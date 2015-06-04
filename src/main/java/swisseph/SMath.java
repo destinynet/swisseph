@@ -18,19 +18,12 @@
 package swisseph;
 
 /**
- * Helper class containing useful mathematical functions and constants.
- * This class mirrors {@link Math}, but is 100% portable. Also, these algorithms are all accurate
- * to less than 1 ulp.
- *
- * <p>The source of the various algorithms used is the fdlibm library, at:<br>
- * <a href="http://www.netlib.org/fdlibm/">http://www.netlib.org/fdlibm/</a>
- *
- * Note that angles are specified in radians.  Conversion functions are
- * provided for your convenience.
- *
- * @author Sourav (sourav@gmx.ch)
+ * Helper class mapping all mathematical functions and constants to
+ * the java.lang.Math class.
  */
-public class SMath implements java.io.Serializable {
+public class SMath
+		implements java.io.Serializable
+		{
   public static final double E = Math.E;
   public static final double PI = Math.PI;
   public static int abs(int i) { return Math.abs(i); }

@@ -1,5 +1,5 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
@@ -68,7 +68,9 @@
 */
 package swisseph;
 
-public class SwissData implements java.io.Serializable {
+public class SwissData
+		implements java.io.Serializable
+		{
 
   /**
   * The character to be used as the degree character. Only textmode
@@ -77,8 +79,9 @@ public class SwissData implements java.io.Serializable {
   * swing components of Java 1.2 and above will use the unicode encoding
   * always!
   */
-  public String ODEGREE_CHAR=""+'\u00b0'; // Unicode degree character 176
-                                          // Identical in most ISO-8859 sets
+//  public String ODEGREE_CHAR=""+'\u00b0'; // Unicode degree character 176
+//                                          // Identical in most ISO-8859 sets
+  public String ODEGREE_STRING="��";	/* degree as string, utf8 encoding */
 
 
   public static final String ayanamsa_name[] = {
@@ -103,6 +106,15 @@ public class SwissData implements java.io.Serializable {
      "J2000",
      "J1900",
      "B1950",
+     "Suryasiddhanta",
+     "Suryasiddhanta, mean Sun",
+     "Aryabhata",
+     "Aryabhata, mean Sun",
+     "SS Revati",
+     "SS Citra",
+     "True Citra",
+     "True Revati",
+     "True Pushya",
   };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -144,14 +156,15 @@ public class SwissData implements java.io.Serializable {
   static final String FILE_A_ACCESS="a+";  // create/open text file for append
   static final int O_BINARY=0;	           // for open(), not defined in Unix
   static final int OPEN_MODE=0666;         // default file creation mode
-  public String DIR_GLUE;              // glue string for directory/file
+  // file.separator may be null with JavaME
+  public static final String DIR_GLUE = (System.getProperty("file.separator") == null ? "/" : System.getProperty("file.separator"));              // glue string for directory/file
   public static final String PATH_SEPARATOR=";:"; // semicolon or colon may be used
 
 
 //////////////////////////////////////////////////////////////////////////////
 // swephexp.h: ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-  public static final int SE_NSIDM_PREDEF         =21;
+  public static final int SE_NSIDM_PREDEF         =30;
 
 //  static final int SE_MAX_STNAME=20;    // maximum size of fixstar name;
 //                                        // the parameter star in swe_fixstar
@@ -169,13 +182,20 @@ public class SwissData implements java.io.Serializable {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-  boolean ephe_path_is_set=false;
-  FilePtr fixfp=null;
-  String ephepath;
-  String jplfnam;
-  int jpldenum;
-  boolean geopos_is_set=false;
-  boolean ayana_is_set=false;
+  boolean ephe_path_is_set=false;	/* ephe_path_is_set = FALSE */
+  boolean jpl_file_is_open=false;	/* jpl_file_is_open = FALSE */
+  FilePtr fixfp=null;			/* fixfp, fixed stars file pointer */
+  String ephepath = SweConst.SE_EPHE_PATH;	/* ephepath, ephemeris path */
+  String jplfnam = SweConst.SE_FNAME_DFT;	/* jplfnam, JPL file name, default */
+  int jpldenum = 0;			/* jpldenum */
+  double eop_tjd_beg;
+  double eop_tjd_beg_horizons;
+  double eop_tjd_end;
+  double eop_tjd_end_add;
+  int eop_dpsi_loaded;
+  boolean geopos_is_set=false;		/* geopos_is_set, for topocentric */
+  boolean ayana_is_set=false;		/* ayana_is_set, ayanamsa is set */
+  boolean is_old_starfile=false;	/* is_old_starfile, fixstars.cat is used (default is sefstars.txt) */
 
   FileData fidat[] = new FileData[SwephData.SEI_NEPHFILES];
   GenConst gcdat;
@@ -190,50 +210,17 @@ public class SwissData implements java.io.Serializable {
   double ast_G, ast_H, ast_diam;
   int i_saved_planet_name;
   String saved_planet_name;
+  //double dpsi[36525];  /* works for 100 years after 1962 */
+  //double deps[36525];
+  double[] dpsi;
+  double[] deps;
+  int astro_models[] = new int[SwephData.SEI_NMODELS];
+  int timeout;
 
   /**
   * Constructs a new SwissData object.
   */
   public SwissData() {
-    // File separator character:
-    DIR_GLUE = System.getProperty("file.separator");
-    if (DIR_GLUE == null) { DIR_GLUE = "/"; } // May happen with JavaME
-
-    try {
-      // ODEGREE_CHAR:
-      String cp=System.getProperty("file.encoding");
-      if (cp!=null) {
-        if (cp.toUpperCase().startsWith("CP")) {
-          try {
-            int cpn=Integer.parseInt(cp.substring(2));
-            if (cpn>=437 && cpn<870) {
-              ODEGREE_CHAR=""+'\u00f8';
-            }
-          } catch (NumberFormatException nfe) {
-          }
-          ODEGREE_CHAR=""+'\u00f8'; // DOS degree character 248
-        } else if (cp.toUpperCase().startsWith("ISO-8859-")) {
-          ODEGREE_CHAR=""+'\u00b0'; // Latin1 degree character 176
-        } else if (cp.toUpperCase().startsWith("UTF")) {
-          ODEGREE_CHAR=""+'\u00b0'; // Default Unicode...
-        }
-      }
-    } catch (SecurityException ase) {
-      if (DIR_GLUE.equals("/")) {
-        ODEGREE_CHAR=""+'\u00b0'; // Latin1 degree character 176
-      } else if (DIR_GLUE.equals("\\")) {
-        ODEGREE_CHAR=""+'\u00f8'; // DOS degree character 248
-      } else {
-        ODEGREE_CHAR=""+'\u00b0'; // Default Unicode...
-      }
-    }
-    // Macintoshs (prior to MacOS X) should use '\u00a1', but how to
-    // identify more reasonably? Has the Mac an appropriate text window anyway?
-    if (DIR_GLUE.equals(":")) {
-      ODEGREE_CHAR=""+'\u00a1';
-    }
-
-
     int i;
     for(i=0;i<SwephData.SEI_NEPHFILES;i++){ fidat[i] = new FileData(); }
     gcdat = new GenConst();

@@ -1,5 +1,5 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
@@ -77,14 +77,16 @@ package swisseph;
 * there is directly valid for this port to Java as well.</B></I>
 * @version 1.0.0a
 */
-class Houses implements java.io.Serializable {
+class Houses
+		implements java.io.Serializable
+		{
   /**
   * The twelve house cusps from cusp[1] to cusp[12] plus many additional
   * points.
   */
   double cusp[]=new double[37];
   /**
-  * The double value of the ascendent.
+  * The double value of the ascendant.
   */
   double ac;
   /**

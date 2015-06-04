@@ -1,5 +1,5 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
@@ -68,7 +68,9 @@
 */
 package swisseph;
 
-class SwephMosh implements java.io.Serializable {
+class SwephMosh
+		implements java.io.Serializable
+		{
 
   SwissLib sl=null;
   SwissEph sw=null;
@@ -117,10 +119,10 @@ class SwephMosh implements java.io.Serializable {
     this.sl    = sl;
     this.sw    = sw;
     this.swed  = swed;
-    this.sm    = new Swemmoon();
     if (this.sl   ==null) { this.sl   =new SwissLib(); }
     if (this.sw   ==null) { this.sw   =new SwissEph(); }
     if (this.swed ==null) { this.swed =new SwissData(); }
+    this.sm    = new Swemmoon(swed, sl);
   }
 
 
@@ -478,7 +480,7 @@ class SwephMosh implements java.io.Serializable {
     /* Convert to equatorial */
     sl.swi_coortrf2(xyz, xyz, -seps, ceps);
     /* Precess to equinox of J2000.0 */
-    sl.swi_precess(xyz, tjd, SwephData.J_TO_J2000);/**/
+    sl.swi_precess(xyz, tjd, 0, SwephData.J_TO_J2000);/**/
     /* now emb -> earth */
     for (i = 0; i <= 2; i++)
       xemb[i] -= xyz[i] / (SwephData.EARTH_MOON_MRAT + 1.0);
@@ -653,13 +655,13 @@ class SwephMosh implements java.io.Serializable {
     xp[4] = pqr[3] * x[3] + pqr[4] * x[4];
     xp[5] = pqr[6] * x[3] + pqr[7] * x[4];
     /* transformation to equator */
-    eps = sl.swi_epsiln(tequ.val);
+    eps = sl.swi_epsiln(tequ.val, 0);
     sl.swi_coortrf(xp, xp, -eps);
     sl.swi_coortrf(xp, 3, xp, 3, -eps);
     /* precess to J2000 */
     if (tequ.val != SwephData.J2000) {
-      sl.swi_precess(xp, tequ.val, SwephData.J_TO_J2000);
-      sl.swi_precess(xp, 3, tequ.val, SwephData.J_TO_J2000);
+      sl.swi_precess(xp, tequ.val, 0, SwephData.J_TO_J2000);
+      sl.swi_precess(xp, 3, tequ.val, 0, SwephData.J_TO_J2000);
     }
     /* to solar system barycentre */
     if ((fict_ifl.val & FICT_GEO) != 0) {
@@ -699,6 +701,7 @@ class SwephMosh implements java.io.Serializable {
       /* file does not exist, use built-in bodies */
       if (ipl >= SweConst.SE_NFICT_ELEM) {
         if (serr != null) {
+          serr.setLength(0);
           serr.append("error no elements for fictitious body no ").append(ipl);
         }
         return SweConst.ERR;
@@ -950,8 +953,6 @@ class SwephMosh implements java.io.Serializable {
       fp.close();
       return SweConst.OK;
     } catch (java.io.IOException e) {
-      if (fp!=null) { try { fp.close(); } catch (java.io.IOException ie) { } }
-    } catch (java.nio.BufferUnderflowException e) {
       if (fp!=null) { try { fp.close(); } catch (java.io.IOException ie) { } }
     }
     return SweConst.ERR;

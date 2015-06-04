@@ -1,5 +1,5 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
@@ -68,10 +68,17 @@
 */
 package swisseph;
 
-class TopoData implements java.io.Serializable {
+class TopoData
+		implements java.io.Serializable
+		{
   double geolon, geolat, geoalt;
   double teval;
   double tjd_ut;
   double xobs[]=new double[6];
 
+
+  void clearData() {
+    geolon = geolat = geoalt = teval = tjd_ut = 0;
+    xobs = new double[6];
+  }
 }

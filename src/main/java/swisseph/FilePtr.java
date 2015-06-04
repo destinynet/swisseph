@@ -1,5 +1,5 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
@@ -72,29 +72,20 @@
 */
 package swisseph;
 
-import java.io.BufferedOutputStream;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.net.MalformedURLException;
-import java.net.Socket;
-import java.net.URL;
-import java.nio.BufferOverflowException;
-import java.nio.ByteOrder;
-import java.nio.CharBuffer;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
+import java.io.*;
+import java.net.*;
 
 
 /**
 * This class is meant to be a wrapper to some read functionality of the
 * RandomAccessFile class. It adds the ability to read (and search and
 * seek) in files using http://... access. This is needed to allow applets
-* read access to files, in this case the Swiss Ephemeris data files.
+* read access to files, in this case the Swiss Ephemeris and JPL data
+* files.
 */
-public class FilePtr implements java.io.Serializable {
-  public static final String useragent = "swisseph-java-1.75.00(01)";
+public class FilePtr
+		implements java.io.Serializable {
+  public static final String useragent = "swisseph-java-" + SwephData.SE_JAVA_VERSION;
 
   //Allocate a 1K buffer for line reading
   private static final int STRING_BUFFER_SIZE = 200;
@@ -102,15 +93,6 @@ public class FilePtr implements java.io.Serializable {
   private static final int MAX_FAILURES = 100;
 
   transient RandomAccessFile fp;
-  
-  //transient by smallufo
-  transient FileChannel fc;
-  
-  //transient by smallufo
-  private transient MappedByteBuffer mbb = null;
-  
-  //transient by smallufo
-  private transient CharBuffer cb = null;
   transient Socket sk;
   transient InputStream is;
   transient BufferedOutputStream os;
@@ -157,7 +139,6 @@ public class FilePtr implements java.io.Serializable {
     data = new byte[BUFSIZE];
     inbuf = new byte[BUFSIZE];
     if (useHTTP && fp == null) { // RandomAccessFile, try file access via http:
-      fc = null;
       try {
         URL u = new URL(fnamp);
         host = u.getHost();
@@ -166,20 +147,12 @@ public class FilePtr implements java.io.Serializable {
       } catch ( MalformedURLException me) {
         throw new IOException("Malformed URL '"+fnamp+"'");
       }
-    } else {
-      fc = fp.getChannel();
-      mbb = fc.map(FileChannel.MapMode.READ_ONLY, 0, length());
-      cb = CharBuffer.allocate( STRING_BUFFER_SIZE );
     }
   }
 
 
   public void setBigendian(boolean bigendian) {
-    if (fc != null) {
-      mbb.order(bigendian?ByteOrder.BIG_ENDIAN:ByteOrder.LITTLE_ENDIAN);
-    } else {
-      this.bigendian = bigendian;
-    }
+    this.bigendian = bigendian;
   }
 
 
@@ -191,10 +164,6 @@ public class FilePtr implements java.io.Serializable {
   * byte could be read.
   */
   public byte readByte() throws IOException, EOFException {
-    if (fc != null) {
-      return mbb.get();
-    }
-
     if (startIdx<0 || fpos<startIdx || fpos>endIdx) {
       readToBuffer();
     }
@@ -223,10 +192,6 @@ public class FilePtr implements java.io.Serializable {
   * 2 bytes could be read completely.
   */
   public short readShort() throws IOException, EOFException {
-    if (fc != null) {
-      return mbb.getShort();
-    }
-
     if (bigendian) {
       return (short)((readByte()<<8)+readUnsignedByte());
     }
@@ -242,10 +207,6 @@ public class FilePtr implements java.io.Serializable {
   * 4 bytes could be read completely.
   */
   public int readInt() throws IOException, EOFException {
-    if (fc != null) {
-      return mbb.getInt();
-    }
-
     if (bigendian) {
       return (((int)readByte())<<24)+
              (((int)readUnsignedByte())<<16)+
@@ -267,10 +228,6 @@ public class FilePtr implements java.io.Serializable {
   * 8 bytes could be read completely.
   */
   public double readDouble() throws IOException, EOFException {
-    if (fc != null) {
-      return mbb.getDouble();
-    }
-
     long ldb = (bigendian?
                    (
                        (((long)readUnsignedByte())<<56)+
@@ -309,30 +266,6 @@ public class FilePtr implements java.io.Serializable {
   * character (byte) could be read.
   */
   public String readLine() throws IOException, EOFException {
-    if (fc != null) {
-      cb.clear();
-
-      char ch;
-      while (true) {
-        try {
-          while ((ch=(char)readUnsignedByte() ) != '\n') {
-            cb.put( ch );
-          }
-          cb.put( ch );
-          break;
-        } catch (BufferOverflowException boe) {
-System.err.println("Re-allocating CharBuffer to size of " + (2 * cb.capacity()) + " characters.");
-          cb.flip();
-          String lineStart = cb.toString();
-          cb = CharBuffer.allocate(cb.capacity() * 2);
-          cb.clear();
-          cb.put(lineStart);
-        }
-      }
-      cb.flip();
-      return cb.toString();
-    }
-
     StringBuffer sout = new StringBuffer(200);
     try {
       char ch;
@@ -357,7 +290,9 @@ System.err.println("Re-allocating CharBuffer to size of " + (2 * cb.capacity()) 
   public void close() throws IOException {
     try {
       fnamp = "";
-      if (fp != null) { fp.close(); }
+      if (fp != null) {
+        fp.close();
+      }
       fp = null;
       if (sk != null) { sk.close(); }
       sk = null;
@@ -381,10 +316,6 @@ System.err.println("Re-allocating CharBuffer to size of " + (2 * cb.capacity()) 
   * @return the current position of the file pointer.
   */
   public long getFilePointer() {
-    if (fc != null) {
-      return mbb.position();
-    }
-
     return fpos;
   }
 
@@ -394,10 +325,6 @@ System.err.println("Re-allocating CharBuffer to size of " + (2 * cb.capacity()) 
   * @throws IOException if an I/O error occurs.
   */
   public long length() throws IOException {
-    if (fc != null) {
-      return fc.size();
-    }
-
     if (fp != null && savedLength < 0) { savedLength = fp.length(); }
     if (fp != null || savedLength >= 0 || !useHTTP) {
       return savedLength;
@@ -448,10 +375,6 @@ System.err.println("Re-allocating CharBuffer to size of " + (2 * cb.capacity()) 
   * @param pos the new position in the file. The position is seen zero based.
   */
   public void seek(long pos) {
-    if (fc != null) {
-      mbb.position((int)pos);
-    }
-
     fpos = pos;
   }
 
@@ -512,6 +435,23 @@ System.err.println("Re-allocating CharBuffer to size of " + (2 * cb.capacity()) 
 
   // Reads a chunk of data to the buffer data[]
   private void readToBuffer() throws IOException, EOFException {
+    // Directly reading a file:
+    if (fp != null) {
+      fp.seek(fpos);
+      int cnt = fp.read(inbuf);
+// Probably, RandomAccessFile.read(byte[n]) performes n read operations???
+      if (cnt == -1) {
+        throw new EOFException("Filepointer position " + fpos + " exceeds file"+
+                               " length by " + (fpos-length()+1) + " byte(s).");
+      }
+      for(int n = 0; n < cnt; n++) {
+        data[n] = inbuf[n];
+      } 
+      startIdx = fpos;
+      endIdx = fpos+cnt-1;
+      return;
+    }
+
     if (fpos >= length()) {
       throw new EOFException("Filepointer position " + fpos + " exceeds file " +
                              "length by " + (fpos-length()+1) + " byte(s).");

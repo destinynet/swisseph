@@ -1,5 +1,5 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
@@ -68,8 +68,14 @@
 */
 package swisseph;
 
-class FileData implements java.io.Serializable {
+class FileData
+		implements java.io.Serializable
+		{
   final byte SEI_FILE_NMAXPLAN=50;
+
+  // The error handling and error strings are different from the original C version.
+  // If required, one would have to rewrite some code
+  String serr_file_damage = "Ephemeris file %s is damaged (0). ";
 
   String fnam;          /* ephemeris file name */
   int fversion;         /* version number of file */
@@ -125,8 +131,6 @@ class FileData implements java.io.Serializable {
     short nplan;
     PlanData pdp;
 //Skipped in JAVA:// FileData fdp = swed.fidat[ifno];
-    String serr_file_damage = "Ephemeris file "+fnam+" is damaged. ";
-//Skipped in JAVA:// int errmsglen = serr_file_damage.length();
     int nbytes_ipl = 2;
 
     try {
@@ -148,8 +152,7 @@ class FileData implements java.io.Serializable {
       try {
         ver=Integer.parseInt(s.substring(offs));
       } catch (NumberFormatException n) {
-        System.out.println(serr_file_damage+" (1)");
-        clearData();
+        label_file_damage(serr, " (1)");
         throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
             SweConst.ERR, serr);
       }
@@ -166,14 +169,17 @@ class FileData implements java.io.Serializable {
         s+=(char)b;
       } while (cLast!='\r' && (char)(b)!='\n' && s.length()<SwissData.AS_MAXCH);
 
-      s2=fnam.substring(fnam.lastIndexOf(swed.DIR_GLUE)+1).toLowerCase();
+      s2=fnam.substring(fnam.lastIndexOf(SwissData.DIR_GLUE)+1).toLowerCase();
       s=s.trim().toLowerCase();
       if (!s.equals(s2)) {
         // Http addresses will end with '/' independent of DIR_GLUE...
         s2=fnam.substring(fnam.lastIndexOf("/")+1).toLowerCase();
         if (!s.equals(s2)) {
-          s2=fnam.substring(fnam.lastIndexOf(swed.DIR_GLUE)+1).toLowerCase();
-          System.out.println("Ephemeris file name '"+s2+"' is wrong; rename to '"+s+"'");
+          s2=fnam.substring(fnam.lastIndexOf(SwissData.DIR_GLUE)+1).toLowerCase();
+          if (serr != null) {
+            serr.setLength(0);
+            serr.append("Ephemeris file name '"+s2+"' is wrong; rename to '"+s+"'");
+          }
           clearData();
           throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
               SweConst.ERR, serr);
@@ -265,13 +271,12 @@ lng = 0;
       fpos=fptr.getFilePointer();
       flen=fptr.length();
       if (lng!=flen) {
-        System.out.println(serr_file_damage+" (2)");
-        clearData();
+        label_file_damage(serr, " (2)");
         throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
             SweConst.ERR, serr);
       }
 //      fptr.seek(flen-1);
-      fptr.seek(fpos);
+      fptr.seek(fpos);	// Not really necessary...
       /**********************************************************
        * DE number of JPL ephemeris which this file is based on *
        **********************************************************/
@@ -291,28 +296,26 @@ lng = 0;
         nplan %= 256;
       }
       if (nplan < 1 || nplan > 20) {
-        System.out.println(serr_file_damage+" (3)");
-        clearData();
+        label_file_damage(serr, " (3)");
         throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
             SweConst.ERR, serr);
       }
-// ��ñññh? fpd->npl = ...???
       npl = nplan;
       /* which ones?                       */
-//do_fread((void *) fdp->ipl, nbytes_ipl, (int) nplan, sizeof(int), fp,...
-//          target            how many      count      how many
-//                          bytes to read           bytes to write
+//  retc = do_fread((void *) fdp->ipl, nbytes_ipl, (int) nplan, sizeof(int), fp, SEI_CURR_FPOS,...
+//                    target            how many      count      how many
+//                                   bytes to read           bytes to write
 // nbytes_ipl can be 2 and 4 only...
       if (nbytes_ipl == 2) {
         for(i=0; i<nplan; i++) {
-          ipl[i]=(int)(read2(fptr, SwephData.SEI_CURR_FPOS, freord, fendian));
+          ipl[i]=(int)(read2(fptr, SwephData.SEI_CURR_FPOS, freord, fendian) & 0xffff);
         }
       } else if (nbytes_ipl == 4) {
         for(i=0; i<nplan; i++) {
           ipl[i]=read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
         }
       } else { // Can't be???
-        System.out.println(serr_file_damage+" (3b)");
+        label_file_damage(serr, " (3b)");
       }
       /*************************************
        * asteroid name                     *
@@ -361,8 +364,7 @@ lng = 0;
       fptr.seek(0L);
       /* must check that defined length of s is less than fpos */
       if (fpos - 1 > 2 * SwissData.AS_MAXCH) {
-        System.out.println(serr_file_damage+" (4)");
-        clearData();
+        label_file_damage(serr, " (4)");
         throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
             SweConst.ERR, serr);
       }
@@ -375,8 +377,7 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
         s+=(char)b;
       }
   if ((int)swi_crc32(/*(unsigned char *)*/ ba, (int) fpos) != (int)ulng) {
-    System.err.println(serr_file_damage+" (5)");
-    clearData();
+    label_file_damage(serr, " (5)");
     throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
         SweConst.ERR, serr);
   }
@@ -442,27 +443,33 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
         }/**/
       }
     } catch (java.io.IOException e) {
-      clearData();
-      System.out.println(serr_file_damage+" (6a)");
-      System.out.println(e.getMessage());
-      throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
-          SweConst.ERR, serr);
-    } catch (java.nio.BufferUnderflowException e) {
-      clearData();
-      System.out.println(serr_file_damage+" (6b)");
+      label_file_damage(serr, " (6a)");
       System.out.println(e.getMessage());
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
     } catch (Exception e) {
-      clearData();
-      System.out.println(serr_file_damage+" (6c)");
-      System.out.println(e.getMessage());
+      label_file_damage(serr, " (6c)");
+      System.out.println(e);
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
     }
     return SweConst.OK;
   }
 
+  private int label_file_damage(StringBuffer serr, String suberror) {
+    if (serr != null) {
+      serr.setLength(0);
+      if (serr_file_damage.length() + fnam.length() < SwissData.AS_MAXCH) {
+        serr.append(serr_file_damage.replaceFirst("%s", fnam));
+        serr.append(suberror);
+      } else {
+        serr.append(serr_file_damage.replaceFirst("%s", fnam)).append(suberror);
+      }
+    }
+    clearData();
+    System.out.println(serr);
+    return SweConst.ERR;
+  }
 
   /*
    * The following C code (by Rob Warnock rpw3@sgi.com) does CRC-32 in
@@ -669,9 +676,14 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
          * order + 1 */
         if (nco > pdp.ncoe) {
           if (serr != null) {
-            serr.append("error in ephemeris file "+fdp.fnam+": "+nco+
-                        " coefficients instead of "+pdp.ncoe+". ");
+            serr.setLength(0);
+	    serr.append("error in ephemeris file: " + nco + " coefficients instead of " + pdp.ncoe + ". ");
+            if (serr.length() + fdp.fnam.length() < SwissData.AS_MAXCH - 1) {
+              serr.setLength(0);
+	      serr.append("error in ephemeris file " + fdp.fnam + ": " + nco + " coefficients instead of " + pdp.ncoe + ". ");
+	    }
           }
+          pdp.segp = null;
           throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
               SweConst.ERR, serr);
         }
@@ -754,10 +766,6 @@ int kCnt;
       serr.append("file error in swisseph.FileData: "+e.getMessage());
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
-    } catch (java.nio.BufferUnderflowException e) {
-      serr.append("file error in swisseph.FileData: "+e.getMessage());
-      throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
-          SweConst.ERR, serr);
     } catch (Exception e) {
       serr.append("file error in swisseph.FileData: "+e.getMessage());
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
@@ -765,21 +773,71 @@ int kCnt;
     }
   }
 
-  /* SWISSEPH
-   * reads from a file and, if necessary, reorders bytes
-   * targ         target pointer
-   * size         size of item to be read
-   * count        number of items
-   * corrsize     in what size should it be returned
-   *              (e.g. 3 byte int -> 4 byte int)
-   * fp           file pointer
-   * fpos         file position: if (fpos >= 0) then fseek
-   * freord       reorder bytes or no
-   * fendian      little/bigendian
-   * ifno         file number
-   * serr         error string
-   */
 
+  double[] getDatafileTimerange(SwissEph sw, String fname, String ephepath) throws SwissephException {
+    return getDatafileTimerange(sw, fname, ephepath, false);
+  }
+  double[] getDatafileTimerange(SwissEph sw, String fname, String ephepath, boolean isAsteroidfile) throws SwissephException {
+    int fendian, freord;
+    FilePtr fptr = null;
+// asteroid files =~ m/s(e|[0-9])[0-9][0-9][0-9][0-9][0-9](s|).se1/
+    try {
+      fptr = sw.swi_fopen(-1, fname, ephepath, null);
+        byte b=0;
+        int cnt = 0;
+        char cLast;
+      for(int n = 0; n < 3; n++) {
+        do {
+          cLast=(char)b;
+          b=fptr.readByte();
+          cnt++;
+        } while (cLast!='\r' && (char)(b)!='\n' && cnt<SwissData.AS_MAXCH);
+      }
+
+      // Read up to end of line or AS_MAXCH*2 into var. 's':
+//      if (ifno == SwephData.SEI_FILE_ANY_AST) { // }
+      if (isAsteroidfile) {
+        b=0;
+        do {
+          cLast=(char)b;
+          b=fptr.readByte();
+          cnt++;
+        } while (cLast!='\r' && (char)(b)!='\n' && cnt<SwissData.AS_MAXCH*2);
+      }
+
+      int testendian = fptr.readInt();
+long lng = 0;
+      if (testendian == SwephData.SEI_FILE_TEST_ENDIAN) {
+        freord = SwephData.SEI_FILE_NOREORD;
+      } else {
+        freord = SwephData.SEI_FILE_REORD;
+        lng = ((testendian & 0x000000ff) << 24) +
+              ((testendian & 0x0000ff00) << 8 ) +
+              ((testendian & 0x00ff0000) >> 8 ) +
+              ((testendian & 0xff000000) >> 24);
+        if (lng != SwephData.SEI_FILE_TEST_ENDIAN) {
+          throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
+              SweConst.ERR, "File is damaged: byte ordering info not correct.");
+        }
+      }
+      if (SwephData.SEI_FILE_TEST_ENDIAN / 16777216 ==
+          (testendian & 0x000000ff)) {
+        fendian = SwephData.SEI_FILE_BIGENDIAN;
+      } else {
+        fendian = SwephData.SEI_FILE_LITENDIAN;
+      }
+      read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
+      read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
+      double tfstart=read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      double tfend=read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      try { fptr.close(); } catch (Exception ie) { }
+
+      return new double[] { tfstart, tfend };
+    } catch (Exception ie) {
+      try { fptr.close(); } catch (Exception e) { }
+      throw new SwissephException(0./0., SwissephException.UNSPECIFIED_FILE_ERROR, SweConst.ERR, ie.toString());
+    }
+  }
 
 } // Ende der Klasse FileData.
 

@@ -1,6 +1,8 @@
 package swisseph;
 
-public class SwissephException extends RuntimeException implements java.io.Serializable {
+public class SwissephException extends RuntimeException
+		implements java.io.Serializable
+		{
   private double jdet=0;
   private int type=0;
   private int rc=0;
@@ -77,6 +79,12 @@ public class SwissephException extends RuntimeException implements java.io.Seria
   * @see #PARAM_ERROR
   */
   public static final int INVALID_PARAMETER_COMBINATION = PARAM_ERROR | 8192;
+  /**
+  * Error code, when the date is invalid
+  * Its current value is PARAM_ERROR + 16384.
+  * @see #PARAM_ERROR
+  */
+  public static final int INVALID_DATE                  = PARAM_ERROR | 16384;
 
   // User requested:
   /**
@@ -143,6 +151,7 @@ public class SwissephException extends RuntimeException implements java.io.Seria
   * @see #OUT_OF_TIME_RANGE
   * @see #UNSUPPORTED_OBJECT
   * @see #INVALID_PARAMETER_COMBINATION
+  * @see #INVALID_DATE
   * @see #USER_ERROR
   * @see #BEYOND_USER_TIME_LIMIT
   */

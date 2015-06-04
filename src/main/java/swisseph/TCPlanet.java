@@ -10,7 +10,7 @@ package swisseph;
 * SwissEph sw = new SwissEph(...);
 * ...
 * int flags = SweConst.SEFLG_SWIEPH |
-*             SweConst.SEFLG_TRANSIT_LONGITUDE
+*             SweConst.SEFLG_TRANSIT_LONGITUDE |
 *             SweConst.SEFLG_TRANSIT_SPEED;
 * boolean backwards = false;
 * 
@@ -25,7 +25,9 @@ package swisseph;
 * This would calculate the (ET-) date, when the Saturn will
 * change from retrograde to direct movement or vice versa.
 */
-public class TCPlanet extends TransitCalculator implements java.io.Serializable {
+public class TCPlanet extends TransitCalculator
+		implements java.io.Serializable
+		{
 
 
   private int planet;
@@ -47,39 +49,118 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
   * positions (longitudinal / latitudinal and distance) or speeds, be
   * it in the geocentric or topocentric coordinate system, or in tropical
   * or sidereal zodiac.<p>
-  * @param sw A SwissEph object, if you have one available. Can be null.
-  * @param planet The transiting planet. Valid planets are SweConst.SE_SUN
-  * up to SweConst.SE_INTP_PERG with the exception of SweConst.SE_EARTH.
+  * @param sw A SwissEph object, if you have one available. May be null.
+  * @param planet The transiting planet or object number.<br>
+  * Planets from SweConst.SE_SUN up to SweConst.SE_INTP_PERG (with the
+  * exception of SweConst.SE_EARTH) have their extreme speeds saved, so
+  * these extreme speeds will be used on calculation.<br>Other objects 
+  * calculate extreme speeds by randomly calculating by default 200 speed
+  * values and multiply them by 1.4 as a safety factor.<br>
+  * ATTENTION: be sure to understand that you might be able to miss some
+  * transit or you might get a rather bad transit time in very rare
+  * circumstances.<br>
+  * Use SweConst.SE_AST_OFFSET + asteroid number for planets with a
+  * planet number not defined als SweConst.SEFLG_*.
   * @param flags The calculation type flags (SweConst.SEFLG_TRANSIT_LONGITUDE,
   * SweConst.SEFLG_TRANSIT_LATITUDE or SweConst.SEFLG_TRANSIT_DISTANCE in
   * conjunction with SweConst.SEFLG_TRANSIT_SPEED for transits over a speed
-  * value). Also flags modifying the basic planet calculations, these are
-  * SweConst.SEFLG_TOPOCTR, SweConst.SEFLG_HELCTR and SweConst.SEFLG_SIDEREAL,
-  * plus the ephemeris flags SweConst.SEFLG_MOSEPH, SweConst.SEFLG_SWIEPH or
-  * plus the ephemeris flags SweConst.SEFLG_MOSEPH, SweConst.SEFLG_SWIEPH.
-  * @param offset This is the desired transit degree or transit speed.
+  * value).<br><br>
+  * Also flags modifying the basic planet calculations, these are
+  * SweConst.SEFLG_TOPOCTR, SweConst.SEFLG_EQUATORIAL, SweConst.SEFLG_HELCTR,
+  * SweConst.SEFLG_TRUEPOS, and SweConst.SEFLG_SIDEREAL, plus the
+  * optional ephemeris flags SweConst.SEFLG_MOSEPH, SweConst.SEFLG_SWIEPH or
+  * SweConst.SEFLG_JPLEPH optionally.
+  * <br>For <i>right ascension</i> use <code>SEFLG_TRANSIT_LONGITUDE | SEFLG_EQUATORIAL</code>,
+  * for <i>declination</i> <code>SEFLG_TRANSIT_LATITUDE | SEFLG_EQUATORIAL</code>.<br>
+  * @param offset This is the desired transit degree or distance in AU or transit speed
+  * in deg/day.
+  * @see swisseph.TCPlanetPlanet#TCPlanetPlanet(SwissEph, int, int, int, double)
+  * @see swisseph.TCPlanet#TCPlanet(SwissEph, int, int, double, int, double)
+  * @see swisseph.SweConst#SEFLG_TRANSIT_LONGITUDE
+  * @see swisseph.SweConst#SEFLG_TRANSIT_LATITUDE
+  * @see swisseph.SweConst#SEFLG_TRANSIT_DISTANCE
+  * @see swisseph.SweConst#SEFLG_TRANSIT_SPEED
+  * @see swisseph.SweConst#SEFLG_YOGA_TRANSIT
+  * @see swisseph.SweConst#SE_AST_OFFSET
+  * @see swisseph.SweConst#SEFLG_TOPOCTR
+  * @see swisseph.SweConst#SEFLG_EQUATORIAL
+  * @see swisseph.SweConst#SEFLG_HELCTR
+  * @see swisseph.SweConst#SEFLG_TRUEPOS
+  * @see swisseph.SweConst#SEFLG_SIDEREAL
+  * @see swisseph.SweConst#SEFLG_MOSEPH
+  * @see swisseph.SweConst#SEFLG_SWIEPH
+  * @see swisseph.SweConst#SEFLG_JPLEPH
+  */
+  public TCPlanet(SwissEph sw, int planet, int flags, double offset) {
+    this(sw, planet, flags, offset, 200, 1.4);
+  }
+  /**
+  * Creates a new TransitCalculator for transits of any of the planets
+  * positions (longitudinal / latitudinal and distance) or speeds, be
+  * it in the geocentric or topocentric coordinate system, or in tropical
+  * or sidereal zodiac.<p>
+  * @param sw A SwissEph object, if you have one available. May be null.
+  * @param planet The transiting planet or object number.<br>
+  * Planets from SweConst.SE_SUN up to SweConst.SE_INTP_PERG (with the
+  * exception of SweConst.SE_EARTH) have their extreme speeds saved, so
+  * these extreme speeds will be used on calculation.<br>Other objects 
+  * calculate extreme speeds by randomly calculating by default 200 speed
+  * values and multiply them by 1.4 as a safety factor.<br>
+  * Changing the 200 calculations will give higher or lower startup time
+  * on <code>new TCPlanet(...)</code>, changing the 1.4 safety factor will
+  * change each single calculation time.<br>
+  * ATTENTION: be sure to understand that you might be able to miss some
+  * transit on these other objects or you might get a rather bad transit
+  * time in very rare circumstances.<br>
+  * Use SweConst.SE_AST_OFFSET + asteroid number for planets with a
+  * planet number not defined als SweConst.SEFLG_*.
+  * @param flags The calculation type flags (SweConst.SEFLG_TRANSIT_LONGITUDE,
+  * SweConst.SEFLG_TRANSIT_LATITUDE or SweConst.SEFLG_TRANSIT_DISTANCE in
+  * conjunction with SweConst.SEFLG_TRANSIT_SPEED for transits over a speed
+  * value).<br><br>
+  * Also flags modifying the basic planet calculations, these are
+  * SweConst.SEFLG_TOPOCTR, SweConst.SEFLG_EQUATORIAL, SweConst.SEFLG_HELCTR,
+  * SweConst.SEFLG_TRUEPOS, and SweConst.SEFLG_SIDEREAL, plus the (optional)
+  * ephemeris flags SweConst.SEFLG_MOSEPH, SweConst.SEFLG_SWIEPH or
+  * SweConst.SEFLG_JPLEPH.
+  * <br>For <i>right ascension</i> use <code>SEFLG_TRANSIT_LONGITUDE | SEFLG_EQUATORIAL</code>,
+  * for <i>declination</i> <code>SEFLG_TRANSIT_LATITUDE | SEFLG_EQUATORIAL</code>.<br>
+  * @param offset This is the desired transit degree or distance (in AU) or transit speed
+  * (in deg/day or AU/day).
+  * @param precalcCount When calculating planets without saved extreme speeds,
+  * you may change the default value of 200 random calculations to search for the
+  * extreme speeds here.
+  * @param precalcSafetyfactor When calculating planets without saved extreme speeds,
+  * you may change the default value of 1.4 as a safety factor to be multiplied with
+  * the found extreme speeds here.
   * @see swisseph.TCPlanetPlanet#TCPlanetPlanet(SwissEph, int, int, int, double)
   * @see swisseph.SweConst#SEFLG_TRANSIT_LONGITUDE
   * @see swisseph.SweConst#SEFLG_TRANSIT_LATITUDE
   * @see swisseph.SweConst#SEFLG_TRANSIT_DISTANCE
   * @see swisseph.SweConst#SEFLG_TRANSIT_SPEED
   * @see swisseph.SweConst#SEFLG_YOGA_TRANSIT
+  * @see swisseph.SweConst#SE_AST_OFFSET
   * @see swisseph.SweConst#SEFLG_TOPOCTR
+  * @see swisseph.SweConst#SEFLG_EQUATORIAL
   * @see swisseph.SweConst#SEFLG_HELCTR
+  * @see swisseph.SweConst#SEFLG_TRUEPOS
   * @see swisseph.SweConst#SEFLG_SIDEREAL
   * @see swisseph.SweConst#SEFLG_MOSEPH
   * @see swisseph.SweConst#SEFLG_SWIEPH
+  * @see swisseph.SweConst#SEFLG_JPLEPH
   */
-  public TCPlanet(SwissEph sw, int planet, int flags, double offset) {
+  public TCPlanet(SwissEph sw, int planet, int flags, double offset, int precalcCount, double precalcSafetyfactor) {
     // Check parameter: //////////////////////////////////////////////////////
     // List of all valid flags:
     this.tflags = flags;
     int vFlags = SweConst.SEFLG_EPHMASK |
                  SweConst.SEFLG_TOPOCTR |
+                 SweConst.SEFLG_EQUATORIAL |
                  SweConst.SEFLG_HELCTR |
                  SweConst.SEFLG_NOABERR |
                  SweConst.SEFLG_NOGDEFL |
                  SweConst.SEFLG_SIDEREAL |
+                 SweConst.SEFLG_TRUEPOS |
                  SweConst.SEFLG_TRANSIT_LONGITUDE |
                  SweConst.SEFLG_TRANSIT_LATITUDE |
                  SweConst.SEFLG_TRANSIT_DISTANCE |
@@ -101,17 +182,10 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
         type != SweConst.SEFLG_TRANSIT_LATITUDE &&
         type != SweConst.SEFLG_TRANSIT_DISTANCE) {
       throw new IllegalArgumentException("Invalid flag combination '" + flags +
-        "': specify at least exactly one of SEFLG_TRANSIT_LONGITUDE (" +
+        "': specify exactly one of SEFLG_TRANSIT_LONGITUDE (" +
         SweConst.SEFLG_TRANSIT_LONGITUDE + "), SEFLG_TRANSIT_LATITUDE (" +
         SweConst.SEFLG_TRANSIT_LATITUDE + "), SEFLG_TRANSIT_DISTANCE (" +
         SweConst.SEFLG_TRANSIT_DISTANCE + ").");
-    }
-    if (planet<SweConst.SE_SUN ||
-        planet>SweConst.SE_INTP_PERG ||
-        planet==SweConst.SE_EARTH) {
-      throw new IllegalArgumentException(
-          "Unsupported planet number " + planet + " ("+
-              sw.swe_get_planet_name(planet) + ")");
     }
     if ((flags & SweConst.SEFLG_HELCTR) != 0 &&
         (planet == SweConst.SE_MEAN_APOG ||
@@ -151,17 +225,36 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
     this.flags = flags;
 
 
-    rollover = (idx == 0);
+    rollover = (idx == 0);  // Ok - idx==1 as well, but the range will be from -90 to +90
+                            // then, which does not fit the scheme. We need a rolloverMin
+                            // value or similar for this to work
 
     this.offset = checkOffset(offset);
 
     max = getSpeed(false);
     min = getSpeed(true);
+
     if (Double.isInfinite(max) || Double.isInfinite(min)) {
+      // Trying to find some reasonable min- and maxSpeed by randomly testing some speed values.
+      // Limited to ecliptical(?) non-speed calculations so far:
+      if (idx < 3) {
+        double[] minmax = getTestspeed(planet, idx, precalcCount, precalcSafetyfactor);
+        min = minmax[0];
+        max = minmax[1];
+      }
+    }
+//System.err.println("speeds: " + min + " - " + max);
+
+    if (Double.isInfinite(max) || Double.isInfinite(min)) {
+      int planetno = (planet > SweConst.SE_AST_OFFSET ? planet - SweConst.SE_AST_OFFSET : planet);
       throw new IllegalArgumentException(
           ((flags&SweConst.SEFLG_TOPOCTR)!=0?"Topo":((flags&SweConst.SEFLG_HELCTR)!=0?"Helio":"Geo")) +
-          "centric transit calculations of planet number " + planet + " ("+
-          sw.swe_get_planet_name(planet) + ") not possible.");
+              "centric transit calculations of planet number " + planetno + " ("+
+              sw.swe_get_planet_name(planet) + ") not possible: (extreme) " +
+              ((flags & SweConst.SEFLG_SPEED) != 0 ? "accelerations" : "speeds") +
+              " of the planet " +
+              ((flags & SweConst.SEFLG_EQUATORIAL) != 0 ? "in equatorial system " : "") +
+              "not available.");
     }
   }
 
@@ -193,9 +286,7 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
     return offset;
   }
   /**
-  * This returns all the &quot;object identifiers s&quot; used in this
-  * TransitCalculator. It may be the planet number or planet numbers,
-  * when calculating planets.
+  * This returns the planet number as an Integer object.
   * @return An array of identifiers identifying the calculated objects.
   */
   public Object[] getObjectIdentifiers() {
@@ -213,7 +304,11 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
 
     int ret = sw.swe_calc(jdET, planet, flags, xx, serr);
     if (ret<0) {
-      throw new SwissephException(jdET, SwissephException.UNDEFINED_ERROR,
+      int type = SwissephException.UNDEFINED_ERROR;
+      if (serr.toString().matches("jd 2488117.1708818264 > Swiss Eph. upper limit 2487932.5;")) {
+        type = SwissephException.BEYOND_USER_TIME_LIMIT;
+      }
+      throw new SwissephException(jdET, type,
           "Calculation failed with return code "+ret+":\n"+serr.toString());
     }
 
@@ -290,7 +385,11 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
         // We need to recalculate the precision in degrees to a distance value.
         // For this we need the maximum distance to the centre of calculation,
         // which is the barycentre for the main planets.
-        degPrec *= sw.ext.maxBaryDist[planet];
+        if (planet >= sw.ext.maxBaryDist.length) {
+          degPrec *= 0.05;	// Rather random value???
+        } else {
+          degPrec *= sw.ext.maxBaryDist[planet];
+        }
     }
 
     return degPrec;
@@ -359,89 +458,204 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
 
 
   private double getSpeed(boolean min) {
-if (planet >= SwephData.minTopoLonSpeed.length) { return (min?-0.100:0.0157); } // Q == Poseidon
+    boolean lon = ((tflags&SweConst.SEFLG_TRANSIT_LONGITUDE) != 0);
     boolean lat = ((tflags&SweConst.SEFLG_TRANSIT_LATITUDE) != 0);
     boolean dist = ((tflags&SweConst.SEFLG_TRANSIT_DISTANCE) != 0);
     boolean speed = ((tflags&SweConst.SEFLG_TRANSIT_SPEED) != 0);
     boolean topo = ((tflags&SweConst.SEFLG_TOPOCTR) != 0);
     boolean helio = ((tflags&SweConst.SEFLG_HELCTR) != 0);
+    boolean rect = ((tflags&SweConst.SEFLG_EQUATORIAL) != 0 && !lat && !dist);
+    boolean decl = ((tflags&SweConst.SEFLG_EQUATORIAL) != 0 && lat);
 
-    // Some topocentric speeds are very different to the geocentric
-    // speeds, so we use other values than for geocentric calculations:
-    if (topo) {
-      if (!sw.swed.geopos_is_set) {
-        throw new IllegalArgumentException("Geographic position is not set for "+
-                                           "requested topocentric calculations.");
-      }
-      if (sw.swed.topd.geoalt>50000.) {
-        throw new IllegalArgumentException("Topocentric transit calculations "+
-                                           "are restricted to a maximum "+
-                                           "altitude of 50km so far.");
-      } else if (sw.swed.topd.geoalt<-12000000) {
-        throw new IllegalArgumentException("Topocentric transit calculations "+
-                                           "are restricted to a minimum "+
-                                           "altitude of -12000km so far.");
-      }
-      if (speed) {
-        if (lat) {
-          return (min?SwephData.minTopoLatAccel[planet]:SwephData.maxTopoLatAccel[planet]);
-        } else if (dist) {
-          return (min?SwephData.minTopoDistAccel[planet]:SwephData.maxTopoDistAccel[planet]);
+    try {
+      // Some topocentric speeds are very different to the geocentric
+      // speeds, so we use other values than for geocentric calculations:
+      if (topo) {
+        if (!sw.swed.geopos_is_set) {
+          throw new IllegalArgumentException("Geographic position is not set for "+
+                                             "requested topocentric calculations.");
+        }
+//        if (sw.swed.topd.geoalt>50000.) {
+//          throw new IllegalArgumentException("Topocentric transit calculations "+
+//                                             "are restricted to a maximum "+
+//                                             "altitude of 50km so far.");
+//        } else if (sw.swed.topd.geoalt<-12000000) {
+//          throw new IllegalArgumentException("Topocentric transit calculations "+
+//                                             "are restricted to a minimum "+
+//                                             "altitude of -12000km so far.");
+//        }
+        if (sw.swed.topd.geoalt>50000. || sw.swed.topd.geoalt<-12000000) {
+          return 1./0.;
+        }
+        if (speed) {
+          if (rect) {
+            return (min?SwephData.minTopoRectAccel[planet]:SwephData.maxTopoRectAccel[planet]);
+          } else if (decl) {
+            return (min?SwephData.minTopoDeclAccel[planet]:SwephData.maxTopoDeclAccel[planet]);
+          } else if (lat) {
+            return (min?SwephData.minTopoLatAccel[planet]:SwephData.maxTopoLatAccel[planet]);
+          } else if (dist) {
+            return (min?SwephData.minTopoDistAccel[planet]:SwephData.maxTopoDistAccel[planet]);
+          } else if (lon) {
+            return (min?SwephData.minTopoLonAccel[planet]:SwephData.maxTopoLonAccel[planet]);
+          }
         } else {
-          return (min?SwephData.minTopoLonAccel[planet]:SwephData.maxTopoLonAccel[planet]);
+          if (rect) {
+            return (min?SwephData.minTopoRectSpeed[planet]:SwephData.maxTopoRectSpeed[planet]);
+          } else if (decl) {
+            return (min?SwephData.minTopoDeclSpeed[planet]:SwephData.maxTopoDeclSpeed[planet]);
+          } else if (lat) {
+            return (min?SwephData.minTopoLatSpeed[planet]:SwephData.maxTopoLatSpeed[planet]);
+          } else if (dist) {
+            return (min?SwephData.minTopoDistSpeed[planet]:SwephData.maxTopoDistSpeed[planet]);
+          } else if (lon) {
+            return (min?SwephData.minTopoLonSpeed[planet]:SwephData.maxTopoLonSpeed[planet]);
+          }
+        }
+      }
+
+      // Heliocentric speeds are very different to the geocentric speeds, so
+      // we use other values than for geocentric calculations:
+      if (helio) {
+        if (speed) {
+          if (rect) {
+            return (min?SwephData.minHelioRectAccel[planet]:SwephData.maxHelioRectAccel[planet]);
+          } else if (decl) {
+            return (min?SwephData.minHelioDeclAccel[planet]:SwephData.maxHelioDeclAccel[planet]);
+          } else if (lat) {
+            return (min?SwephData.minHelioLatAccel[planet]:SwephData.maxHelioLatAccel[planet]);
+          } else if (dist) {
+            return (min?SwephData.minHelioDistAccel[planet]:SwephData.maxHelioDistAccel[planet]);
+          } else if (lon) {
+            return (min?SwephData.minHelioLonAccel[planet]:SwephData.maxHelioLonAccel[planet]);
+          }
+        } else {
+          if (rect) {
+            return (min?SwephData.minHelioRectSpeed[planet]:SwephData.maxHelioRectSpeed[planet]);
+          } else if (decl) {
+            return (min?SwephData.minHelioDeclSpeed[planet]:SwephData.maxHelioDeclSpeed[planet]);
+          } else if (lat) {
+            return (min?SwephData.minHelioLatSpeed[planet]:SwephData.maxHelioLatSpeed[planet]);
+          } else if (dist) {
+            return (min?SwephData.minHelioDistSpeed[planet]:SwephData.maxHelioDistSpeed[planet]);
+          } else if (lon) {
+            return (min?SwephData.minHelioLonSpeed[planet]:SwephData.maxHelioLonSpeed[planet]);
+          }
+        }
+      }
+
+
+      // Geocentric:
+      if (speed) {
+        if (rect) {
+          return (min?SwephData.minRectAccel[planet]:SwephData.maxRectAccel[planet]);
+        } else if (decl) {
+          return (min?SwephData.minDeclAccel[planet]:SwephData.maxDeclAccel[planet]);
+        } else if (lat) {
+          return (min?SwephData.minLatAccel[planet]:SwephData.maxLatAccel[planet]);
+        } else if (dist) {
+          return (min?SwephData.minDistAccel[planet]:SwephData.maxDistAccel[planet]);
+        } else if (lon) {
+          return (min?SwephData.minLonAccel[planet]:SwephData.maxLonAccel[planet]);
         }
       } else {
-        if (lat) {
-          return (min?SwephData.minTopoLatSpeed[planet]:SwephData.maxTopoLatSpeed[planet]);
+        if (rect) {
+          return (min?SwephData.minRectSpeed[planet]:SwephData.maxRectSpeed[planet]);
+        } else if (decl) {
+          return (min?SwephData.minDeclSpeed[planet]:SwephData.maxDeclSpeed[planet]);
+        } else if (lat) {
+          return (min?SwephData.minLatSpeed[planet]:SwephData.maxLatSpeed[planet]);
         } else if (dist) {
-          return (min?SwephData.minTopoDistSpeed[planet]:SwephData.maxTopoDistSpeed[planet]);
-        } else {
-          return (min?SwephData.minTopoLonSpeed[planet]:SwephData.maxTopoLonSpeed[planet]);
+          return (min?SwephData.minDistSpeed[planet]:SwephData.maxDistSpeed[planet]);
+        } else if (lon) {
+          return (min?SwephData.minLonSpeed[planet]:SwephData.maxLonSpeed[planet]);
         }
+      }
+      return 1./0.;
+    } catch (Exception e) {
+      return 1./0.;
+    }
+  }
+
+  // This routine returns extreme speed values by randomly calculating the speed
+  // of the planet. Doesn't work for accelerations so far.
+  double[] getTestspeed(int planet, int idx, int precalcCount, double precalcSafetyfactor) {
+    StringBuffer serr = new StringBuffer();
+    double min = Double.MAX_VALUE;
+    double max = -Double.MAX_VALUE;
+
+    double[] timerange = new double[] { SwephData.MOSHPLEPH_START, SwephData.MOSHPLEPH_END };
+    if (planet > SweConst.SE_AST_OFFSET) {
+      // get filename:
+      String fn = SwissLib.swi_gen_filename(2457264.5 /* doesn't matter */, planet);
+      // Unfortunately, the name from swi_gen_filename may be slightly different,
+      // so we have to test opening the filename and change the filename if
+      // the file does not exist or is not readable:
+      FilePtr fptr = null;
+      SwissephException se = null;
+      try {
+        fptr = sw.swi_fopen(SwephData.SEI_FILE_ANY_AST, fn, sw.swed.ephepath, serr);
+      } catch (SwissephException se1) {
+        se = se1;
+      }
+      if (fptr == null) {
+        /*
+         * try also for short files (..s.se1)
+         */
+        if (fn.indexOf("s.") <= 0) {
+          fn = fn.substring(0, fn.indexOf(".")) + "s." + SwephData.SE_FILE_SUFFIX;
+        }
+        try {
+          fptr = sw.swi_fopen(SwephData.SEI_FILE_ANY_AST, fn, sw.swed.ephepath, serr);
+        } catch (SwissephException se2) {
+          se = se2;
+        }
+      }
+      if (fptr == null) {
+          throw se;
+      }
+      try {
+        fptr.close();
+      } catch (Exception e) { }
+
+      // Now finally we have a filename for which we can get the time range,
+      // if the file can be found and is readable:
+      try {
+        timerange = sw.getDatafileTimerange(fn);
+      } catch (SwissephException se3) {
       }
     }
 
-    // Heliocentric speeds are very different to the geocentric speeds, so
-    // we use other values than for geocentric calculations:
-    if (helio) {
-      if (speed) {
-        if (lat) {
-          return (min?SwephData.minHelioLatAccel[planet]:SwephData.maxHelioLatAccel[planet]);
-        } else if (dist) {
-          return (min?SwephData.minHelioDistAccel[planet]:SwephData.maxHelioDistAccel[planet]);
-        } else {
-          return (min?SwephData.minHelioLonAccel[planet]:SwephData.maxHelioLonAccel[planet]);
-        }
-      } else {
-        if (lat) {
-          return (min?SwephData.minHelioLatSpeed[planet]:SwephData.maxHelioLatSpeed[planet]);
-        } else if (dist) {
-          return (min?SwephData.minHelioDistSpeed[planet]:SwephData.maxHelioDistSpeed[planet]);
-        } else {
-          return (min?SwephData.minHelioLonSpeed[planet]:SwephData.maxHelioLonSpeed[planet]);
-        }
+    java.util.Random rd = new java.util.Random();
+    double[] xx = new double[6];
+    for(int f = 0; f < precalcCount; f++) {
+      double jdET = rd.nextDouble();
+      jdET = jdET * (timerange[1] - timerange[0]) + timerange[0];
+      int ret = sw.swe_calc(jdET, planet, flags | SweConst.SEFLG_SPEED, xx, serr);
+      if (ret<0) {
+//              throw new SwissephException(jdET, SwissephException.UNDEFINED_ERROR,
+//                  "Calculation failed with return code "+ret+":\n"+serr.toString());
+            continue;
       }
+      if (min > xx[idx+3]) { min = xx[idx+3]; }
+      if (max < xx[idx+3]) { max = xx[idx+3]; }
     }
-
-
-    // Geocentric:
-    if (speed) {
-      if (lat) {
-        return (min?SwephData.minLatAccel[planet]:SwephData.maxLatAccel[planet]);
-      } else if (dist) {
-        return (min?SwephData.minDistAccel[planet]:SwephData.maxDistAccel[planet]);
-      } else {
-        return (min?SwephData.minLonAccel[planet]:SwephData.maxLonAccel[planet]);
-      }
+    if (min == max || min == Double.MAX_VALUE || max == -Double.MAX_VALUE) {
+      min = 1./0.;  // Use as flag
     } else {
-      if (lat) {
-        return (min?SwephData.minLatSpeed[planet]:SwephData.maxLatSpeed[planet]);
-      } else if (dist) {
-        return (min?SwephData.minDistSpeed[planet]:SwephData.maxDistSpeed[planet]);
-      } else {
-        return (min?SwephData.minLonSpeed[planet]:SwephData.maxLonSpeed[planet]);
+      // Apply safety factor for randomly calculated extreme speeds:
+      switch ((int)Math.signum(min)) {
+        case -1 : min *= precalcSafetyfactor; break;
+        case  0 : min = -0.1; break;
+        case  1 : min /= precalcSafetyfactor; break;
+      }
+      switch ((int)Math.signum(max)) {
+        case -1 : max /= precalcSafetyfactor; break;
+        case  0 : max = 0.1; break;
+        case  1 : max *= precalcSafetyfactor; break;
       }
     }
+    return new double[] {min, max};
   }
 
   public String toString() {

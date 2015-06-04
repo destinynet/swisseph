@@ -1,5 +1,5 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
@@ -78,7 +78,9 @@ package swisseph;
 * there is directly valid for this port to Java as well.</B></I>
 * @version 1.0.0a
 */
-public class SweConst implements java.io.Serializable {
+public class SweConst
+		implements java.io.Serializable
+		{
 
 ////////////////////////////////////////////////////////////////////////////////
 //// sweodef.h: ////////////////////////////////////////////////////////////////
@@ -302,58 +304,79 @@ public class SweConst implements java.io.Serializable {
   public static final int SE_FIXSTAR=-10;
 
   /**
-  * This is a constant to access the ascendent value in parameter ascmc[]
-  * of SwissEph.swe_houses_armc() / SwissEph.swe_houses(). Its value is 0.
+  * This is a constant to access the ascendant value in parameter ascmc[]
+  * of SwissEph.swe_houses_armc() / SwissEph.swe_houses() or to specify
+  * the ascendant object in transit calculations. Its value is 0.
   */
-  static final int SE_ASC   =0;
+  public static final int SE_ASC   =0;
   /**
   * This is a constant to access the medium coeli value in parameter ascmc[]
-  * of SwissEph.swe_houses_armc() / SwissEph.swe_houses(). Its value is 1.
+  * of SwissEph.swe_houses_armc() / SwissEph.swe_houses() or to specify
+  * the medium coeli object in transit calculations. Its value is 1.
   */
-  static final int SE_MC    =1;
+  public static final int SE_MC    =1;
   /**
   * This is a constant to access the value of the sidereal time in parameter
-  * ascmc[] of SwissEph.swe_houses_armc() / SwissEph.swe_houses(). Its value
+  * ascmc[] of SwissEph.swe_houses_armc() / SwissEph.swe_houses() or to specify
+  * the sidereal time as an object in transit calculations. Its value
   * is 2.
   */
-  static final int SE_ARMC  =2;
+  public static final int SE_ARMC  =2;
   /**
   * This is a constant to access the vertex value in parameter ascmc[]
-  * of SwissEph.swe_houses_armc() / SwissEph.swe_houses(). Its value is 3.
+  * of SwissEph.swe_houses_armc() / SwissEph.swe_houses() or to specify
+  * the vertex object in transit calculations. Its value is 3.
   */
-  static final int SE_VERTEX=3;
+  public static final int SE_VERTEX=3;
   /**
-  * This is a constant to access the value of the &quot;equatorial ascendent&quot;
-  * in parameter ascmc[] of SwissEph.swe_houses_armc() / SwissEph.swe_houses().
+  * This is a constant to access the value of the &quot;equatorial ascendant&quot;
+  * in parameter ascmc[] of SwissEph.swe_houses_armc() / SwissEph.swe_houses() or
+  * to specify the equatorial ascendant object in transit calculations.
   * Its value is 4.
   */
-  static final int SE_EQUASC=4;
+  public static final int SE_EQUASC=4;
   /**
   * This is a constant to access the value of the &quot;co-ascendant&quot; of
   * W. Koch in parameter ascmc[] of SwissEph.swe_houses_armc() /
-  * SwissEph.swe_houses(). Its value is 5.
+  * SwissEph.swe_houses() or to specify the corresponding object in transit
+  * calculations. Its value is 5.
   */
-  static final int SE_COASC1=5;
+  public static final int SE_COASC1=5;
   /**
   * This is a constant to access the value of the &quot;co-ascendant&quot; of
   * M. Munkasey in parameter ascmc[] of SwissEph.swe_houses_armc() /
-  * SwissEph.swe_houses(). Its value is 6.
+  * SwissEph.swe_houses() or to specify the corresponding object in transit
+  * calculations. Its value is 6.
   */
-  static final int SE_COASC2=6;
+  public static final int SE_COASC2=6;
   /**
-  * This is a constant to access the polar ascendent value of M. Munkasey in
-  * parameter ascmc[] of SwissEph.swe_houses_armc() / SwissEph.swe_houses().
+  * This is a constant to access the polar ascendant value of M. Munkasey in
+  * parameter ascmc[] of SwissEph.swe_houses_armc() / SwissEph.swe_houses()
+  * or to specify the corresponding object in transit calculations.
   * Its value is 7.
   */
-  static final int SE_POLASC=7;
+  public static final int SE_POLASC=7;
   /**
   * This is a constant to know the count of valid parameters in parameter
   * ascmc[] of SwissEph.swe_houses_armc() / SwissEph.swe_houses(). Its value
   * is 8 now, meaning, ascmc[0] to ascmc[7] contain meaningful data, even though
   * ascmc[] has to be of size 10.
   */
-  static final int SE_NASCMC=8;
+  public static final int SE_NASCMC=8;
 
+  /*
+   * only used for experimenting with various JPL ephemeris files
+   * which are available at Astrodienst's internal network
+   */
+  public static final int SE_DE_NUMBER=431;
+  public static final String SE_FNAME_DE200="de200.eph";
+  public static final String SE_FNAME_DE403="de403.eph";
+  public static final String SE_FNAME_DE404="de404.eph";
+  public static final String SE_FNAME_DE405="de405.eph";
+  public static final String SE_FNAME_DE406="de406.eph";
+  public static final String SE_FNAME_DE431="de431.eph";
+  public static final String SE_FNAME_DFT=SE_FNAME_DE431;
+  public static final String SE_FNAME_DFT2=SE_FNAME_DE406;
 
   /*
    * flag bits for parameter iflag in function swe_calc()
@@ -414,8 +437,8 @@ public class SweConst implements java.io.Serializable {
   */
   public static final int SEFLG_NOABERR=1024; // turn off 'annual' aberration of light
   /**
-  * Calculate the equatorial position of the planet. This is a constant to be used as
-  * a flag to swe_calc() / swe_fixstar().
+  * Calculate the position of the planet in the earth equator coordinate system. This
+  * is a constant to be used as a flag to swe_calc() / swe_fixstar().
   */
   public static final int SEFLG_EQUATORIAL=2*1024; // equatorial positions are wanted
   /**
@@ -449,6 +472,10 @@ public class SweConst implements java.io.Serializable {
   * constant to be used as a flag to swe_calc() / swe_fixstar().
   */
   public static final int SEFLG_ICRS=128*1024; // ICRS (DE406 reference frame)
+  public static final int SEFLG_DPSIDEPS_1980=(256*1024); /* reproduce JPL Horizons 
+                                      * 1962 - today to 0.002 arcsec. */
+  public static final int SEFLG_JPLHOR=SEFLG_DPSIDEPS_1980;
+  public static final int SEFLG_JPLHOR_APPROX=(512*1024);   /* approximate JPL Horizons 1962 - today */
 
   /**
   * calculate transits over a longitude. This is a constant to be used as a
@@ -481,24 +508,94 @@ public class SweConst implements java.io.Serializable {
   public static final int SEFLG_TRANSIT_SPEED     = 1024*1024;
   /**
   * calculate yoga transits, this means consider the SUM of two planets
-  * positions or speed instead of the difference. This is a constant to be
+  * positions or speeds instead of the difference. This is a constant to be
   * used as a flag to the TransitCalculator constructors.
   * @see swisseph.TCPlanetPlanet#TCPlanetPlanet(SwissEph, int, int, int, double)
   */
   public static final int SEFLG_YOGA_TRANSIT      = 2048*1024;
+  /**
+  * calculate partile transits. This calculates the times when two planets
+  * have an identically integer degree value in their respective sign ==
+  * 30 degree section: (int)(lon1 % 30) == (int)(lon2 % 30). This is a
+  * flag to the TransitCalculator constructors.
+  * @see swisseph.TCPlanetPlanet#TCPlanetPlanet(SwissEph, int, int, int, double)
+  */
+  public static final int SEFLG_PARTILE_TRANSIT_START = 4096*1024;
+  /**
+  * calculate partile transits. This calculates the time when two planets
+  * aren't partile anymore. So they don't have an identically integer
+  * degree value in their respective sign == 30 degree section:
+  * (int)(lon1 % 30) != (int)(lon2 % 30). This is a flag to the
+  * TransitCalculator constructors.
+  * @see swisseph.TCPlanetPlanet#TCPlanetPlanet(SwissEph, int, int, int, double)
+  */
+  public static final int SEFLG_PARTILE_TRANSIT_END = 8192*1024;
+  /**
+  * calculate partile transits. This calculates the time when two planets
+  * gain or loose a partile aspect, depending on if they have a partile
+  * aspect on the starting date or not. This is a flag to the
+  * TransitCalculator constructors.
+  * @see swisseph.TCPlanetPlanet#TCPlanetPlanet(SwissEph, int, int, int, double)
+  * @see #SEFLG_PARTILE_TRANSIT_START
+  * @see #SEFLG_PARTILE_TRANSIT_END
+  */
+  public static final int SEFLG_PARTILE_TRANSIT = SEFLG_PARTILE_TRANSIT_START + SEFLG_PARTILE_TRANSIT_END;
 
+  public static final int SE_HOUSE1 = -1;
+  public static final int SE_HOUSE2 = -2;
+  public static final int SE_HOUSE3 = -3;
+  public static final int SE_HOUSE4 = -4;
+  public static final int SE_HOUSE5 = -5;
+  public static final int SE_HOUSE6 = -6;
+  public static final int SE_HOUSE7 = -7;
+  public static final int SE_HOUSE8 = -8;
+  public static final int SE_HOUSE9 = -9;
+  public static final int SE_HOUSE10 = -10;
+  public static final int SE_HOUSE11 = -11;
+  public static final int SE_HOUSE12 = -12;
+  public static final int SE_HSYS_PLACIDUS = 'P';
+  public static final int SE_HSYS_KOCH = 'K';
+  public static final int SE_HSYS_PORPHYRIUS = 'O';
+  public static final int SE_HSYS_REGIOMONTANUS = 'R';
+  public static final int SE_HSYS_CAMPANUS = 'C';
+  public static final int SE_HSYS_EQUAL = 'E';
+  public static final int SE_HSYS_VEHLOW = 'V';
+  public static final int SE_HSYS_MERIDIAN = 'X';
+  public static final int SE_HSYS_HORIZONTAL = 'H';
+  public static final int SE_HSYS_POLICH_PAGE = 'T';
+  public static final int SE_HSYS_ALCABITIUS = 'B';
+  public static final int SE_HSYS_GAUQUELIN_SECTORS = 'G';
+  public static final int SE_HSYS_MORINUS = 'M';
+  public static final int SE_HSYS_KRUSINSKI = 'U';
+  public static final int SE_HSYS_WHOLE_SIGN = 'W';
+
+  /**
+  * Use the calculation routines that use the ephemeris data files of the
+  * Solar System Dynamics Group of the Jet Propulsion Laboratory of NASA
+  * <A HREF="http://ssd.jpl.nasa.gov/">http://ssd.jpl.nasa.gov/</A>. This
+  * requires you to have the ephemeris data files from JPL (DE406: about
+  * 9.5&nbsp;MB per 300&nbsp;years). They can be obtained from
+  * <A HREF="ftp://navigator.jpl.nasa.gov/pub/ephem/export">
+  * ftp://navigator.jpl.nasa.gov/pub/ephem/export</A> (as of December 21, 2000).
+  * @see SwissEph#swe_set_ephe_path(java.lang.String)
+  */
+  public static final int SEFLG_JPLEPH=1;
   /**
   * Use the calculation routines of Swiss Ephemeris from Astrodienst&nbsp;AG
   * Z&uuml;rich <A HREF="http://www.astro.com">http://www.astro.com</A>. This
   * requires you to have the data files for SwissEphemeris available and in
   * the search path for the ephemeris files.<BR>
+  * Basically, these routines are
+  * identical to the JPL routines, but the data files are <I>much</I> more
+  * compressed (about one 10th of the original JPL files), and the exactness
+  * is retained to 1/1000 of an arc second.
   * @see SwissEph#swe_set_ephe_path(java.lang.String)
   */
   public static final int SEFLG_SWIEPH=2;
   /**
   * Use the Moshier semi-analytical calculation routines.
   * These routines are the slowest (about 10 times slower than
-  * SWISS EPHEMERIS) and most
+  * JPL or SWISS EPHEMERIS) and most
   * inaccurate, but they do not require any additional data files.<BR>
   * The accuracy is about 1 arc seconds for the planets and a few arc seconds
   * for the moon. Unfortunately, the deviation for true lunar nodes may be
@@ -507,11 +604,12 @@ public class SweConst implements java.io.Serializable {
   public static final int SEFLG_MOSEPH=4;
   /**
   * Defines the default method of calculation as SEFLG_SWIEPH.
+  * @see swisseph.SweConst#SEFLG_JPLEPH
   * @see swisseph.SweConst#SEFLG_SWIEPH
   * @see swisseph.SweConst#SEFLG_MOSEPH
   */
   public static final int SEFLG_DEFAULTEPH=SEFLG_SWIEPH;
-  public static final int SEFLG_EPHMASK=1|SEFLG_SWIEPH|SEFLG_MOSEPH;
+  public static final int SEFLG_EPHMASK=SEFLG_JPLEPH|SEFLG_SWIEPH|SEFLG_MOSEPH;
 
   public static final int SE_SIDBITS             =256;
   /* for projection onto ecliptic of t0 */
@@ -641,22 +739,79 @@ public class SweConst implements java.io.Serializable {
   public static final int SE_SIDM_GALCENT_0SAG   =17;
   /**
   * A constant to be used for specifying the sidereal mode (ayanamsha) as
-  * J2000.
+  * J2000 (Julian day 2451545.0, 2000 January 1.5)
   * @see SwissEph#swe_set_sid_mode(int, double, double)
   */
   public static final int SE_SIDM_J2000          =18;
   /**
   * A constant to be used for specifying the sidereal mode (ayanamsha) as
-  * J1900.
+  * J1900 (Julian day 2415020.0, 1900 January 0.5).
   * @see SwissEph#swe_set_sid_mode(int, double, double)
   */
   public static final int SE_SIDM_J1900          =19;
   /**
   * A constant to be used for specifying the sidereal mode (ayanamsha) as
-  * B1950.
+  * B1950 (Julian day 2433282.42345905, 1950 January 0.923).
   * @see SwissEph#swe_set_sid_mode(int, double, double)
   */
   public static final int SE_SIDM_B1950          =20;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * SURYASIDDHANTA (Suryasiddhanta, assuming ingress of mean Sun into
+  * Aries at point of mean equinox of date on 21.3.499, noon, Ujjain
+  * (75.7684565 E) = 7:30:31.57 UT).
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_SURYASIDDHANTA =21;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * SURYASIDDHANTA_MSUN (Suryasiddhanta, assuming ingress of mean Sun
+  * into Aries at true position of mean Sun at same epoch).
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_SURYASIDDHANTA_MSUN =22;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * ARYABHATA (Aryabhata, same date as SE_SIDM_SURYASIDDHANTA_MSUN, but UT 6:56:55.57).
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_ARYABHATA      =23;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * ARYABHATA_MSUN (Aryabhata, analogous SE_SIDM_SURYASIDDHANTA_MSUN).
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_ARYABHATA_MSUN =24;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * SE_SIDM_SS_REVATI (SS, Revati/zePsc at polar long. 359��50').
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_SS_REVATI      =25;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * SE_SIDM_SS_CITRA (SS, Citra/Spica at polar long. 180��).
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_SS_CITRA       =26;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * SE_SIDM_TRUE_CITRA (True Spica (Spica exactly at 0 Libra)
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_TRUE_CITRA     =27;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * SE_SIDM_TRUE_REVATI (True Revati (zeta Psc exactly at 0 Aries))
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_TRUE_REVATI    =28;
+  /**
+  * A constant to be used for specifying the sidereal mode (ayanamsha) as
+  * SE_SIDM_TRUE_PUSHYA (True Pushya (delta Cnc exactly a 16 Cancer))
+  * @see SwissEph#swe_set_sid_mode(int, double, double)
+  */
+  public static final int SE_SIDM_TRUE_PUSHYA    =29;
   /**
   * A constant to be used for specifying the sidereal mode (ayanamsha) as
   * defined by the user in the additional two parameters of swe_set_sid_mode().
@@ -664,7 +819,7 @@ public class SweConst implements java.io.Serializable {
   */
   public static final int SE_SIDM_USER          =255;
 
-  static final int SE_MAX_STNAME=20;    // maximum size of fixstar name;
+  static final int SE_MAX_STNAME=256;   // maximum size of fixstar name;
                                         // the parameter star in swe_fixstar
 					// must allow twice this space for
 				        // the returned star name.
@@ -701,11 +856,171 @@ public class SweConst implements java.io.Serializable {
   public static final int SE_SPLIT_DEG_KEEP_SIGN = 16;
                                           /* don't round to next sign,
                                            * e.g. 29.9999999 will be rounded
-                                           * to 29?59'59" (or 29?59' or 29?) */
+                                           * to 29d59'59" (or 29d59' or 29d) */
   public static final int SE_SPLIT_DEG_KEEP_DEG  = 32;
                                           /* don't round to next degree
                                            * e.g. 13.9999999 will be rounded
-                                           * to 13?59'59" (or 13?59' or 13?) */
+                                           * to 13d59'59" (or 13d59' or 13d) */
+
+  /* for heliacal functions */
+  public static final int SE_HELIACAL_RISING          = 1;
+  public static final int SE_HELIACAL_SETTING         = 2;
+  public static final int SE_MORNING_FIRST            = SE_HELIACAL_RISING;
+  public static final int SE_EVENING_LAST             = SE_HELIACAL_SETTING;
+  public static final int SE_EVENING_FIRST            = 3;
+  public static final int SE_MORNING_LAST             = 4;
+  public static final int SE_ACRONYCHAL_RISING        = 5;  /* still not implemented */
+  public static final int SE_ACRONYCHAL_SETTING       = 6;  /* still not implemented */
+  public static final int SE_COSMICAL_SETTING         = SE_ACRONYCHAL_SETTING;
+
+  public static final int SE_HELFLAG_LONG_SEARCH      = 128;
+  public static final int SE_HELFLAG_HIGH_PRECISION   = 256;
+  public static final int SE_HELFLAG_OPTICAL_PARAMS   = 512;
+  public static final int SE_HELFLAG_NO_DETAILS       = 1024;
+  public static final int SE_HELFLAG_SEARCH_1_PERIOD  = (1 << 11); /*  2048 */
+  public static final int SE_HELFLAG_VISLIM_DARK      = (1 << 12); /*  4096 */
+  public static final int SE_HELFLAG_VISLIM_NOMOON    = (1 << 13); /*  8192 */
+  public static final int SE_HELFLAG_VISLIM_PHOTOPIC  = (1 << 14); /* 16384 */
+  public static final int SE_HELFLAG_AV               = (1 << 15); /* 32768 */
+  public static final int SE_HELFLAG_AVKIND_VR        = (1 << 15); /* 32768 */
+  public static final int SE_HELFLAG_AVKIND_PTO       = (1 << 16);
+  public static final int SE_HELFLAG_AVKIND_MIN7      = (1 << 17);
+  public static final int SE_HELFLAG_AVKIND_MIN9      = (1 << 18);
+  public static final int SE_HELFLAG_AVKIND = SE_HELFLAG_AVKIND_VR|SE_HELFLAG_AVKIND_PTO|SE_HELFLAG_AVKIND_MIN7|SE_HELFLAG_AVKIND_MIN9;
+  public static final double TJD_INVALID              = 99999999.0;
+//  public static final int SIMULATE_VICTORVB           = 1;	// is a #define for SweHel
+
+  public static final int SE_HELIACAL_LONG_SEARCH       = 128;
+  public static final int SE_HELIACAL_HIGH_PRECISION    = 256;
+  public static final int SE_HELIACAL_OPTICAL_PARAMS    = 512;
+  public static final int SE_HELIACAL_NO_DETAILS        = 1024;
+  public static final int SE_HELIACAL_SEARCH_1_PERIOD   = (1 << 11); /*  2048 */
+  public static final int SE_HELIACAL_VISLIM_DARK       = (1 << 12); /*  4096 */
+  public static final int SE_HELIACAL_VISLIM_NOMOON     = (1 << 13); /*  8192 */
+  public static final int SE_HELIACAL_VISLIM_PHOTOPIC   = (1 << 14); /* 16384 */
+  public static final int SE_HELIACAL_AVKIND_VR         = (1 << 15); /* 32768 */
+  public static final int SE_HELIACAL_AVKIND_PTO        = (1 << 16);
+  public static final int SE_HELIACAL_AVKIND_MIN7       = (1 << 17);
+  public static final int SE_HELIACAL_AVKIND_MIN9       = (1 << 18);
+  public static final int SE_HELIACAL_AVKIND = (SE_HELFLAG_AVKIND_VR|SE_HELFLAG_AVKIND_PTO|SE_HELFLAG_AVKIND_MIN7|SE_HELFLAG_AVKIND_MIN9);
+
+  public static final int SE_PHOTOPIC_FLAG            = 0;
+  public static final int SE_SCOTOPIC_FLAG            = 1;
+  public static final int SE_MIXEDOPIC_FLAG           = 2;
+
+
+  /* for setGlobalTidalAcc() and ephemeris-dependent delta t:
+   * intrinsic tidal acceleration in the mean motion of the moon,
+   * not given in the parameters list of the ephemeris files but computed
+   * by Chapront/Chapront-Touzé/Francou A&A 387 (2002), p. 705.
+   */
+  public static final double SE_TIDAL_DE200       =  (-23.8946);
+  public static final double SE_TIDAL_DE403       =  (-25.580);  /* was (-25.8) until V. 1.76.2 */
+  public static final double SE_TIDAL_DE404       =  (-25.580);  /* was (-25.8) until V. 1.76.2 */
+  public static final double SE_TIDAL_DE405       =  (-25.826);  /* was (-25.7376) until V. 1.76.2 */
+  public static final double SE_TIDAL_DE406       =  (-25.826);  /* was (-25.7376) until V. 1.76.2 */
+  public static final double SE_TIDAL_DE421       =  (-25.85);   /* JPL Interoffice Memorandum 14-mar-2008 on DE421 Lunar Orbit */
+  public static final double SE_TIDAL_DE430       =  (-25.82);   /* JPL Interoffice Memorandum 9-jul-2013 on DE430 Lunar Orbit */
+  public static final double SE_TIDAL_DE431       =  (-25.80);   /* IPN Progress Report 42-196 �Ǜ February 15, 2014, p. 15 */
+  public static final double SE_TIDAL_26          =  (-26.0);
+  public static final double SE_TIDAL_DEFAULT     =  SE_TIDAL_DE431;
+  public static final double SE_TIDAL_AUTOMATIC   =  999999;
+  public static final double SE_TIDAL_MOSEPH      =  SE_TIDAL_DE404;
+  public static final double SE_TIDAL_SWIEPH      =  SE_TIDAL_DEFAULT;
+  public static final double SE_TIDAL_JPLEPH      =  SE_TIDAL_DEFAULT;
+
+  public static final int SE_MODEL_PREC_LONGTERM  = 0;
+  public static final int SE_MODEL_PREC_SHORTTERM = 1;
+  public static final int SE_MODEL_NUT            = 2;
+  public static final int SE_MODEL_SIDT           = 3;
+  public static final int SE_MODEL_BIAS           = 4;
+  public static final int SE_MODEL_JPLHOR_MODE    = 5;
+  public static final int SE_MODEL_JPLHORA_MODE   = 6;
+  public static final int SE_MODEL_DELTAT         = 7;
+
+  /* precession models */
+  public static final int SEMOD_PREC_IAU_1976       = 1;
+  public static final int SEMOD_PREC_IAU_2000       = 2;
+  public static final int SEMOD_PREC_IAU_2006       = 3;
+  public static final int SEMOD_PREC_BRETAGNON_2003 = 4;
+  public static final int SEMOD_PREC_LASKAR_1986    = 5;
+  public static final int SEMOD_PREC_SIMON_1994     = 6;
+  public static final int SEMOD_PREC_WILLIAMS_1994  = 7;
+  public static final int SEMOD_PREC_VONDRAK_2011   = 8;
+  public static final int SEMOD_PREC_DEFAULT        = SEMOD_PREC_VONDRAK_2011;
+  /* former implementations of the used 
+   * IAU 1976, 2000 and 2006 for a limited time range
+   * in combination with a different model for 
+   * long term precession. 
+  #define SEMOD_PREC_DEFAULT_SHORT SEMOD_PREC_IAU_2000
+   */
+  public static final int SEMOD_PREC_DEFAULT_SHORT = SEMOD_PREC_VONDRAK_2011;
+
+  /* nutation models */
+  public static final int SEMOD_NUT_IAU_1980        = 1;
+  public static final int SEMOD_NUT_IAU_CORR_1987   = 2; /* Herring's (1987) corrections to IAU 1980 
+				      * nutation series. AA (1996) neglects them.*/
+  public static final int SEMOD_NUT_IAU_2000A       = 3; /* very time consuming ! */
+  public static final int SEMOD_NUT_IAU_2000B       = 4; /* fast, but precision of milli-arcsec */
+  public static final int SEMOD_NUT_DEFAULT         = SEMOD_NUT_IAU_2000B;  /* fast, but precision of milli-arcsec */
+
+  /* methods for sidereal time */
+  public static final int SEMOD_SIDT_LONGTERM       = 1;
+  public static final int SEMOD_SIDT_IERS_CONV_2010 = 2;
+  public static final int SEMOD_SIDT_PREC_MODEL     = 3;
+  public static final int SEMOD_SIDT_DEFAULT        = SEMOD_SIDT_LONGTERM;
+
+  /* frame bias methods */
+  public static final int SEMOD_BIAS_IAU2000        = 1;  /* use frame bias matrix IAU 2000 */
+  public static final int SEMOD_BIAS_IAU2006        = 2;  /* use frame bias matrix IAU 2000 */
+  public static final int SEMOD_BIAS_DEFAULT        = SEMOD_BIAS_IAU2006;
+
+  /* methods of JPL Horizons (iflag & SEFLG_JPLHOR), 
+   * using daily dpsi, deps;  see explanations below */
+  public static final int SEMOD_JPLHOR_EXTENDED_1800 = 1;  /* daily dpsi and deps from file are 
+                                       * limited to 1962 - today. JPL uses the
+				       * first and last value for all  dates 
+				       * beyond this time range. */
+  public static final int SEMOD_JPLHOR_NOT_EXTENDED  = 2;  /* outside the available time range 
+                                       * 1962 - today default to SEFLG_JPLHOR_APROX */
+  public static final int SEMOD_JPLHOR_DEFAULT       = SEMOD_JPLHOR_EXTENDED_1800;
+  /* SEMOD_JPLHOR_EXTENDED_1800, if combined with SEFLG_JPLHOR provides good 
+   * agreement with JPL Horizons for 1800 - today. However, Horizons uses
+   * correct dpsi and deps only after 20-jan-1962. For all dates before that
+   * it uses dpsi and deps of 20-jan-1962, which provides a continuous
+   * ephemeris, but does not make sense otherwise.
+   * Before 1800, even this option does not provide agreement with Horizons,
+   * because Horizons uses a different precession model (Owen 1986)
+   * before 1800, which is not included in the Swiss Ephemeris.
+   * SEMOD_JPLHOR_NOT_EXTENDED causes the program to default to SEFLG_JPLHOR_APPROX,
+   * if the date is outside the time range 1962 - today, where values
+   * for dpsi and deps are given.
+   * Note that this will result in a non-continuous ephemeris near
+   * 20-jan-1962 and current years.
+   */
+
+  /* methods of approximation of JPL Horizons (iflag & SEFLG_JPLHORA), 
+   * without dpsi, deps; see explanations below */
+  public static final int SEMOD_JPLHORA_1     = 1;
+  public static final int SEMOD_JPLHORA_2     = 2;
+  public static final int SEMOD_JPLHORA_DEFAULT     = SEMOD_JPLHORA_1;
+
+  /* With SEMOD_JPLHORA_1, planetary positions are always calculated 
+   * using a recent precession/nutation model. Frame bias matrix is applied 
+   * with some correction to RA and another correction is added to epsilon.
+   * This provides a very good approximation of JPL Horizons positions. 
+   * With SEMOD_JPLHORA_2, frame bias as r$ecommended by IERS Conventions 2003 
+   * and 2010 is *not* applied. Instead, dpsi_bias and deps_bias are added to 
+   * nutation. This procedure is found in some older astronomical software.
+   * Equatorial apparent positions will be close to JPL Horizons 
+   * (within a few mas) beetween 1962 and current years. Ecl. longitude 
+   * will be good, latitude bad. 
+   */
+
+  public static final int SEMOD_DELTAT_ESPENAK_MEEUS_2006   = 1;
+  public static final int SEMOD_DELTAT_STEPHENSON_MORRISON_2004   = 2;
+  public static final int SEMOD_DELTAT_DEFAULT   = SEMOD_DELTAT_ESPENAK_MEEUS_2006;
+
 
 
   /*
@@ -722,14 +1037,16 @@ public class SweConst implements java.io.Serializable {
    * It is defined as being <CODE>".:./ephe:/users/ephe2/:/users/ephe/"</CODE>.
    * @see SwissEph#swe_set_ephe_path(java.lang.String)
    */
+// ifndef SE_EPHE_PATH -- This is not currently possible to be done with this environment
   public static final String SE_EPHE_PATH=".:./ephe:/users/ephe2/:/users/ephe/";
-//  public static final String SE_EPHE_PATH=".:./ephe:/users/ephe2/:/users/ephe/:c\\:\\\\ephe:d\\:\\\\ephe:http\\://www.th-mack.de/datafiles";
                         /* At Astrodienst, we maintain two ephemeris areas for
                            the thousands of asteroid files:
                            the short files in /users/ephe/ast*,
                            the long file in /users/ephe2/ast*. */
+// endif /* SE_EPHE_PATH */
 
-  static final String SE_STARFILE="fixstars.cat";
+  static final String SE_STARFILE_OLD="fixstars.cat";
+  static final String SE_STARFILE="sefstars.txt";
   static final String SE_ASTNAMFILE="seasnam.txt";
   /**
   * The name of the file containing the orbital elements of ficticious planets.
@@ -750,24 +1067,66 @@ public class SweConst implements java.io.Serializable {
   public static final int SE_ECL_PARTIAL=16;
   public static final int SE_ECL_ANNULAR_TOTAL=32;
   public static final int SE_ECL_PENUMBRAL=64;
+  public static final int SE_ECL_ALLTYPES_SOLAR = SE_ECL_CENTRAL|SE_ECL_NONCENTRAL|SE_ECL_TOTAL|SE_ECL_ANNULAR|SE_ECL_PARTIAL|SE_ECL_ANNULAR_TOTAL;
+  public static final int SE_ECL_ALLTYPES_LUNAR = SE_ECL_TOTAL|SE_ECL_PARTIAL|SE_ECL_PENUMBRAL;
   public static final int SE_ECL_VISIBLE=128;
   public static final int SE_ECL_MAX_VISIBLE=256;
   /**
+  * Begin of partial eclipse.
   * This is the time, when the moon touches the sun the first time.
   */
-  public static final int SE_ECL_1ST_VISIBLE=512;
+  public static final int SE_ECL_1ST_VISIBLE	=512;	/* begin of partial eclipse */
   /**
+  * Begin of partial eclipse.
+  * This is the time, when the moon touches the sun the first time.
+  */
+  public static final int SE_ECL_PARTBEG_VISIBLE=512;	/* begin of partial eclipse */
+  /**
+  * Begin of total eclipse.
   * This is the time, when the sun completely disappears.
   */
-  public static final int SE_ECL_2ND_VISIBLE=1024;
+  public static final int SE_ECL_2ND_VISIBLE	=1024;	/* begin of total eclipse */
   /**
+  * Begin of total eclipse.
+  * This is the time, when the sun completely disappears.
+  */
+  public static final int SE_ECL_TOTBEG_VISIBLE	=1024;	/* begin of total eclipse */
+  /**
+  * End of total eclipse.
   * This is the time, when the sun starts to reappear.
   */
-  public static final int SE_ECL_3RD_VISIBLE=2048;
+  public static final int SE_ECL_3RD_VISIBLE	=2048;    /* end of total eclipse */
   /**
+  * End of total eclipse.
+  * This is the time, when the sun starts to reappear.
+  */
+  public static final int SE_ECL_TOTEND_VISIBLE	=2048;    /* end of total eclipse */
+  /**
+  * End of partial eclipse.
   * This is the time, when the moon and the sun finally separate.
   */
-  public static final int SE_ECL_4TH_VISIBLE=4096;
+  public static final int SE_ECL_4TH_VISIBLE	=4096;    /* end of partial eclipse */
+  /**
+  * End of partial eclipse.
+  * This is the time, when the moon and the sun finally separate.
+  */
+  public static final int SE_ECL_PARTEND_VISIBLE=4096;    /* end of partial eclipse */
+  /**
+  * Begin of penumbral eclipse.
+  */
+  public static final int SE_ECL_PENUMBBEG_VISIBLE=8192;    /* begin of penumbral eclipse */
+  /**
+  * End of penumbral eclipse.
+  */
+  public static final int SE_ECL_PENUMBEND_VISIBLE=16384;   /* end of penumbral eclipse */
+  /**
+  * Occultation begins during the day
+  */
+  public static final int SE_ECL_OCC_BEG_DAYLIGHT=8192;    /* occultation begins during the day */
+  /**
+  * Occultation ends during the day
+  */
+  public static final int SE_ECL_OCC_END_DAYLIGHT=16384;   /* occultation ends during the day */
   /**
   * Just check if the next conjunction of the moon with
   * a planet is an occultation; don't search further.
@@ -801,17 +1160,32 @@ public class SweConst implements java.io.Serializable {
   * @see swisseph.SwissEph#swe_rise_trans(double, int, java.lang.StringBuffer, int, int, double[], double, double, swisseph.DblObj, java.lang.StringBuffer)
   */
   public static final int SE_BIT_DISC_CENTER   = 256;
-                                    /* to be or'ed to SE_CALC_RISE/SET */
-                                    /* if rise or set of disc center is */
-                                    /* required */
+                                    /* to be or'ed to SE_CALC_RISE/SET
+                                     * if rise or set of disc center is
+                                     * required */
+  /**
+  * Add this to SE_CALC_RISE/SET, if rise or set of disc bottom is requested.
+  * This is a constant to be used as a flag to swe_rise_trans().
+  * @see swisseph.SwissEph#swe_rise_trans(double, int, java.lang.StringBuffer, int, int, double[], double, double, swisseph.DblObj, java.lang.StringBuffer)
+  */
+  public static final int SE_BIT_DISC_BOTTOM   = 8192;
+                                    /* to be or'ed to SE_CALC_RISE/SET,
+                                     * if rise or set of lower limb of
+                                     * disc is requried */
   /**
   * Add this to SE_CALC_RISE/SET, if refraction should not to be considered.
   * This is a constant to be used as a flag to swe_rise_trans().
   * @see swisseph.SwissEph#swe_rise_trans(double, int, java.lang.StringBuffer, int, int, double[], double, double, swisseph.DblObj, java.lang.StringBuffer)
   */
   public static final int SE_BIT_NO_REFRACTION = 512;
-                                    /* to be or'ed to SE_CALC_RISE/SET, */
-                                    /* if refraction is not to be considered */
+                                    /* to be or'ed to SE_CALC_RISE/SET,
+                                     * if refraction is not to be considered */
+  public static final int SE_BIT_CIVIL_TWILIGHT =  1024; /* to be or'ed to SE_CALC_RISE/SET */
+  public static final int SE_BIT_NAUTIC_TWILIGHT = 2048; /* to be or'ed to SE_CALC_RISE/SET */
+  public static final int SE_BIT_ASTRO_TWILIGHT =  4096; /* to be or'ed to SE_CALC_RISE/SET */
+  public static final int SE_BIT_FIXED_DISC_SIZE  = (16*1024); /* or'ed to SE_CALC_RISE/SET:
+                                     * neglect the effect of distance on
+                                     * disc size */
 
   /* for swe_azalt() and swe_azalt_rev() */
   /**

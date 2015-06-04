@@ -1,5 +1,5 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
@@ -80,9 +80,16 @@ package swisseph;
 * @see SwissEph#swe_set_sid_mode
 * @version 1.0.0a
 */
-class SidData implements java.io.Serializable {
+class SidData
+		implements java.io.Serializable
+		{
   int sid_mode=0;
   double ayan_t0=0.;
   double t0=0.;
 
+
+  void clearData() {
+    sid_mode=0;
+    ayan_t0 = t0 = 0.;
+  }
 }

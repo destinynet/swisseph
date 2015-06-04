@@ -1,10 +1,10 @@
 /*
-   This is a port of the Swiss Ephemeris Free Edition, Version 1.75.00
+   This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
    copyright see the original copyright notices below and additional
    copyright notes in the file named LICENSE, or - if this file is not
    available - the copyright notes at http://www.astro.ch/swisseph/ and
-   following. 
+   following.
 
    For any questions or comments regarding this port to Java, you should
    ONLY contact me and not Astrodienst, as the Astrodienst AG is not involved
@@ -13,15 +13,6 @@
    Thomas Mack, mack@ifis.cs.tu-bs.de, 23rd of April 2001
 
 */
-/*********************************************************
-  $Header: /home/dieter/sweph/RCS/swedate.c,v 1.74 2008/06/16 10:07:20 dieter Exp $
-  version 15-feb-89 16:30
-
-  swe_date_conversion()
-  swe_revjul()
-  swe_julday()
-
-************************************************************/
 /* Copyright (C) 1997 - 2008 Astrodienst AG, Switzerland.  All rights reserved.
 
   License conditions
@@ -91,14 +82,16 @@ import java.util.Date;
 * for more infos and the original authors.
 * <P><I><B>You will find the complete documentation for the original
 * SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
-* http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information 
+* http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information
 * there is directly valid for this port to Java as well.</B></I>
 * @author Thomas Mack / mack@ifis.cs.tu-bs.de
 * @version 1.0.0c
 */
-public class SweDate implements java.io.Serializable {
+public class SweDate
+		implements java.io.Serializable
+		{
 
-  private static SwissEph sw = new SwissEph();
+  private static SwissEph sw = new SwissEph();	// Just a default
 
   /**
   * Constant for weekdays. SUNDAY is equal to 0.
@@ -134,38 +127,7 @@ public class SweDate implements java.io.Serializable {
   public static final boolean SE_KEEP_DATE=true;
   public static final boolean SE_KEEP_JD=false;
 
-
-// for delta t: tidal acceleration in the mean motion of the moon
-
-  /**
-  * Tidal acceleration value in the mean motion of the moon of DE403 (-25.8).
-  */
-  public static final double SE_TIDAL_DE403=-25.8;
-  /**
-  * Tidal acceleration value in the mean motion of the moon of DE404 (-25.8).
-  */
-  public static final double SE_TIDAL_DE404=-25.8;
-  /**
-  * Tidal acceleration value in the mean motion of the moon of DE405 (-25.7376).
-  */
-  public static final double SE_TIDAL_DE405=-25.7376;
-  /**
-  * Tidal acceleration value in the mean motion of the moon of DE406 (-25.7376).
-  */
-  public static final double SE_TIDAL_DE406=-25.7376;
-  /**
-  * Tidal acceleration value in the mean motion of the moon of DE200 (-23.8946).
-  */
-  public static final double SE_TIDAL_DE200=-23.8946;
-  /**
-  * Tidal acceleration value in the mean motion of the moon of -26.
-  */
-  public static final double SE_TIDAL_26=-26.0;
-  /**
-  * Default tidal acceleration value in the mean motion of the moon (=SE_TIDAL_DE406).
-  * @see #SE_TIDAL_DE406
-  */
-  public static final double SE_TIDAL_DEFAULT=SE_TIDAL_DE406;
+  private boolean init_leapseconds_done=false;
 
 
 
@@ -176,7 +138,8 @@ public class SweDate implements java.io.Serializable {
   */
   public static final double JD0=2440587.5;          /* 1970 January 1.0 */
 
-  private double tid_acc = SE_TIDAL_DEFAULT;
+  private static double tid_acc = SweConst.SE_TIDAL_DEFAULT;
+  private static boolean is_tid_acc_manual = false;
   private static boolean init_dt_done = false;
   private double jd;
   // JD for the start of the Gregorian calendar system (October 15, 1582):
@@ -464,10 +427,11 @@ public class SweDate implements java.io.Serializable {
   * SE_TIDAL_DEFAULT.
   * @param tjd Julian Day number
   * @return delta T
-  * @see #SE_TIDAL_DEFAULT
+  * @see swisseph.SweConst#SE_TIDAL_DEFAULT
   */
-  static public double getDeltaT(double tjd) {
-    double sdt = calc_deltaT(tjd, SE_TIDAL_DEFAULT);
+  public static double getDeltaT(double tjd) {
+    //double sdt = calc_deltaT(tjd, SE_TIDAL_DEFAULT);
+    double sdt = calc_deltaT(tjd);
     return sdt;
   }
 
@@ -855,26 +819,149 @@ public class SweDate implements java.io.Serializable {
   //////////////////////////////////////////////////////////////////////////////
 
   /**
-  * Returns the tidal acceleration used in calculations of delta T.
+  * Returns the tidal acceleration used in calculations of delta T.<br>
+  * Was <code>double swe_get_tid_acc()</code> in the original
+  * C sources.
   * @return Tidal acceleration
   */
-  public double getTidalAcc() {
-    return this.tid_acc;
+  public static double getGlobalTidalAcc() {
+    return tid_acc;
+  }
+
+  /* function sets tidal acceleration of the Moon.
+   * t_acc can be either
+   * - the value of the tidal acceleration in arcsec/cty^2
+   * - the DE number of an ephemeris; in this case the tidal acceleration
+   *   of the Moon will be set consistent with that ephemeris.
+   * - SE_TIDAL_AUTOMATIC, 
+   */
+  /**
+  * @see #setGlobalTidalAcc(double)
+  */
+  static void swe_set_tid_acc(double t_acc) {
+    setGlobalTidalAcc(t_acc);
+  }
+  /**
+  * Sets the tidal acceleration used in calculations of delta T.
+  * t_acc can be either<br>
+  * - the value of the tidal acceleration in arcsec/cty^2. You might want to
+  *   use the constants SE_TIDAL_* below<br>
+  * - SE_TIDAL_AUTOMATIC, 
+  * Corresponds to <code>void swe_set_tid_acc(double)</code> method in the original
+  * C version.<br>
+  * <b>ATTENTION: this method changes the tidal acceleration of the moon
+  * globally, so <i>any</i> calculation of delta T following this call
+  * will be effected.</b>
+  * @param t_acc tidal acceleration
+  * @see swisseph.SweConst#SE_TIDAL_DE403
+  * @see swisseph.SweConst#SE_TIDAL_DE404
+  * @see swisseph.SweConst#SE_TIDAL_DE405
+  * @see swisseph.SweConst#SE_TIDAL_DE406
+  * @see swisseph.SweConst#SE_TIDAL_DE421
+  * @see swisseph.SweConst#SE_TIDAL_DE430
+  * @see swisseph.SweConst#SE_TIDAL_DE431
+  * @see swisseph.SweConst#SE_TIDAL_DE200
+  * @see swisseph.SweConst#SE_TIDAL_26
+  * @see swisseph.SweConst#SE_TIDAL_AUTOMATIC
+  * @see swisseph.SweConst#SE_TIDAL_DEFAULT
+  */
+  public static void setGlobalTidalAcc(double t_acc) {
+    if (t_acc == SweConst.SE_TIDAL_AUTOMATIC) {
+      tid_acc = SweConst.SE_TIDAL_DEFAULT;
+      is_tid_acc_manual = false;
+      return;
+    }
+    tid_acc = t_acc;
+    is_tid_acc_manual = true;
   }
 
   /**
-  * Sets the tidal acceleration used in calculations of delta T.
-  * @param tid_acc tidal acceleration
-  * @see #SE_TIDAL_DE403
-  * @see #SE_TIDAL_DE404
-  * @see #SE_TIDAL_DE405
-  * @see #SE_TIDAL_DE406
-  * @see #SE_TIDAL_DE200
-  * @see #SE_TIDAL_26
-  * @see #SE_TIDAL_DEFAULT
+  * @see #setGlobalTidalAcc(double, int, int)
   */
-  public void setTidalAcc(double tid_acc) {
-    this.tid_acc=tid_acc;
+  static void swi_set_tid_acc(double tjd_ut, int iflag, int denum) {
+    setGlobalTidalAcc(tjd_ut, iflag, denum);
+  }
+  /**
+  * Sets the tidal acceleration used in calculations of delta T.
+  * Corresponds to <code>void swi_set_tid_acc(double, int, int)</code> method in the original
+  * C version.
+  * @param t_acc tidal acceleration
+  * @param iflag
+  * @param denum
+  * @see #setGlobalTidalAcc(double)
+  * @see swisseph.SweConst#SE_TIDAL_DE403
+  * @see swisseph.SweConst#SE_TIDAL_DE404
+  * @see swisseph.SweConst#SE_TIDAL_DE405
+  * @see swisseph.SweConst#SE_TIDAL_DE406
+  * @see swisseph.SweConst#SE_TIDAL_DE421
+  * @see swisseph.SweConst#SE_TIDAL_DE430
+  * @see swisseph.SweConst#SE_TIDAL_DE431
+  * @see swisseph.SweConst#SE_TIDAL_DE200
+  * @see swisseph.SweConst#SE_TIDAL_26
+  * @see swisseph.SweConst#SE_TIDAL_AUTOMATIC
+  * @see swisseph.SweConst#SE_TIDAL_DEFAULT
+  */
+  static void setGlobalTidalAcc(double tjd_ut, int iflag, int denum) {
+    double xx[] = new double[6];
+    double tjd_et;
+    int retval = 0;
+    /* manual tid_acc overrides automatic tid_acc */
+    if (is_tid_acc_manual)
+      return;
+    if (denum == 0) {
+      if ((iflag & SweConst.SEFLG_MOSEPH) != 0) {
+        tid_acc = SweConst.SE_TIDAL_DE404;
+        return;
+      }
+      if ((iflag & SweConst.SEFLG_JPLEPH) != 0) {
+        if (sw.swed.jpl_file_is_open) {
+	  denum = sw.swed.jpldenum;
+        } else {
+	  tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
+	  iflag = SweConst.SEFLG_JPLEPH|SweConst.SEFLG_J2000|SweConst.SEFLG_TRUEPOS|SweConst.SEFLG_ICRS|SweConst.SEFLG_BARYCTR;
+	  retval = sw.swe_calc(tjd_et, SweConst.SE_JUPITER, iflag, xx, null);
+	  if (sw.swed.jpl_file_is_open && (retval & SweConst.SEFLG_JPLEPH) != 0) {
+	    denum = sw.swed.jpldenum;
+	  }
+        }
+      }
+      /* SEFLG_SWIEPH wanted or SEFLG_JPLEPH failed: */
+      if (denum == 0) {
+        tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
+        if (sw.swed.fidat[SwephData.SEI_FILE_MOON].fptr == null ||
+          tjd_et < sw.swed.fidat[SwephData.SEI_FILE_MOON].tfstart + 1 ||
+	  tjd_et > sw.swed.fidat[SwephData.SEI_FILE_MOON].tfend - 1) {
+	  iflag = SweConst.SEFLG_SWIEPH|SweConst.SEFLG_J2000|SweConst.SEFLG_TRUEPOS|SweConst.SEFLG_ICRS;
+	  sw.swe_calc(tjd_et, SweConst.SE_MOON, iflag, xx, null);
+        }
+        if (sw.swed.fidat[SwephData.SEI_FILE_MOON].fptr != null) {
+	  denum = sw.swed.fidat[SwephData.SEI_FILE_MOON].sweph_denum;
+        /* Moon ephemeris file is not available, default to Moshier ephemeris */
+        } else {
+	  denum = 404; /* DE number of Moshier ephemeris */
+        }
+      }
+    }
+    switch(denum) {
+      case 200: tid_acc = SweConst.SE_TIDAL_DE200; break;
+      case 403: tid_acc = SweConst.SE_TIDAL_DE403; break;
+      case 404: tid_acc = SweConst.SE_TIDAL_DE404; break;
+      case 405: tid_acc = SweConst.SE_TIDAL_DE405; break;
+      case 406: tid_acc = SweConst.SE_TIDAL_DE406; break;
+      case 421: tid_acc = SweConst.SE_TIDAL_DE421; break; 
+      case 430: tid_acc = SweConst.SE_TIDAL_DE430; break;
+      case 431: tid_acc = SweConst.SE_TIDAL_DE431; break;
+      default: tid_acc = SweConst.SE_TIDAL_DEFAULT; break;
+    }
+  }
+
+  /**
+  * This method is needed to have a consistent global SwissData object "swed",
+  * whose contents may determine the tidal acceleration. Called from the
+  * SwissEph constructor only.
+  */
+  protected static void setSwissEphObject(SwissEph swiss) {
+    sw = swiss;
   }
 
   /**
@@ -884,12 +971,12 @@ public class SweDate implements java.io.Serializable {
   */
   public String toString() {
     double hour = getHour();
-    String h = (int)hour + ":";
+    String h = (hour<10?" ":"") + (int)hour + ":";
     hour = 60 * (hour - (int)hour);
-    h += (int)hour + ":";
+    h += (hour<10?"0":"") + (int)hour + ":";
     hour = 60 * (hour - (int)hour);
-    h += hour ;
-               
+    h += (hour<10?"0":"") + hour ;
+
     return "(YYYY/MM/DD) " +
            getYear() + "/" +
            (getMonth()<10?"0":"") + getMonth() + "/" +
@@ -907,6 +994,54 @@ public class SweDate implements java.io.Serializable {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private methods: //////////////////////////////////////////////////////////
+/*************** swe_julday ********************************************
+ * This function returns the absolute Julian day number (JD)
+ * for a given calendar date.
+ * The arguments are a calendar date: day, month, year as integers,
+ * hour as double with decimal fraction.
+ * If gregflag = SE_GREG_CAL (1), Gregorian calendar is assumed,
+ * if gregflag = SE_JUL_CAL (0),Julian calendar is assumed.
+
+ The Julian day number is a system of numbering all days continously
+ within the time range of known human history. It should be familiar
+ to every astrological or astronomical programmer. The time variable
+ in astronomical theories is usually expressed in Julian days or
+ Julian centuries (36525 days per century) relative to some start day;
+ the start day is called 'the epoch'.
+ The Julian day number is a double representing the number of
+ days since JD = 0.0 on 1 Jan -4712, 12:00 noon (in the Julian calendar).
+
+ Midnight has always a JD with fraction .5, because traditionally
+ the astronomical day started at noon. This was practical because
+ then there was no change of date during a night at the telescope.
+ From this comes also the fact the noon ephemerides were printed
+ before midnight ephemerides were introduced early in the 20th century.
+
+ NOTE: The Julian day number must not be confused with the Julian
+ calendar system.
+
+ Be aware the we always use astronomical year numbering for the years
+ before Christ, not the historical year numbering.
+ Astronomical years are done with negative numbers, historical
+ years with indicators BC or BCE (before common era).
+ Year 0 (astronomical)          = 1 BC
+ year -1 (astronomical)         = 2 BC
+ etc.
+
+ Original author: Marc Pottenger, Los Angeles.
+ with bug fix for year < -4711   15-aug-88 by Alois Treindl
+ (The parameter sequence m,d,y still indicates the US origin,
+  be careful because the similar function date_conversion() uses
+  other parameter sequence and also Astrodienst relative juldate.)
+
+ References: Oliver Montenbruck, Grundlagen der Ephemeridenrechnung,
+             Verlag Sterne und Weltraum (1987), p.49 ff
+
+ related functions: swe_revjul() reverse Julian day number: compute the
+                               calendar date from a given JD
+                    date_conversion() includes test for legal date values
+                    and notifies errors like 32 January.
+ ****************************************************************/
   private static synchronized double swe_julday(int year, int month, int day,
                                                 double hour, boolean calType) {
     double jd;
@@ -967,7 +1102,7 @@ public class SweDate implements java.io.Serializable {
   /// deltaT:
   ////////////////////////////////////////////////////////////////////////////
   /* DeltaT = Ephemeris Time - Universal Time, in days.
-   * 
+   *
    * 1620 - today + a couple of years:
    * ---------------------------------
    * The tabulated values of deltaT, in hundredths of a second,
@@ -977,9 +1112,9 @@ public class SweDate implements java.io.Serializable {
    * ELP2000 (and DE200) used the value -23.8946.
    * To change ndot, one can
    * either redefine SE_TIDAL_DEFAULT in swephexp.h
-   * or use the routine swe_set_tid_acc() before calling Swiss 
+   * or use the routine swe_set_tid_acc() before calling Swiss
    * Ephemeris.
-   * Bessel's interpolation formula is implemented to obtain fourth 
+   * Bessel's interpolation formula is implemented to obtain fourth
    * order interpolated values at intermediate times.
    *
    * -1000 - 1620:
@@ -1017,8 +1152,8 @@ public class SweDate implements java.io.Serializable {
    * Borkowski, K. M., "ELP2000-85 and the Dynamical Time
    * - Universal Time relation," Astronomy and Astrophysics
    * 205, L8-L10 (1988)
-   * Borkowski's formula is derived from partly doubtful eclipses 
-   * going back to 2137 BC and uses lunar position based on tidal 
+   * Borkowski's formula is derived from partly doubtful eclipses
+   * going back to 2137 BC and uses lunar position based on tidal
    * coefficient of -23.9 arcsec/cy^2.
    *
    * Chapront-Touze, Michelle, and Jean Chapront, _Lunar Tables
@@ -1029,14 +1164,14 @@ public class SweDate implements java.io.Serializable {
    * Stephenson, F. R., and M. A. Houlden, _Atlas of Historical
    * Eclipse Maps_, Cambridge U. Press (1986)
    *
-   * Stephenson, F.R. & Morrison, L.V., "Long-Term Fluctuations in 
-   * the Earth's Rotation: 700 BC to AD 1990", Philosophical 
-   * Transactions of the Royal Society of London, 
-   * Ser. A, 351 (1995), 165-202. 
+   * Stephenson, F.R. & Morrison, L.V., "Long-Term Fluctuations in
+   * the Earth's Rotation: 700 BC to AD 1990", Philosophical
+   * Transactions of the Royal Society of London,
+   * Ser. A, 351 (1995), 165-202.
    *
-   * Stephenson, F. Richard, _Historical Eclipses and Earth's 
+   * Stephenson, F. Richard, _Historical Eclipses and Earth's
    * Rotation_, Cambridge U. Press (1997)
-   * 
+   *
    * Morrison, L. V., and F.R. Stephenson, "Historical Values of the Earth's
    * Clock Error DT and the Calculation of Eclipses", JHA xxxv (2004),
    * pp.327-336
@@ -1047,95 +1182,105 @@ public class SweDate implements java.io.Serializable {
    * The actual accuracy decreases rapidly prior to 1780.
    *
    * Jean Meeus, Astronomical Algorithms, 2nd edition, 1998.
-   * 
+   *
    * For a comprehensive collection of publications and formulae, see:
-   * http://www.phys.uu.nl/~vgent/astro/deltatime.htm
-   * 
-   * For future values of delta t, the following data from the 
+   * http://www.phys.uu.nl/~vgent/deltat/deltat_modern.htm
+   * http://www.phys.uu.nl/~vgent/deltat/deltat_old.htm
+   *
+   * For future values of delta t, the following data from the
    * Earth Orientation Department of the US Naval Observatory can be used:
    * (TAI-UTC) from: ftp://maia.usno.navy.mil/ser7/tai-utc.dat
    * (UT1-UTC) from: ftp://maia.usno.navy.mil/ser7/finals.all
    * file description in: ftp://maia.usno.navy.mil/ser7/readme.finals
    * Delta T = TAI-UT1 + 32.184 sec = (TAI-UTC) - (UT1-UTC) + 32.184 sec
    *
-   * Last update of table dt[]: Dieter Koch, 8 June 2007.
+   * Also, there is the following file:
+   * http://maia.usno.navy.mil/ser7/deltat.data, but it is about 3 months
+   * behind (on 3 feb 2009); and predictions:
+   * http://maia.usno.navy.mil/ser7/deltat.preds
+   *
+   * Last update of table dt[]: Dieter Koch, 18 dec 2013.
    * ATTENTION: Whenever updating this table, do not forget to adjust
    * the macros TABEND and TABSIZ !
    */
 
   private static final int TABSTART=1620;
-  private static final int TABEND=2014;
+  private static final int TABEND=2019;
   private static final int TABSIZ=TABEND-TABSTART+1;
 
   /* we make the table greater for additional values read from external file */
-  private static final int TABSIZ_SPACE=TABSIZ+50;
+  private static final int TABSIZ_SPACE=TABSIZ+100;
 
-  private static short dt[]=new short[] {
+  private static double dt[]=new double[] {
   /* 1620.0 thru 1659.0 */
-  12400, 11900, 11500, 11000, 10600, 10200, 9800, 9500, 9100, 8800,
-  8500, 8200, 7900, 7700, 7400, 7200, 7000, 6700, 6500, 6300,
-  6200, 6000, 5800, 5700, 5500, 5400, 5300, 5100, 5000, 4900,
-  4800, 4700, 4600, 4500, 4400, 4300, 4200, 4100, 4000, 3800,
+  124.00, 119.00, 115.00, 110.00, 106.00, 102.00, 98.00, 95.00, 91.00, 88.00,
+  85.00, 82.00, 79.00, 77.00, 74.00, 72.00, 70.00, 67.00, 65.00, 63.00,
+  62.00, 60.00, 58.00, 57.00, 55.00, 54.00, 53.00, 51.00, 50.00, 49.00,
+  48.00, 47.00, 46.00, 45.00, 44.00, 43.00, 42.00, 41.00, 40.00, 38.00,
   /* 1660.0 thru 1699.0 */
-  3700, 3600, 3500, 3400, 3300, 3200, 3100, 3000, 2800, 2700,
-  2600, 2500, 2400, 2300, 2200, 2100, 2000, 1900, 1800, 1700,
-  1600, 1500, 1400, 1400, 1300, 1200, 1200, 1100, 1100, 1000,
-  1000, 1000, 900, 900, 900, 900, 900, 900, 900, 900,
+  37.00, 36.00, 35.00, 34.00, 33.00, 32.00, 31.00, 30.00, 28.00, 27.00,
+  26.00, 25.00, 24.00, 23.00, 22.00, 21.00, 20.00, 19.00, 18.00, 17.00,
+  16.00, 15.00, 14.00, 14.00, 13.00, 12.00, 12.00, 11.00, 11.00, 10.00,
+  10.00, 10.00, 9.00, 9.00, 9.00, 9.00, 9.00, 9.00, 9.00, 9.00,
   /* 1700.0 thru 1739.0 */
-  900, 900, 900, 900, 900, 900, 900, 900, 1000, 1000,
-  1000, 1000, 1000, 1000, 1000, 1000, 1000, 1100, 1100, 1100,
-  1100, 1100, 1100, 1100, 1100, 1100, 1100, 1100, 1100, 1100,
-  1100, 1100, 1100, 1100, 1200, 1200, 1200, 1200, 1200, 1200,
+  9.00, 9.00, 9.00, 9.00, 9.00, 9.00, 9.00, 9.00, 10.00, 10.00,
+  10.00, 10.00, 10.00, 10.00, 10.00, 10.00, 10.00, 11.00, 11.00, 11.00,
+  11.00, 11.00, 11.00, 11.00, 11.00, 11.00, 11.00, 11.00, 11.00, 11.00,
+  11.00, 11.00, 11.00, 11.00, 12.00, 12.00, 12.00, 12.00, 12.00, 12.00,
   /* 1740.0 thru 1779.0 */
-  1200, 1200, 1200, 1200, 1300, 1300, 1300, 1300, 1300, 1300,
-  1300, 1400, 1400, 1400, 1400, 1400, 1400, 1400, 1500, 1500,
-  1500, 1500, 1500, 1500, 1500, 1600, 1600, 1600, 1600, 1600,
-  1600, 1600, 1600, 1600, 1600, 1700, 1700, 1700, 1700, 1700,
+  12.00, 12.00, 12.00, 12.00, 13.00, 13.00, 13.00, 13.00, 13.00, 13.00,
+  13.00, 14.00, 14.00, 14.00, 14.00, 14.00, 14.00, 14.00, 15.00, 15.00,
+  15.00, 15.00, 15.00, 15.00, 15.00, 16.00, 16.00, 16.00, 16.00, 16.00,
+  16.00, 16.00, 16.00, 16.00, 16.00, 17.00, 17.00, 17.00, 17.00, 17.00,
   /* 1780.0 thru 1799.0 */
-  1700, 1700, 1700, 1700, 1700, 1700, 1700, 1700, 1700, 1700,
-  1700, 1700, 1600, 1600, 1600, 1600, 1500, 1500, 1400, 1400,
+  17.00, 17.00, 17.00, 17.00, 17.00, 17.00, 17.00, 17.00, 17.00, 17.00,
+  17.00, 17.00, 16.00, 16.00, 16.00, 16.00, 15.00, 15.00, 14.00, 14.00,
   /* 1800.0 thru 1819.0 */
-  1370, 1340, 1310, 1290, 1270, 1260, 1250, 1250, 1250, 1250,
-  1250, 1250, 1250, 1250, 1250, 1250, 1250, 1240, 1230, 1220,
+  13.70, 13.40, 13.10, 12.90, 12.70, 12.60, 12.50, 12.50, 12.50, 12.50,
+  12.50, 12.50, 12.50, 12.50, 12.50, 12.50, 12.50, 12.40, 12.30, 12.20,
   /* 1820.0 thru 1859.0 */
-  1200, 1170, 1140, 1110, 1060, 1020, 960, 910, 860, 800,
-  750, 700, 660, 630, 600, 580, 570, 560, 560, 560,
-  570, 580, 590, 610, 620, 630, 650, 660, 680, 690,
-  710, 720, 730, 740, 750, 760, 770, 770, 780, 780,
+  12.00, 11.70, 11.40, 11.10, 10.60, 10.20, 9.60, 9.10, 8.60, 8.00,
+  7.50, 7.00, 6.60, 6.30, 6.00, 5.80, 5.70, 5.60, 5.60, 5.60,
+  5.70, 5.80, 5.90, 6.10, 6.20, 6.30, 6.50, 6.60, 6.80, 6.90,
+  7.10, 7.20, 7.30, 7.40, 7.50, 7.60, 7.70, 7.70, 7.80, 7.80,
   /* 1860.0 thru 1899.0 */
-  788, 782, 754, 697, 640, 602, 541, 410, 292, 182,
-  161, 10, -102, -128, -269, -324, -364, -454, -471, -511,
-  -540, -542, -520, -546, -546, -579, -563, -564, -580, -566,
-  -587, -601, -619, -664, -644, -647, -609, -576, -466, -374,
+  7.88, 7.82, 7.54, 6.97, 6.40, 6.02, 5.41, 4.10, 2.92, 1.82,
+  1.61, .10, -1.02, -1.28, -2.69, -3.24, -3.64, -4.54, -4.71, -5.11,
+  -5.40, -5.42, -5.20, -5.46, -5.46, -5.79, -5.63, -5.64, -5.80, -5.66,
+  -5.87, -6.01, -6.19, -6.64, -6.44, -6.47, -6.09, -5.76, -4.66, -3.74,
   /* 1900.0 thru 1939.0 */
-  -272, -154, -2, 124, 264, 386, 537, 614, 775, 913,
-  1046, 1153, 1336, 1465, 1601, 1720, 1824, 1906, 2025, 2095,
-  2116, 2225, 2241, 2303, 2349, 2362, 2386, 2449, 2434, 2408,
-  2402, 2400, 2387, 2395, 2386, 2393, 2373, 2392, 2396, 2402,
+  -2.72, -1.54, -.02, 1.24, 2.64, 3.86, 5.37, 6.14, 7.75, 9.13,
+  10.46, 11.53, 13.36, 14.65, 16.01, 17.20, 18.24, 19.06, 20.25, 20.95,
+  21.16, 22.25, 22.41, 23.03, 23.49, 23.62, 23.86, 24.49, 24.34, 24.08,
+  24.02, 24.00, 23.87, 23.95, 23.86, 23.93, 23.73, 23.92, 23.96, 24.02,
   /* 1940.0 thru 1979.0 */
-   2433, 2483, 2530, 2570, 2624, 2677, 2728, 2778, 2825, 2871,
-   2915, 2957, 2997, 3036, 3072, 3107, 3135, 3168, 3218, 3268,
-   3315, 3359, 3400, 3447, 3503, 3573, 3654, 3743, 3829, 3920,
-   4018, 4117, 4223, 4337, 4449, 4548, 4646, 4752, 4853, 4959,
+   24.33, 24.83, 25.30, 25.70, 26.24, 26.77, 27.28, 27.78, 28.25, 28.71,
+   29.15, 29.57, 29.97, 30.36, 30.72, 31.07, 31.35, 31.68, 32.18, 32.68,
+   33.15, 33.59, 34.00, 34.47, 35.03, 35.73, 36.54, 37.43, 38.29, 39.20,
+   40.18, 41.17, 42.23, 43.37, 44.49, 45.48, 46.46, 47.52, 48.53, 49.59,
   /* 1980.0 thru 1999.0 */
-   5054, 5138, 5217, 5296, 5379, 5434, 5487, 5532, 5582, 5630,
-   5686, 5757, 5831, 5912, 5998, 6078, 6163, 6230, 6297, 6347,
-  /* 2000.0 thru 2007.0 */
-   6383, 6409, 6430, 6447, 6457, 6469, 6485, 6515,
-  /* Extrapolated values, 2008 - 2014 */
-                                                   6548, 6580,
-   6620, 6660, 6700, 6750, 6800,
-  // JAVA ONLY: add 50 empty elements, see constant TABSIZ_SPACE above!
+   50.54, 51.38, 52.17, 52.96, 53.79, 54.34, 54.87, 55.32, 55.82, 56.30,
+   56.86, 57.57, 58.31, 59.12, 59.98, 60.78, 61.63, 62.30, 62.97, 63.47,
+  /* 2000.0 thru 2009.0 */
+   63.83, 64.09, 64.30, 64.47, 64.57, 64.69, 64.85, 65.15, 65.46, 65.78,      
+  /* 2010.0 thru 2015.0 */
+   66.07, 66.32, 66.60, 66.907,67.281,67.644,
+  /* Extrapolated values, 2016 - 2019 */
+                                             68.01, 68.50, 69.00, 69.50,
+  // JAVA ONLY: add 100 empty elements, see constant TABSIZ_SPACE above!
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   };
-private static final int TAB2_SIZ    = 27;
-private static final int TAB2_START  = -1000;
-private static final int TAB2_END    = 1600;
-private static final int TAB2_STEP   = 100;
-private static final int LTERM_EQUATION_YSTART = 1820;
-private static final int LTERM_EQUATION_COEFF = 32;
+/*#define DELTAT_ESPENAK_MEEUS_2006 TRUE*/
+  private static final int TAB2_SIZ    = 27;
+  private static final int TAB2_START  = -1000;
+  private static final int TAB2_END    = 1600;
+  private static final int TAB2_STEP   = 100;
+  private static final int LTERM_EQUATION_YSTART = 1820;
+  private static final int LTERM_EQUATION_COEFF = 32;
   /* Table for -1000 through 1600, from Morrison & Stephenson (2004).  */
   private static short dt2[]=new short[] {
   /*-1000  -900  -800  -700  -600  -500  -400  -300  -200  -100*/
@@ -1148,135 +1293,114 @@ private static final int LTERM_EQUATION_COEFF = 32;
   /* returns DeltaT (ET - UT) in days
    * double tjd 	= 	julian day in UT
    */
-  private synchronized double calc_deltaT(double tjd) {
-    double sdt = calc_deltaT(tjd, this.tid_acc);
-    return sdt;
-  }
-  private static synchronized double calc_deltaT(double tjd, double tid_acc) {
-    double ans = 0., ans2, ans3;
-    double p, B=0., B2, Y=0., Ygreg, dd; // To remove Java warning of "maybe" not initialized
-    int d[]=new int[6];
-    int i, iy, k;
+  private static synchronized double calc_deltaT(double tjd) {
+    double ans = 0;
+    double B, Y, Ygreg, dd;
+    int iy;
+    int deltat_model = sw.swed.astro_models[SweConst.SE_MODEL_DELTAT];
+    if (deltat_model == 0) deltat_model = SweConst.SEMOD_DELTAT_DEFAULT;
     /* read additional values from swedelta.txt */
-    int tabsiz = init_dt();
-    int tabend = TABSTART + tabsiz - 1;
+    /*AS_BOOL use_espenak_meeus = DELTAT_ESPENAK_MEEUS_2006;*/
     Y = 2000.0 + (tjd - SwephData.J2000)/365.25;
     Ygreg = 2000.0 + (tjd - SwephData.J2000)/365.2425;
-    /* before -500:
-     * formula by Stephenson (1997; p. 508) but adjusted to fit the starting
-     * point of table dt2 (Stephenson 1997). */
-    if( Y < TAB2_START ) {
-      B = (Y - LTERM_EQUATION_YSTART) * 0.01;
-      ans = -20 + LTERM_EQUATION_COEFF * B * B;
-      ans = adjust_for_tidacc(tid_acc, ans, Y);
-      /* transition from formula to table over 100 years */
-      if (Y >= TAB2_START - 100) {
-        /* starting value of table dt2: */
-        ans2 = adjust_for_tidacc(tid_acc, dt2[0], TAB2_START);
-        /* value of formula at epoch TAB2_START */
-        B = (TAB2_START - LTERM_EQUATION_YSTART) * 0.01;
-        ans3 = -20 + LTERM_EQUATION_COEFF * B * B;
-        ans3 = adjust_for_tidacc(tid_acc, ans3, Y);
-        dd = ans3 - ans2;
-        B = (Y - (TAB2_START - 100)) * 0.01;
-        /* fit to starting point of table dt2. */
-        ans = ans - dd * B;
+    /* Before 1633 AD, if the macro DELTAT_ESPENAK_MEEUS_2006 is TRUE: 
+     * Polynomials by Espenak & Meeus 2006, derived from Stephenson & Morrison 
+     * 2004. 
+     * Note, Espenak & Meeus use their formulae only from 2000 BC on.
+     * However, they use the long-term formula of Morrison & Stephenson,
+     * which can be used even for the remoter past.
+     */
+    /*if (use_espenak_meeus && tjd < 2317746.13090277789) {*/
+    if (deltat_model == SweConst.SEMOD_DELTAT_ESPENAK_MEEUS_2006 && tjd < 2317746.13090277789) {
+      return deltat_espenak_meeus_1620(tjd);
+    }
+    /* If the macro DELTAT_ESPENAK_MEEUS_2006 is FALSE:
+     * Before 1620, we follow Stephenson & Morrsion 2004. For the tabulated 
+     * values 1000 BC through 1600 AD, we use linear interpolation.
+     */
+    if (Y < TABSTART) {
+      if (Y < TAB2_END) {
+        return deltat_stephenson_morrison_1600(tjd);
+      } else {
+        /* between 1600 and 1620:
+         * linear interpolation between 
+         * end of table dt2 and start of table dt */
+        if (Y >= TAB2_END) { 
+	  B = TABSTART - TAB2_END;
+	  iy = (TAB2_END - TAB2_START) / TAB2_STEP;
+	  dd = (Y - TAB2_END) / B;
+	  /*ans = dt2[iy] + dd * (dt[0] / 100.0 - dt2[iy]);*/
+	  ans = dt2[iy] + dd * (dt[0] - dt2[iy]);
+	  ans = adjust_for_tidacc(ans, Ygreg);
+	  return ans / 86400.0;
+        }
       }
-    }
-    /* between -500 and 1600:
-     * linear interpolation between values of table dt2 (Stephenson 1997) */
-    if (Y >= TAB2_START && Y < TAB2_END) {
-      double Yjul = 2000 + (tjd - 2451557.5) / 365.25;
-      p = SMath.floor(Yjul);
-      iy = (int) ((p - TAB2_START) / TAB2_STEP);
-      dd = (Yjul - (TAB2_START + TAB2_STEP * iy)) / TAB2_STEP;
-      ans = dt2[iy] + (dt2[iy+1] - dt2[iy]) * dd;
-      /* correction for tidal acceleration used by our ephemeris */
-      ans = adjust_for_tidacc(tid_acc, ans, Y);
-    }
-    /* between 1600 and 1620:
-     * linear interpolation between 
-     * end of table dt2 and start of table dt */
-    if (Y >= TAB2_END && Y < TABSTART) { 
-      B = TABSTART - TAB2_END;
-      iy = (TAB2_END - TAB2_START) / TAB2_STEP;
-      dd = (Y - TAB2_END) / B;
-      ans = dt2[iy] + dd * (dt[0] / 100.0 - dt2[iy]);
-      ans = adjust_for_tidacc(tid_acc, ans, Y);
     }
     /* 1620 - today + a few years (tabend):
      * Besselian interpolation from tabulated values in table dt.
      * See AA page K11.
      */
-    if (Y >= TABSTART && Y <= tabend) {
+    if (Y >= TABSTART) {
+      return deltat_aa(tjd);
+    }
+    return ans / 86400.0;
+  }
+
+  private static double deltat_aa(double tjd) {
+    double ans = 0, ans2, ans3;
+    double p, B, B2, Y, dd;
+    double d[] = new double[6];
+    int i, iy, k;
+    /* read additional values from swedelta.txt */
+    int tabsiz = init_dt();
+    int tabend = TABSTART + tabsiz - 1;
+    /*Y = 2000.0 + (tjd - J2000)/365.25;*/
+    Y = 2000.0 + (tjd - SwephData.J2000)/365.2425;
+    if (Y <= tabend) {
       /* Index into the table.
        */
       p = SMath.floor(Y);
       iy = (int) (p - TABSTART);
-      /* Zeroth order estimate is value at start of year
-       */
+      /* Zeroth order estimate is value at start of year */
       ans = dt[iy];
       k = iy + 1;
       if( k >= tabsiz )
-        return deltatIsDone(ans, Y, B, tid_acc, tabsiz, tabend); /* No data, can't go on. */
-      /* The fraction of tabulation interval
-       */
+        return deltat_aa_label_done(ans, Y); /* No data, can't go on. */
+      /* The fraction of tabulation interval */
       p = Y - p;
-      /* First order interpolated value
-       */
+      /* First order interpolated value */
       ans += p*(dt[k] - dt[iy]);
       if( (iy-1 < 0) || (iy+2 >= tabsiz) )
-        return deltatIsDone(ans, Y, B, tid_acc, tabsiz, tabend); /* can't do second differences */
-      /* Make table of first differences
-       */
+        return deltat_aa_label_done(ans, Y); /* can't do second differences */
+      /* Make table of first differences */
       k = iy - 2;
       for( i=0; i<5; i++ ) {
-        if( (k < 0) || (k+1 >= tabsiz) ) 
+        if( (k < 0) || (k+1 >= tabsiz) )
           d[i] = 0;
         else
-          d[i] = dt[k+1] - dt[k];
+	  d[i] = dt[k+1] - dt[k];
         k += 1;
       }
-      /* Compute second differences
-       */
+      /* Compute second differences */
       for( i=0; i<4; i++ )
         d[i] = d[i+1] - d[i];
       B = 0.25*p*(p-1.0);
       ans += B*(d[1] + d[2]);
-//    printf( "B %.4lf, ans %.4lf\n", B, ans );
       if( iy+2 >= tabsiz )
-        return deltatIsDone(ans, Y, B, tid_acc, tabsiz, tabend);
-      /* Compute third differences
-       */
+        return deltat_aa_label_done(ans, Y);
+      /* Compute third differences */
       for( i=0; i<3; i++ )
         d[i] = d[i+1] - d[i];
       B = 2.0*B/3.0;
       ans += (p-0.5)*B*d[1];
-//    printf( "B %.4lf, ans %.4lf\n", B*(p-0.5), ans );
       if( (iy-2 < 0) || (iy+3 > tabsiz) )
-        return deltatIsDone(ans, Y, B, tid_acc, tabsiz, tabend);
-      /* Compute fourth differences
-       */
+        return deltat_aa_label_done(ans, Y);
+      /* Compute fourth differences */
       for( i=0; i<2; i++ )
         d[i] = d[i+1] - d[i];
       B = 0.125*B*(p+1.0)*(p-2.0);
       ans += B*(d[0] + d[1]);
-//    printf( "B %.4lf, ans %.4lf\n", B, ans );
-    }
-
-    return deltatIsDone(ans, Y, B, tid_acc, tabsiz, tabend);
-  }
-
-  private synchronized static double deltatIsDone(double ans, double Y,
-                                                  double B, double tid_acc, int tabsiz, int tabend) {
-// //#ifdef TRACE0
-//     // Trace.level++; Don't increment here, as the calling method calc_deltat() does not decrement on return!
-//     Trace.trace(Trace.level, "SweDate.deltatIsDone(double, double, double, double, int, int)");
-// //#endif /* TRACE0 */
-    double ans2, ans3, B2, dd;
-    if (Y >= TABSTART && Y <= tabend) {
-      ans *= 0.01;
-      ans = adjust_for_tidacc(tid_acc, ans, Y);
+      return deltat_aa_label_done(ans, Y); /* No data, can't go on. */
     }
     /* today - :
      * Formula Stephenson (1997; p. 507),
@@ -1284,18 +1408,121 @@ private static final int LTERM_EQUATION_COEFF = 32;
      * similar to what Meeus 1998 had suggested.
      * Slow transition within 100 years.
      */
-    if (Y > tabend) {
-      B = 0.01 * (Y - 1820);
-      ans = -20 + 31 * B * B;
-      /* slow transition from tabulated values to Stephenson formula: */
-      if (Y <= tabend+100) {
-        B2 = 0.01 * (tabend - 1820);
-        ans2 = -20 + 31 * B2 * B2;
-        ans3 = dt[tabsiz-1] * 0.01;
-        dd = (ans2 - ans3);
-        ans += dd * (Y - (tabend + 100)) * 0.01;
+    B = 0.01 * (Y - 1820);
+    ans = -20 + 31 * B * B;
+    /* slow transition from tabulated values to Stephenson formula: */
+    if (Y <= tabend+100) {
+      B2 = 0.01 * (tabend - 1820);
+      ans2 = -20 + 31 * B2 * B2;
+      ans3 = dt[tabsiz-1];
+      dd = (ans2 - ans3);
+      ans += dd * (Y - (tabend + 100)) * 0.01;
+    }
+    return ans / 86400.0;
+  }
+
+  private static double deltat_longterm_morrison_stephenson(double tjd) {
+    double Ygreg =  2000.0 + (tjd - SwephData.J2000)/365.2425;
+    double u = (Ygreg  - 1820) / 100.0;
+    return (-20 + 32 * u * u);
+  }
+
+  private static double deltat_stephenson_morrison_1600(double tjd) {
+    double ans = 0, ans2, ans3;
+    double p, B, dd;
+    double tjd0;
+    int iy;
+    /* read additional values from swedelta.txt */
+    double Y = 2000.0 + (tjd - SwephData.J2000)/365.2425;
+    /* double Y = 2000.0 + (tjd - J2000)/365.25;*/
+    /* before -1000:
+     * formula by Stephenson&Morrison (2004; p. 335) but adjusted to fit the 
+     * starting point of table dt2. */
+    if( Y < TAB2_START ) {
+      /*B = (Y - LTERM_EQUATION_YSTART) * 0.01;
+      ans = -20 + LTERM_EQUATION_COEFF * B * B;*/
+      ans = deltat_longterm_morrison_stephenson(tjd);
+      ans = adjust_for_tidacc(ans, Y);
+      /* transition from formula to table over 100 years */
+      if (Y >= TAB2_START - 100) {
+        /* starting value of table dt2: */
+        ans2 = adjust_for_tidacc(dt2[0], TAB2_START);
+        /* value of formula at epoch TAB2_START */
+        /* B = (TAB2_START - LTERM_EQUATION_YSTART) * 0.01;
+        ans3 = -20 + LTERM_EQUATION_COEFF * B * B;*/
+        tjd0 = (TAB2_START - 2000) * 365.2425 + SwephData.J2000;
+        ans3 = deltat_longterm_morrison_stephenson(tjd0);
+        ans3 = adjust_for_tidacc(ans3, Y);
+        dd = ans3 - ans2;
+        B = (Y - (TAB2_START - 100)) * 0.01;
+        /* fit to starting point of table dt2. */
+        ans = ans - dd * B;
       }
     }
+    /* between -1000 and 1600: 
+     * linear interpolation between values of table dt2 (Stephenson&Morrison 2004) */
+    if (Y >= TAB2_START && Y < TAB2_END) { 
+      double Yjul = 2000 + (tjd - 2451557.5) / 365.25;
+      p = SMath.floor(Yjul);
+      iy = (int) ((p - TAB2_START) / TAB2_STEP);
+      dd = (Yjul - (TAB2_START + TAB2_STEP * iy)) / TAB2_STEP;
+      ans = dt2[iy] + (dt2[iy+1] - dt2[iy]) * dd;
+      /* correction for tidal acceleration used by our ephemeris */
+      ans = adjust_for_tidacc(ans, Y);
+    }
+    ans /= 86400.0;
+    return ans;
+  }
+
+  private static double deltat_espenak_meeus_1620(double tjd) {
+    double ans = 0;
+    double Ygreg;
+    double u;
+    /* double Y = 2000.0 + (tjd - J2000)/365.25;*/
+    Ygreg = 2000.0 + (tjd - SwephData.J2000)/365.2425;
+    if (Ygreg < -500) {
+      ans = deltat_longterm_morrison_stephenson(tjd);
+    } else if (Ygreg < 500) {
+      u = Ygreg / 100.0;
+      ans = (((((0.0090316521 * u + 0.022174192) * u - 0.1798452) * u - 5.952053) * u+ 33.78311) * u - 1014.41) * u + 10583.6;
+    } else if (Ygreg < 1600) {
+      u = (Ygreg - 1000) / 100.0;
+      ans = (((((0.0083572073 * u - 0.005050998) * u - 0.8503463) * u + 0.319781) * u + 71.23472) * u - 556.01) * u + 1574.2;
+    } else if (Ygreg < 1700) {
+      u = Ygreg - 1600;
+      ans = 120 - 0.9808 * u - 0.01532 * u * u + u * u * u / 7129.0;
+    } else if (Ygreg < 1800) {
+      u = Ygreg - 1700;
+      ans = (((-u / 1174000.0 + 0.00013336) * u - 0.0059285) * u + 0.1603) * u + 8.83;
+    } else if (Ygreg < 1860) {
+      u = Ygreg - 1800;
+      ans = ((((((0.000000000875 * u - 0.0000001699) * u + 0.0000121272) * u - 0.00037436) * u + 0.0041116) * u + 0.0068612) * u - 0.332447) * u + 13.72;
+    } else if (Ygreg < 1900) {
+      u = Ygreg - 1860;
+      ans = ((((u / 233174.0 - 0.0004473624) * u + 0.01680668) * u - 0.251754) * u + 0.5737) * u + 7.62;
+    } else if (Ygreg < 1920) {
+      u = Ygreg - 1900;
+      ans = (((-0.000197 * u + 0.0061966) * u - 0.0598939) * u + 1.494119) * u -2.79;
+    } else if (Ygreg < 1941) {
+      u = Ygreg - 1920;
+      ans = 21.20 + 0.84493 * u - 0.076100 * u * u + 0.0020936 * u * u * u;
+    } else if (Ygreg < 1961) {
+      u = Ygreg - 1950;
+      ans = 29.07 + 0.407 * u - u * u / 233.0 + u * u * u / 2547.0;
+    } else if (Ygreg < 1986) {
+      u = Ygreg - 1975;
+      ans = 45.45 + 1.067 * u - u * u / 260.0 - u * u * u / 718.0;
+    } else if (Ygreg < 2005) {
+      u = Ygreg - 2000;
+      ans = ((((0.00002373599 * u + 0.000651814) * u + 0.0017275) * u - 0.060374) * u + 0.3345) * u + 63.86;
+    }
+    ans = adjust_for_tidacc(ans, Ygreg);
+    ans /= 86400.0;
+    return ans;
+  }
+
+  private static synchronized double deltat_aa_label_done(double ans, double Y) {
+    ans = adjust_for_tidacc(ans, Y);
     return ans / 86400.0;
   }
 
@@ -1314,9 +1541,18 @@ private static final int LTERM_EQUATION_COEFF = 32;
       init_dt_done = true;
       /* no error message if file is missing */
       try {
-        fp = sw.swi_fopen(-1, "sedeltat.txt", sw.swed.ephepath, null);
+        if ((fp = sw.swi_fopen(-1, "swe_deltat.txt", sw.swed.ephepath, null)) == null &&
+            (fp = sw.swi_fopen(-1, "sedeltat.txt", sw.swed.ephepath, null)) == null) {
+          return TABSIZ;  // I think, I could skip this one...
+        }
       } catch (SwissephException se) {
-        return TABSIZ;
+        try {
+          if ((fp = sw.swi_fopen(-1, "sedeltat.txt", sw.swed.ephepath, null)) == null) {
+            return TABSIZ;  // I think, I could skip this one...
+          }
+        } catch (SwissephException se2) {
+          return TABSIZ;
+        }
       }
       try {
         while ((s=fp.readLine()) != null) {
@@ -1332,10 +1568,10 @@ private static final int LTERM_EQUATION_COEFF = 32;
           if (s.length() > 4) {
             s = s.substring(4).trim();
           }
-          dt[tab_index] = (short)(SwissLib.atof(s) * 100 + 0.5);
+          /*dt[tab_index] = (short) (atof(sp) * 100 + 0.5);*/
+          dt[tab_index] = (short)SwissLib.atof(s);
         }
       } catch (java.io.IOException e) {
-      } catch (java.nio.BufferUnderflowException e) {
       }
       try { fp.close(); } catch (java.io.IOException e) {}
     }
@@ -1350,7 +1586,7 @@ private static final int LTERM_EQUATION_COEFF = 32;
     tabsiz--;
     return tabsiz;
   }
- 
+
   /* Astronomical Almanac table is corrected by adding the expression
    *     -0.000091 (ndot + 26)(year-1955)^2  seconds
    * to entries prior to 1955 (AA page K8), where ndot is the secular
@@ -1359,11 +1595,11 @@ private static final int LTERM_EQUATION_COEFF = 32;
    * Entries after 1955 are referred to atomic time standards and
    * are not affected by errors in Lunar or planetary theory.
    */
-  private static double adjust_for_tidacc(double tid_acc_local, double ans, double Y) {
+  private static double adjust_for_tidacc(double ans, double Y) {
     double B;
     if( Y < 1955.0 ) {
       B = (Y - 1955.0);
-      ans += -0.000091 * (tid_acc_local + 26.0) * B * B;
+      ans += -0.000091 * (tid_acc + 26.0) * B * B;
     }
     return ans;
   }
@@ -1413,10 +1649,575 @@ private static final int LTERM_EQUATION_COEFF = 32;
     this.jd=swe_julday(year, month, day, hour, calType);
   }
 
+
+  /** Transform local time to UTC.
+  *
+  * For time zones east of Greenwich, d_timezone is positive.
+  * For time zones west of Greenwich, d_timezone is negative.
+  *
+  * @param iyear Year of the input date (UTC)
+  * @param imonth Month of the input date (UTC, 1 to 12)
+  * @param iday Day of the input date (UTC, 1 to 31)
+  * @param ihour Hour of the input date (UTC, 0 to 23)
+  * @param imin Minute of the input date (UTC, 0 to 59)
+  * @param dsec Second of the input date (UTC, 0.0 to less than 61.0)
+  * @param d_timezone Timezone in hours
+  * @return The converted date fields
+  * @see #getLocalTimeFromUTC(int, int, int, int, int, double, double)
+  */
+  public SDate getUTCFromLocalTime(
+          int iyear, int imonth, int iday,
+          int ihour, int imin, double dsec,
+          double d_timezone) {
+    return getLocalTimeFromUTC(iyear, imonth, iday, ihour, imin, dsec, -d_timezone);
+  };
+  /* transform local time to UTC or UTC to local time
+   *
+   * input
+   *   iyear ... dsec     date and time
+   *   d_timezone		timezone offset
+   * output
+   *   iyear_out ... dsec_out
+   *
+   * For time zones east of Greenwich, d_timezone is positive.
+   * For time zones west of Greenwich, d_timezone is negative.
+   *
+   * For conversion from local time to utc, use +d_timezone.
+   * For conversion from utc to local time, use -d_timezone.
+   */
+  /** Transform UTC to local time. This method is identical to
+  * the swe_utc_time_zone() method in the original API from
+  * AstroDienst Zurich.
+  *
+  * For time zones east of Greenwich, d_timezone is positive.
+  * For time zones west of Greenwich, d_timezone is negative.
+  *
+  * @param iyear Year of the input date (UTC)
+  * @param imonth Month of the input date (UTC, 1 to 12)
+  * @param iday Day of the input date (UTC, 1 to 31)
+  * @param ihour Hour of the input date (UTC, 0 to 23)
+  * @param imin Minute of the input date (UTC, 0 to 59)
+  * @param dsec Second of the input date (UTC, 0.0 to less than 61.0)
+  * @param d_timezone Timezone in hours. You can use -d_timezone
+  * to reverse the conversion, but you may also use the
+  * getUTCFromLocalTime() method for this.
+  * @return The converted date fields
+  * @see #getUTCFromLocalTime(int, int, int, int, int, double, double)
+  */
+  public SDate getLocalTimeFromUTC(
+          int iyear, int imonth, int iday,
+          int ihour, int imin, double dsec,
+          double d_timezone) {
+//  public SDate swe_utc_time_zone(
+//          int iyear, int imonth, int iday,
+//          int ihour, int imin, double dsec,
+//          double d_timezone) {
+    int iyear_out, imonth_out, iday_out, ihour_out, imin_out;
+    double dsec_out;
+    double tjd, d;
+    boolean have_leapsec = false;
+    double dhour;
+    if (dsec >= 60.0) {
+      have_leapsec = true;
+      dsec -= 1.0;
+    }
+    dhour = ((double) ihour) + ((double) imin) / 60.0 + dsec / 3600.0;
+    tjd = swe_julday(iyear, imonth, iday, 0, SE_GREG_CAL);
+    dhour -= d_timezone;
+    if (dhour < 0.0) {
+      tjd -= 1.0;
+      dhour += 24.0;
+    }
+    if (dhour >= 24.0) {
+      tjd += 1.0;
+      dhour -= 24.0;
+    }
+//    swe_revjul(tjd + 0.001, SE_GREG_CAL, iyear_out, imonth_out, iday_out, &d);
+    IDate dt = swe_revjul(tjd + 0.001, SE_GREG_CAL);
+    iyear_out = dt.year;
+    imonth_out = dt.month;
+    iday_out = dt.day;
+    ihour_out = (int) dhour;
+    d = (dhour - (double) ihour_out) * 60;
+    imin_out = (int) d;
+    dsec_out = (d - (double) imin_out) * 60;
+    if (have_leapsec)
+      dsec_out += 1.0;
+    return new SDate(iyear_out, imonth_out, iday_out, ihour_out, imin_out, dsec_out);
+  }
+
+  /*
+   * functions for the handling of UTC
+   */
+
+  /* Leap seconds were inserted at the end of the following days:*/
+  private static final int NLEAP_SECONDS = 26;
+  private static final int NLEAP_SECONDS_SPACE = 100;
+  private static final int leap_seconds[] = new int[]{
+  19720630,
+  19721231,
+  19731231,
+  19741231,
+  19751231,
+  19761231,
+  19771231,
+  19781231,
+  19791231,
+  19810630,
+  19820630,
+  19830630,
+  19850630,
+  19871231,
+  19891231,
+  19901231,
+  19920630,
+  19930630,
+  19940630,
+  19951231,
+  19970630,
+  19981231,
+  20051231,
+  20081231,
+  20120630,
+  20150630,
+  0,  /* keep this 0 as end mark */
+  // JAVA ONLY to have the array extended to NLEAP_SECONDS_SPACE elements:
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  };
+  private static final double J1972 = 2441317.5;
+  private static final int NLEAP_INIT = 10;
+
+  /* Read additional leap second dates from external file, if given.
+   */
+  private int init_leapsec() {
+    FilePtr fp = null;
+    int ndat, ndat_last;
+    int tabsiz = 0;
+    int i;
+    String s;
+    if (!init_leapseconds_done) {
+      init_leapseconds_done = true;
+      tabsiz = NLEAP_SECONDS;
+      ndat_last = leap_seconds[NLEAP_SECONDS - 1];
+      /* no error message if file is missing */
+      try {
+        if ((fp = sw.swi_fopen(-1, "seleapsec.txt", sw.swed.ephepath, null)) == null)
+          return NLEAP_SECONDS;
+        while ((s=fp.readLine()) != null) {
+          s.trim();
+          if (s.startsWith("#") || s.length() == 0)
+            continue;
+          ndat = SwissLib.atoi(s);
+          if (ndat <= ndat_last)
+            continue;
+          /* table space is limited. no error msg, if exceeded */
+          if (tabsiz >= NLEAP_SECONDS_SPACE)
+            return tabsiz;
+          leap_seconds[tabsiz] = ndat;
+          tabsiz++;
+        }
+        if (tabsiz > NLEAP_SECONDS) leap_seconds[tabsiz] = 0; /* end mark */
+        fp.close();
+      } catch (java.io.IOException e) {
+      } catch (SwissephException e) {
+        return tabsiz;
+      }
+      try { fp.close(); } catch (java.io.IOException e) {}
+      return tabsiz;
+    }
+    /* find table size */
+    tabsiz = 0;
+    for (i = 0; i < NLEAP_SECONDS_SPACE; i++) {
+      if (leap_seconds[i] == 0)
+        break;
+      else
+        tabsiz++;
+    }
+    return tabsiz;
+  }
+
+  /**
+  * Determines, if the year, month, day, hour, minute and second fields
+  * describe a valid date.
+  * @param iyear Year of the input date (UTC)
+  * @param imonth Month of the input date (UTC, 1 to 12)
+  * @param iday Day of the input date (UTC, 1 to 31)
+  * @param ihour Hour of the input date (UTC, 0 to 23)
+  * @param imin Minute of the input date (UTC, 0 to 59)
+  * @param dsec Second of the input date (UTC, 1.0 to less than 61.0)
+  * @param gregflag true == Gregorian calendar, false == Julian calendar
+  * @return true, if the date is valid, false otherwise.
+  */
+  public boolean isValidUTCDate(int iyear, int imonth, int iday, int ihour, int imin, double dsec, boolean gregflag) {
+    return getInvalidUTCDateError(iyear, imonth, iday, ihour, imin, dsec, gregflag) == null;
+  }
+  /**
+  * Returns a String error message, if the year, month, day, hour, minute and
+  * second fields do not describe a valid date.
+  * @param iyear Year of the input date (UTC)
+  * @param imonth Month of the input date (UTC, 1 to 12)
+  * @param iday Day of the input date (UTC, 1 to 31)
+  * @param ihour Hour of the input date (UTC, 0 to 23)
+  * @param imin Minute of the input date (UTC, 0 to 59)
+  * @param dsec Second of the input date (UTC, 1.0 to less than 61.0)
+  * @param gregflag true == Gregorian calendar, false == Julian calendar
+  * @return null, if the date is valid, otherwise it returns a message in english, describing the error field.
+  */
+  public String getInvalidUTCDateError(int iyear, int imonth, int iday, int ihour, int imin, double dsec, boolean gregflag) {
+    double[] dret = new double[2];
+    double tjd_ut1, tjd_et, tjd_et_1972, dhour, d;
+    int iyear2, imonth2, iday2;
+    int i, j, ndat, nleap, tabsiz_nleap;
+    /*
+     * error handling: invalid iyear etc.
+     */
+    tjd_ut1 = swe_julday(iyear, imonth, iday, 0, gregflag);
+    IDate dt = swe_revjul(tjd_ut1, gregflag);
+//   tjd_ut1 = swe_julday(iyear, imonth, iday, 0, gregflag);
+//   swe_revjul(tjd_ut1, gregflag, &iyear2, &imonth2, &iday2, &d);
+    if (iyear != dt.year || imonth != dt.month || iday != dt.day) {
+      return "invalid date: year = " + iyear + ", month = " + imonth + ", day = " + iyear + iday;
+    }
+    if (ihour < 0 || ihour > 23
+     || imin < 0 || imin > 59
+     || dsec < 0 || dsec >= 61
+     || (dsec >= 60 && (imin < 59 || ihour < 23 || tjd_ut1 < J1972))) {
+      return "invalid time: " + ihour + ":" + imin + ":" + dsec;
+    }
+    /*
+     * number of leap seconds since 1972:
+     */
+    tabsiz_nleap = init_leapsec();
+    ndat = iyear * 10000 + imonth * 100 + iday;
+    /*
+     * if input second is 60: is it a valid leap second ?
+     */
+    if (dsec >= 60) {
+      j = 0;
+      for (i = 0; i < tabsiz_nleap; i++) {
+        if (ndat == leap_seconds[i]) {
+          j = 1;
+          break;
+        }
+      }
+      if (j != 1) {
+        return "invalid time (no leap second!): " + ihour + ":" + imin + ":" + dsec;
+      }
+    }
+    return null;
+  }
+  /**
+  * Calculates the julian day numbers (TT (==ET) and UT1) from a given date.
+  * @param iyear Year of the input date (UTC)
+  * @param imonth Month of the input date (UTC, 1 to 12)
+  * @param iday Day of the input date (UTC, 1 to 31)
+  * @param ihour Hour of the input date (UTC, 0 to 23)
+  * @param imin Minute of the input date (UTC, 0 to 59)
+  * @param dsec Second of the input date (UTC, 1.0 to less than 61.0)
+  * @param gregflag true == Gregorian calendar, false == Julian calendar
+  * @param checkValidInput if true, throws SwissephException, when any of month,
+  * day, hour, minute or second are out of their valid ranges. If false, it
+  * doesn't care about invalid values (e.g. month = 13 or second = 61, even
+  * though there is no leap second on that date and time).
+  * @return an array of two doubles<br>
+  *         first value = Julian day number TT (ET)<br>
+  *         second value = Julian day number UT1<p>
+  *
+  * Note:<pre>
+  * - Before 1972, swe_utc_to_jd() treats its input time as UT1.
+  *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
+  *   UTC second was regularly changed, so that UTC remained very close to UT1.
+  * - From 1972 on, input time is treated as UTC.
+  * - If delta_t - nleap - 32.184 > 1, the input time is treated as UT1.
+  *   Note: Like this we avoid errors greater than 1 second in case that
+  *   the leap seconds table (or the Swiss Ephemeris version) is not updated
+  *   for a long time.</pre>
+  * @see #getUTCfromJDET(double, boolean)
+  * @see #getUTCfromJDUT1(double, boolean)
+  * @see #SE_GREG_CAL
+  * @see #SE_JUL_CAL
+  */
+  /*
+   * Input:  Clock time UTC, year, month, day, hour, minute, second (decimal).
+   *         gregflag  Calendar flag
+   *         serr      error string
+   * Output: An array of doubles:
+   *         dret[0] = Julian day number TT (ET)
+   *         dret[1] = Julian day number UT1
+   *
+   * Function returns OK or Error.
+   *
+   * - Before 1972, swe_utc_to_jd() treats its input time as UT1.
+   *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
+   *   UTC second was regularly changed, so that UTC remained very close to UT1.
+   * - From 1972 on, input time is treated as UTC.
+   * - If delta_t - nleap - 32.184 > 1, the input time is treated as UT1.
+   *   Note: Like this we avoid errors greater than 1 second in case that
+   *   the leap seconds table (or the Swiss Ephemeris version) is not updated
+   *   for a long time.
+  */
+  public double[] getJDfromUTC(int iyear,
+      int imonth,
+      int iday,
+      int ihour,
+      int imin,
+      double dsec,
+      boolean gregflag,
+      boolean checkValidInput) throws SwissephException {
+    double[] dret = new double[2];
+    double tjd_ut1, tjd_et, tjd_et_1972, dhour, d;
+    int i, j, ndat, nleap, tabsiz_nleap;
+    /*
+     * error handling: invalid iyear etc.
+     */
+    if (checkValidInput) {
+      String err = getInvalidUTCDateError(iyear, imonth, iday, ihour, imin, dsec, gregflag);
+      if (err != null) {
+        tjd_ut1 = swe_julday(iyear, imonth, iday, ihour+imin/60.+dsec/3600., gregflag);
+        throw new SwissephException(tjd_ut1, SwissephException.INVALID_DATE, err);
+      }
+    }
+    tjd_ut1 = swe_julday(iyear, imonth, iday, 0, gregflag);
+    dhour = (double) ihour + ((double) imin) / 60.0 + dsec / 3600.0;
+    /*
+     * before 1972, we treat input date as UT1
+     */
+    if (tjd_ut1 < J1972) {
+      dret[1] = swe_julday(iyear, imonth, iday, dhour, gregflag);
+      dret[0] = dret[1] + getDeltaT(dret[1]);
+      return dret;
+    }
+    /*
+     * if gregflag = Julian calendar, convert to gregorian calendar
+     */
+    if (gregflag == SE_JUL_CAL) {
+      gregflag = SE_GREG_CAL;
+//      swe_revjul(tjd_ut1, gregflag, &iyear, &imonth, &iday, &d);
+      IDate dt = swe_revjul(tjd_ut1, gregflag);
+    }
+    /*
+     * number of leap seconds since 1972:
+     */
+    tabsiz_nleap = init_leapsec();
+    nleap = NLEAP_INIT; /* initial difference between UTC and TAI in 1972 */
+    ndat = iyear * 10000 + imonth * 100 + iday;
+    for (i = 0; i < tabsiz_nleap; i++) {
+      if (ndat <= leap_seconds[i])
+        break;
+      nleap++;
+    }
+    /*
+     * For input dates > today:
+     * If leap seconds table is not up to date, we'd better interpret the
+     * input time as UT1, not as UTC. How do we find out?
+     * Check, if delta_t - nleap - 32.184 > 0.9
+     */
+    d = getDeltaT(tjd_ut1) * 86400.0;
+    if (d - (double) nleap - 32.184 >= 1.0) {
+      dret[1] = tjd_ut1 + dhour / 24.0;
+      dret[0] = dret[1] + getDeltaT(dret[1]);
+      return dret;
+    }
+    /*
+     * convert UTC to ET and UT1
+     */
+    /* the number of days between input date and 1 jan 1972: */
+    d = tjd_ut1 - J1972;
+    /* SI time since 1972, ignoring leap seconds: */
+    d += (double) ihour / 24.0 + (double) imin / 1440.0 + dsec / 86400.0;
+    /* ET (TT) */
+    tjd_et_1972 = J1972 + (32.184 + NLEAP_INIT) / 86400.0;
+    tjd_et = tjd_et_1972 + d + ((double) (nleap - NLEAP_INIT)) / 86400.0;
+    d = getDeltaT(tjd_et);
+    tjd_ut1 = tjd_et - getDeltaT(tjd_et - d);
+    tjd_ut1 = tjd_et - getDeltaT(tjd_ut1);
+    dret[0] = tjd_et;
+    dret[1] = tjd_ut1;
+    return dret;
+  }
+
+  /**
+  * Calculates the UTC date from ET Julian day number.
+  * @param tjd_et Julian day number (ET) to be converted.
+  * @param gregflag true == Gregorian calendar, false == Julian calendar
+  * @return The UTC date as SDate object.
+  *
+  * Note:<pre>
+  * - Before 1 jan 1972 UTC, output UT1.
+  *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
+  *   UTC second was regularly changed, so that UTC remained very close to UT1.
+  * - From 1972 on, output is UTC.
+  * - If delta_t - nleap - 32.184 > 1, the output is UT1.
+  *   Note: Like this we avoid errors greater than 1 second in case that
+  *   the leap seconds table (or the Swiss Ephemeris version) has not been
+  *   updated for a long time.</pre>
+  * @see #getUTCfromJDUT1(double, boolean)
+  * @see swisseph.SDate
+  * @see #SE_GREG_CAL
+  * @see #SE_JUL_CAL
+  */
+  /*
+   * Input:  tjd_et   Julian day number, terrestrial time (ephemeris time).
+   *         gregfalg Calendar flag
+   * Output: UTC year, month, day, hour, minute, second (decimal).
+   *
+   * - Before 1 jan 1972 UTC, output UT1.
+   *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
+   *   UTC second was regularly changed, so that UTC remained very close to UT1.
+   * - From 1972 on, output is UTC.
+   * - If delta_t - nleap - 32.184 > 1, the output is UT1.
+   *   Note: Like this we avoid errors greater than 1 second in case that
+   *   the leap seconds table (or the Swiss Ephemeris version) has not been
+   *   updated for a long time.
+   */
+  public SDate getUTCfromJDET(double tjd_et, boolean gregflag) {
+    int i;
+    int second_60 = 0;
+    int iyear, imonth, iday, ihour, imin, iyear2, imonth2, iday2, nleap, ndat, tabsiz_nleap;
+    double dsec, d, tjd, tjd_et_1972, tjd_ut, dret[] = new double[10];
+    /*
+     * if tjd_et is before 1 jan 1972 UTC, return UT1
+     */
+    tjd_et_1972 = J1972 + (32.184 + NLEAP_INIT) / 86400.0;
+    d = getDeltaT(tjd_et);
+    tjd_ut = tjd_et - getDeltaT(tjd_et - d);
+    tjd_ut = tjd_et - getDeltaT(tjd_ut);
+    if (tjd_et < tjd_et_1972) {
+//     swe_revjul(tjd_ut, gregflag, iyear, imonth, iday, &d);
+      IDate dt=swe_revjul(tjd_ut, gregflag);
+      return new SDate(dt.year, dt.month, dt.day, dt.hour);
+    }
+    /*
+     * minimum number of leap seconds since 1972; we may be missing one leap
+     * second
+     */
+    tabsiz_nleap = init_leapsec();
+//   swe_revjul(tjd_ut-1, SE_GREG_CAL, &iyear2, &imonth2, &iday2, &d);
+    IDate dt=swe_revjul(tjd_ut-1, SE_GREG_CAL);
+    iyear2 = dt.year;
+    imonth2 = dt.month;
+    iday2 = dt.day;
+    d = dt.hour;
+    ndat = iyear2 * 10000 + imonth2 * 100 + iday2;
+    nleap = 0;
+    for (i = 0; i < tabsiz_nleap; i++) {
+      if (ndat <= leap_seconds[i])
+        break;
+      nleap++;
+    }
+    /* date of potentially missing leapsecond */
+    if (nleap < tabsiz_nleap) {
+      i = leap_seconds[nleap];
+      iyear2 = i / 10000;
+      imonth2 = (i % 10000) / 100;;
+      iday2 = i % 100;
+      tjd = swe_julday(iyear2, imonth2, iday2, 0, SE_GREG_CAL);
+//     swe_revjul(tjd+1, SE_GREG_CAL, &iyear2, &imonth2, &iday2, &d);
+      dt=swe_revjul(tjd_ut+1, SE_GREG_CAL);
+      iyear2 = dt.year;
+      imonth2 = dt.month;
+      iday2 = dt.day;
+      d = dt.hour;
+      dret = getJDfromUTC(iyear2,imonth2,iday2, 0, 0, 0, SE_GREG_CAL, false);
+      d = tjd_et - dret[0];
+      if (d >= 0) {
+        nleap++;
+      } else if (d < 0 && d > -1.0/86400.0) {
+        second_60 = 1;
+      }
+    }
+    /*
+     * UTC, still unsure about one leap second
+     */
+    tjd = J1972 + (tjd_et - tjd_et_1972) - ((double) nleap + second_60) / 86400.0;
+//   swe_revjul(tjd, SE_GREG_CAL, iyear, imonth, iday, &d);
+    dt=swe_revjul(tjd, SE_GREG_CAL);
+    iyear = dt.year;
+    imonth = dt.month;
+    iday = dt.day;
+    d = dt.hour;
+    ihour = (int) d;
+    d -= (double) ihour;
+    d *= 60;
+    imin = (int) d;
+    dsec = (d - (double) imin) * 60.0 + second_60;
+    /*
+     * For input dates > today:
+     * If leap seconds table is not up to date, we'd better interpret the
+     * input time as UT1, not as UTC. How do we find out?
+     * Check, if delta_t - nleap - 32.184 > 0.9
+     */
+    d = getDeltaT(tjd_et);
+    d = getDeltaT(tjd_et - d);
+    if (d * 86400.0 - (double) (nleap + NLEAP_INIT) - 32.184 >= 1.0) {
+//     swe_revjul(tjd_et - d, SE_GREG_CAL, iyear, imonth, iday, &d);
+      dt=swe_revjul(tjd_et - d, SE_GREG_CAL);
+      iyear = dt.year;
+      imonth = dt.month;
+      iday = dt.day;
+      d = dt.hour;
+      ihour = (int) d;
+      d -= (double) ihour;
+      d *= 60;
+      imin = (int) d;
+      dsec = (d - (double) imin) * 60.0;
+    }
+    if (gregflag == SE_JUL_CAL) {
+      tjd = swe_julday(iyear, imonth, iday, 0, SE_GREG_CAL);
+//     swe_revjul(tjd, gregflag, iyear, imonth, iday, &d);
+      dt=swe_revjul(tjd, SE_GREG_CAL);
+      return new SDate(dt.year, dt.month, dt.day, dt.hour);
+    }
+    return new SDate(iyear, imonth, iday, ihour, imin, dsec);
+  }
+
+  /**
+  * Calculates the UTC date from UT1 (universal time) Julian day number.
+  * @param tjd_ut Julian day number (UT1) to be converted.
+  * @param gregflag true == Gregorian calendar, false == Julian calendar
+  * @return The UTC date as SDate object.
+  *
+  * Note:<pre>
+  * - Before 1 jan 1972 UTC, output UT1.
+  *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
+  *   UTC second was regularly changed, so that UTC remained very close to UT1.
+  * - From 1972 on, output is UTC.
+  * - If delta_t - nleap - 32.184 > 1, the output is UT1.
+  *   Note: Like this we avoid errors greater than 1 second in case that
+  *   the leap seconds table (or the Swiss Ephemeris version) has not been
+  *   updated for a long time.</pre>
+  * @see #getUTCfromJDET(double, boolean)
+  * @see swisseph.SDate
+  * @see #SE_GREG_CAL
+  * @see #SE_JUL_CAL
+  */
+  /*
+   * Input:  tjd_ut   Julian day number, universal time (UT1).
+   *         gregfalg Calendar flag
+   * Output: UTC year, month, day, hour, minute, second (decimal).
+   *
+   * - Before 1 jan 1972 UTC, output UT1.
+   *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
+   *   UTC second was regularly changed, so that UTC remained very close to UT1.
+   * - From 1972 on, output is UTC.
+   * - If delta_t - nleap - 32.184 > 1, the output is UT1.
+   *   Note: Like this we avoid errors greater than 1 second in case that
+   *   the leap seconds table (or the Swiss Ephemeris version) has not been
+   *   updated for a long time.
+   */
+  public SDate getUTCfromJDUT1(double tjd_ut, boolean gregflag) {
+    double tjd_et = tjd_ut + getDeltaT(tjd_ut);
+    return getUTCfromJDET(tjd_et, gregflag);
+  }
 } // end of class SweDate
 
 
-class IDate implements java.io.Serializable {
+class IDate
+		implements java.io.Serializable
+		{
   public int year;
   public int month;
   public int day;
