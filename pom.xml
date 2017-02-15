@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>destiny-parent</artifactId>
+    <groupId>destiny</groupId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>swisseph</artifactId>
+  <version>2.01.00</version>
+  <name>swisseph</name>
+  <url>http://destiny.to</url>
+  <build>
+  	<resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+       <directory>src/main/java</directory>
+     </resource>
+  	</resources>
+  </build>
+  <dependencies>
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+  </dependency>
+  </dependencies>
+  <dependencyManagement>
+  	<dependencies>
+  	</dependencies>
+  </dependencyManagement>
+</project>
