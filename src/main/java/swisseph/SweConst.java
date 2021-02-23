@@ -784,13 +784,13 @@ public class SweConst
   public static final int SE_SIDM_ARYABHATA_MSUN =24;
   /**
   * A constant to be used for specifying the sidereal mode (ayanamsha) as
-  * SE_SIDM_SS_REVATI (SS, Revati/zePsc at polar long. 359��50').
+  * SE_SIDM_SS_REVATI (SS, Revati/zePsc at polar long. 359°50').
   * @see SwissEph#swe_set_sid_mode(int, double, double)
   */
   public static final int SE_SIDM_SS_REVATI      =25;
   /**
   * A constant to be used for specifying the sidereal mode (ayanamsha) as
-  * SE_SIDM_SS_CITRA (SS, Citra/Spica at polar long. 180��).
+  * SE_SIDM_SS_CITRA (SS, Citra/Spica at polar long. 180°).
   * @see SwissEph#swe_set_sid_mode(int, double, double)
   */
   public static final int SE_SIDM_SS_CITRA       =26;
@@ -853,10 +853,18 @@ public class SweConst
   public static final int SE_SPLIT_DEG_ROUND_MIN =  2;
   public static final int SE_SPLIT_DEG_ROUND_DEG =  4;
   public static final int SE_SPLIT_DEG_ZODIACAL  =  8;
+  /**
+  * SwissLib.swe_split_deg(): Don't round to next sign, e.g. 29.9999999 will
+  * be rounded to 29d59'59" (or 29d59' or 29d)
+  */
   public static final int SE_SPLIT_DEG_KEEP_SIGN = 16;
                                           /* don't round to next sign,
                                            * e.g. 29.9999999 will be rounded
                                            * to 29d59'59" (or 29d59' or 29d) */
+  /**
+  * SwissLib.swe_split_deg(): Don't round to next degree, e.g. 13.9999999 will
+  * be rounded to 13d59'59" (or 13d59' or 13d)
+  */
   public static final int SE_SPLIT_DEG_KEEP_DEG  = 32;
                                           /* don't round to next degree
                                            * e.g. 13.9999999 will be rounded
@@ -921,7 +929,7 @@ public class SweConst
   public static final double SE_TIDAL_DE406       =  (-25.826);  /* was (-25.7376) until V. 1.76.2 */
   public static final double SE_TIDAL_DE421       =  (-25.85);   /* JPL Interoffice Memorandum 14-mar-2008 on DE421 Lunar Orbit */
   public static final double SE_TIDAL_DE430       =  (-25.82);   /* JPL Interoffice Memorandum 9-jul-2013 on DE430 Lunar Orbit */
-  public static final double SE_TIDAL_DE431       =  (-25.80);   /* IPN Progress Report 42-196 �Ǜ February 15, 2014, p. 15 */
+  public static final double SE_TIDAL_DE431       =  (-25.80);   /* IPN Progress Report 42-196 • February 15, 2014, p. 15 */
   public static final double SE_TIDAL_26          =  (-26.0);
   public static final double SE_TIDAL_DEFAULT     =  SE_TIDAL_DE431;
   public static final double SE_TIDAL_AUTOMATIC   =  999999;

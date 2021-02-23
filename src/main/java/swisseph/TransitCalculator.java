@@ -1,7 +1,8 @@
 package swisseph;
 
 /**
-* Interface for different methods used for transit calculations.
+* Interface for different calculation- and comparison-classes used for
+* transit calculations.
 */
 public abstract class TransitCalculator
 		implements java.io.Serializable
@@ -23,6 +24,18 @@ public abstract class TransitCalculator
   */
   public double getRolloverVal() {
     return rolloverVal;
+  }
+  /**
+   * @return Returns the lowest possible offset value.
+   */
+  public double getMinOffset() {
+    return 0.;
+  }
+  /**
+   * @return Returns the highest possible offset value.
+   */
+  public double getMaxOffset() {
+    return 360.;
   }
   /**
   * This sets the degree or other value for the position or speed of

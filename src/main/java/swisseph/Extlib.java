@@ -9,8 +9,12 @@
 package swisseph;
 
 
-import java.text.*;  // DateFormat etc.
-import java.util.*;  // Locale etc.
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
 * Some supportive methods, mainly for internationalization.
@@ -39,6 +43,7 @@ public class Extlib
 
   /**
   * This method is for debugging purposes only.
+  * @param argv (unused parameter)
   */
   public static void main(String argv[]) {
     new Extlib();
@@ -48,17 +53,19 @@ public class Extlib
 
   /**
   * This method returns all available locale strings
+  * @return array of locale names like en_US etc.
   */
   public String[] getLocales() {
     Locale[] locs = DateFormat.getAvailableLocales();
-    String[] locStrings = new String[locs.length];
+    String[] locStrings = new String[locs.length + 1]; // All locales plus "iso" locale (YYYY-MM-DD)
 
+    locStrings[0] = "iso";
     for (int r=0; r<locs.length; r++) {
-      locStrings[r] = locs[r].getLanguage();
+      locStrings[r+1] = locs[r].getLanguage();
       if (locs[r].getCountry().length() > 0) {
-        locStrings[r] += "_"+locs[r].getCountry();
+        locStrings[r+1] += "_"+locs[r].getCountry();
         if (locs[r].getVariant().length() > 0) {
-          locStrings[r] += "_"+locs[r].getVariant();	// e.g. th_TH_TH
+          locStrings[r+1] += "_"+locs[r].getVariant();	// e.g. th_TH_TH
         }
       }
     }
@@ -77,19 +84,55 @@ public class Extlib
   public Locale getLocale(String locString) {
     String lang = locString;
     String cntry = "";
+    String variant = "";
     if (locString == null || "".equals(locString)) {
       return Locale.getDefault();
     }
-    int idx = locString.indexOf("_");
-    if (idx >= 0) {
-      lang = locString.substring(0,idx);
-      cntry = locString.substring(idx+1);
+    // Arabic numbers don't get used by default, see http://bugs.sun.com/view_bug.do?bug_id=4336841
+    // Work around this for all "inherited" arabic locales:
+    // ar:    \u0660
+    // ar_AE: inherited	// from ar?
+    // ar_BH: inherited
+    // ar_DZ: 0
+    // ar_EG: inherited
+    // ar_IN: inherited
+    // ar_IQ; inherited
+    // ar_JO: inherited
+    // ar_KW: inherited
+    // ar_LB: inherited
+    // ar_LY: inherited
+    // ar_MA: 0
+    // ar_OM: inherited
+    // ar_QA: inherited
+    // ar_SA: inherited
+    // ar_SD: inherited
+    // ar_SY: inherited
+    // ar_TN: 0
+    // ar_YE: inherited
+    boolean arabicNumbers = (locString.startsWith("ar") &&
+        !"ar_DZ".equals(locString) &&
+        !"ar_MA".equals(locString) &&
+        !"ar_TN".equals(locString));
+    if (arabicNumbers) {
+        return new Locale.Builder().setLanguageTag(locString.replace('_','-') + "-u-nu-arab").build();
+    }
+
+    String[] locparts = locString.split("_");
+    int len = locparts.length;
+    lang = locparts[0];
+    if (len > 1) {
+      cntry = locparts[1];
+    }
+    if (len > 2) {
+      variant = locparts[2];
     }
     Locale loc = null;
-    if (cntry.equals("")) {
+    if (len == 1) {
       loc = new Locale(lang);
-    } else {
+    } else if (len == 2) {
       loc = new Locale(lang, cntry);
+    } else {
+      loc = new Locale(lang, cntry, variant);
     }
 
     return loc;
@@ -109,14 +152,21 @@ public class Extlib
   * "0", which differs from normal DateFormat output.
   * @param locString The input locale for which this date time format
   * should be created. See getLocale() for more infos.
+  * @param force24h Force the use of the 24 hour date format even on 12h date formats
   * @return The normalized form of the DateFormat.
   */
   public SimpleDateFormat createLocDateTimeFormatter(String locString, boolean force24h) {
 
     // Get date format:
-    Locale loc = getLocale(locString);
-    SimpleDateFormat df = (SimpleDateFormat)DateFormat.getDateTimeInstance(
+    Locale loc;
+    SimpleDateFormat df;
+    if (locString.equals("iso")) {
+      df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    } else {
+      loc = getLocale(locString);
+      df = (SimpleDateFormat)DateFormat.getDateTimeInstance(
               java.text.DateFormat.SHORT, java.text.DateFormat.MEDIUM, loc);
+    }
 
     // Revert to UTC:
     df.getCalendar().setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -131,6 +181,9 @@ public class Extlib
   /**
   * Ensures a date pattern with four letter year, two letter month and day
   * and 24h time format, if requested.
+  * @param pattern The date pattern to be normalized
+  * @param force24h Force the use of the 24 hour date format even on 12h date formats
+  * @return The normalized form of the DateFormat.
   */
   public String getNormalizedDatePattern(String pattern, boolean force24h) {
     int idx = 0;
@@ -189,6 +242,8 @@ public class Extlib
 
   /**
   * Returns the decimal separator of the NumberFormat
+  * @param nf NumberFormat for which the decimal separator should be retrieved
+  * @return Decimal separator for this NumberFormat
   */
   public String getDecimalSeparator(NumberFormat nf) {
     if (nf instanceof DecimalFormat) {
@@ -201,9 +256,13 @@ public class Extlib
   * Returns the index in the formatter pattern of the given pattern 'what'
   * recalculated to the APPLIED pattern of the formatter.
   * E.g. for locale zh_HK the pattern is:
-  *    yyyy'���'MM'���'dd'���' ahh:mm:ss
+  *    yyyy'年'MM'月'dd'日' ahh:mm:ss
   * The index of 'ss' would NOT be 25, which we would get when simply counting in
   * the pattern string, but rather 20, when counting in the resulting string.
+  * @param pattern Date pattern
+  * @param what Search for this String in the pattern
+  * @param dof The DateFormat to be used
+  * @return Index after 'what' string in pattern
   */
   public int getPatternLastIdx(String pattern, String what, SimpleDateFormat dof) {
     // If we want to append fractions of a second, we have to know

@@ -78,7 +78,7 @@ class SwephData
 
 
   static final String SE_VERSION = "2.01.00";
-  static final String SE_JAVA_VERSION = "2.01.00_00";
+  static final String SE_JAVA_VERSION = "2.01.00_02";
 
   // Aus sweph.h:
   static final int[] PNOINT2JPL = new int[] {SwephJPL.J_EARTH, SwephJPL.J_MOON,
@@ -208,8 +208,8 @@ class SwephData
     new AyaInit(1903396.7895321, 0),       /*23: Aryabhata, same date, but UT 6:56:55.57
                                                  analogous 21 */
     new AyaInit(1903396.7895321,-0.23763238),/*24: Aryabhata, analogous 22 */
-    new AyaInit(1903396.8128654,-0.79167046),/*25: SS, Revati/zePsc at polar long. 359��50'*/
-    new AyaInit(1903396.8128654, 2.11070444),/*26: SS, Citra/Spica at polar long. 180�� */
+    new AyaInit(1903396.8128654,-0.79167046),/*25: SS, Revati/zePsc at polar long. 359°50'*/
+    new AyaInit(1903396.8128654, 2.11070444),/*26: SS, Citra/Spica at polar long. 180° */
     new AyaInit(0, 0),	                /*27: True Citra (Spica exactly at 0 Libra) */
     new AyaInit(0, 0),	                /*28: True Revati (zeta Psc exactly at 0 Aries) */
     new AyaInit(0, 0),			/*29: True Pushya (delta Cnc exactly a 16 Cancer */

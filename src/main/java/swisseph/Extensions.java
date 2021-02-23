@@ -53,6 +53,18 @@ class Extensions
                     double jdMax)
          throws IllegalArgumentException, SwissephException {
     jdET = tc.preprocessDate(jdET, back);
+
+    double offset = tc.getOffset();
+
+    if (!tc.rollover) {
+    	double minv = tc.getMinOffset();
+    	double maxv = tc.getMaxOffset();
+    	if (offset < minv || offset > maxv) {
+    	      throw new SwissephException(jdET, SwissephException.OUT_OF_TIME_RANGE,
+    	              "No transit possible due to offset out of range.");
+    	}
+    }
+
     double max = tc.getMaxSpeed();
     double min = tc.getMinSpeed();
 
@@ -63,7 +75,6 @@ class Extensions
     boolean above;
     double lastVal;
     double val;
-    double offset = tc.getOffset();
 
 
 

@@ -62,7 +62,11 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
   * and speeds.<p>
   * Calculation of partile transits is possible now, but it's still a
   * rather slow calculation and not finally tested.<p>
-  * @param sw A SwissEph object, if you have one available. May be null.
+  * @param sw A SwissEph object, if you have one available. May be null,
+  * if you don't use sidereal or topocentric mode.<br>
+  * If you use sidereal or topocentric mode, you have to set the sidereal
+  * mode or topocentric location before calculating transits. Both planets
+  * share the same sidereal mode and location.
   * @param pl1 The planet number of the first planet.<br>
   * Planets from SweConst.SE_SUN up to SweConst.SE_INTP_PERG (with the
   * exception of SweConst.SE_EARTH) have their extreme speeds saved, so
@@ -73,7 +77,7 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
   * transit or you might get a rather bad transit time in very rare
   * circumstances.<br>
   * Use SweConst.SE_AST_OFFSET + asteroid number for planets with a
-  * planet number not defined als SweConst.SEFLG_*.
+  * planet number not defined by SweConst.SEFLG_*.
   * @param pl2 The second planet that will be transited by the first planet.
   * @param flags The calculation type flags (SweConst.SEFLG_TRANSIT_LONGITUDE,
   * SweConst.SEFLG_TRANSIT_LATITUDE or SweConst.SEFLG_TRANSIT_DISTANCE in
@@ -125,7 +129,11 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
   * and speeds.<p>
   * Calculation of partile transits is possible now, but it's still a
   * rather slow calculation and not finally tested.<p>
-  * @param sw A SwissEph object, if you have one available. May be null.
+  * @param sw A SwissEph object, if you have one available. May be null,
+  * if you don't use sidereal or topocentric mode.<br>
+  * If you use sidereal or topocentric mode, you have to set the sidereal
+  * mode or topocentric location before calculating transits. Both planets
+  * share the same sidereal mode and location.
   * @param pl1 The planet number of the first planet.<br>
   * Planets from SweConst.SE_SUN up to SweConst.SE_INTP_PERG (with the
   * exception of SweConst.SE_EARTH) have their extreme speeds saved, so
@@ -136,7 +144,7 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
   * transit or you might get a rather bad transit time in very rare
   * circumstances.<br>
   * Use SweConst.SE_AST_OFFSET + asteroid number for planets with a
-  * planet number not defined als SweConst.SEFLG_*.
+  * planet number not defined by SweConst.SEFLG_*.
   * @param pl2 The second planet that will be transited by the first planet.
   * @param flags The calculation type flags (SweConst.SEFLG_TRANSIT_LONGITUDE,
   * SweConst.SEFLG_TRANSIT_LATITUDE or SweConst.SEFLG_TRANSIT_DISTANCE in
@@ -164,6 +172,14 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
   * position of the second planet.<br>
   * Specify the desired transit degree or distance (in AU) or transit speed (in
   * deg/day).
+  * @param precalcCount Only used, when a planet without known minimum and
+  * maximum speed (or acceleration on speed transit) has to be calculated (this
+  * is the case with asteroids for example). This value determines, how many
+  * random calculations will be done to get an idea of the speed or acceleration
+  * range of the planet. Defaults to 200, minimum is 100.
+  * @param precalcSafetyfactor Only for objects without known range of possible speeds
+  * (esp. asteroids or similar): increase the calculated random speed values
+  * by multiplying them with this safety factor. Defaults to 1.4, minimum will be 1.1.
   * @see swisseph.TCPlanetPlanet#TCPlanetPlanet(SwissEph, int, int, int, double)
   * @see swisseph.TCPlanet#TCPlanet(SwissEph, int, int, double)
   * @see swisseph.TCPlanet#TCPlanet(SwissEph, int, int, double, int, double)
@@ -192,6 +208,9 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
     }
 
     // Check parameter: //////////////////////////////////////////////////////
+    precalcCount = Math.max(precalcCount, 100);
+    precalcSafetyfactor = Math.max(precalcSafetyfactor, 1.1);
+
     // List of all valid flags:
     this.tflags = flags;
     int vFlags = SweConst.SEFLG_EPHMASK |
@@ -413,6 +432,32 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
     return rollover;
   }
   /**
+   * @return Returns the lowest possible offset value.
+   */
+  public double getMinOffset() {
+    if ((tflags & SweConst.SEFLG_TRANSIT_SPEED) != 0) {
+      double min1 = getSpeed(true, pl1, false);
+      double max1 = getSpeed(true, pl1, true);
+      double min2 = getSpeed(true, pl2, false);
+      double max2 = getSpeed(true, pl2, true);
+      return SMath.min(min1-max2, min2-max1);
+    }
+    return 0.;
+  }
+  /**
+   * @return Returns the highest possible offset value.
+   */
+  public double getMaxOffset() {
+    if ((tflags & SweConst.SEFLG_TRANSIT_SPEED) != 0) {
+      double min1 = getSpeed(true, pl1, false);
+      double max1 = getSpeed(true, pl1, true);
+      double min2 = getSpeed(true, pl2, false);
+      double max2 = getSpeed(true, pl2, true);
+      return SMath.max(max1-min2, max2-min1);
+    }
+    return 360.;
+  }
+  /**
   * This sets the transit degree or other transit value for the difference
   * or sum of the positions or speeds of both planets. It will be used on
   * the next call to getTransit().
@@ -436,11 +481,17 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
   * @return An array of identifiers identifying the calculated objects.
   */
   public Object[] getObjectIdentifiers() {
-    return new Object[]{"" + pl1, "" + pl2};
+    return new String[]{"" + pl1, "" + pl2};
   }
 
   /**
   * Checks if the two planets have a partile aspect.
+  * @param jdET Time to check
+  * @param p1 First planet
+  * @param p2 Second planet
+  * @param flgs Calculation flags, see the swe_calc() method
+  * @param offset The wanted offset between the planets
+  * @return true or false
   */
   public boolean hasPartileAspect(double jdET, int p1, int p2, int flgs, double offset) {
     StringBuffer serr = new StringBuffer();
@@ -715,10 +766,13 @@ System.err.println("SERR: " + serr);
 
 
   private double getSpeed(boolean min, int planet) {
+    boolean speed = ((tflags&SweConst.SEFLG_TRANSIT_SPEED) != 0);
+    return getSpeed(min, planet, speed);
+  }
+  private double getSpeed(boolean min, int planet, boolean speed) {
     boolean lon = ((tflags&SweConst.SEFLG_TRANSIT_LONGITUDE) != 0);
     boolean lat = ((tflags&SweConst.SEFLG_TRANSIT_LATITUDE) != 0);
     boolean dist = ((tflags&SweConst.SEFLG_TRANSIT_DISTANCE) != 0);
-    boolean speed = ((tflags&SweConst.SEFLG_TRANSIT_SPEED) != 0);
     boolean topo = ((tflags&SweConst.SEFLG_TOPOCTR) != 0);
     boolean helio = ((tflags&SweConst.SEFLG_HELCTR) != 0);
     boolean rect = ((tflags&SweConst.SEFLG_EQUATORIAL) != 0 && !lat && !dist);

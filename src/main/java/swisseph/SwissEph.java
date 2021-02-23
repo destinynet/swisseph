@@ -81,9 +81,15 @@
 */
 package swisseph;
 
-import java.util.*;
-import java.net.*;
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.Socket;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
 
 /**
 * This class is the basic class for planetary calculations.<p>
@@ -129,19 +135,17 @@ public class SwissEph
   * the Swiss Ephemeris data files. If you want to use this class in
   * applets, you would have to specify the path as a valid http URL on
   * the same www server from where your applet gets served, if the
-  * normal security restrictions apply.<br />
+  * normal security restrictions apply.<br>
   * ATTENTION: This constructor sets a global parameter used in
   * calculation of delta T when parameter path is not null.
   * @param path The search path for the Swiss Ephemeris
   * and JPL
   * data files. If null or empty, a default path will be used.
-  * You will have to quote ':', ';' and '\' characters, so a
-  * path like <code>&quot;C:\swiss\ephe&quot;</code> has to be written as
-  * <code>&quot;C\\:\\swiss\\ephe&quot;</code>, as any '\' will be
-  * evaluated twice: the first time by the Java compiler, and the second
-  * time by the program itself. You can specify multiple path elements
-  * separated by the (unquoted) ':' or ';' character. See swe_set_ephe_path()
-  * for more information.
+  * Additionally to the '\' character, you will have to quote ':' and ';',
+  * so a path like <code>&quot;C:\swiss\ephe&quot;</code> has to be written
+  * as <code>&quot;C\\:\\swiss\\ephe&quot;</code>.
+  * You can specify multiple path elements separated by the (unquoted) ':' or
+  * ';' character. See swe_set_ephe_path() for more information.
   * @see SweConst#SE_EPHE_PATH
   * @see SwissEph#swe_set_ephe_path(java.lang.String)
   */
@@ -163,9 +167,9 @@ public class SwissEph
     swed.geopos_is_set=false;
     swed.ayana_is_set=false;
 // JAVA only:
-    if (path != null) {
+//    if (path != null) {
       swe_set_ephe_path(path);
-    }
+//    }
   }
 //////////////////////////////////////////////////////////////////////////////
 // End of Constructors ///////////////////////////////////////////////////////
@@ -190,7 +194,7 @@ public class SwissEph
   * size arbitrarily.<P>
   * Some test numbers for the calculation of sun, and for calculation of
   * 9&nbsp;planets in a row:<BR>
-  * <table border="1"><tr><th>buffer<br>size</th><th>HTTP Requests<br>for the sun</th><th>HTTP Requests<br>for 9 planets</th></tr>
+  * <table border="1" summary=""><tr><th>buffer<br>size</th><th>HTTP Requests<br>for the sun</th><th>HTTP Requests<br>for 9 planets</th></tr>
   * <tr><td align="right">100</td><td align="right">57</td><td align="right">69</td></tr>
   * <tr><td align="right">200</td><td align="right">30</td><td align="right">40</td></tr>
   * <tr><td align="right">300</td><td align="right">23</td><td align="right">33</td></tr>
@@ -246,7 +250,7 @@ public class SwissEph
   /**
   * This is the main calculation routine for all planets, asteroids, lunar
   * nodes and apogees.
-  * See <A HREF="SwissEph.html#swe_calc(double, int, int, double[], java.lang.StringBuffer)">swe_calc(...)</A> for more information.<br>
+  * See swe_calc(...) for more information.<br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
   * @param tjd_ut The Julian Day number in UT (Universal Time).
@@ -278,16 +282,16 @@ public class SwissEph
   * nodes and apogees. It is equal to swe_calc_ut() with the exception that
   * the time has to be given in ET (Ephemeris Time or Dynamical Time). You
   * would get ET by adding deltaT to the UT, e.g.,
-  * <CODE>tjd_et&nbsp;+&nbsp;SweDate.getDeltaT(tjd_et)</CODE>.<P>
+  * <CODE>tjd_et&nbsp;+&nbsp;SweDate.getDeltaT(tjd_et)</CODE>.
   * <P>The parameter xx is used as an output parameter containing the
   * following info:
-  * <P><CODE><BLOCKQUOTE>xx[0]:&nbsp;&nbsp;&nbsp;longitude<BR>
+  * <BLOCKQUOTE><CODE>xx[0]:&nbsp;&nbsp;&nbsp;longitude<BR>
   * xx[1]:&nbsp;&nbsp;&nbsp;latitude<BR>
   * xx[2]:&nbsp;&nbsp;&nbsp;distance in AU<BR>
   * xx[3]:&nbsp;&nbsp;&nbsp;speed in longitude (degree / day)<BR>
   * xx[4]:&nbsp;&nbsp;&nbsp;speed in latitude (degree / day)<BR>
   * xx[5]:&nbsp;&nbsp;&nbsp;speed in distance (AU / day)<BR>
-  * </BLOCKQUOTE></CODE><P>
+  * </CODE></BLOCKQUOTE><P>
   * The speed infos will be calculated only, if the appropriate SEFLG_*
   * switch is set.
   * @param tjd The Julian Day number in ET (UT + deltaT).
@@ -329,9 +333,24 @@ public class SwissEph
   // This is the new recommended interface for planetary calculations.
   // It should be rewritten to be used for fixstars as well.
   /**
+  * This method will probably be deprecated some time in future or change
+  * parameters. Use swe_calc() or swe_calc_ut() instead.
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
-  * @see SweDate#setGlobalTidalAcc(double)
+  * @param jdET The Julian Day number in ET (UT + deltaT).
+  * @param ipl The body to be calculated. See
+  * <A HREF="SweConst.html">SweConst</A> for a list of bodies
+  * @param iflag A flag that contains detailed specification on how the body
+  * is to be computed. See <A HREF="SweConst.html">SweConst</A>
+  * for a list of valid flags (SEFLG_*).
+  * @param xx A double[6] in which the result is returned. See above for more
+  * details.
+  * @return iflag; iflag MAY have changed from input parameter, when the
+  * calculation had used different flags, e.g.: when specified SweConst.SEFLG_SWIEPH,
+  * but the ephemeris data files wheren't available, the calculation automatically
+  * switches to Moshier calculations (SweConst.SEFLG_MOSEPH) and changes iflag.
+  * @see #swe_calc_ut(double, int, int, double[], java.lang.StringBuffer)
+  * @see #swe_calc(double, int, int, double[], java.lang.StringBuffer)
   */
   public int calc(double jdET, int ipl, int iflag, double xx[])
                   throws SwissephException {
@@ -617,14 +636,15 @@ public class SwissEph
   * @param path The search path for the Swiss Ephemeris
   * and JPL
   * data files. If null or empty, a default path will be used.
-  * You will have to quote ':', ';' and '\' characters, so a
-  * path like <code>&quot;C:\swiss\ephe&quot;</code> has to be written as
-  * <code>&quot;C\\:\\swiss\\ephe&quot;</code>, as any '\' will be
-  * evaluated twice: the first time by the Java compiler, and the second
-  * time by the program itself.
+  * Additionally to the '\' character, you will have to quote ':' and ';',
+  * so a path like <code>&quot;C:\swiss\ephe&quot;</code> has to be written
+  * as <code>&quot;C\\:\\swiss\\ephe&quot;</code>.
+  * You can specify multiple path elements separated by the (unquoted) ':' or
+  * ';' character.
   * @see SweDate#setGlobalTidalAcc(double)
   */
   public void swe_set_ephe_path(String path) {
+if(path == null) return;
     int i, iflag;
     String s="";
     double xx[] = new double[6];
@@ -800,8 +820,8 @@ public class SwissEph
   * This sets the ayanamsha mode for sidereal planet calculations. If you
   * don't set the ayanamsha mode, it will default to Fagan/Bradley
   * (SE_SIDM_FAGAN_BRADLEY).
-  * The predefined ayanamsha modes are as follows:<P><CODE>
-  * <blockquote>
+  * The predefined ayanamsha modes are as follows:
+  * <blockquote><CODE>
   * SE_SIDM_FAGAN_BRADLEY<BR>
   * SE_SIDM_LAHIRI<BR>
   * SE_SIDM_DELUCE<BR>
@@ -823,8 +843,7 @@ public class SwissEph
   * SE_SIDM_J2000<BR>
   * SE_SIDM_J1900<BR>
   * SE_SIDM_B1950<BR>
-  * </blockquote>
-  * </CODE><P>
+  * </CODE></blockquote><P>
   * @param sid_mode One of the above ayanamsha modes plus (optionally)
   * one of the non-standard sidereal calculation modes of
   * <CODE>SE_SIDBIT_ECL_T0</CODE> or <CODE>SE_SIDBIT_SSY_PLANE</CODE>.
@@ -1008,9 +1027,48 @@ public class SwissEph
   * Dynamical Time instead of Universal Time UT). You would get ET by adding
   * deltaT to the UT, e.g.,
   * <CODE>tjd_et&nbsp;+&nbsp;SweDate.getDeltaT(tjd_et)</CODE>.<P>
-  * See <A HREF="SwissEph.html#swe_fixstar_ut(java.lang.StringBuffer, double, int, double[], java.lang.StringBuffer)">
-  * swe_fixstar_ut(...)</A> for missing information.
+  * See swe_fixstar_ut(...) for missing information.
   * @see #swe_fixstar_ut(java.lang.StringBuffer, double, int, double[], java.lang.StringBuffer)
+  */
+  /**
+  * Computes fixed stars. This method is identical to swe_fixstar_ut() with
+  * the one exception that the time has to be given in ET (Ephemeris Time or
+  * Dynamical Time instead of Universal Time UT). You would get ET by adding
+  * deltaT to the UT, e.g.,
+  * <CODE>tjd_et&nbsp;+&nbsp;SweDate.getDeltaT(tjd_et)</CODE>.<P>
+  * The fixed stars are defined in the file sefstars.txt and the star
+  * parameter must refer to any entry in that file. The entries in that file
+  * start with <I>traditional_name&nbsp;,nomenclature_name,...</I>, e.g.,
+  * "<CODE>Alpheratz&nbsp;&nbsp;&nbsp;&nbsp;,alAnd,</CODE>"[...].
+  * @param star Actually, it is an input and an output parameter at the same
+  * time. So it is not possible to define it as a String, but rather as a
+  * StringBuffer. On input it defines the star to be calculated and can be
+  * in three forms:<BR>
+  * - as a positive integer number meaning the star in the file sefstars.txt
+  * that is given on the line number of the given number, without counting
+  * any comment lines beginning with #.<BR>
+  * - as a traditional name case insensitively compared to the first name
+  * on every line in sefstars.txt.<BR>
+  * - as a nomenclature prefixed by a comma. This name is compared in a case
+  * preserving manner to the nomenclature name on every line in
+  * sefstars.txt.<BR>
+  * On Output it returns the complete name (traditional plus nomenclature
+  * name), e.g. "<CODE>Alpheratz,alAnd</CODE>".<br>
+  * <b>ATTENTION: This method possibly (re-)sets a global parameter used
+  * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
+  * @param tjd The Julian Day in ET
+  * @param iflag Any of the SweConst.SEFLG_* flags
+  * @param xx A double[6] used as output parameter only. This returns
+  * longitude, latitude and the distance (in AU) of the fixed stars, but
+  * it does <B>not</B> return any speed values in xx[3] to xx[5] as it does
+  * in swe_calc() / swe_calc_ut(), even if you specify SweConst.SEFLG_SPEED
+  * in the flags parameter!
+  * @param serr A StringBuffer containing a warning or error message, if
+  * something fails.
+  * @return iflag or SweConst.ERR (-1); iflag MAY have changed from input
+  * parameter!
+  * @see #swe_fixstar(java.lang.StringBuffer, double, int, double[], java.lang.StringBuffer)
+  * @see SweDate#setGlobalTidalAcc(double)
   */
   public int swe_fixstar(StringBuffer star, double tjd, int iflag, double xx[],
                          StringBuffer serr) {
@@ -1114,8 +1172,7 @@ String slast_starname;
                                     swed.ephepath, null);
         } catch (SwissephException se2) {
           if (serr != null) {
-            serr.setLength(0);
-            serr.append(se2.getMessage());
+            serr.append(se2.getMessage() == null ? "" : se2.getMessage());
             swErrorType = se2.getType();
           }
 	  swed.is_old_starfile = false;
@@ -1189,7 +1246,7 @@ String slast_starname;
   * Computes fixed stars. This method is identical to swe_fixstar() with the
   * one exception that the time has to be given in UT (Universal Time instead
   * of Ephemeris Time or Dynamical Time ET).<P>
-  * The fixed stars are defined in the file fixstars.cat and the star
+  * The fixed stars are defined in the file sefstars.txt and the star
   * parameter must refer to any entry in that file. The entries in that file
   * start with <I>traditional_name&nbsp;,nomenclature_name,...</I>, e.g.,
   * "<CODE>Alpheratz&nbsp;&nbsp;&nbsp;&nbsp;,alAnd,</CODE>"[...].
@@ -1197,14 +1254,14 @@ String slast_starname;
   * time. So it is not possible to define it as a String, but rather as a
   * StringBuffer. On input it defines the star to be calculated and can be
   * in three forms:<BR>
-  * - as a positive integer number meaning the star in the file fixstars.cat
+  * - as a positive integer number meaning the star in the file sefstars.txt
   * that is given on the line number of the given number, without counting
   * any comment lines beginning with #.<BR>
   * - as a traditional name case insensitively compared to the first name
-  * on every line in fixstars.cat.<BR>
+  * on every line in sefstars.txt.<BR>
   * - as a nomenclature prefixed by a comma. This name is compared in a case
   * preserving manner to the nomenclature name on every line in
-  * fixstars.cat.<BR>
+  * sefstars.txt.<BR>
   * On Output it returns the complete name (traditional plus nomenclature
   * name), e.g. "<CODE>Alpheratz,alAnd</CODE>".<br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
@@ -1424,6 +1481,57 @@ String slast_starname;
     return null;
   }
 
+  /**
+  * Returns the name of the house object.
+  * @param obj Constant for house object
+  * @return Corresponding string for this house constant
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE1
+  * @see SweConst#SE_HOUSE10
+  * @see SweConst#SE_HOUSE11
+  * @see SweConst#SE_HOUSE12
+  * @see SweConst#SE_ASC
+  * @see SweConst#SE_MC
+  * @see SweConst#SE_ARMC
+  * @see SweConst#SE_VERTEX
+  * @see SweConst#SE_EQUASC
+  * @see SweConst#SE_COASC1
+  * @see SweConst#SE_COASC2
+  * @see SweConst#SE_POLASC
+  */
+  public static String getHouseobjectname(int obj) {
+    switch(obj) {
+	case SweConst.SE_HOUSE1: return "house 1";
+	case SweConst.SE_HOUSE2: return "house 2";
+	case SweConst.SE_HOUSE3: return "house 3";
+	case SweConst.SE_HOUSE4: return "house 4";
+	case SweConst.SE_HOUSE5: return "house 5";
+	case SweConst.SE_HOUSE6: return "house 6";
+	case SweConst.SE_HOUSE7: return "house 7";
+	case SweConst.SE_HOUSE8: return "house 8";
+	case SweConst.SE_HOUSE9: return "house 9";
+	case SweConst.SE_HOUSE10: return "house 10";
+	case SweConst.SE_HOUSE11: return "house 11";
+	case SweConst.SE_HOUSE12: return "house 12";
+        case SweConst.SE_ASC: return "ascendant";
+        case SweConst.SE_MC: return "medium coeli";
+        case SweConst.SE_ARMC: return "sidereal time";
+        case SweConst.SE_VERTEX: return "vertex";
+        case SweConst.SE_EQUASC: return "equatorial ascendant";
+        case SweConst.SE_COASC1: return "co-ascendant of W. Koch";
+        case SweConst.SE_COASC2: return "co-ascendant of M. Munkasey";
+        case SweConst.SE_POLASC: return "polar asc. of M. Munkasey";
+    }
+    return "";
+  }
+
   /* set geographic position and altitude of observer */
   /**
   * If you want to do calculations relative to the observer on some place
@@ -1606,7 +1714,7 @@ String slast_starname;
   *                    of the moon with the body tested, add the following flag:
   *                    backward |= SE_ECL_ONE_TRY. If this flag is not set,
   *                    the function will search for an occultation until it
-  *                    finds one. For bodies with ecliptical latitudes > 5,
+  *                    finds one. For bodies with ecliptical latitudes &gt; 5,
   *                    the function may search successlessly until it reaches
   *                    the end of the ephemeris.
   *                    (Note: we do not add SE_ECL_ONE_TRY to ifl, because
@@ -1648,7 +1756,30 @@ String slast_starname;
   * in ET (Ephemeris Time or Dynamical Time). You would get ET by adding
   * deltaT to the UT, e.g.,
   * <CODE>tjd_et&nbsp;+&nbsp;SweDate.getDeltaT(tjd_et)</CODE>.<P>
-  * See <A HREF="SwissEph.html#swe_nod_aps_ut(double, int, int, int, double[], double[], double[], double[], java.lang.StringBuffer)">swe_nod_aps_ut(...)</A> for missing information.
+  * @param tjd_et The time in ET
+  * @param ipl Planet number
+  * @param iflag Any of the SEFLG_* flags
+  * @param method Defines, what kind of calculation is wanted (SE_NODBIT_MEAN,
+  * SE_NODBIT_OSCU, SE_NODBIT_OSCU_BAR, SE_NODBIT_FOPOINT)
+  * @param xnasc Output parameter of double[6]. On return it contains six
+  * doubles for the ascending node
+  * @param xndsc Output parameter of double[6]. On return it contains six
+  * doubles for the descending node
+  * @param xperi Output parameter of double[6]. On return it contains six
+  * doubles for the perihelion
+  * @param xaphe Output parameter of double[6]. On return it contains six
+  * doubles for the aphelion
+  * @param serr A StringBuffer containing a warning or error message, if
+  * something fails.
+  * @return SweConst.OK (0) or SweConst.ERR (-1)
+  * @see SwissEph#swe_nod_aps_ut(double, int, int, int, double[], double[], double[], double[], java.lang.StringBuffer)
+  * @see SweConst#OK
+  * @see SweConst#ERR
+  * @see SweConst#SE_NODBIT_MEAN
+  * @see SweConst#SE_NODBIT_OSCU
+  * @see SweConst#SE_NODBIT_OSCU_BAR
+  * @see SweConst#SE_NODBIT_FOPOINT
+  * @see SweDate#setGlobalTidalAcc(double)
   */
   public int swe_nod_aps(double tjd_et, int ipl, int iflag, int  method,
                          double[] xnasc, double[] xndsc,
@@ -1711,7 +1842,38 @@ String slast_starname;
   * has to be given in ET (Ephemeris Time or Dynamical Time). You
   * would get ET by adding deltaT to the UT, e.g.,
   * <CODE>tjd_et&nbsp;+&nbsp;SweDate.getDeltaT(tjd_et)</CODE>.<P>
-  * See <A HREF="SwissEph.html#swe_pheno_ut(double, int, int, double[], java.lang.StringBuffer)">swe_pheno_ut(...)</A> for missing information.
+  * See swe_pheno_ut() for missing information.
+  * Computes phase, phase angel, elongation, apparent diameter and apparent
+  * magnitude for sun, moon, all planets and asteroids.
+  * <P>attr is an output parameter with the following meaning:</p>
+  * <BLOCKQUOTE><CODE>
+  * attr[0]:&nbsp;&nbsp;&nbsp;phase angle (earth-planet-sun).<BR>
+  * attr[1]:&nbsp;&nbsp;&nbsp;phase (illumined fraction of disc).<BR>
+  * attr[2]:&nbsp;&nbsp;&nbsp;elongation of planet.<BR>
+  * attr[3]:&nbsp;&nbsp;&nbsp;apparent diameter of disc.<BR>
+  * attr[4]:&nbsp;&nbsp;&nbsp;apparent magnitude.<BR>
+  * </CODE></BLOCKQUOTE><P><B>Attention: attr must be a double[20]!</B><br>
+  * <b>ATTENTION: This method possibly (re-)sets a global parameter used
+  * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
+  * @param tjd The Julian Day number in ET.
+  * @param ipl The body number to be calculated. See class
+  * <A HREF="SweConst.html">SweConst</A> for a list of bodies (SE_*)
+  * @param iflag Which ephemeris is to be used (SEFLG_JPLEPH, SEFLG_SWIEPH,
+  * SEFLG_MOSEPH). Other flags: SEFLG_TRUEPOS, SEFLG_HELCTR.
+  * @param attr A double[20] in which the result is returned. See above for more
+  * details.
+  * @param serr A StringBuffer containing a warning or error message, if
+  * something fails.
+  * @return SweConst.OK (0) or SweConst.ERR (-1)
+  * @see SwissEph#swe_pheno_ut(double, int, int, double[], java.lang.StringBuffer)
+  * @see SweConst#OK
+  * @see SweConst#ERR
+  * @see SweConst#SEFLG_JPLEPH
+  * @see SweConst#SEFLG_SWIEPH
+  * @see SweConst#SEFLG_MOSEPH
+  * @see SweConst#SEFLG_TRUEPOS
+  * @see SweConst#SEFLG_HELCTR
+  * @see SweDate#setGlobalTidalAcc(double)
   */
   public int swe_pheno(double tjd, int ipl, int iflag, double[] attr,
                        StringBuffer serr) {
@@ -1724,21 +1886,21 @@ String slast_starname;
   /**
   * Computes phase, phase angel, elongation, apparent diameter and apparent
   * magnitude for sun, moon, all planets and asteroids.
-  * <P>attr is an output parameter with the following meaning:
-  * <P><CODE><BLOCKQUOTE>
+  * <P>attr is an output parameter with the following meaning:</p>
+  * <BLOCKQUOTE><CODE>
   * attr[0]:&nbsp;&nbsp;&nbsp;phase angle (earth-planet-sun).<BR>
   * attr[1]:&nbsp;&nbsp;&nbsp;phase (illumined fraction of disc).<BR>
   * attr[2]:&nbsp;&nbsp;&nbsp;elongation of planet.<BR>
   * attr[3]:&nbsp;&nbsp;&nbsp;apparent diameter of disc.<BR>
   * attr[4]:&nbsp;&nbsp;&nbsp;apparent magnitude.<BR>
-  * </BLOCKQUOTE></CODE><P><B>Attention: attr must be a double[20]!</B><br>
+  * </CODE></BLOCKQUOTE><P><B>Attention: attr must be a double[20]!</B><br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
   * @param tjd_ut The Julian Day number in UT (Universal Time).
   * @param ipl The body number to be calculated. See class
   * <A HREF="SweConst.html">SweConst</A> for a list of bodies (SE_*)
   * @param iflag Which ephemeris is to be used (SEFLG_JPLEPH, SEFLG_SWIEPH,
-  * SEFLG_MOSEPH). Also allowable flags: SEFLG_TRUEPOS, SEFLG_HELCTR.
+  * SEFLG_MOSEPH). Other flags: SEFLG_TRUEPOS, SEFLG_HELCTR.
   * @param attr A double[20] in which the result is returned. See above for more
   * details.
   * @param serr A StringBuffer containing a warning or error message, if
@@ -1747,6 +1909,7 @@ String slast_starname;
   * @see SweConst#OK
   * @see SweConst#ERR
   * @see SweConst#SEFLG_JPLEPH
+  * @see SweConst#SEFLG_SWIEPH
   * @see SweConst#SEFLG_MOSEPH
   * @see SweConst#SEFLG_TRUEPOS
   * @see SweConst#SEFLG_HELCTR
@@ -1775,6 +1938,30 @@ String slast_starname;
       sc=new Swecl(this, sl, sm, swed);
     }
     return sc.swe_refrac(inalt, atpress, attemp, calc_flag);
+  }
+  /**
+  * Calculates the true altitude from the apparent altitude or vice versa.
+  * @param inalt The true or apparent altitude to be converted
+  * @param geoalt altitude of observer above sea level in meters
+  * @param atpress Atmospheric pressure in mBar (hPa). If it is 0, the pressure
+  * will be estimated from attemp on sea level.
+  * @param attemp Atmospheric temperature in degrees Celsius.
+  * @param lapse_rate (dattemp/dgeoalt) = [°K/m]
+  * @param calc_flag SweConst.SE_TRUE_TO_APP or SweConst.SE_APP_TO_TRUE
+  * @param dret output parameter, use a double[4] as input.
+  * <pre>
+  * - dret[0] true altitude, if possible; otherwise input value
+  * - dret[1] apparent altitude, if possible; otherwise input value
+  * - dret[2] refraction
+  * - dret[3] dip of the horizon
+  * </pre>
+  * @return The converted altitude; see parameter dret for more output values
+  */
+  public double swe_refrac_extended(double inalt, double geoalt, double atpress, double lapse_rate, double attemp, int calc_flag, double[] dret) {
+    if (sc==null) {
+      sc=new Swecl(this, sl, sm, swed);
+    }
+    return sc.swe_refrac_extended(inalt, geoalt, atpress, lapse_rate, attemp, calc_flag, dret);
   }
 
   /**
@@ -1838,10 +2025,47 @@ String slast_starname;
   }
   /**
   * Same as swe_rise_trans(), but allows to define the height of the horizon
-  * at the point of the rising or setting (horhgt) in deg. See there for more
-  * information.<br>
+  * at the point of the rising or setting (horhgt) in degree.<br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
+  * @param tjd_ut The Julian Day number in UT, from when to start searching
+  * @param ipl Planet number, if times for planet or moon are to be calculated.
+  * @param starname The name of the star, if times for a star should be
+  * calculated. It has to be null or the empty string otherwise!
+  * @param epheflag To indicate, which ephemeris should be used (SEFLG_JPLEPH,
+  * SEFLG_SWIEPH or SEFLG_MOSEPH)
+  * @param rsmi Specification, what type of calculation is wanted
+  * (SE_CALC_RISE, SE_CALC_SET, SE_CALC_MTRANSIT, SE_CALC_ITRANSIT) plus
+  * optionally SE_BIT_DISC_CENTER, when the rise time of the disc center
+  * of the body is requested and / or SE_BIT_NO_REFRACTION for calculation
+  * without refraction effects. The calculation method defaults to
+  * SE_CALC_RISE.
+  * @param geopos A double[3] containing the longitude, latitude and
+  * height of the observer. Eastern longitude and northern
+  * latitude is given by positive values, western longitude and southern
+  * latitude by negative values.
+  * @param atpress atmospheric pressure in mBar (hPa). If it is 0, the pressure
+  * will be estimated from geopos[2] and attemp (1013.25 mbar for sea level).
+  * When calculating MTRANSIT or ITRANSIT, this parameter is not used.
+  * @param attemp atmospheric temperature in degrees Celsius. When
+  * calculating MTRANSIT or ITRANSIT, this parameter is not used.
+  * @param horhgt Height of horizon in degree.
+  * @param tret Return value containing the time of rise or whatever was
+  * requested. This is UT.
+  * @param serr A StringBuffer containing a warning or error message, if
+  * something fails
+  * @return SweConst.OK (0) or SweConst.ERR (-1)  or -2 if the body does not rise or set
   * @see #swe_rise_trans(double, int, StringBuffer, int, int, double[], double, double, DblObj, StringBuffer)
+  * @see SweConst#OK
+  * @see SweConst#ERR
+  * @see SweConst#SEFLG_JPLEPH
+  * @see SweConst#SEFLG_MOSEPH
+  * @see SweConst#SE_CALC_RISE
+  * @see SweConst#SE_CALC_SET
+  * @see SweConst#SE_CALC_MTRANSIT
+  * @see SweConst#SE_CALC_ITRANSIT
+  * @see SweConst#SE_BIT_DISC_CENTER
+  * @see SweConst#SE_BIT_NO_REFRACTION
+  * @see DblObj
   * @see SweDate#setGlobalTidalAcc(double)
   */
   public int swe_rise_trans_true_hor(
@@ -1862,7 +2086,7 @@ String slast_starname;
   /**
   * Computes the attributes of a solar eclipse for a given Julian Day,
   * geographic longitude, latitude, and height.
-  * <P><CODE><BLOCKQUOTE>
+  * <BLOCKQUOTE><CODE>
   * attr[0]:&nbsp;&nbsp;&nbsp;fraction of solar diameter covered by moon
   * (magnitude)<BR>
   * attr[1]:&nbsp;&nbsp;&nbsp;ratio of lunar diameter to solar one<BR>
@@ -1873,7 +2097,7 @@ String slast_starname;
   * attr[5]:&nbsp;&nbsp;&nbsp;true altitude of sun above horizon at tjd<BR>
   * attr[6]:&nbsp;&nbsp;&nbsp;apparent altitude of sun above horizon at tjd<BR>
   * attr[7]:&nbsp;&nbsp;&nbsp;angular distance of moon from sun in degrees
-  * </BLOCKQUOTE></CODE><P><B>Attention: attr must be a double[20]!</B><br>
+  * </CODE></BLOCKQUOTE><p><B>Attention: attr must be a double[20]!</B><br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
   * @param tjd_ut The Julian Day number in UT
@@ -1913,7 +2137,7 @@ String slast_starname;
   * <P><CODE>
   * tret[0]:&nbsp;&nbsp;&nbsp;time of maximum eclipse.<BR>
   * tret[1]:&nbsp;&nbsp;&nbsp;time, when the eclipse takes place at local
-  * apparent noon.<BR><BLOCKQUOTE>
+  * apparent noon.</code><BR><BLOCKQUOTE><code>
   * tret[2]:&nbsp;&nbsp;&nbsp;time of the begin of the eclipse.<BR>
   * tret[3]:&nbsp;&nbsp;&nbsp;time of the end of the eclipse.<BR>
   * tret[4]:&nbsp;&nbsp;&nbsp;time of the begin of totality.<BR>
@@ -1924,7 +2148,7 @@ String slast_starname;
   * <I>Not yet implemented.</I><BR>
   * tret[9]:&nbsp;&nbsp;&nbsp;time, when annular-total eclipse becomes annular
   * again -- <I>Not yet implemented.</I>
-  * </BLOCKQUOTE></CODE><P><B>Attention: tret must be a double[10]!</B><br>
+  * </CODE></BLOCKQUOTE><P><B>Attention: tret must be a double[10]!</B><br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
   * @param tjd_start The Julian Day number in UT, from when to start searching
@@ -2044,9 +2268,9 @@ String slast_starname;
   }
 
   /**
-  * Computes the geographic location for a given time, where a solar
-  * eclipse is central (or maximum for a non-central eclipse).
-  * <P>Output parameters:<P><CODE><BLOCKQUOTE>
+  * <p>Computes the geographic location for a given time, where a solar
+  * eclipse is central (or maximum for a non-central eclipse).</p>
+  * <P>Output parameters:</P><BLOCKQUOTE><CODE>
   * geopos[0]:&nbsp;&nbsp;&nbsp;geographic longitude of central line, positive
   * values mean east of Greenwich, negative values west of Greenwich<BR>
   * geopos[1]:&nbsp;&nbsp;&nbsp;geographic latitude of central line,
@@ -2062,7 +2286,7 @@ String slast_starname;
   * attr[5]:&nbsp;&nbsp;&nbsp;true altitude of sun above horizon at tjd<BR>
   * attr[6]:&nbsp;&nbsp;&nbsp;apparent altitude of sun above horizon at tjd<BR>
   * attr[7]:&nbsp;&nbsp;&nbsp;angular distance of moon from sun in degrees
-  * </BLOCKQUOTE></CODE><P><B>ATTENTION: geopos must be a double[10], attr
+  * </CODE></BLOCKQUOTE><P><B>ATTENTION: geopos must be a double[10], attr
   * a double[20]!</B><br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
@@ -2158,7 +2382,7 @@ String slast_starname;
   * Additionally, you can specify SE_ECL_ONE_TRY,
   * to only search for one conjunction of the moon with the planetary body.
   * If this flag is not set, the function will search for an occultation until
-  * it finds one. For bodies with ecliptical latitudes > 5, the function may
+  * it finds one. For bodies with ecliptical latitudes &gt; 5, the function may
   * search successlessly until it reaches the end of the ephemeris.
   * @param geopos A double[3] containing the longitude, latitude and
   * height of the geographic position. Eastern longitude and northern
@@ -2254,11 +2478,26 @@ String slast_starname;
   * SEFLG_SWIEPH or SEFLG_MOSEPH)
   * @param geopos A double[10], on return containing the geographic positions.
   * @param attr A double[20], on return containing the attributes of the
-  * eclipse as above.
+  * eclipse as above.<br>
+  * attr[0] fraction of solar diameter covered by moon (magnitude)<br>
+  * attr[1] ratio of lunar diameter to solar one<br>
+  * attr[2] fraction of solar disc covered by moon (obscuration)<br>
+  * attr[3] diameter of core shadow in km<br>
+  * attr[4] azimuth of sun at tjd<br>
+  * attr[5] true altitude of sun above horizon at tjd<br>
+  * attr[6] apparent altitude of sun above horizon at tjd<br>
+  * attr[7] angular distance of moon from sun in degrees<br>
   * @param serr A StringBuffer containing a warning or error message, if
   * something fails.
   * @return -1 (SweConst.ERR), if the calculation failed<BR>
   * 0, if there is no solar eclipse at that time<BR>
+  * SweConst.SE_ECL_TOTAL<br>
+  * SweConst.SE_ECL_ANNULAR<br>
+  * SweConst.SE_ECL_TOTAL | SweConst.SE_ECL_CENTRAL<br>
+  * SweConst.SE_ECL_TOTAL | SweConst.SE_ECL_NONCENTRAL<br>
+  * SweConst.SE_ECL_ANNULAR | SweConst.SE_ECL_CENTRAL<br>
+  * SweConst.SE_ECL_ANNULAR | SweConst.SE_ECL_NONCENTRAL<br>
+  * SweConst.SE_ECL_PARTIAL<br>
   * @see #swe_sol_eclipse_where(double, int, double[], double[], java.lang.StringBuffer)
   * @see #swe_fixstar_ut(StringBuffer, double, int, double[], StringBuffer)
   * @see SweDate#setGlobalTidalAcc(double)
@@ -2331,7 +2570,7 @@ String slast_starname;
   * <P><CODE>
   * tret[0]:&nbsp;&nbsp;&nbsp;time of maximum eclipse.<BR>
   * tret[1]:&nbsp;&nbsp;&nbsp;time, when the eclipse takes place at local
-  * apparent noon.<BR><BLOCKQUOTE>
+  * apparent noon.</code><BR><BLOCKQUOTE><code>
   * tret[2]:&nbsp;&nbsp;&nbsp;time of the begin of the eclipse.<BR>
   * tret[3]:&nbsp;&nbsp;&nbsp;time of the end of the eclipse.<BR>
   * tret[4]:&nbsp;&nbsp;&nbsp;time of the begin of totality.<BR>
@@ -2342,7 +2581,7 @@ String slast_starname;
   * <I>Not yet implemented.</I><BR>
   * tret[9]:&nbsp;&nbsp;&nbsp;time, when annular-total eclipse becomes annular
   * again -- <I>Not yet implemented.</I>
-  * </BLOCKQUOTE></CODE><P><B>Attention: tret must be a double[10]!</B><br>
+  * </CODE></BLOCKQUOTE><P><B>Attention: tret must be a double[10]!</B><br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
   * @param tjd_start The Julian Day number in UT, from when to start searching
@@ -2355,7 +2594,7 @@ String slast_starname;
   * If you like to have only one conjunction
   * of the moon with the body tested, add flag SE_ECL_ONE_TRY. If this flag
   * is not set, the function will search for an occultation until it
-  * finds one. For bodies with ecliptical latitudes > 5, the function may
+  * finds one. For bodies with ecliptical latitudes &gt; 5, the function may
   * search successlessly until it reaches the end of the ephemeris.
   * @param ifltype eclipse type to be searched (SE_ECL_TOTAL, etc.).
   * 0, if any type of eclipse is wanted. This functionality also works
@@ -2454,7 +2693,7 @@ String slast_starname;
   /**
   * The function returns the name of the house system.
   * @param hsys House system character
-  * house systems are:<P><CODE><BLOCKQUOTE>
+  * house systems are:<BLOCKQUOTE><CODE>
   * A&nbsp;&nbsp;equal<br>
   * E&nbsp;&nbsp;equal<br>
   * B&nbsp;&nbsp;Alcabitius<br>
@@ -2472,7 +2711,7 @@ String slast_starname;
   * W&nbsp;&nbsp;equal, whole sign<br>
   * X&nbsp;&nbsp;axial rotation system/ Meridian houses<br>
   * Y&nbsp;&nbsp;APC houses
-  * </blockquote></code>
+  * </code></blockquote>
   * @return The name of the house system
   */
   public String swe_house_name(char hsys) {
@@ -2529,7 +2768,7 @@ String slast_starname;
   * @param ascmc The special points like ascendant etc. are returned here.
   * See swe_houses(...) for further info on this parameter.
   * @see SwissEph#swe_houses(double, int, double, double, int, double[], double[])
-  * @see SwissEph#swe_calc
+  * @see SwissEph#swe_calc(double, int, int, double[], java.lang.StringBuffer)
   * @return SweConst.OK (==0) or SweConst.ERR (==-1), if calculation was not
   * possible due to nearness to the polar circle in Koch or Placidus house system
   * or when requesting Gauquelin sectors. Calculation automatically switched to
@@ -2547,7 +2786,7 @@ String slast_starname;
 
   /**
   * Calculates the house positions and other vital points. The possible
-  * house systems are:<P><CODE><BLOCKQUOTE>
+  * house systems are:<BLOCKQUOTE><CODE>
   * (int)'A'&nbsp;&nbsp;equal<br>
   * (int)'E'&nbsp;&nbsp;equal<br>
   * (int)'B'&nbsp;&nbsp;Alcabitius<br>
@@ -2565,10 +2804,10 @@ String slast_starname;
   * (int)'W'&nbsp;&nbsp;equal, whole sign<br>
   * (int)'X'&nbsp;&nbsp;axial rotation system/ Meridian houses<br>
   * (int)'Y'&nbsp;&nbsp;APC houses
-  * </BLOCKQUOTE></CODE><P>
+  * </CODE></BLOCKQUOTE><P>
   *
   * The parameter ascmc is defined as double[10] and will return the
-  * following points:<P><CODE><BLOCKQUOTE>
+  * following points:<BLOCKQUOTE><CODE>
   * ascmc[0] = ascendant<BR>
   * ascmc[1] = mc<BR>
   * ascmc[2] = armc (= sidereal time)<BR>
@@ -2579,7 +2818,7 @@ String slast_starname;
   * ascmc[7] = polar ascendant (Michael Munkasey)<BR>
   * ascmc[8] = reserved for future use<BR>
   * ascmc[9] = reserved for future use
-  *  </BLOCKQUOTE></CODE>
+  *  </CODE></BLOCKQUOTE>
   * You can use the SE_ constants below from SweConst.java to access
   * these values in ascmc[].<p>
   * @param tjd_ut The Julian Day number in UT
@@ -2630,15 +2869,15 @@ String slast_starname;
   /**
   * -- NOT YET IMPLEMENTED -- File to read from and write to the maximum and minimum speeds of planets
   * and other objects.<br>
-  * If the maximum and minimum speeds of a transit object is not know, the
+  * If the maximum and minimum speeds of a transit object is not known, the
   * routines calculate some number of random speeds to get an idea of the
   * extreme speeds. This is necessary, as one cannot find out about transits,
-  * if one doesn't have some idea about their movements.<br>
+  * if one doesn't have some idea about their movement.<br>
   * If the transit speeds file is set, the transit routines will read the
   * extreme speeds from this file and write findings due to the random
   * calculations done on initialization of the TransitCalculator to this
   * file, so the results may become more reliable and the calculations
-  * faster.<br>
+  * faster with time.<br>
   * This method throws IOException if the file cannot be read (or found) or
   * isn't writeable, if param <code>writeable</code> is true.
   * @param fname The filename to be used. It should be writable, so the

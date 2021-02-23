@@ -75,8 +75,6 @@
 */
 package swisseph;
 
-import java.util.Locale;
-
 /**
 * This class initiates the calculation of solar and lunar eclipses, of
 * sun risetime and time of sunset, and lastly the calculation of the
@@ -3976,8 +3974,7 @@ class Swecl
         else
           tjd_start = tret[0] + 25;
 //        goto next_lun_ecl;
-      } else {
-        break;	// exit next_lun_ecl calculation
+        continue;
       }
       /* moon rise and moon set */
       if (swe_rise_trans(tret[6] - 0.001, SweConst.SE_MOON, null, ifl, SweConst.SE_CALC_RISE|SweConst.SE_BIT_DISC_BOTTOM, geopos, 0, 0, tjdr, serr) == SweConst.ERR)
@@ -4026,6 +4023,7 @@ class Swecl
 //        goto next_lun_ecl;
         continue;
       }
+      break;
     } // while(true) / label next_lun_ecl
     retflag |= (retflag2 & SweConst.SE_ECL_ALLTYPES_LUNAR);
     return retflag;
@@ -4721,8 +4719,10 @@ class Swecl
        return SweConst.OK;
       }
     }
-    if (serr!=null)
+    if (serr!=null) {
+      serr.setLength(0);
       serr.append("rise or set not found for planet ").append(ipl);
+    }
     return -2; /* no t of rise or set found */
   }
 
@@ -5976,8 +5976,10 @@ class Swecl
       return SweConst.OK;
     } else {
       dgsect.val = 0;
-      if (serr!=null)
+      if (serr!=null) {
+        serr.setLength(0);
         serr.append("rise or set not found for planet ").append(ipl);
+      }
       return SweConst.ERR;
     }
   }

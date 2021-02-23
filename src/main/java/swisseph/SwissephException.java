@@ -129,7 +129,7 @@ public class SwissephException extends RuntimeException
 
   /**
   * Returns the julian day number as ET of the current process.
-  * May return <i>Infinity</i>, if no date is available.
+  * @return Julian day number. May return <i>Infinity</i>, if no date is available.
   */
   public double getJD() {
     return jdet;

@@ -81,7 +81,7 @@ public class SwissData
   */
 //  public String ODEGREE_CHAR=""+'\u00b0'; // Unicode degree character 176
 //                                          // Identical in most ISO-8859 sets
-  public String ODEGREE_STRING="��";	/* degree as string, utf8 encoding */
+  public String ODEGREE_STRING="°";	/* degree as string, utf8 encoding */
 
 
   public static final String ayanamsa_name[] = {

@@ -68,6 +68,10 @@
 */
 package swisseph;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+
 class FileData
 		implements java.io.Serializable
 		{
@@ -482,7 +486,7 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
    * of several of the popular FDDI "MAC" chips.
    */
   /* unsigned long [...] */
-  static long crc32_table[]=null;
+  long crc32_table[]=null;
   /* Initialized first time "crc32()" is called. If you prefer, you can
    * statically initialize it at compile time. [Another exercise.]
    */
@@ -763,11 +767,15 @@ int kCnt;
       }
       return SweConst.OK;
     } catch (java.io.IOException e) {
-      serr.append("file error in swisseph.FileData: "+e.getMessage());
+      PrintWriter prErr = new PrintWriter(new StringWriter());
+      e.printStackTrace(prErr);
+      serr.append("file error in swisseph.FileData: "+prErr.toString());
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
     } catch (Exception e) {
-      serr.append("file error in swisseph.FileData: "+e.getMessage());
+      PrintWriter prErr = new PrintWriter(new StringWriter());
+      e.printStackTrace(prErr);
+      serr.append("file error in swisseph.FileData: "+prErr.toString());
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
     }

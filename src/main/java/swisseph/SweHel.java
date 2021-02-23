@@ -1372,6 +1372,50 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
   /** Limiting magnitude in dark skies<br>
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
+  * @param tjdut UT julian day number
+  * @param dgeo geographic position<br>
+  * <pre> dgeo[0]: geographic longitude
+  *     dgeo[1]: geographic latitude
+  *     dgeo[2]: geographic altitude (eye height) in meters</pre>
+  * @param datm atmospheric conditions<br>
+  * <pre>datm[0]: atmospheric pressure in mbar (hPa)
+  *     datm[1]: atmospheric temperature in degrees Celsius
+  *     datm[2]: relative humidity in %
+  *     datm[3]: if datm[3]&gt;=1, then it is Meteorological Range [km]
+  *          if 1&gt;datm[3]&gt;0, then it is the total atmsopheric coeffcient (ktot)
+  *          if datm[3]=0, then the other atmospheric parameters determine the total atmospheric coefficient (ktot)
+  *     Default values:
+  *     If this is too much for you, set all these values to 0. The software will then set the following defaults:
+  *     Pressure 1013.25, temperature 15, relative humidity 40. The values will be modified depending
+  *     on the altitude of the observer above sea level.
+  *     If the extinction coefficient (meteorological range) datm[3] is 0, the software will calculate its value
+  *     from datm[0..2].</pre>
+  * @param dobs observer description<br>
+  * <pre>dobs[0]: age of observer in years (default = 36)
+  *     dobs[1]: Snellen ratio of observers eyes (default = 1 = normal)
+  * The following parameters are only relevant if the flag SE_HELFLAG_OPTICAL_PARAMS is set:
+  *      dobs[2]: 0 = monocular, 1 = binocular (actually a boolean)
+  *      dobs[3]: telescope magnification: 0 = default to naked eye (binocular), 1 = naked eye
+  *      dobs[4]: optical aperture (telescope diameter) in mm
+  *      dobs[5]: optical transmission</pre>
+  * @param ObjectName of fixstar or asteroid number or "sun", "venus", "mars",
+  * "mercury", "jupiter", "saturn", "uranus", "neptune", "moon" (case insensitive)
+  * @param helflag calculation flag, bitmap<br>
+  * helflag contains ephemeris flag, like iflag in swe_calc() etc. In addition it can contain the following bits:
+  * <pre>     SweConst.SE_HELFLAG_OPTICAL_PARAMS (512): Use this with calculations for optical instruments.
+  *            Unless this bit is set, the values of dobs[2-5] are ignored.
+  *      SweConst.SE_HELFLAG_NO_DETAILS (1024): provide the date, but not details like visibility start,
+  *            optimum, and end. This bit makes the program a bit faster.
+  *      SweConst.SE_HELFLAG_VISLIM_DARK (4096): function behaves as if the Sun were at nadir.
+  *      SweConst.SE_HELFLAG_VISLIM_NOMOON (8192): function behaves as if the Moon were at nadir, i. e. the
+  *            Moon as a factor disturbing the observation is excluded. This flag is useful if one is not really
+  *            interested in the heliacal date of that particular year but in the heliacal date of that epoch.</pre>
+  * @param dret (output parameter) double[50]<br>
+  * <pre>        dret[0]: start visibility (Julian day number)
+  *      dret[1]: optimum visibility (Julian day number), zero if helflag &gt;= SweConst.SE_HELFLAG_AV
+  *      dret[2]: end of visibility (Julian day number), zero if helflag &gt;= SweConst.SE_HELFLAG_AV
+  *      dret[3] ... dret[49]: unused but required on input</pre>
+  * @param serr error string
   * @return <pre>
   * -1   Error
   * -2   Object is below horizon
@@ -1757,6 +1801,99 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
   '29=MSk [-]
   */
   /**
+  /**
+  * (Undocumented)
+  * <pre>
+  *  ' JDNDaysUT [JDN]
+  *  ' HPheno
+  *  '0=AltO [deg]         topocentric altitude of object (unrefracted)
+  *  '1=AppAltO [deg]        apparent altitude of object (refracted)
+  *  '2=GeoAltO [deg]        geocentric altitude of object
+  *  '3=AziO [deg]           azimuth of object
+  *  '4=AltS [deg]           topocentric altitude of Sun
+  *  '5=AziS [deg]           azimuth of Sun
+  *  '6=TAVact [deg]         actual topocentric arcus visionis
+  *  '7=ARCVact [deg]        actual (geocentric) arcus visionis
+  *  '8=DAZact [deg]         actual difference between object's and sun's azimuth
+  *  '9=ARCLact [deg]        actual longitude difference between object and sun
+  *  '10=kact [-]            extinction coefficient
+  *  '11=minTAV [deg]        smallest topocentric arcus visionis
+  *  '12=TfistVR [JDN]       first time object is visible, according to VR
+  *  '13=TbVR [JDN]          optimum time the object is visible, according to VR
+  *  '14=TlastVR [JDN]       last time object is visible, according to VR
+  *  '15=TbYallop[JDN]       best time the object is visible, according to Yallop
+  *  '16=WMoon [deg]         cresent width of moon
+  *  '17=qYal [-]            q-test value of Yallop
+  *  '18=qCrit [-]           q-test criterion of Yallop
+  *  '19=ParO [deg]          parallax of object
+  *  '20 Magn [-]            magnitude of object
+  *  '21=RiseO [JDN]         rise/set time of object
+  *  '22=RiseS [JDN]         rise/set time of sun
+  *  '23=Lag [JDN]           rise/set time of object minus rise/set time of sun
+  *  '24=TvisVR [JDN]        visibility duration
+  *  '25=LMoon [deg]         cresent length of moon
+  *  '26=CVAact [deg]
+  *  '27=Illum [%] 'new
+  *  '28=CVAact [deg] 'new
+  *  '29=MSk [-]
+  * </pre>
+  * <b>ATTENTION: This method possibly (re-)sets a global parameter used
+  * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
+  * @param JDNDaysUT Julian day number of the start date for the search
+  * @param dgeo Geographic location; double[3] = [longitude, latitude, altitude in meters]
+  * @param datm Athmospheric conditions; double[4]:<br>
+  *        datm[0]: atmospheric pressure in mbar (hPa)<br>
+  *        datm[1]: atmospheric temperature in degrees Celsius<br>
+  *        datm[2]: relative humidity in %<br>
+  *        datm[3]: if datm[3]&gt;=1, then it is Meteorological Range [km]<br>
+  *             if 1&gt;datm[3]&gt;0, then it is the total atmsopheric coeffcient (ktot)<br>
+  *                      datm[3]=0, then the other atmospheric parameters determine the total<br>
+  *<br>
+  *        Default values:<br>
+  *        If this is too much for you, set all these values to 0. The software will then set the following defaults:<br>
+  *        Pressure 1013.25, temperature 15, relative humidity 40. The values will be modified depending<br>
+  *        on the altitude of the observer above sea level.<br>
+  *        If the extinction coefficient (meteorological range) datm[3] is 0, the software will calculate its value<br>
+  *        from datm[0..2].
+  * @param dobs Description of observer; double[6]:<br>
+  *        dobs[0]: age of observer in years (default = 36)<br>
+  *        dobs[1]: Snellen ratio of observers eyes (default = 1 = normal)<br>
+  * The following parameters are only relevant if the flag SE_HELFLAG_OPTICAL_PARAMS is set:<br>
+  *        dobs[2]: 0 = monocular, 1 = binocular (actually a boolean)<br>
+  *        dobs[3]: telescope magnification: 0 = default to naked eye (binocular), 1 = naked eye<br>
+  *        dobs[4]: optical aperture (telescope diameter) in mm<br>
+  *        dobs[5]: optical transmission
+  * @param ObjectNameIn Name string of fixstar or planet
+  * @param TypeEvent Type of event<br>
+  *        event_type = SweConst.SE_HELIACAL_RISING (1): morning first (exists for all visible planets and stars)<br>
+  *        event_type = SweConst.SE_HELIACAL_SETTING (2): evening last (exists for all visible planets and stars)<br>
+  *        event_type = SweConst.SE_EVENING_FIRST (3): evening first (exists for Mercury, Venus, and the Moon)<br>
+  *        event_type = SweConst.SE_MORNING_LAST (4): morning last (exists for Mercury, Venus, and the Moon)
+  * @param helflag helflag contains ephemeris flag, like iflag in swe_calc() etc. In addition it can contain the following bits:<br>
+  *        SweConst.SE_HELFLAG_OPTICAL_PARAMS (512): Use this with calculations for optical instruments.
+  *              Unless this bit is set, the values of dobs[2-5] are ignored.<br>
+  *        SweConst.SE_HELFLAG_NO_DETAILS (1024): provide the date, but not details like visibility start,
+  *              optimum, and end. This bit makes the program a bit faster.<br>
+  *        SweConst.SE_HELFLAG_VISLIM_DARK (4096): function behaves as if the Sun were at nadir.<br>
+  *        SweConst.SE_HELFLAG_VISLIM_NOMOON (8192): function behaves as if the Moon were at nadir, i. e. the
+  *              Moon as a factor disturbing the observation is excluded. This flag is useful if one is not really
+  *              interested in the heliacal date of that particular year but in the heliacal date of that epoch. 
+  * @param darr Return values in double[3].<br>
+  *        darr[0]: start visibility (Julian day number)<br>
+  *        darr[1]: optimum visibility (Julian day number), zero if helflag &gt;= SweConst.SE_HELFLAG_AV<br>
+  *        darr[2]: end of visibility (Julian day number), zero if helflag &gt;= SweConst.SE_HELFLAG_AV
+  * @param serr Output value; error string on error
+  * @return SweConst.OK or SweConst.ERR on error
+  * @see SweConst#SE_HELIACAL_RISING
+  * @see SweConst#SE_HELIACAL_SETTING
+  * @see SweConst#SE_EVENING_FIRST
+  * @see SweConst#SE_MORNING_LAST
+  * @see SweConst#SE_HELFLAG_OPTICAL_PARAMS
+  * @see SweConst#SE_HELFLAG_NO_DETAILS
+  * @see SweConst#SE_HELFLAG_VISLIM_DARK
+  * @see SweConst#SE_HELFLAG_VISLIM_NOMOON
+  * @see SweConst#SE_HELFLAG_AV
+  * @see SweDate#setGlobalTidalAcc(double)
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
   * @see SweDate#setGlobalTidalAcc(double)
@@ -3125,8 +3262,63 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
   ' see http://www.iol.ie/~geniet/eng/atmoastroextinction.htm
   */
   /**
+  * This method calculates the Julian day of the next heliacal phenomenon after a given start date. It works between geographic latitudes 60s � 60n.
   * <b>ATTENTION: This method possibly (re-)sets a global parameter used
   * in calculation of delta T. See SweDate.setGlobalTidalAcc(double).</b>
+  * @param JDNDaysUTStart Julian day number of the start date for the search
+  * @param dgeo Geographic location; double[3] = [longitude, latitude, altitude in meters]
+  * @param datm Athmospheric conditions; double[4]:<br>
+  *        datm[0]: atmospheric pressure in mbar (hPa)<br>
+  *        datm[1]: atmospheric temperature in degrees Celsius<br>
+  *        datm[2]: relative humidity in %<br>
+  *        datm[3]: if datm[3]&gt;=1, then it is Meteorological Range [km]<br>
+  *             if 1&gt;datm[3]&gt;0, then it is the total atmsopheric coeffcient (ktot)<br>
+  *                      datm[3]=0, then the other atmospheric parameters determine the total<br>
+  *<br>
+  *        Default values:<br>
+  *        If this is too much for you, set all these values to 0. The software will then set the following defaults:<br>
+  *        Pressure 1013.25, temperature 15, relative humidity 40. The values will be modified depending<br>
+  *        on the altitude of the observer above sea level.<br>
+  *        If the extinction coefficient (meteorological range) datm[3] is 0, the software will calculate its value<br>
+  *        from datm[0..2].
+  * @param dobs Description of observer; double[6]:<br>
+  *        dobs[0]: age of observer in years (default = 36)<br>
+  *        dobs[1]: Snellen ratio of observers eyes (default = 1 = normal)<br>
+  * The following parameters are only relevant if the flag SE_HELFLAG_OPTICAL_PARAMS is set:<br>
+  *        dobs[2]: 0 = monocular, 1 = binocular (actually a boolean)<br>
+  *        dobs[3]: telescope magnification: 0 = default to naked eye (binocular), 1 = naked eye<br>
+  *        dobs[4]: optical aperture (telescope diameter) in mm<br>
+  *        dobs[5]: optical transmission
+  * @param ObjectNameIn Name string of fixstar or planet
+  * @param TypeEvent Type of event<br>
+  *        event_type = SweConst.SE_HELIACAL_RISING (1): morning first (exists for all visible planets and stars)<br>
+  *        event_type = SweConst.SE_HELIACAL_SETTING (2): evening last (exists for all visible planets and stars)<br>
+  *        event_type = SweConst.SE_EVENING_FIRST (3): evening first (exists for Mercury, Venus, and the Moon)<br>
+  *        event_type = SweConst.SE_MORNING_LAST (4): morning last (exists for Mercury, Venus, and the Moon)
+  * @param helflag helflag contains ephemeris flag, like iflag in swe_calc() etc. In addition it can contain the following bits:<br>
+  *        SweConst.SE_HELFLAG_OPTICAL_PARAMS (512): Use this with calculations for optical instruments.
+  *              Unless this bit is set, the values of dobs[2-5] are ignored.<br>
+  *        SweConst.SE_HELFLAG_NO_DETAILS (1024): provide the date, but not details like visibility start,
+  *              optimum, and end. This bit makes the program a bit faster.<br>
+  *        SweConst.SE_HELFLAG_VISLIM_DARK (4096): function behaves as if the Sun were at nadir.<br>
+  *        SweConst.SE_HELFLAG_VISLIM_NOMOON (8192): function behaves as if the Moon were at nadir, i. e. the
+  *              Moon as a factor disturbing the observation is excluded. This flag is useful if one is not really
+  *              interested in the heliacal date of that particular year but in the heliacal date of that epoch. 
+  * @param dret Return values in double[3].<br>
+  *        dret[0]: start visibility (Julian day number)<br>
+  *        dret[1]: optimum visibility (Julian day number), zero if helflag &gt;= SweConst.SE_HELFLAG_AV<br>
+  *        dret[2]: end of visibility (Julian day number), zero if helflag &gt;= SweConst.SE_HELFLAG_AV
+  * @param serr_ret Output value; error string on error
+  * @return SweConst.OK or SweConst.ERR on error
+  * @see SweConst#SE_HELIACAL_RISING
+  * @see SweConst#SE_HELIACAL_SETTING
+  * @see SweConst#SE_EVENING_FIRST
+  * @see SweConst#SE_MORNING_LAST
+  * @see SweConst#SE_HELFLAG_OPTICAL_PARAMS
+  * @see SweConst#SE_HELFLAG_NO_DETAILS
+  * @see SweConst#SE_HELFLAG_VISLIM_DARK
+  * @see SweConst#SE_HELFLAG_VISLIM_NOMOON
+  * @see SweConst#SE_HELFLAG_AV
   * @see SweDate#setGlobalTidalAcc(double)
   */
   public int swe_heliacal_ut(double JDNDaysUTStart, double[] dgeo, double[] datm, double[] dobs, StringBuffer ObjectNameIn, int TypeEvent, int helflag, double[] dret, StringBuffer serr_ret) {

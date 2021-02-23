@@ -99,7 +99,7 @@ import java.util.StringTokenizer;
 * of Greenwich. Especially America often uses a different notation!<p> 
 * Probably most interesting are the functions swe_sidtime() (calculate the
 * sidereal time) and swe_degnorm() (normalize a position to the range of
-* 0.0&nbsp;<=&nbsp;x&nbsp;<&nbsp;360.0) and others.
+* 0.0&nbsp;&lt;=&nbsp;x&nbsp;&lt;&nbsp;360.0) and others.
 */
 public class SwissLib
 		implements java.io.Serializable
@@ -217,7 +217,9 @@ public class SwissLib
   /* Reduce x modulo 360 degrees
    */
   /**
-  * Normalizes a double to the range of 0.0 >= x < 360.0.
+  * Normalizes a double to the range of 0.0 &gt;= x &lt; 360.0.
+  * @param x input double
+  * @return normalized value to a range of 0 .. &lt; 360
   */
   public double swe_degnorm(double x) {
     double y;
@@ -235,7 +237,9 @@ public class SwissLib
   /* Reduce x modulo TWOPI degrees
    */
   /**
-  * Normalizes a double to the range 0.0 >= x < 2*PI.
+  * Normalizes a double to the range 0.0 &gt;= x &lt; 2*PI.
+  * @param x input double
+  * @return normalized value to a range of 0 .. &lt; 2*PI
   */
   public double swe_radnorm(double x) {
     double y;
@@ -1337,7 +1341,7 @@ int pn = 0;
    * errors will be:
    *
    *   omit       error,            omit  error,
-   *   a <        longitude         c <   obliquity
+   *   a &lt;        longitude         c &lt;   obliquity
    * .0005"       .0100"          .0008"  .0094"
    * .0046        .0492           .0095   .0481
    * .0123        .0880           .0224   .0905
@@ -2383,7 +2387,7 @@ int pn = 0;
 
   /* sidereal time, without eps and nut as parameters.
    * tjd must be UT !!!
-   * for more informsation, see comment with swe_sidtime0()
+   * for more information, see comment with swe_sidtime0()
    */
   /**
   * This calculates the sidereal time from a Julian day number.<p>
@@ -2517,7 +2521,7 @@ SweDate sd = new SweDate(jd);
     return fname;
   }
 
-  /*********************************************************
+  /* *******************************************************
    *  function for splitting centiseconds into             *
    *  ideg        degrees,
    *  imin        minutes,
@@ -2527,6 +2531,28 @@ SweDate sd = new SweDate(jd);
    *              or +/- sign
    *
    *********************************************************/
+  /**
+  * Method to split centiseconds into:
+  * <pre>
+  *  ideg        degrees,
+  *  imin        minutes,
+  *  isec        seconds,
+  *  dsecfr      fraction of seconds
+  *  isgn        zodiac sign number;
+  * </pre>
+  * @param ddeg Input value in centiseconds
+  * @param roundflag Flag for rounding, one of [SweConst.SE_SPLIT_DEG_ROUND_DEG | SweConst.SE_SPLIT_DEG_ROUND_MIN | SweConst.SE_SPLIT_DEG_ROUND_SEC] in combination with [SweConst.SE_SPLIT_DEG_KEEP_DEG | SweConst.SE_SPLIT_DEG_KEEP_SIGN | SweConst.SE_SPLIT_DEG_ZODIACAL]
+  * @param ideg Output value, degree
+  * @param imin Output value, minutes
+  * @param isec Output value, seconds
+  * @param dsecfr Output value, fraction of seconds
+  * @param isgn Output value, sign of value
+  * @see swisseph.SweConst#SE_SPLIT_DEG_ROUND_DEG
+  * @see swisseph.SweConst#SE_SPLIT_DEG_ROUND_MIN
+  * @see swisseph.SweConst#SE_SPLIT_DEG_ROUND_SEC
+  * @see swisseph.SweConst#SE_SPLIT_DEG_KEEP_DEG
+  * @see swisseph.SweConst#SE_SPLIT_DEG_ZODIACAL
+  */
   public void swe_split_deg(double ddeg, int roundflag, IntObj ideg,
                             IntObj imin, IntObj isec, DblObj dsecfr,
                             IntObj isgn) {
@@ -2640,9 +2666,14 @@ String swi_strncpy(String to, String from, int n) {
 // swejpl.c: /////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-  /*************************************
+  /* ***********************************
   double to int32 with rounding, no overflow check
   *************************************/
+  /**
+  * Round double to integer; negative double will get rounded as: - Math.abs(x)
+  * @param x The double value to round to an integer
+  * @return Integer value
+  */
   public int swe_d2l(double x) {
     if (x >=0.) {
       return ((int) (x + 0.5));
@@ -2653,7 +2684,7 @@ String swi_strncpy(String to, String from, int n) {
 
   /**
   * This calculates the difference of the two angles p1, p2 and normalizes
-  * them to a range of -180.0 <= x < 180.0 degrees.
+  * them to a range of -180.0 &lt;= x &lt; 180.0 degrees.
   * @param p1 The angle of point 1
   * @param p2 The angle of point 2
   * @return The normalized difference between p1, p2
@@ -2684,6 +2715,8 @@ String swi_strncpy(String to, String from, int n) {
   /**
   * This method emulates the C version of atof() allowing <i>any</i> string
   * to be parsed into a number.
+  * @param src String to parse to a double
+  * @return Double value
   */
   public static synchronized double atof(String src) {
     // atof() (in C) allows extra strings after the number, and even no number
@@ -2704,6 +2737,8 @@ String swi_strncpy(String to, String from, int n) {
   /**
   * This method emulates the C version of atoi() allowing <i>any</i> string
   * to be parsed into an integer.
+  * @param src String to parse to an integer
+  * @return Integer value
   */
   public static synchronized int atoi(String src) {
     // atoi() (in C) allows extra strings after the number, and even no number

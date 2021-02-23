@@ -68,9 +68,10 @@
 */
 package swisseph;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
 * This class is a date class specialized for the use with the swisseph
@@ -139,6 +140,10 @@ public class SweDate
   public static final double JD0=2440587.5;          /* 1970 January 1.0 */
 
   private static double tid_acc = SweConst.SE_TIDAL_DEFAULT;
+// private static ThreadLocal<Integer> double = new ThreadLocal<Integer>() {
+// @Override protected Integer initialValue() { return SweConst.SE_TIDAL_DEFAULT; }
+// };
+
   private static boolean is_tid_acc_manual = false;
   private static boolean init_dt_done = false;
   private double jd;
@@ -439,10 +444,11 @@ public class SweDate
   * This will return a java.util.Date object with the date of this
   * SweDate object. This is needed often in internationalisation of date
   * and time formats. You can add an offset in milliseconds to account for
-  * timezones or daylight savings time, as SweDate is meant to be in GMT
+  * timezones or daylight savings time, as SweDate is meant to be in UT
   * time always.
   * @param offset An offset in milliseconds to be added to the current
   * date and time.
+  * @return a Date object initialised by this object
   */
   public Date getDate(long offset) {
     long millis=(long)((getJulDay()-JD0)*24L*3600L*1000L)+offset;
@@ -452,6 +458,7 @@ public class SweDate
   /**
   * This will return a java.util.Date object from a julian day number.
   * @param jd The julian day number for which to create a Date object.
+  * @return the Date object for the JD
   */
   public static Date getDate(double jd) {
     long millis=(long)((jd-JD0)*24L*3600L*1000L);
@@ -767,6 +774,7 @@ public class SweDate
   /**
   * Returns the julian day number on which the Gregorian calendar system
   * comes to be in effect.
+  * @return Julian day number of the date, the Gregorian calendar started
   */
   public double getGregorianChange() {
     return this.jdCO;
@@ -826,6 +834,7 @@ public class SweDate
   */
   public static double getGlobalTidalAcc() {
     return tid_acc;
+// return tid_acc.get();
   }
 
   /* function sets tidal acceleration of the Moon.
@@ -851,7 +860,7 @@ public class SweDate
   * C version.<br>
   * <b>ATTENTION: this method changes the tidal acceleration of the moon
   * globally, so <i>any</i> calculation of delta T following this call
-  * will be effected.</b>
+  * will be affected.</b>
   * @param t_acc tidal acceleration
   * @see swisseph.SweConst#SE_TIDAL_DE403
   * @see swisseph.SweConst#SE_TIDAL_DE404
@@ -868,10 +877,12 @@ public class SweDate
   public static void setGlobalTidalAcc(double t_acc) {
     if (t_acc == SweConst.SE_TIDAL_AUTOMATIC) {
       tid_acc = SweConst.SE_TIDAL_DEFAULT;
+// tid_acc.set(SweConst.SE_TIDAL_DEFAULT);
       is_tid_acc_manual = false;
       return;
     }
     tid_acc = t_acc;
+// tid_acc.set(t_acc);
     is_tid_acc_manual = true;
   }
 
@@ -911,6 +922,7 @@ public class SweDate
     if (denum == 0) {
       if ((iflag & SweConst.SEFLG_MOSEPH) != 0) {
         tid_acc = SweConst.SE_TIDAL_DE404;
+// tid_acc.set(SweConst.SE_TIDAL_DE404);
         return;
       }
       if ((iflag & SweConst.SEFLG_JPLEPH) != 0) {
@@ -952,6 +964,15 @@ public class SweDate
       case 430: tid_acc = SweConst.SE_TIDAL_DE430; break;
       case 431: tid_acc = SweConst.SE_TIDAL_DE431; break;
       default: tid_acc = SweConst.SE_TIDAL_DEFAULT; break;
+//      case 200: tid_acc.set(SweConst.SE_TIDAL_DE200); break;
+//      case 403: tid_acc.set(SweConst.SE_TIDAL_DE403); break;
+//      case 404: tid_acc.set(SweConst.SE_TIDAL_DE404); break;
+//      case 405: tid_acc.set(SweConst.SE_TIDAL_DE405); break;
+//      case 406: tid_acc.set(SweConst.SE_TIDAL_DE406); break;
+//      case 421: tid_acc.set(SweConst.SE_TIDAL_DE421); break; 
+//      case 430: tid_acc.set(SweConst.SE_TIDAL_DE430); break;
+//      case 431: tid_acc.set(SweConst.SE_TIDAL_DE431); break;
+//      default: tid_acc.set(SweConst.SE_TIDAL_DEFAULT); break;
     }
   }
 
@@ -959,6 +980,7 @@ public class SweDate
   * This method is needed to have a consistent global SwissData object "swed",
   * whose contents may determine the tidal acceleration. Called from the
   * SwissEph constructor only.
+  * @param swiss The SwissEph object to be used
   */
   protected static void setSwissEphObject(SwissEph swiss) {
     sw = swiss;
@@ -975,7 +997,7 @@ public class SweDate
     hour = 60 * (hour - (int)hour);
     h += (hour<10?"0":"") + (int)hour + ":";
     hour = 60 * (hour - (int)hour);
-    h += (hour<10?"0":"") + hour ;
+    h += (hour<10?"0":"") + ((int)(hour*100))/100.;
 
     return "(YYYY/MM/DD) " +
            getYear() + "/" +
@@ -1600,6 +1622,7 @@ public class SweDate
     if( Y < 1955.0 ) {
       B = (Y - 1955.0);
       ans += -0.000091 * (tid_acc + 26.0) * B * B;
+//      ans += -0.000091 * (tid_acc.get() + 26.0) * B * B;
     }
     return ans;
   }
@@ -1931,7 +1954,7 @@ public class SweDate
   *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
   *   UTC second was regularly changed, so that UTC remained very close to UT1.
   * - From 1972 on, input time is treated as UTC.
-  * - If delta_t - nleap - 32.184 > 1, the input time is treated as UT1.
+  * - If delta_t - nleap - 32.184 &gt; 1, the input time is treated as UT1.
   *   Note: Like this we avoid errors greater than 1 second in case that
   *   the leap seconds table (or the Swiss Ephemeris version) is not updated
   *   for a long time.</pre>
@@ -2050,7 +2073,7 @@ public class SweDate
   *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
   *   UTC second was regularly changed, so that UTC remained very close to UT1.
   * - From 1972 on, output is UTC.
-  * - If delta_t - nleap - 32.184 > 1, the output is UT1.
+  * - If delta_t - nleap - 32.184 &gt; 1, the output is UT1.
   *   Note: Like this we avoid errors greater than 1 second in case that
   *   the leap seconds table (or the Swiss Ephemeris version) has not been
   *   updated for a long time.</pre>
@@ -2185,7 +2208,7 @@ public class SweDate
   *   Note: UTC was introduced in 1961. From 1961 - 1971, the length of the
   *   UTC second was regularly changed, so that UTC remained very close to UT1.
   * - From 1972 on, output is UTC.
-  * - If delta_t - nleap - 32.184 > 1, the output is UT1.
+  * - If delta_t - nleap - 32.184 &gt; 1, the output is UT1.
   *   Note: Like this we avoid errors greater than 1 second in case that
   *   the leap seconds table (or the Swiss Ephemeris version) has not been
   *   updated for a long time.</pre>
@@ -2211,6 +2234,47 @@ public class SweDate
   public SDate getUTCfromJDUT1(double tjd_ut, boolean gregflag) {
     double tjd_et = tjd_ut + getDeltaT(tjd_ut);
     return getUTCfromJDET(tjd_et, gregflag);
+  }
+
+
+  /**
+  * Returns a LocalDateTime object to be used with DateTimeFormatters.
+  * E.g.:
+  * <pre>
+  * DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/mm/dd-hh:mm:ss-a (HH:mm:ss'h')");
+
+  * System.out.println(new SweDate(2016, 5, 31, 0 + 9/60. + 53/3600.).getLocalDateTime().format(dtf));
+  * </pre>
+  * @return The java.time.LocalDateTime object for this SweDate object
+  */
+  public LocalDateTime getLocalDateTime() {
+    return getLocalDateTime(this);
+  }
+
+  /**
+  * Returns a LocalDateTime object to be used with DateTimeFormatters.
+  * E.g.:
+  * <pre>
+  * DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/mm/dd-hh:mm:ss-a (HH:mm:ss'h')");
+
+  * SweDate sd = new SweDate();
+  * System.out.println(SweDate.getLocalDateTime(sd).format(dtf));
+  * </pre>
+  * @return The java.time.LocalDateTime object for the SweDate object
+  */
+  public static LocalDateTime getLocalDateTime(SweDate sd) {
+    double hour = sd.getHour();
+    double minute = ((hour % 1) * 60);
+    double second = ((minute % 1) * 60);
+    double nano = ((second % 1) * 1E6);
+
+    return LocalDateTime.of(sd.getYear(),
+        sd.getMonth(),
+        sd.getDay(),
+        (int)hour,
+        (int)minute,
+        (int)second,
+        (int)nano);
   }
 } // end of class SweDate
 

@@ -11,11 +11,6 @@
    in this port in any way.
 
    Thomas Mack, mack@ifis.cs.tu-bs.de, 23rd of April 2001
-
-   The code base for the use of the java.nio package is from Aaron Hunter,
-   who does not impose any additional license restrictions.
-
-   Thomas Mack, mack@ifis.cs.tu-bs.de, 25th of June 2007
 */
 /* Copyright (C) 1997 - 2008 Astrodienst AG, Switzerland.  All rights reserved.
 
@@ -73,7 +68,9 @@
 package swisseph;
 
 import java.io.*;
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.Socket;
+import java.net.URL;
 
 
 /**
@@ -120,6 +117,13 @@ public class FilePtr
   * directly, you should use the BufferedInputStream etc. -classes, as
   * they are MUCH faster than the RandomAccessFile class that is used
   * here.
+  * @param fp (optional) RandomAccessFile, if already open and available
+  * @param sk (optional) Socket, if already open and available
+  * @param is (optional) InputStream, if already opened
+  * @param os (optional) The OutputStream to write to for HTTP-access
+  * @param fnamp (optional) The url for HTTP-access
+  * @param fileLength (optional) The file length of an opened data file
+  * @param bufsize Size of input-buffer to be used
   */
   public FilePtr(RandomAccessFile fp,
                  Socket sk,
@@ -127,7 +131,8 @@ public class FilePtr
                  BufferedOutputStream os,
                  String fnamp,
                  long fileLength,
-                 int bufsize) throws IOException {
+                 int bufsize)
+	throws IOException {
     this.fp = fp;
     this.sk = sk;
     this.is = is;
