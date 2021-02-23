@@ -66,15 +66,15 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 
 
-class FileData
-		implements java.io.Serializable
-		{
+class FileData implements Serializable {
   final byte SEI_FILE_NMAXPLAN=50;
 
   // The error handling and error strings are different from the original C version.

@@ -3,8 +3,8 @@ package swisseph;
 import java.io.Serializable;
 
 public class SwissephException extends RuntimeException implements Serializable {
-  private double jdet;
-  private int type;
+  private final double jdet;
+  private final int type;
   private int rc = 0;
 
   /**
