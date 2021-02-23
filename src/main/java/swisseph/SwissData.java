@@ -68,103 +68,99 @@
 */
 package swisseph;
 
-public class SwissData
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+public class SwissData implements Serializable {
 
   /**
-  * The character to be used as the degree character. Only textmode
-  * applications (and probably awt applications in Java 1.1 and below?)
-  * will require to differentiate between different characters, awt&nbsp;/
-  * swing components of Java 1.2 and above will use the unicode encoding
-  * always!
-  */
+   * The character to be used as the degree character. Only textmode
+   * applications (and probably awt applications in Java 1.1 and below?)
+   * will require to differentiate between different characters, awt&nbsp;/
+   * swing components of Java 1.2 and above will use the unicode encoding
+   * always!
+   */
 //  public String ODEGREE_CHAR=""+'\u00b0'; // Unicode degree character 176
 //                                          // Identical in most ISO-8859 sets
-  public String ODEGREE_STRING="°";	/* degree as string, utf8 encoding */
+  public String ODEGREE_STRING = "°";  /* degree as string, utf8 encoding */
 
 
   public static final String ayanamsa_name[] = {
-     "Fagan/Bradley",
-     "Lahiri",
-     "De Luce",
-     "Raman",
-     "Ushashashi",
-     "Krishnamurti",
-     "Djwhal Khul",
-     "Yukteshwar",
-     "J.N. Bhasin",
-     "Babylonian/Kugler 1",
-     "Babylonian/Kugler 2",
-     "Babylonian/Kugler 3",
-     "Babylonian/Huber",
-     "Babylonian/Eta Piscium",
-     "Babylonian/Aldebaran = 15 Tau",
-     "Hipparchos",
-     "Sassanian",
-     "Galact. Center = 0 Sag",
-     "J2000",
-     "J1900",
-     "B1950",
-     "Suryasiddhanta",
-     "Suryasiddhanta, mean Sun",
-     "Aryabhata",
-     "Aryabhata, mean Sun",
-     "SS Revati",
-     "SS Citra",
-     "True Citra",
-     "True Revati",
-     "True Pushya",
+      "Fagan/Bradley",
+      "Lahiri",
+      "De Luce",
+      "Raman",
+      "Ushashashi",
+      "Krishnamurti",
+      "Djwhal Khul",
+      "Yukteshwar",
+      "J.N. Bhasin",
+      "Babylonian/Kugler 1",
+      "Babylonian/Kugler 2",
+      "Babylonian/Kugler 3",
+      "Babylonian/Huber",
+      "Babylonian/Eta Piscium",
+      "Babylonian/Aldebaran = 15 Tau",
+      "Hipparchos",
+      "Sassanian",
+      "Galact. Center = 0 Sag",
+      "J2000",
+      "J1900",
+      "B1950",
+      "Suryasiddhanta",
+      "Suryasiddhanta, mean Sun",
+      "Aryabhata",
+      "Aryabhata, mean Sun",
+      "SS Revati",
+      "SS Citra",
+      "True Citra",
+      "True Revati",
+      "True Pushya",
   };
 
-//////////////////////////////////////////////////////////////////////////////
-// sweodef.h: ////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-  public static final int AS_MAXCH=256; // used for string declarations,
-                                        // allowing 255 char+\0
+  // sweodef.h: ////////////////////////////////////////////////////////////////
+  public static final int AS_MAXCH = 256; // used for string declarations,
+  // allowing 255 char+\0
 
-  static final double DEGTORAD=0.0174532925199433;
-  static final double RADTODEG=57.2957795130823;
+  static final double DEGTORAD = 0.0174532925199433;
+  static final double RADTODEG = 57.2957795130823;
 
-  static final int DEG=360000;  // degree expressed in centiseconds
-  static final int DEG7_30=2700000;	// 7.5 degrees
-  static final int DEG15=15 * DEG;
-  static final int DEG24=24 * DEG;
-  static final int DEG30=30 * DEG;
-  static final int DEG60=60 * DEG;
-  static final int DEG90=90 * DEG;
-  static final int DEG120=120 * DEG;
-  static final int DEG150=150 * DEG;
-  static final int DEG180=180 * DEG;
-  static final int DEG270=270 * DEG;
-  static final int DEG360=360 * DEG;
+  static final int DEG = 360000;  // degree expressed in centiseconds
+  static final int DEG7_30 = 2700000;  // 7.5 degrees
+  static final int DEG15 = 15 * DEG;
+  static final int DEG24 = 24 * DEG;
+  static final int DEG30 = 30 * DEG;
+  static final int DEG60 = 60 * DEG;
+  static final int DEG90 = 90 * DEG;
+  static final int DEG120 = 120 * DEG;
+  static final int DEG150 = 150 * DEG;
+  static final int DEG180 = 180 * DEG;
+  static final int DEG270 = 270 * DEG;
+  static final int DEG360 = 360 * DEG;
 
-  static final double CSTORAD=4.84813681109536E-08; // centisec to rad:
-                                                    // pi / 180 /3600/100
-  static final double RADTOCS=2.06264806247096E+07; // rad to centisec
-                                                    // 180*3600*100/pi
+  static final double CSTORAD = 4.84813681109536E-08; // centisec to rad:
+  // pi / 180 /3600/100
+  static final double RADTOCS = 2.06264806247096E+07; // rad to centisec
+  // 180*3600*100/pi
 
-  static final double CS2DEG=1.0/360000.0;	     // centisec to degree
+  static final double CS2DEG = 1.0 / 360000.0;       // centisec to degree
 
-  static final String BFILE_R_ACCESS="r";  // open binary file for reading
-  static final String BFILE_RW_ACCESS="r+";// open binary file for writing and reading
-  static final String BFILE_W_CREATE="w";  // create/open binary file for write
-  static final String BFILE_A_ACCESS="a+"; // create/open binary file for append
-  static final String FILE_R_ACCESS="r";   // open text file for reading
-  static final String FILE_RW_ACCESS="r+"; // open text file for writing and reading
-  static final String FILE_W_CREATE="w";   // create/open text file for write
-  static final String FILE_A_ACCESS="a+";  // create/open text file for append
-  static final int O_BINARY=0;	           // for open(), not defined in Unix
-  static final int OPEN_MODE=0666;         // default file creation mode
+  static final String BFILE_R_ACCESS = "r";  // open binary file for reading
+  static final String BFILE_RW_ACCESS = "r+";// open binary file for writing and reading
+  static final String BFILE_W_CREATE = "w";  // create/open binary file for write
+  static final String BFILE_A_ACCESS = "a+"; // create/open binary file for append
+  static final String FILE_R_ACCESS = "r";   // open text file for reading
+  static final String FILE_RW_ACCESS = "r+"; // open text file for writing and reading
+  static final String FILE_W_CREATE = "w";   // create/open text file for write
+  static final String FILE_A_ACCESS = "a+";  // create/open text file for append
+  static final int O_BINARY = 0;             // for open(), not defined in Unix
+  static final int OPEN_MODE = 0666;         // default file creation mode
   // file.separator may be null with JavaME
   public static final String DIR_GLUE = (System.getProperty("file.separator") == null ? "/" : System.getProperty("file.separator"));              // glue string for directory/file
-  public static final String PATH_SEPARATOR=";:"; // semicolon or colon may be used
+  public static final String PATH_SEPARATOR = ";:"; // semicolon or colon may be used
 
 
-//////////////////////////////////////////////////////////////////////////////
-// swephexp.h: ///////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-  public static final int SE_NSIDM_PREDEF         =30;
+  // swephexp.h: ///////////////////////////////////////////////////////////////
+  public static final int SE_NSIDM_PREDEF = 30;
 
 //  static final int SE_MAX_STNAME=20;    // maximum size of fixstar name;
 //                                        // the parameter star in swe_fixstar
@@ -173,41 +169,44 @@ public class SwissData
 //
 
   static final int pnoext2int[] = {SwephData.SEI_SUN, SwephData.SEI_MOON,
-    SwephData.SEI_MERCURY, SwephData.SEI_VENUS, SwephData.SEI_MARS,
-    SwephData.SEI_JUPITER, SwephData.SEI_SATURN, SwephData.SEI_URANUS,
-    SwephData.SEI_NEPTUNE, SwephData.SEI_PLUTO, 0, 0, 0, 0, SwephData.SEI_EARTH,
-    SwephData.SEI_CHIRON, SwephData.SEI_PHOLUS, SwephData.SEI_CERES,
-    SwephData.SEI_PALLAS, SwephData.SEI_JUNO, SwephData.SEI_VESTA, };
+      SwephData.SEI_MERCURY, SwephData.SEI_VENUS, SwephData.SEI_MARS,
+      SwephData.SEI_JUPITER, SwephData.SEI_SATURN, SwephData.SEI_URANUS,
+      SwephData.SEI_NEPTUNE, SwephData.SEI_PLUTO, 0, 0, 0, 0, SwephData.SEI_EARTH,
+      SwephData.SEI_CHIRON, SwephData.SEI_PHOLUS, SwephData.SEI_CERES,
+      SwephData.SEI_PALLAS, SwephData.SEI_JUNO, SwephData.SEI_VESTA,};
 
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-  boolean ephe_path_is_set=false;	/* ephe_path_is_set = FALSE */
-  boolean jpl_file_is_open=false;	/* jpl_file_is_open = FALSE */
-  FilePtr fixfp=null;			/* fixfp, fixed stars file pointer */
-  String ephepath = SweConst.SE_EPHE_PATH;	/* ephepath, ephemeris path */
-  String jplfnam = SweConst.SE_FNAME_DFT;	/* jplfnam, JPL file name, default */
-  int jpldenum = 0;			/* jpldenum */
+  //////////////////////////////////////////////////////////////////////////////
+  boolean ephe_path_is_set = false;  /* ephe_path_is_set = FALSE */
+  boolean jpl_file_is_open = false;  /* jpl_file_is_open = FALSE */
+  FilePtr fixfp = null;      /* fixfp, fixed stars file pointer */
+  String ephepath = SweConst.SE_EPHE_PATH;  /* ephepath, ephemeris path */
+  String jplfnam = SweConst.SE_FNAME_DFT;  /* jplfnam, JPL file name, default */
+  int jpldenum = 0;      /* jpldenum */
   double eop_tjd_beg;
   double eop_tjd_beg_horizons;
   double eop_tjd_end;
   double eop_tjd_end_add;
   int eop_dpsi_loaded;
-  boolean geopos_is_set=false;		/* geopos_is_set, for topocentric */
-  boolean ayana_is_set=false;		/* ayana_is_set, ayanamsa is set */
-  boolean is_old_starfile=false;	/* is_old_starfile, fixstars.cat is used (default is sefstars.txt) */
+  boolean geopos_is_set = false;    /* geopos_is_set, for topocentric */
+  boolean ayana_is_set = false;    /* ayana_is_set, ayanamsa is set */
+  boolean is_old_starfile = false;  /* is_old_starfile, fixstars.cat is used (default is sefstars.txt) */
 
   FileData fidat[] = new FileData[SwephData.SEI_NEPHFILES];
   GenConst gcdat;
   PlanData pldat[] = new PlanData[SwephData.SEI_NPLANETS];
   PlanData nddat[] = new PlanData[SwephData.SEI_NNODE_ETC];
-  SavePositions savedat[] = new SavePositions[SweConst.SE_NPLANETS+1];
-  Epsilon oec, oec2000;
-  Nut nut, nut2000, nutv;
+  SavePositions savedat[] = new SavePositions[SweConst.SE_NPLANETS + 1];
+  Epsilon oec;
+  Epsilon oec2000;
+  Nut nut;
+  Nut nut2000;
+  Nut nutv;
   TopoData topd;
   SidData sidd;
   String astelem;
-  double ast_G, ast_H, ast_diam;
+  double ast_G;
+  double ast_H;
+  double ast_diam;
   int i_saved_planet_name;
   String saved_planet_name;
   //double dpsi[36525];  /* works for 100 years after 1962 */
@@ -218,15 +217,23 @@ public class SwissData
   int timeout;
 
   /**
-  * Constructs a new SwissData object.
-  */
+   * Constructs a new SwissData object.
+   */
   public SwissData() {
     int i;
-    for(i=0;i<SwephData.SEI_NEPHFILES;i++){ fidat[i] = new FileData(); }
+    for (i = 0; i < SwephData.SEI_NEPHFILES; i++) {
+      fidat[i] = new FileData();
+    }
     gcdat = new GenConst();
-    for(i=0;i<SwephData.SEI_NPLANETS;i++){ pldat[i] = new PlanData(); }
-    for(i=0;i<SwephData.SEI_NNODE_ETC;i++){ nddat[i] = new PlanData(); }
-    for(i=0;i<SweConst.SE_NPLANETS+1;i++){ savedat[i] = new SavePositions(); }
+    for (i = 0; i < SwephData.SEI_NPLANETS; i++) {
+      pldat[i] = new PlanData();
+    }
+    for (i = 0; i < SwephData.SEI_NNODE_ETC; i++) {
+      nddat[i] = new PlanData();
+    }
+    for (i = 0; i < SweConst.SE_NPLANETS + 1; i++) {
+      savedat[i] = new SavePositions();
+    }
     oec = new Epsilon();
     oec2000 = new Epsilon();
     nut = new Nut();

@@ -68,14 +68,15 @@
 */
 package swisseph;
 
-class TopoData
-		implements java.io.Serializable
-		{
-  double geolon, geolat, geoalt;
+import java.io.Serializable;
+
+class TopoData implements Serializable {
+  double geolon;
+  double geolat;
+  double geoalt;
   double teval;
   double tjd_ut;
-  double xobs[]=new double[6];
-
+  double[] xobs = new double[6];
 
   void clearData() {
     geolon = geolat = geoalt = teval = tjd_ut = 0;

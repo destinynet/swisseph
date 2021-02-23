@@ -1,13 +1,11 @@
 package swisseph;
 
 /**
-* This class implements some constants and methods used by
-* different TransitCalculators.<p>
-* You normally don't use this class in your own programs.
-*/
-class TransitBase
-    implements java.io.Serializable
-    {
+ * This class implements some constants and methods used by
+ * different TransitCalculators.<p>
+ * You normally don't use this class in your own programs.
+ */
+class TransitBase implements java.io.Serializable {
   static final double B0_ARMC_MAX = 360.986667;
   static final double B0_ARMC_MIN = 360.984167;
   static final double B0_ASC_MAX = 393.494420;
@@ -1574,8 +1572,8 @@ class TransitBase
   static final double G0_ASC_MIN = 331.162937;
   static final double G0_COASC1_MAX = 393.494420;
   static final double G0_COASC1_MIN = 331.162937;
-  static final double G0_COASC2_MAX = 1./0.;
-  static final double G0_COASC2_MIN = 1./0.;
+  static final double G0_COASC2_MAX = 1. / 0.;
+  static final double G0_COASC2_MIN = 1. / 0.;
   static final double G0_EQUASC_MAX = 393.494420;
   static final double G0_EQUASC_MIN = 331.162937;
   static final double G0_HOUSE10_MAX = 618069.268650;
@@ -2632,206 +2630,206 @@ class TransitBase
   static final double K66_POLASC_MIN = 176.632500;
   static final double K66_VERTEX_MAX = 489.939167;
   static final double K66_VERTEX_MIN = 313.358333;
-  static final double K70_ARMC_MAX = 1./0.;
-  static final double K70_ARMC_MIN = 1./0.;
-  static final double K70_ASC_MAX = 1./0.;
-  static final double K70_ASC_MIN = 1./0.;
-  static final double K70_COASC1_MAX = 1./0.;
-  static final double K70_COASC1_MIN = 1./0.;
-  static final double K70_COASC2_MAX = 1./0.;
-  static final double K70_COASC2_MIN = 1./0.;
-  static final double K70_EQUASC_MAX = 1./0.;
-  static final double K70_EQUASC_MIN = 1./0.;
-  static final double K70_HOUSE10_MAX = 1./0.;
-  static final double K70_HOUSE10_MIN = 1./0.;
-  static final double K70_HOUSE11_MAX = 1./0.;
-  static final double K70_HOUSE11_MIN = 1./0.;
-  static final double K70_HOUSE12_MAX = 1./0.;
-  static final double K70_HOUSE12_MIN = 1./0.;
-  static final double K70_HOUSE1_MAX = 1./0.;
-  static final double K70_HOUSE1_MIN = 1./0.;
-  static final double K70_HOUSE2_MAX = 1./0.;
-  static final double K70_HOUSE2_MIN = 1./0.;
-  static final double K70_HOUSE3_MAX = 1./0.;
-  static final double K70_HOUSE3_MIN = 1./0.;
-  static final double K70_HOUSE4_MAX = 1./0.;
-  static final double K70_HOUSE4_MIN = 1./0.;
-  static final double K70_HOUSE5_MAX = 1./0.;
-  static final double K70_HOUSE5_MIN = 1./0.;
-  static final double K70_HOUSE6_MAX = 1./0.;
-  static final double K70_HOUSE6_MIN = 1./0.;
-  static final double K70_HOUSE7_MAX = 1./0.;
-  static final double K70_HOUSE7_MIN = 1./0.;
-  static final double K70_HOUSE8_MAX = 1./0.;
-  static final double K70_HOUSE8_MIN = 1./0.;
-  static final double K70_HOUSE9_MAX = 1./0.;
-  static final double K70_HOUSE9_MIN = 1./0.;
-  static final double K70_MC_MAX = 1./0.;
-  static final double K70_MC_MIN = 1./0.;
-  static final double K70_POLASC_MAX = 1./0.;
-  static final double K70_POLASC_MIN = 1./0.;
-  static final double K70_VERTEX_MAX = 1./0.;
-  static final double K70_VERTEX_MIN = 1./0.;
-  static final double K80_ARMC_MAX = 1./0.;
-  static final double K80_ARMC_MIN = 1./0.;
-  static final double K80_ASC_MAX = 1./0.;
-  static final double K80_ASC_MIN = 1./0.;
-  static final double K80_COASC1_MAX = 1./0.;
-  static final double K80_COASC1_MIN = 1./0.;
-  static final double K80_COASC2_MAX = 1./0.;
-  static final double K80_COASC2_MIN = 1./0.;
-  static final double K80_EQUASC_MAX = 1./0.;
-  static final double K80_EQUASC_MIN = 1./0.;
-  static final double K80_HOUSE10_MAX = 1./0.;
-  static final double K80_HOUSE10_MIN = 1./0.;
-  static final double K80_HOUSE11_MAX = 1./0.;
-  static final double K80_HOUSE11_MIN = 1./0.;
-  static final double K80_HOUSE12_MAX = 1./0.;
-  static final double K80_HOUSE12_MIN = 1./0.;
-  static final double K80_HOUSE1_MAX = 1./0.;
-  static final double K80_HOUSE1_MIN = 1./0.;
-  static final double K80_HOUSE2_MAX = 1./0.;
-  static final double K80_HOUSE2_MIN = 1./0.;
-  static final double K80_HOUSE3_MAX = 1./0.;
-  static final double K80_HOUSE3_MIN = 1./0.;
-  static final double K80_HOUSE4_MAX = 1./0.;
-  static final double K80_HOUSE4_MIN = 1./0.;
-  static final double K80_HOUSE5_MAX = 1./0.;
-  static final double K80_HOUSE5_MIN = 1./0.;
-  static final double K80_HOUSE6_MAX = 1./0.;
-  static final double K80_HOUSE6_MIN = 1./0.;
-  static final double K80_HOUSE7_MAX = 1./0.;
-  static final double K80_HOUSE7_MIN = 1./0.;
-  static final double K80_HOUSE8_MAX = 1./0.;
-  static final double K80_HOUSE8_MIN = 1./0.;
-  static final double K80_HOUSE9_MAX = 1./0.;
-  static final double K80_HOUSE9_MIN = 1./0.;
-  static final double K80_MC_MAX = 1./0.;
-  static final double K80_MC_MIN = 1./0.;
-  static final double K80_POLASC_MAX = 1./0.;
-  static final double K80_POLASC_MIN = 1./0.;
-  static final double K80_VERTEX_MAX = 1./0.;
-  static final double K80_VERTEX_MIN = 1./0.;
-  static final double K85_ARMC_MAX = 1./0.;
-  static final double K85_ARMC_MIN = 1./0.;
-  static final double K85_ASC_MAX = 1./0.;
-  static final double K85_ASC_MIN = 1./0.;
-  static final double K85_COASC1_MAX = 1./0.;
-  static final double K85_COASC1_MIN = 1./0.;
-  static final double K85_COASC2_MAX = 1./0.;
-  static final double K85_COASC2_MIN = 1./0.;
-  static final double K85_EQUASC_MAX = 1./0.;
-  static final double K85_EQUASC_MIN = 1./0.;
-  static final double K85_HOUSE10_MAX = 1./0.;
-  static final double K85_HOUSE10_MIN = 1./0.;
-  static final double K85_HOUSE11_MAX = 1./0.;
-  static final double K85_HOUSE11_MIN = 1./0.;
-  static final double K85_HOUSE12_MAX = 1./0.;
-  static final double K85_HOUSE12_MIN = 1./0.;
-  static final double K85_HOUSE1_MAX = 1./0.;
-  static final double K85_HOUSE1_MIN = 1./0.;
-  static final double K85_HOUSE2_MAX = 1./0.;
-  static final double K85_HOUSE2_MIN = 1./0.;
-  static final double K85_HOUSE3_MAX = 1./0.;
-  static final double K85_HOUSE3_MIN = 1./0.;
-  static final double K85_HOUSE4_MAX = 1./0.;
-  static final double K85_HOUSE4_MIN = 1./0.;
-  static final double K85_HOUSE5_MAX = 1./0.;
-  static final double K85_HOUSE5_MIN = 1./0.;
-  static final double K85_HOUSE6_MAX = 1./0.;
-  static final double K85_HOUSE6_MIN = 1./0.;
-  static final double K85_HOUSE7_MAX = 1./0.;
-  static final double K85_HOUSE7_MIN = 1./0.;
-  static final double K85_HOUSE8_MAX = 1./0.;
-  static final double K85_HOUSE8_MIN = 1./0.;
-  static final double K85_HOUSE9_MAX = 1./0.;
-  static final double K85_HOUSE9_MIN = 1./0.;
-  static final double K85_MC_MAX = 1./0.;
-  static final double K85_MC_MIN = 1./0.;
-  static final double K85_POLASC_MAX = 1./0.;
-  static final double K85_POLASC_MIN = 1./0.;
-  static final double K85_VERTEX_MAX = 1./0.;
-  static final double K85_VERTEX_MIN = 1./0.;
-  static final double K88_ARMC_MAX = 1./0.;
-  static final double K88_ARMC_MIN = 1./0.;
-  static final double K88_ASC_MAX = 1./0.;
-  static final double K88_ASC_MIN = 1./0.;
-  static final double K88_COASC1_MAX = 1./0.;
-  static final double K88_COASC1_MIN = 1./0.;
-  static final double K88_COASC2_MAX = 1./0.;
-  static final double K88_COASC2_MIN = 1./0.;
-  static final double K88_EQUASC_MAX = 1./0.;
-  static final double K88_EQUASC_MIN = 1./0.;
-  static final double K88_HOUSE10_MAX = 1./0.;
-  static final double K88_HOUSE10_MIN = 1./0.;
-  static final double K88_HOUSE11_MAX = 1./0.;
-  static final double K88_HOUSE11_MIN = 1./0.;
-  static final double K88_HOUSE12_MAX = 1./0.;
-  static final double K88_HOUSE12_MIN = 1./0.;
-  static final double K88_HOUSE1_MAX = 1./0.;
-  static final double K88_HOUSE1_MIN = 1./0.;
-  static final double K88_HOUSE2_MAX = 1./0.;
-  static final double K88_HOUSE2_MIN = 1./0.;
-  static final double K88_HOUSE3_MAX = 1./0.;
-  static final double K88_HOUSE3_MIN = 1./0.;
-  static final double K88_HOUSE4_MAX = 1./0.;
-  static final double K88_HOUSE4_MIN = 1./0.;
-  static final double K88_HOUSE5_MAX = 1./0.;
-  static final double K88_HOUSE5_MIN = 1./0.;
-  static final double K88_HOUSE6_MAX = 1./0.;
-  static final double K88_HOUSE6_MIN = 1./0.;
-  static final double K88_HOUSE7_MAX = 1./0.;
-  static final double K88_HOUSE7_MIN = 1./0.;
-  static final double K88_HOUSE8_MAX = 1./0.;
-  static final double K88_HOUSE8_MIN = 1./0.;
-  static final double K88_HOUSE9_MAX = 1./0.;
-  static final double K88_HOUSE9_MIN = 1./0.;
-  static final double K88_MC_MAX = 1./0.;
-  static final double K88_MC_MIN = 1./0.;
-  static final double K88_POLASC_MAX = 1./0.;
-  static final double K88_POLASC_MIN = 1./0.;
-  static final double K88_VERTEX_MAX = 1./0.;
-  static final double K88_VERTEX_MIN = 1./0.;
-  static final double K89x_ARMC_MAX = 1./0.;
-  static final double K89x_ARMC_MIN = 1./0.;
-  static final double K89x_ASC_MAX = 1./0.;
-  static final double K89x_ASC_MIN = 1./0.;
-  static final double K89x_COASC1_MAX = 1./0.;
-  static final double K89x_COASC1_MIN = 1./0.;
-  static final double K89x_COASC2_MAX = 1./0.;
-  static final double K89x_COASC2_MIN = 1./0.;
-  static final double K89x_EQUASC_MAX = 1./0.;
-  static final double K89x_EQUASC_MIN = 1./0.;
-  static final double K89x_HOUSE10_MAX = 1./0.;
-  static final double K89x_HOUSE10_MIN = 1./0.;
-  static final double K89x_HOUSE11_MAX = 1./0.;
-  static final double K89x_HOUSE11_MIN = 1./0.;
-  static final double K89x_HOUSE12_MAX = 1./0.;
-  static final double K89x_HOUSE12_MIN = 1./0.;
-  static final double K89x_HOUSE1_MAX = 1./0.;
-  static final double K89x_HOUSE1_MIN = 1./0.;
-  static final double K89x_HOUSE2_MAX = 1./0.;
-  static final double K89x_HOUSE2_MIN = 1./0.;
-  static final double K89x_HOUSE3_MAX = 1./0.;
-  static final double K89x_HOUSE3_MIN = 1./0.;
-  static final double K89x_HOUSE4_MAX = 1./0.;
-  static final double K89x_HOUSE4_MIN = 1./0.;
-  static final double K89x_HOUSE5_MAX = 1./0.;
-  static final double K89x_HOUSE5_MIN = 1./0.;
-  static final double K89x_HOUSE6_MAX = 1./0.;
-  static final double K89x_HOUSE6_MIN = 1./0.;
-  static final double K89x_HOUSE7_MAX = 1./0.;
-  static final double K89x_HOUSE7_MIN = 1./0.;
-  static final double K89x_HOUSE8_MAX = 1./0.;
-  static final double K89x_HOUSE8_MIN = 1./0.;
-  static final double K89x_HOUSE9_MAX = 1./0.;
-  static final double K89x_HOUSE9_MIN = 1./0.;
-  static final double K89x_MC_MAX = 1./0.;
-  static final double K89x_MC_MIN = 1./0.;
-  static final double K89x_POLASC_MAX = 1./0.;
-  static final double K89x_POLASC_MIN = 1./0.;
-  static final double K89x_VERTEX_MAX = 1./0.;
-  static final double K89x_VERTEX_MIN = 1./0.;
+  static final double K70_ARMC_MAX = 1. / 0.;
+  static final double K70_ARMC_MIN = 1. / 0.;
+  static final double K70_ASC_MAX = 1. / 0.;
+  static final double K70_ASC_MIN = 1. / 0.;
+  static final double K70_COASC1_MAX = 1. / 0.;
+  static final double K70_COASC1_MIN = 1. / 0.;
+  static final double K70_COASC2_MAX = 1. / 0.;
+  static final double K70_COASC2_MIN = 1. / 0.;
+  static final double K70_EQUASC_MAX = 1. / 0.;
+  static final double K70_EQUASC_MIN = 1. / 0.;
+  static final double K70_HOUSE10_MAX = 1. / 0.;
+  static final double K70_HOUSE10_MIN = 1. / 0.;
+  static final double K70_HOUSE11_MAX = 1. / 0.;
+  static final double K70_HOUSE11_MIN = 1. / 0.;
+  static final double K70_HOUSE12_MAX = 1. / 0.;
+  static final double K70_HOUSE12_MIN = 1. / 0.;
+  static final double K70_HOUSE1_MAX = 1. / 0.;
+  static final double K70_HOUSE1_MIN = 1. / 0.;
+  static final double K70_HOUSE2_MAX = 1. / 0.;
+  static final double K70_HOUSE2_MIN = 1. / 0.;
+  static final double K70_HOUSE3_MAX = 1. / 0.;
+  static final double K70_HOUSE3_MIN = 1. / 0.;
+  static final double K70_HOUSE4_MAX = 1. / 0.;
+  static final double K70_HOUSE4_MIN = 1. / 0.;
+  static final double K70_HOUSE5_MAX = 1. / 0.;
+  static final double K70_HOUSE5_MIN = 1. / 0.;
+  static final double K70_HOUSE6_MAX = 1. / 0.;
+  static final double K70_HOUSE6_MIN = 1. / 0.;
+  static final double K70_HOUSE7_MAX = 1. / 0.;
+  static final double K70_HOUSE7_MIN = 1. / 0.;
+  static final double K70_HOUSE8_MAX = 1. / 0.;
+  static final double K70_HOUSE8_MIN = 1. / 0.;
+  static final double K70_HOUSE9_MAX = 1. / 0.;
+  static final double K70_HOUSE9_MIN = 1. / 0.;
+  static final double K70_MC_MAX = 1. / 0.;
+  static final double K70_MC_MIN = 1. / 0.;
+  static final double K70_POLASC_MAX = 1. / 0.;
+  static final double K70_POLASC_MIN = 1. / 0.;
+  static final double K70_VERTEX_MAX = 1. / 0.;
+  static final double K70_VERTEX_MIN = 1. / 0.;
+  static final double K80_ARMC_MAX = 1. / 0.;
+  static final double K80_ARMC_MIN = 1. / 0.;
+  static final double K80_ASC_MAX = 1. / 0.;
+  static final double K80_ASC_MIN = 1. / 0.;
+  static final double K80_COASC1_MAX = 1. / 0.;
+  static final double K80_COASC1_MIN = 1. / 0.;
+  static final double K80_COASC2_MAX = 1. / 0.;
+  static final double K80_COASC2_MIN = 1. / 0.;
+  static final double K80_EQUASC_MAX = 1. / 0.;
+  static final double K80_EQUASC_MIN = 1. / 0.;
+  static final double K80_HOUSE10_MAX = 1. / 0.;
+  static final double K80_HOUSE10_MIN = 1. / 0.;
+  static final double K80_HOUSE11_MAX = 1. / 0.;
+  static final double K80_HOUSE11_MIN = 1. / 0.;
+  static final double K80_HOUSE12_MAX = 1. / 0.;
+  static final double K80_HOUSE12_MIN = 1. / 0.;
+  static final double K80_HOUSE1_MAX = 1. / 0.;
+  static final double K80_HOUSE1_MIN = 1. / 0.;
+  static final double K80_HOUSE2_MAX = 1. / 0.;
+  static final double K80_HOUSE2_MIN = 1. / 0.;
+  static final double K80_HOUSE3_MAX = 1. / 0.;
+  static final double K80_HOUSE3_MIN = 1. / 0.;
+  static final double K80_HOUSE4_MAX = 1. / 0.;
+  static final double K80_HOUSE4_MIN = 1. / 0.;
+  static final double K80_HOUSE5_MAX = 1. / 0.;
+  static final double K80_HOUSE5_MIN = 1. / 0.;
+  static final double K80_HOUSE6_MAX = 1. / 0.;
+  static final double K80_HOUSE6_MIN = 1. / 0.;
+  static final double K80_HOUSE7_MAX = 1. / 0.;
+  static final double K80_HOUSE7_MIN = 1. / 0.;
+  static final double K80_HOUSE8_MAX = 1. / 0.;
+  static final double K80_HOUSE8_MIN = 1. / 0.;
+  static final double K80_HOUSE9_MAX = 1. / 0.;
+  static final double K80_HOUSE9_MIN = 1. / 0.;
+  static final double K80_MC_MAX = 1. / 0.;
+  static final double K80_MC_MIN = 1. / 0.;
+  static final double K80_POLASC_MAX = 1. / 0.;
+  static final double K80_POLASC_MIN = 1. / 0.;
+  static final double K80_VERTEX_MAX = 1. / 0.;
+  static final double K80_VERTEX_MIN = 1. / 0.;
+  static final double K85_ARMC_MAX = 1. / 0.;
+  static final double K85_ARMC_MIN = 1. / 0.;
+  static final double K85_ASC_MAX = 1. / 0.;
+  static final double K85_ASC_MIN = 1. / 0.;
+  static final double K85_COASC1_MAX = 1. / 0.;
+  static final double K85_COASC1_MIN = 1. / 0.;
+  static final double K85_COASC2_MAX = 1. / 0.;
+  static final double K85_COASC2_MIN = 1. / 0.;
+  static final double K85_EQUASC_MAX = 1. / 0.;
+  static final double K85_EQUASC_MIN = 1. / 0.;
+  static final double K85_HOUSE10_MAX = 1. / 0.;
+  static final double K85_HOUSE10_MIN = 1. / 0.;
+  static final double K85_HOUSE11_MAX = 1. / 0.;
+  static final double K85_HOUSE11_MIN = 1. / 0.;
+  static final double K85_HOUSE12_MAX = 1. / 0.;
+  static final double K85_HOUSE12_MIN = 1. / 0.;
+  static final double K85_HOUSE1_MAX = 1. / 0.;
+  static final double K85_HOUSE1_MIN = 1. / 0.;
+  static final double K85_HOUSE2_MAX = 1. / 0.;
+  static final double K85_HOUSE2_MIN = 1. / 0.;
+  static final double K85_HOUSE3_MAX = 1. / 0.;
+  static final double K85_HOUSE3_MIN = 1. / 0.;
+  static final double K85_HOUSE4_MAX = 1. / 0.;
+  static final double K85_HOUSE4_MIN = 1. / 0.;
+  static final double K85_HOUSE5_MAX = 1. / 0.;
+  static final double K85_HOUSE5_MIN = 1. / 0.;
+  static final double K85_HOUSE6_MAX = 1. / 0.;
+  static final double K85_HOUSE6_MIN = 1. / 0.;
+  static final double K85_HOUSE7_MAX = 1. / 0.;
+  static final double K85_HOUSE7_MIN = 1. / 0.;
+  static final double K85_HOUSE8_MAX = 1. / 0.;
+  static final double K85_HOUSE8_MIN = 1. / 0.;
+  static final double K85_HOUSE9_MAX = 1. / 0.;
+  static final double K85_HOUSE9_MIN = 1. / 0.;
+  static final double K85_MC_MAX = 1. / 0.;
+  static final double K85_MC_MIN = 1. / 0.;
+  static final double K85_POLASC_MAX = 1. / 0.;
+  static final double K85_POLASC_MIN = 1. / 0.;
+  static final double K85_VERTEX_MAX = 1. / 0.;
+  static final double K85_VERTEX_MIN = 1. / 0.;
+  static final double K88_ARMC_MAX = 1. / 0.;
+  static final double K88_ARMC_MIN = 1. / 0.;
+  static final double K88_ASC_MAX = 1. / 0.;
+  static final double K88_ASC_MIN = 1. / 0.;
+  static final double K88_COASC1_MAX = 1. / 0.;
+  static final double K88_COASC1_MIN = 1. / 0.;
+  static final double K88_COASC2_MAX = 1. / 0.;
+  static final double K88_COASC2_MIN = 1. / 0.;
+  static final double K88_EQUASC_MAX = 1. / 0.;
+  static final double K88_EQUASC_MIN = 1. / 0.;
+  static final double K88_HOUSE10_MAX = 1. / 0.;
+  static final double K88_HOUSE10_MIN = 1. / 0.;
+  static final double K88_HOUSE11_MAX = 1. / 0.;
+  static final double K88_HOUSE11_MIN = 1. / 0.;
+  static final double K88_HOUSE12_MAX = 1. / 0.;
+  static final double K88_HOUSE12_MIN = 1. / 0.;
+  static final double K88_HOUSE1_MAX = 1. / 0.;
+  static final double K88_HOUSE1_MIN = 1. / 0.;
+  static final double K88_HOUSE2_MAX = 1. / 0.;
+  static final double K88_HOUSE2_MIN = 1. / 0.;
+  static final double K88_HOUSE3_MAX = 1. / 0.;
+  static final double K88_HOUSE3_MIN = 1. / 0.;
+  static final double K88_HOUSE4_MAX = 1. / 0.;
+  static final double K88_HOUSE4_MIN = 1. / 0.;
+  static final double K88_HOUSE5_MAX = 1. / 0.;
+  static final double K88_HOUSE5_MIN = 1. / 0.;
+  static final double K88_HOUSE6_MAX = 1. / 0.;
+  static final double K88_HOUSE6_MIN = 1. / 0.;
+  static final double K88_HOUSE7_MAX = 1. / 0.;
+  static final double K88_HOUSE7_MIN = 1. / 0.;
+  static final double K88_HOUSE8_MAX = 1. / 0.;
+  static final double K88_HOUSE8_MIN = 1. / 0.;
+  static final double K88_HOUSE9_MAX = 1. / 0.;
+  static final double K88_HOUSE9_MIN = 1. / 0.;
+  static final double K88_MC_MAX = 1. / 0.;
+  static final double K88_MC_MIN = 1. / 0.;
+  static final double K88_POLASC_MAX = 1. / 0.;
+  static final double K88_POLASC_MIN = 1. / 0.;
+  static final double K88_VERTEX_MAX = 1. / 0.;
+  static final double K88_VERTEX_MIN = 1. / 0.;
+  static final double K89x_ARMC_MAX = 1. / 0.;
+  static final double K89x_ARMC_MIN = 1. / 0.;
+  static final double K89x_ASC_MAX = 1. / 0.;
+  static final double K89x_ASC_MIN = 1. / 0.;
+  static final double K89x_COASC1_MAX = 1. / 0.;
+  static final double K89x_COASC1_MIN = 1. / 0.;
+  static final double K89x_COASC2_MAX = 1. / 0.;
+  static final double K89x_COASC2_MIN = 1. / 0.;
+  static final double K89x_EQUASC_MAX = 1. / 0.;
+  static final double K89x_EQUASC_MIN = 1. / 0.;
+  static final double K89x_HOUSE10_MAX = 1. / 0.;
+  static final double K89x_HOUSE10_MIN = 1. / 0.;
+  static final double K89x_HOUSE11_MAX = 1. / 0.;
+  static final double K89x_HOUSE11_MIN = 1. / 0.;
+  static final double K89x_HOUSE12_MAX = 1. / 0.;
+  static final double K89x_HOUSE12_MIN = 1. / 0.;
+  static final double K89x_HOUSE1_MAX = 1. / 0.;
+  static final double K89x_HOUSE1_MIN = 1. / 0.;
+  static final double K89x_HOUSE2_MAX = 1. / 0.;
+  static final double K89x_HOUSE2_MIN = 1. / 0.;
+  static final double K89x_HOUSE3_MAX = 1. / 0.;
+  static final double K89x_HOUSE3_MIN = 1. / 0.;
+  static final double K89x_HOUSE4_MAX = 1. / 0.;
+  static final double K89x_HOUSE4_MIN = 1. / 0.;
+  static final double K89x_HOUSE5_MAX = 1. / 0.;
+  static final double K89x_HOUSE5_MIN = 1. / 0.;
+  static final double K89x_HOUSE6_MAX = 1. / 0.;
+  static final double K89x_HOUSE6_MIN = 1. / 0.;
+  static final double K89x_HOUSE7_MAX = 1. / 0.;
+  static final double K89x_HOUSE7_MIN = 1. / 0.;
+  static final double K89x_HOUSE8_MAX = 1. / 0.;
+  static final double K89x_HOUSE8_MIN = 1. / 0.;
+  static final double K89x_HOUSE9_MAX = 1. / 0.;
+  static final double K89x_HOUSE9_MIN = 1. / 0.;
+  static final double K89x_MC_MAX = 1. / 0.;
+  static final double K89x_MC_MIN = 1. / 0.;
+  static final double K89x_POLASC_MAX = 1. / 0.;
+  static final double K89x_POLASC_MIN = 1. / 0.;
+  static final double K89x_VERTEX_MAX = 1. / 0.;
+  static final double K89x_VERTEX_MIN = 1. / 0.;
   static final double O0_ARMC_MAX = 360.986667;
   static final double O0_ARMC_MIN = 360.984167;
   static final double O0_ASC_MAX = 393.494420;
@@ -3672,206 +3670,206 @@ class TransitBase
   static final double P66_POLASC_MIN = 176.632500;
   static final double P66_VERTEX_MAX = 489.939167;
   static final double P66_VERTEX_MIN = 313.358333;
-  static final double P70_ARMC_MAX = 1./0.;
-  static final double P70_ARMC_MIN = 1./0.;
-  static final double P70_ASC_MAX = 1./0.;
-  static final double P70_ASC_MIN = 1./0.;
-  static final double P70_COASC1_MAX = 1./0.;
-  static final double P70_COASC1_MIN = 1./0.;
-  static final double P70_COASC2_MAX = 1./0.;
-  static final double P70_COASC2_MIN = 1./0.;
-  static final double P70_EQUASC_MAX = 1./0.;
-  static final double P70_EQUASC_MIN = 1./0.;
-  static final double P70_HOUSE10_MAX = 1./0.;
-  static final double P70_HOUSE10_MIN = 1./0.;
-  static final double P70_HOUSE11_MAX = 1./0.;
-  static final double P70_HOUSE11_MIN = 1./0.;
-  static final double P70_HOUSE12_MAX = 1./0.;
-  static final double P70_HOUSE12_MIN = 1./0.;
-  static final double P70_HOUSE1_MAX = 1./0.;
-  static final double P70_HOUSE1_MIN = 1./0.;
-  static final double P70_HOUSE2_MAX = 1./0.;
-  static final double P70_HOUSE2_MIN = 1./0.;
-  static final double P70_HOUSE3_MAX = 1./0.;
-  static final double P70_HOUSE3_MIN = 1./0.;
-  static final double P70_HOUSE4_MAX = 1./0.;
-  static final double P70_HOUSE4_MIN = 1./0.;
-  static final double P70_HOUSE5_MAX = 1./0.;
-  static final double P70_HOUSE5_MIN = 1./0.;
-  static final double P70_HOUSE6_MAX = 1./0.;
-  static final double P70_HOUSE6_MIN = 1./0.;
-  static final double P70_HOUSE7_MAX = 1./0.;
-  static final double P70_HOUSE7_MIN = 1./0.;
-  static final double P70_HOUSE8_MAX = 1./0.;
-  static final double P70_HOUSE8_MIN = 1./0.;
-  static final double P70_HOUSE9_MAX = 1./0.;
-  static final double P70_HOUSE9_MIN = 1./0.;
-  static final double P70_MC_MAX = 1./0.;
-  static final double P70_MC_MIN = 1./0.;
-  static final double P70_POLASC_MAX = 1./0.;
-  static final double P70_POLASC_MIN = 1./0.;
-  static final double P70_VERTEX_MAX = 1./0.;
-  static final double P70_VERTEX_MIN = 1./0.;
-  static final double P80_ARMC_MAX = 1./0.;
-  static final double P80_ARMC_MIN = 1./0.;
-  static final double P80_ASC_MAX = 1./0.;
-  static final double P80_ASC_MIN = 1./0.;
-  static final double P80_COASC1_MAX = 1./0.;
-  static final double P80_COASC1_MIN = 1./0.;
-  static final double P80_COASC2_MAX = 1./0.;
-  static final double P80_COASC2_MIN = 1./0.;
-  static final double P80_EQUASC_MAX = 1./0.;
-  static final double P80_EQUASC_MIN = 1./0.;
-  static final double P80_HOUSE10_MAX = 1./0.;
-  static final double P80_HOUSE10_MIN = 1./0.;
-  static final double P80_HOUSE11_MAX = 1./0.;
-  static final double P80_HOUSE11_MIN = 1./0.;
-  static final double P80_HOUSE12_MAX = 1./0.;
-  static final double P80_HOUSE12_MIN = 1./0.;
-  static final double P80_HOUSE1_MAX = 1./0.;
-  static final double P80_HOUSE1_MIN = 1./0.;
-  static final double P80_HOUSE2_MAX = 1./0.;
-  static final double P80_HOUSE2_MIN = 1./0.;
-  static final double P80_HOUSE3_MAX = 1./0.;
-  static final double P80_HOUSE3_MIN = 1./0.;
-  static final double P80_HOUSE4_MAX = 1./0.;
-  static final double P80_HOUSE4_MIN = 1./0.;
-  static final double P80_HOUSE5_MAX = 1./0.;
-  static final double P80_HOUSE5_MIN = 1./0.;
-  static final double P80_HOUSE6_MAX = 1./0.;
-  static final double P80_HOUSE6_MIN = 1./0.;
-  static final double P80_HOUSE7_MAX = 1./0.;
-  static final double P80_HOUSE7_MIN = 1./0.;
-  static final double P80_HOUSE8_MAX = 1./0.;
-  static final double P80_HOUSE8_MIN = 1./0.;
-  static final double P80_HOUSE9_MAX = 1./0.;
-  static final double P80_HOUSE9_MIN = 1./0.;
-  static final double P80_MC_MAX = 1./0.;
-  static final double P80_MC_MIN = 1./0.;
-  static final double P80_POLASC_MAX = 1./0.;
-  static final double P80_POLASC_MIN = 1./0.;
-  static final double P80_VERTEX_MAX = 1./0.;
-  static final double P80_VERTEX_MIN = 1./0.;
-  static final double P85_ARMC_MAX = 1./0.;
-  static final double P85_ARMC_MIN = 1./0.;
-  static final double P85_ASC_MAX = 1./0.;
-  static final double P85_ASC_MIN = 1./0.;
-  static final double P85_COASC1_MAX = 1./0.;
-  static final double P85_COASC1_MIN = 1./0.;
-  static final double P85_COASC2_MAX = 1./0.;
-  static final double P85_COASC2_MIN = 1./0.;
-  static final double P85_EQUASC_MAX = 1./0.;
-  static final double P85_EQUASC_MIN = 1./0.;
-  static final double P85_HOUSE10_MAX = 1./0.;
-  static final double P85_HOUSE10_MIN = 1./0.;
-  static final double P85_HOUSE11_MAX = 1./0.;
-  static final double P85_HOUSE11_MIN = 1./0.;
-  static final double P85_HOUSE12_MAX = 1./0.;
-  static final double P85_HOUSE12_MIN = 1./0.;
-  static final double P85_HOUSE1_MAX = 1./0.;
-  static final double P85_HOUSE1_MIN = 1./0.;
-  static final double P85_HOUSE2_MAX = 1./0.;
-  static final double P85_HOUSE2_MIN = 1./0.;
-  static final double P85_HOUSE3_MAX = 1./0.;
-  static final double P85_HOUSE3_MIN = 1./0.;
-  static final double P85_HOUSE4_MAX = 1./0.;
-  static final double P85_HOUSE4_MIN = 1./0.;
-  static final double P85_HOUSE5_MAX = 1./0.;
-  static final double P85_HOUSE5_MIN = 1./0.;
-  static final double P85_HOUSE6_MAX = 1./0.;
-  static final double P85_HOUSE6_MIN = 1./0.;
-  static final double P85_HOUSE7_MAX = 1./0.;
-  static final double P85_HOUSE7_MIN = 1./0.;
-  static final double P85_HOUSE8_MAX = 1./0.;
-  static final double P85_HOUSE8_MIN = 1./0.;
-  static final double P85_HOUSE9_MAX = 1./0.;
-  static final double P85_HOUSE9_MIN = 1./0.;
-  static final double P85_MC_MAX = 1./0.;
-  static final double P85_MC_MIN = 1./0.;
-  static final double P85_POLASC_MAX = 1./0.;
-  static final double P85_POLASC_MIN = 1./0.;
-  static final double P85_VERTEX_MAX = 1./0.;
-  static final double P85_VERTEX_MIN = 1./0.;
-  static final double P88_ARMC_MAX = 1./0.;
-  static final double P88_ARMC_MIN = 1./0.;
-  static final double P88_ASC_MAX = 1./0.;
-  static final double P88_ASC_MIN = 1./0.;
-  static final double P88_COASC1_MAX = 1./0.;
-  static final double P88_COASC1_MIN = 1./0.;
-  static final double P88_COASC2_MAX = 1./0.;
-  static final double P88_COASC2_MIN = 1./0.;
-  static final double P88_EQUASC_MAX = 1./0.;
-  static final double P88_EQUASC_MIN = 1./0.;
-  static final double P88_HOUSE10_MAX = 1./0.;
-  static final double P88_HOUSE10_MIN = 1./0.;
-  static final double P88_HOUSE11_MAX = 1./0.;
-  static final double P88_HOUSE11_MIN = 1./0.;
-  static final double P88_HOUSE12_MAX = 1./0.;
-  static final double P88_HOUSE12_MIN = 1./0.;
-  static final double P88_HOUSE1_MAX = 1./0.;
-  static final double P88_HOUSE1_MIN = 1./0.;
-  static final double P88_HOUSE2_MAX = 1./0.;
-  static final double P88_HOUSE2_MIN = 1./0.;
-  static final double P88_HOUSE3_MAX = 1./0.;
-  static final double P88_HOUSE3_MIN = 1./0.;
-  static final double P88_HOUSE4_MAX = 1./0.;
-  static final double P88_HOUSE4_MIN = 1./0.;
-  static final double P88_HOUSE5_MAX = 1./0.;
-  static final double P88_HOUSE5_MIN = 1./0.;
-  static final double P88_HOUSE6_MAX = 1./0.;
-  static final double P88_HOUSE6_MIN = 1./0.;
-  static final double P88_HOUSE7_MAX = 1./0.;
-  static final double P88_HOUSE7_MIN = 1./0.;
-  static final double P88_HOUSE8_MAX = 1./0.;
-  static final double P88_HOUSE8_MIN = 1./0.;
-  static final double P88_HOUSE9_MAX = 1./0.;
-  static final double P88_HOUSE9_MIN = 1./0.;
-  static final double P88_MC_MAX = 1./0.;
-  static final double P88_MC_MIN = 1./0.;
-  static final double P88_POLASC_MAX = 1./0.;
-  static final double P88_POLASC_MIN = 1./0.;
-  static final double P88_VERTEX_MAX = 1./0.;
-  static final double P88_VERTEX_MIN = 1./0.;
-  static final double P89x_ARMC_MAX = 1./0.;
-  static final double P89x_ARMC_MIN = 1./0.;
-  static final double P89x_ASC_MAX = 1./0.;
-  static final double P89x_ASC_MIN = 1./0.;
-  static final double P89x_COASC1_MAX = 1./0.;
-  static final double P89x_COASC1_MIN = 1./0.;
-  static final double P89x_COASC2_MAX = 1./0.;
-  static final double P89x_COASC2_MIN = 1./0.;
-  static final double P89x_EQUASC_MAX = 1./0.;
-  static final double P89x_EQUASC_MIN = 1./0.;
-  static final double P89x_HOUSE10_MAX = 1./0.;
-  static final double P89x_HOUSE10_MIN = 1./0.;
-  static final double P89x_HOUSE11_MAX = 1./0.;
-  static final double P89x_HOUSE11_MIN = 1./0.;
-  static final double P89x_HOUSE12_MAX = 1./0.;
-  static final double P89x_HOUSE12_MIN = 1./0.;
-  static final double P89x_HOUSE1_MAX = 1./0.;
-  static final double P89x_HOUSE1_MIN = 1./0.;
-  static final double P89x_HOUSE2_MAX = 1./0.;
-  static final double P89x_HOUSE2_MIN = 1./0.;
-  static final double P89x_HOUSE3_MAX = 1./0.;
-  static final double P89x_HOUSE3_MIN = 1./0.;
-  static final double P89x_HOUSE4_MAX = 1./0.;
-  static final double P89x_HOUSE4_MIN = 1./0.;
-  static final double P89x_HOUSE5_MAX = 1./0.;
-  static final double P89x_HOUSE5_MIN = 1./0.;
-  static final double P89x_HOUSE6_MAX = 1./0.;
-  static final double P89x_HOUSE6_MIN = 1./0.;
-  static final double P89x_HOUSE7_MAX = 1./0.;
-  static final double P89x_HOUSE7_MIN = 1./0.;
-  static final double P89x_HOUSE8_MAX = 1./0.;
-  static final double P89x_HOUSE8_MIN = 1./0.;
-  static final double P89x_HOUSE9_MAX = 1./0.;
-  static final double P89x_HOUSE9_MIN = 1./0.;
-  static final double P89x_MC_MAX = 1./0.;
-  static final double P89x_MC_MIN = 1./0.;
-  static final double P89x_POLASC_MAX = 1./0.;
-  static final double P89x_POLASC_MIN = 1./0.;
-  static final double P89x_VERTEX_MAX = 1./0.;
-  static final double P89x_VERTEX_MIN = 1./0.;
+  static final double P70_ARMC_MAX = 1. / 0.;
+  static final double P70_ARMC_MIN = 1. / 0.;
+  static final double P70_ASC_MAX = 1. / 0.;
+  static final double P70_ASC_MIN = 1. / 0.;
+  static final double P70_COASC1_MAX = 1. / 0.;
+  static final double P70_COASC1_MIN = 1. / 0.;
+  static final double P70_COASC2_MAX = 1. / 0.;
+  static final double P70_COASC2_MIN = 1. / 0.;
+  static final double P70_EQUASC_MAX = 1. / 0.;
+  static final double P70_EQUASC_MIN = 1. / 0.;
+  static final double P70_HOUSE10_MAX = 1. / 0.;
+  static final double P70_HOUSE10_MIN = 1. / 0.;
+  static final double P70_HOUSE11_MAX = 1. / 0.;
+  static final double P70_HOUSE11_MIN = 1. / 0.;
+  static final double P70_HOUSE12_MAX = 1. / 0.;
+  static final double P70_HOUSE12_MIN = 1. / 0.;
+  static final double P70_HOUSE1_MAX = 1. / 0.;
+  static final double P70_HOUSE1_MIN = 1. / 0.;
+  static final double P70_HOUSE2_MAX = 1. / 0.;
+  static final double P70_HOUSE2_MIN = 1. / 0.;
+  static final double P70_HOUSE3_MAX = 1. / 0.;
+  static final double P70_HOUSE3_MIN = 1. / 0.;
+  static final double P70_HOUSE4_MAX = 1. / 0.;
+  static final double P70_HOUSE4_MIN = 1. / 0.;
+  static final double P70_HOUSE5_MAX = 1. / 0.;
+  static final double P70_HOUSE5_MIN = 1. / 0.;
+  static final double P70_HOUSE6_MAX = 1. / 0.;
+  static final double P70_HOUSE6_MIN = 1. / 0.;
+  static final double P70_HOUSE7_MAX = 1. / 0.;
+  static final double P70_HOUSE7_MIN = 1. / 0.;
+  static final double P70_HOUSE8_MAX = 1. / 0.;
+  static final double P70_HOUSE8_MIN = 1. / 0.;
+  static final double P70_HOUSE9_MAX = 1. / 0.;
+  static final double P70_HOUSE9_MIN = 1. / 0.;
+  static final double P70_MC_MAX = 1. / 0.;
+  static final double P70_MC_MIN = 1. / 0.;
+  static final double P70_POLASC_MAX = 1. / 0.;
+  static final double P70_POLASC_MIN = 1. / 0.;
+  static final double P70_VERTEX_MAX = 1. / 0.;
+  static final double P70_VERTEX_MIN = 1. / 0.;
+  static final double P80_ARMC_MAX = 1. / 0.;
+  static final double P80_ARMC_MIN = 1. / 0.;
+  static final double P80_ASC_MAX = 1. / 0.;
+  static final double P80_ASC_MIN = 1. / 0.;
+  static final double P80_COASC1_MAX = 1. / 0.;
+  static final double P80_COASC1_MIN = 1. / 0.;
+  static final double P80_COASC2_MAX = 1. / 0.;
+  static final double P80_COASC2_MIN = 1. / 0.;
+  static final double P80_EQUASC_MAX = 1. / 0.;
+  static final double P80_EQUASC_MIN = 1. / 0.;
+  static final double P80_HOUSE10_MAX = 1. / 0.;
+  static final double P80_HOUSE10_MIN = 1. / 0.;
+  static final double P80_HOUSE11_MAX = 1. / 0.;
+  static final double P80_HOUSE11_MIN = 1. / 0.;
+  static final double P80_HOUSE12_MAX = 1. / 0.;
+  static final double P80_HOUSE12_MIN = 1. / 0.;
+  static final double P80_HOUSE1_MAX = 1. / 0.;
+  static final double P80_HOUSE1_MIN = 1. / 0.;
+  static final double P80_HOUSE2_MAX = 1. / 0.;
+  static final double P80_HOUSE2_MIN = 1. / 0.;
+  static final double P80_HOUSE3_MAX = 1. / 0.;
+  static final double P80_HOUSE3_MIN = 1. / 0.;
+  static final double P80_HOUSE4_MAX = 1. / 0.;
+  static final double P80_HOUSE4_MIN = 1. / 0.;
+  static final double P80_HOUSE5_MAX = 1. / 0.;
+  static final double P80_HOUSE5_MIN = 1. / 0.;
+  static final double P80_HOUSE6_MAX = 1. / 0.;
+  static final double P80_HOUSE6_MIN = 1. / 0.;
+  static final double P80_HOUSE7_MAX = 1. / 0.;
+  static final double P80_HOUSE7_MIN = 1. / 0.;
+  static final double P80_HOUSE8_MAX = 1. / 0.;
+  static final double P80_HOUSE8_MIN = 1. / 0.;
+  static final double P80_HOUSE9_MAX = 1. / 0.;
+  static final double P80_HOUSE9_MIN = 1. / 0.;
+  static final double P80_MC_MAX = 1. / 0.;
+  static final double P80_MC_MIN = 1. / 0.;
+  static final double P80_POLASC_MAX = 1. / 0.;
+  static final double P80_POLASC_MIN = 1. / 0.;
+  static final double P80_VERTEX_MAX = 1. / 0.;
+  static final double P80_VERTEX_MIN = 1. / 0.;
+  static final double P85_ARMC_MAX = 1. / 0.;
+  static final double P85_ARMC_MIN = 1. / 0.;
+  static final double P85_ASC_MAX = 1. / 0.;
+  static final double P85_ASC_MIN = 1. / 0.;
+  static final double P85_COASC1_MAX = 1. / 0.;
+  static final double P85_COASC1_MIN = 1. / 0.;
+  static final double P85_COASC2_MAX = 1. / 0.;
+  static final double P85_COASC2_MIN = 1. / 0.;
+  static final double P85_EQUASC_MAX = 1. / 0.;
+  static final double P85_EQUASC_MIN = 1. / 0.;
+  static final double P85_HOUSE10_MAX = 1. / 0.;
+  static final double P85_HOUSE10_MIN = 1. / 0.;
+  static final double P85_HOUSE11_MAX = 1. / 0.;
+  static final double P85_HOUSE11_MIN = 1. / 0.;
+  static final double P85_HOUSE12_MAX = 1. / 0.;
+  static final double P85_HOUSE12_MIN = 1. / 0.;
+  static final double P85_HOUSE1_MAX = 1. / 0.;
+  static final double P85_HOUSE1_MIN = 1. / 0.;
+  static final double P85_HOUSE2_MAX = 1. / 0.;
+  static final double P85_HOUSE2_MIN = 1. / 0.;
+  static final double P85_HOUSE3_MAX = 1. / 0.;
+  static final double P85_HOUSE3_MIN = 1. / 0.;
+  static final double P85_HOUSE4_MAX = 1. / 0.;
+  static final double P85_HOUSE4_MIN = 1. / 0.;
+  static final double P85_HOUSE5_MAX = 1. / 0.;
+  static final double P85_HOUSE5_MIN = 1. / 0.;
+  static final double P85_HOUSE6_MAX = 1. / 0.;
+  static final double P85_HOUSE6_MIN = 1. / 0.;
+  static final double P85_HOUSE7_MAX = 1. / 0.;
+  static final double P85_HOUSE7_MIN = 1. / 0.;
+  static final double P85_HOUSE8_MAX = 1. / 0.;
+  static final double P85_HOUSE8_MIN = 1. / 0.;
+  static final double P85_HOUSE9_MAX = 1. / 0.;
+  static final double P85_HOUSE9_MIN = 1. / 0.;
+  static final double P85_MC_MAX = 1. / 0.;
+  static final double P85_MC_MIN = 1. / 0.;
+  static final double P85_POLASC_MAX = 1. / 0.;
+  static final double P85_POLASC_MIN = 1. / 0.;
+  static final double P85_VERTEX_MAX = 1. / 0.;
+  static final double P85_VERTEX_MIN = 1. / 0.;
+  static final double P88_ARMC_MAX = 1. / 0.;
+  static final double P88_ARMC_MIN = 1. / 0.;
+  static final double P88_ASC_MAX = 1. / 0.;
+  static final double P88_ASC_MIN = 1. / 0.;
+  static final double P88_COASC1_MAX = 1. / 0.;
+  static final double P88_COASC1_MIN = 1. / 0.;
+  static final double P88_COASC2_MAX = 1. / 0.;
+  static final double P88_COASC2_MIN = 1. / 0.;
+  static final double P88_EQUASC_MAX = 1. / 0.;
+  static final double P88_EQUASC_MIN = 1. / 0.;
+  static final double P88_HOUSE10_MAX = 1. / 0.;
+  static final double P88_HOUSE10_MIN = 1. / 0.;
+  static final double P88_HOUSE11_MAX = 1. / 0.;
+  static final double P88_HOUSE11_MIN = 1. / 0.;
+  static final double P88_HOUSE12_MAX = 1. / 0.;
+  static final double P88_HOUSE12_MIN = 1. / 0.;
+  static final double P88_HOUSE1_MAX = 1. / 0.;
+  static final double P88_HOUSE1_MIN = 1. / 0.;
+  static final double P88_HOUSE2_MAX = 1. / 0.;
+  static final double P88_HOUSE2_MIN = 1. / 0.;
+  static final double P88_HOUSE3_MAX = 1. / 0.;
+  static final double P88_HOUSE3_MIN = 1. / 0.;
+  static final double P88_HOUSE4_MAX = 1. / 0.;
+  static final double P88_HOUSE4_MIN = 1. / 0.;
+  static final double P88_HOUSE5_MAX = 1. / 0.;
+  static final double P88_HOUSE5_MIN = 1. / 0.;
+  static final double P88_HOUSE6_MAX = 1. / 0.;
+  static final double P88_HOUSE6_MIN = 1. / 0.;
+  static final double P88_HOUSE7_MAX = 1. / 0.;
+  static final double P88_HOUSE7_MIN = 1. / 0.;
+  static final double P88_HOUSE8_MAX = 1. / 0.;
+  static final double P88_HOUSE8_MIN = 1. / 0.;
+  static final double P88_HOUSE9_MAX = 1. / 0.;
+  static final double P88_HOUSE9_MIN = 1. / 0.;
+  static final double P88_MC_MAX = 1. / 0.;
+  static final double P88_MC_MIN = 1. / 0.;
+  static final double P88_POLASC_MAX = 1. / 0.;
+  static final double P88_POLASC_MIN = 1. / 0.;
+  static final double P88_VERTEX_MAX = 1. / 0.;
+  static final double P88_VERTEX_MIN = 1. / 0.;
+  static final double P89x_ARMC_MAX = 1. / 0.;
+  static final double P89x_ARMC_MIN = 1. / 0.;
+  static final double P89x_ASC_MAX = 1. / 0.;
+  static final double P89x_ASC_MIN = 1. / 0.;
+  static final double P89x_COASC1_MAX = 1. / 0.;
+  static final double P89x_COASC1_MIN = 1. / 0.;
+  static final double P89x_COASC2_MAX = 1. / 0.;
+  static final double P89x_COASC2_MIN = 1. / 0.;
+  static final double P89x_EQUASC_MAX = 1. / 0.;
+  static final double P89x_EQUASC_MIN = 1. / 0.;
+  static final double P89x_HOUSE10_MAX = 1. / 0.;
+  static final double P89x_HOUSE10_MIN = 1. / 0.;
+  static final double P89x_HOUSE11_MAX = 1. / 0.;
+  static final double P89x_HOUSE11_MIN = 1. / 0.;
+  static final double P89x_HOUSE12_MAX = 1. / 0.;
+  static final double P89x_HOUSE12_MIN = 1. / 0.;
+  static final double P89x_HOUSE1_MAX = 1. / 0.;
+  static final double P89x_HOUSE1_MIN = 1. / 0.;
+  static final double P89x_HOUSE2_MAX = 1. / 0.;
+  static final double P89x_HOUSE2_MIN = 1. / 0.;
+  static final double P89x_HOUSE3_MAX = 1. / 0.;
+  static final double P89x_HOUSE3_MIN = 1. / 0.;
+  static final double P89x_HOUSE4_MAX = 1. / 0.;
+  static final double P89x_HOUSE4_MIN = 1. / 0.;
+  static final double P89x_HOUSE5_MAX = 1. / 0.;
+  static final double P89x_HOUSE5_MIN = 1. / 0.;
+  static final double P89x_HOUSE6_MAX = 1. / 0.;
+  static final double P89x_HOUSE6_MIN = 1. / 0.;
+  static final double P89x_HOUSE7_MAX = 1. / 0.;
+  static final double P89x_HOUSE7_MIN = 1. / 0.;
+  static final double P89x_HOUSE8_MAX = 1. / 0.;
+  static final double P89x_HOUSE8_MIN = 1. / 0.;
+  static final double P89x_HOUSE9_MAX = 1. / 0.;
+  static final double P89x_HOUSE9_MIN = 1. / 0.;
+  static final double P89x_MC_MAX = 1. / 0.;
+  static final double P89x_MC_MIN = 1. / 0.;
+  static final double P89x_POLASC_MAX = 1. / 0.;
+  static final double P89x_POLASC_MIN = 1. / 0.;
+  static final double P89x_VERTEX_MAX = 1. / 0.;
+  static final double P89x_VERTEX_MIN = 1. / 0.;
   static final double R0_ARMC_MAX = 360.986667;
   static final double R0_ARMC_MIN = 360.984167;
   static final double R0_ASC_MAX = 393.494420;
@@ -6954,13 +6952,11 @@ class TransitBase
   static final double X89x_VERTEX_MIN = 330.556667;
 
 
-
-
   // degrees per day
   static double getHouseSpeed(boolean min, int hsys, int object, double geolat) {
-    int latrange = Math.abs((int)(geolat))+1;
+    int latrange = Math.abs((int) (geolat)) + 1;
 
-    latrange = 10 + 10 * (int)(latrange/10);
+    latrange = 10 + 10 * (int) (latrange / 10);
 
     if (Math.abs(geolat) <= 66 && Math.abs(geolat) > 60) {
       latrange = 66;
@@ -6972,177 +6968,309 @@ class TransitBase
       latrange = 90;
     }
 
-    if (object < 0) {	// cusps range from -1 to -12
+    if (object < 0) {  // cusps range from -1 to -12
       object = Math.abs(object) + 7;
     }
 
-    switch(hsys) {
+    switch (hsys) {
       case SweConst.SE_HSYS_PLACIDUS:
-System.err.println("latrange: " + latrange + ", " + object + ", " + min + " [" + minLonP30[object] + " .. " + maxLonP30[object] + "]");
-          switch(latrange) {
-            case 10: return (min ? minLonP10[object] : maxLonP10[object]);
-            case 20: return (min ? minLonP20[object] : maxLonP20[object]);
-            case 30: return (min ? minLonP30[object] : maxLonP30[object]);
-            case 40: return (min ? minLonP40[object] : maxLonP40[object]);
-            case 50: return (min ? minLonP50[object] : maxLonP50[object]);
-            case 60: return (min ? minLonP60[object] : maxLonP60[object]);
-            case 66: return (min ? minLonP66[object] : maxLonP66[object]);
-            case 70: return (min ? minLonP70[object] : maxLonP70[object]);
-            case 80: return (min ? minLonP80[object] : maxLonP80[object]);
-            case 85: return (min ? minLonP85[object] : maxLonP85[object]);
-            case 88: return (min ? minLonP88[object] : maxLonP88[object]);
-            case 90: return (min ? minLonP89x[object] : maxLonP89x[object]);
-          }
+        System.err.println("latrange: " + latrange + ", " + object + ", " + min + " [" + minLonP30[object] + " .. " + maxLonP30[object] + "]");
+        switch (latrange) {
+          case 10:
+            return (min ? minLonP10[object] : maxLonP10[object]);
+          case 20:
+            return (min ? minLonP20[object] : maxLonP20[object]);
+          case 30:
+            return (min ? minLonP30[object] : maxLonP30[object]);
+          case 40:
+            return (min ? minLonP40[object] : maxLonP40[object]);
+          case 50:
+            return (min ? minLonP50[object] : maxLonP50[object]);
+          case 60:
+            return (min ? minLonP60[object] : maxLonP60[object]);
+          case 66:
+            return (min ? minLonP66[object] : maxLonP66[object]);
+          case 70:
+            return (min ? minLonP70[object] : maxLonP70[object]);
+          case 80:
+            return (min ? minLonP80[object] : maxLonP80[object]);
+          case 85:
+            return (min ? minLonP85[object] : maxLonP85[object]);
+          case 88:
+            return (min ? minLonP88[object] : maxLonP88[object]);
+          case 90:
+            return (min ? minLonP89x[object] : maxLonP89x[object]);
+        }
       case SweConst.SE_HSYS_KOCH:
-          switch(latrange) {
-            case 10: return (min ? minLonK10[object] : maxLonK10[object]);
-            case 20: return (min ? minLonK20[object] : maxLonK20[object]);
-            case 30: return (min ? minLonK30[object] : maxLonK30[object]);
-            case 40: return (min ? minLonK40[object] : maxLonK40[object]);
-            case 50: return (min ? minLonK50[object] : maxLonK50[object]);
-            case 60: return (min ? minLonK60[object] : maxLonK60[object]);
-            case 66: return (min ? minLonK66[object] : maxLonK66[object]);
-            case 70: return (min ? minLonK70[object] : maxLonK70[object]);
-            case 80: return (min ? minLonK80[object] : maxLonK80[object]);
-            case 85: return (min ? minLonK85[object] : maxLonK85[object]);
-            case 88: return (min ? minLonK88[object] : maxLonK88[object]);
-            case 90: return (min ? minLonK89x[object] : maxLonK89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonK10[object] : maxLonK10[object]);
+          case 20:
+            return (min ? minLonK20[object] : maxLonK20[object]);
+          case 30:
+            return (min ? minLonK30[object] : maxLonK30[object]);
+          case 40:
+            return (min ? minLonK40[object] : maxLonK40[object]);
+          case 50:
+            return (min ? minLonK50[object] : maxLonK50[object]);
+          case 60:
+            return (min ? minLonK60[object] : maxLonK60[object]);
+          case 66:
+            return (min ? minLonK66[object] : maxLonK66[object]);
+          case 70:
+            return (min ? minLonK70[object] : maxLonK70[object]);
+          case 80:
+            return (min ? minLonK80[object] : maxLonK80[object]);
+          case 85:
+            return (min ? minLonK85[object] : maxLonK85[object]);
+          case 88:
+            return (min ? minLonK88[object] : maxLonK88[object]);
+          case 90:
+            return (min ? minLonK89x[object] : maxLonK89x[object]);
+        }
       case SweConst.SE_HSYS_PORPHYRIUS:
-          switch(latrange) {
-            case 10: return (min ? minLonO10[object] : maxLonO10[object]);
-            case 20: return (min ? minLonO20[object] : maxLonO20[object]);
-            case 30: return (min ? minLonO30[object] : maxLonO30[object]);
-            case 40: return (min ? minLonO40[object] : maxLonO40[object]);
-            case 50: return (min ? minLonO50[object] : maxLonO50[object]);
-            case 60: return (min ? minLonO60[object] : maxLonO60[object]);
-            case 66: return (min ? minLonO66[object] : maxLonO66[object]);
-            case 70: return (min ? minLonO70[object] : maxLonO70[object]);
-            case 80: return (min ? minLonO80[object] : maxLonO80[object]);
-            case 85: return (min ? minLonO85[object] : maxLonO85[object]);
-            case 88: return (min ? minLonO88[object] : maxLonO88[object]);
-            case 90: return (min ? minLonO89x[object] : maxLonO89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonO10[object] : maxLonO10[object]);
+          case 20:
+            return (min ? minLonO20[object] : maxLonO20[object]);
+          case 30:
+            return (min ? minLonO30[object] : maxLonO30[object]);
+          case 40:
+            return (min ? minLonO40[object] : maxLonO40[object]);
+          case 50:
+            return (min ? minLonO50[object] : maxLonO50[object]);
+          case 60:
+            return (min ? minLonO60[object] : maxLonO60[object]);
+          case 66:
+            return (min ? minLonO66[object] : maxLonO66[object]);
+          case 70:
+            return (min ? minLonO70[object] : maxLonO70[object]);
+          case 80:
+            return (min ? minLonO80[object] : maxLonO80[object]);
+          case 85:
+            return (min ? minLonO85[object] : maxLonO85[object]);
+          case 88:
+            return (min ? minLonO88[object] : maxLonO88[object]);
+          case 90:
+            return (min ? minLonO89x[object] : maxLonO89x[object]);
+        }
       case SweConst.SE_HSYS_REGIOMONTANUS:
-          switch(latrange) {
-            case 10: return (min ? minLonR10[object] : maxLonR10[object]);
-            case 20: return (min ? minLonR20[object] : maxLonR20[object]);
-            case 30: return (min ? minLonR30[object] : maxLonR30[object]);
-            case 40: return (min ? minLonR40[object] : maxLonR40[object]);
-            case 50: return (min ? minLonR50[object] : maxLonR50[object]);
-            case 60: return (min ? minLonR60[object] : maxLonR60[object]);
-            case 66: return (min ? minLonR66[object] : maxLonR66[object]);
-            case 70: return (min ? minLonR70[object] : maxLonR70[object]);
-            case 80: return (min ? minLonR80[object] : maxLonR80[object]);
-            case 85: return (min ? minLonR85[object] : maxLonR85[object]);
-            case 88: return (min ? minLonR88[object] : maxLonR88[object]);
-            case 90: return (min ? minLonR89x[object] : maxLonR89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonR10[object] : maxLonR10[object]);
+          case 20:
+            return (min ? minLonR20[object] : maxLonR20[object]);
+          case 30:
+            return (min ? minLonR30[object] : maxLonR30[object]);
+          case 40:
+            return (min ? minLonR40[object] : maxLonR40[object]);
+          case 50:
+            return (min ? minLonR50[object] : maxLonR50[object]);
+          case 60:
+            return (min ? minLonR60[object] : maxLonR60[object]);
+          case 66:
+            return (min ? minLonR66[object] : maxLonR66[object]);
+          case 70:
+            return (min ? minLonR70[object] : maxLonR70[object]);
+          case 80:
+            return (min ? minLonR80[object] : maxLonR80[object]);
+          case 85:
+            return (min ? minLonR85[object] : maxLonR85[object]);
+          case 88:
+            return (min ? minLonR88[object] : maxLonR88[object]);
+          case 90:
+            return (min ? minLonR89x[object] : maxLonR89x[object]);
+        }
       case SweConst.SE_HSYS_CAMPANUS:
-          switch(latrange) {
-            case 10: return (min ? minLonC10[object] : maxLonC10[object]);
-            case 20: return (min ? minLonC20[object] : maxLonC20[object]);
-            case 30: return (min ? minLonC30[object] : maxLonC30[object]);
-            case 40: return (min ? minLonC40[object] : maxLonC40[object]);
-            case 50: return (min ? minLonC50[object] : maxLonC50[object]);
-            case 60: return (min ? minLonC60[object] : maxLonC60[object]);
-            case 66: return (min ? minLonC66[object] : maxLonC66[object]);
-            case 70: return (min ? minLonC70[object] : maxLonC70[object]);
-            case 80: return (min ? minLonC80[object] : maxLonC80[object]);
-            case 85: return (min ? minLonC85[object] : maxLonC85[object]);
-            case 88: return (min ? minLonC88[object] : maxLonC88[object]);
-            case 90: return (min ? minLonC89x[object] : maxLonC89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonC10[object] : maxLonC10[object]);
+          case 20:
+            return (min ? minLonC20[object] : maxLonC20[object]);
+          case 30:
+            return (min ? minLonC30[object] : maxLonC30[object]);
+          case 40:
+            return (min ? minLonC40[object] : maxLonC40[object]);
+          case 50:
+            return (min ? minLonC50[object] : maxLonC50[object]);
+          case 60:
+            return (min ? minLonC60[object] : maxLonC60[object]);
+          case 66:
+            return (min ? minLonC66[object] : maxLonC66[object]);
+          case 70:
+            return (min ? minLonC70[object] : maxLonC70[object]);
+          case 80:
+            return (min ? minLonC80[object] : maxLonC80[object]);
+          case 85:
+            return (min ? minLonC85[object] : maxLonC85[object]);
+          case 88:
+            return (min ? minLonC88[object] : maxLonC88[object]);
+          case 90:
+            return (min ? minLonC89x[object] : maxLonC89x[object]);
+        }
       case SweConst.SE_HSYS_EQUAL:
-          switch(latrange) {
-            case 10: return (min ? minLonE10[object] : maxLonE10[object]);
-            case 20: return (min ? minLonE20[object] : maxLonE20[object]);
-            case 30: return (min ? minLonE30[object] : maxLonE30[object]);
-            case 40: return (min ? minLonE40[object] : maxLonE40[object]);
-            case 50: return (min ? minLonE50[object] : maxLonE50[object]);
-            case 60: return (min ? minLonE60[object] : maxLonE60[object]);
-            case 66: return (min ? minLonE66[object] : maxLonE66[object]);
-            case 70: return (min ? minLonE70[object] : maxLonE70[object]);
-            case 80: return (min ? minLonE80[object] : maxLonE80[object]);
-            case 85: return (min ? minLonE85[object] : maxLonE85[object]);
-            case 88: return (min ? minLonE88[object] : maxLonE88[object]);
-            case 90: return (min ? minLonE89x[object] : maxLonE89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonE10[object] : maxLonE10[object]);
+          case 20:
+            return (min ? minLonE20[object] : maxLonE20[object]);
+          case 30:
+            return (min ? minLonE30[object] : maxLonE30[object]);
+          case 40:
+            return (min ? minLonE40[object] : maxLonE40[object]);
+          case 50:
+            return (min ? minLonE50[object] : maxLonE50[object]);
+          case 60:
+            return (min ? minLonE60[object] : maxLonE60[object]);
+          case 66:
+            return (min ? minLonE66[object] : maxLonE66[object]);
+          case 70:
+            return (min ? minLonE70[object] : maxLonE70[object]);
+          case 80:
+            return (min ? minLonE80[object] : maxLonE80[object]);
+          case 85:
+            return (min ? minLonE85[object] : maxLonE85[object]);
+          case 88:
+            return (min ? minLonE88[object] : maxLonE88[object]);
+          case 90:
+            return (min ? minLonE89x[object] : maxLonE89x[object]);
+        }
       case SweConst.SE_HSYS_VEHLOW:
-          switch(latrange) {
-            case 10: return (min ? minLonV10[object] : maxLonV10[object]);
-            case 20: return (min ? minLonV20[object] : maxLonV20[object]);
-            case 30: return (min ? minLonV30[object] : maxLonV30[object]);
-            case 40: return (min ? minLonV40[object] : maxLonV40[object]);
-            case 50: return (min ? minLonV50[object] : maxLonV50[object]);
-            case 60: return (min ? minLonV60[object] : maxLonV60[object]);
-            case 66: return (min ? minLonV66[object] : maxLonV66[object]);
-            case 70: return (min ? minLonV70[object] : maxLonV70[object]);
-            case 80: return (min ? minLonV80[object] : maxLonV80[object]);
-            case 85: return (min ? minLonV85[object] : maxLonV85[object]);
-            case 88: return (min ? minLonV88[object] : maxLonV88[object]);
-            case 90: return (min ? minLonV89x[object] : maxLonV89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonV10[object] : maxLonV10[object]);
+          case 20:
+            return (min ? minLonV20[object] : maxLonV20[object]);
+          case 30:
+            return (min ? minLonV30[object] : maxLonV30[object]);
+          case 40:
+            return (min ? minLonV40[object] : maxLonV40[object]);
+          case 50:
+            return (min ? minLonV50[object] : maxLonV50[object]);
+          case 60:
+            return (min ? minLonV60[object] : maxLonV60[object]);
+          case 66:
+            return (min ? minLonV66[object] : maxLonV66[object]);
+          case 70:
+            return (min ? minLonV70[object] : maxLonV70[object]);
+          case 80:
+            return (min ? minLonV80[object] : maxLonV80[object]);
+          case 85:
+            return (min ? minLonV85[object] : maxLonV85[object]);
+          case 88:
+            return (min ? minLonV88[object] : maxLonV88[object]);
+          case 90:
+            return (min ? minLonV89x[object] : maxLonV89x[object]);
+        }
       case SweConst.SE_HSYS_MERIDIAN:
-          switch(latrange) {
-            case 10: return (min ? minLonX10[object] : maxLonX10[object]);
-            case 20: return (min ? minLonX20[object] : maxLonX20[object]);
-            case 30: return (min ? minLonX30[object] : maxLonX30[object]);
-            case 40: return (min ? minLonX40[object] : maxLonX40[object]);
-            case 50: return (min ? minLonX50[object] : maxLonX50[object]);
-            case 60: return (min ? minLonX60[object] : maxLonX60[object]);
-            case 66: return (min ? minLonX66[object] : maxLonX66[object]);
-            case 70: return (min ? minLonX70[object] : maxLonX70[object]);
-            case 80: return (min ? minLonX80[object] : maxLonX80[object]);
-            case 85: return (min ? minLonX85[object] : maxLonX85[object]);
-            case 88: return (min ? minLonX88[object] : maxLonX88[object]);
-            case 90: return (min ? minLonX89x[object] : maxLonX89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonX10[object] : maxLonX10[object]);
+          case 20:
+            return (min ? minLonX20[object] : maxLonX20[object]);
+          case 30:
+            return (min ? minLonX30[object] : maxLonX30[object]);
+          case 40:
+            return (min ? minLonX40[object] : maxLonX40[object]);
+          case 50:
+            return (min ? minLonX50[object] : maxLonX50[object]);
+          case 60:
+            return (min ? minLonX60[object] : maxLonX60[object]);
+          case 66:
+            return (min ? minLonX66[object] : maxLonX66[object]);
+          case 70:
+            return (min ? minLonX70[object] : maxLonX70[object]);
+          case 80:
+            return (min ? minLonX80[object] : maxLonX80[object]);
+          case 85:
+            return (min ? minLonX85[object] : maxLonX85[object]);
+          case 88:
+            return (min ? minLonX88[object] : maxLonX88[object]);
+          case 90:
+            return (min ? minLonX89x[object] : maxLonX89x[object]);
+        }
       case SweConst.SE_HSYS_HORIZONTAL:
-          switch(latrange) {
-            case 10: return (min ? minLonH10[object] : maxLonH10[object]);
-            case 20: return (min ? minLonH20[object] : maxLonH20[object]);
-            case 30: return (min ? minLonH30[object] : maxLonH30[object]);
-            case 40: return (min ? minLonH40[object] : maxLonH40[object]);
-            case 50: return (min ? minLonH50[object] : maxLonH50[object]);
-            case 60: return (min ? minLonH60[object] : maxLonH60[object]);
-            case 66: return (min ? minLonH66[object] : maxLonH66[object]);
-            case 70: return (min ? minLonH70[object] : maxLonH70[object]);
-            case 80: return (min ? minLonH80[object] : maxLonH80[object]);
-            case 85: return (min ? minLonH85[object] : maxLonH85[object]);
-            case 88: return (min ? minLonH88[object] : maxLonH88[object]);
-            case 90: return (min ? minLonH89x[object] : maxLonH89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonH10[object] : maxLonH10[object]);
+          case 20:
+            return (min ? minLonH20[object] : maxLonH20[object]);
+          case 30:
+            return (min ? minLonH30[object] : maxLonH30[object]);
+          case 40:
+            return (min ? minLonH40[object] : maxLonH40[object]);
+          case 50:
+            return (min ? minLonH50[object] : maxLonH50[object]);
+          case 60:
+            return (min ? minLonH60[object] : maxLonH60[object]);
+          case 66:
+            return (min ? minLonH66[object] : maxLonH66[object]);
+          case 70:
+            return (min ? minLonH70[object] : maxLonH70[object]);
+          case 80:
+            return (min ? minLonH80[object] : maxLonH80[object]);
+          case 85:
+            return (min ? minLonH85[object] : maxLonH85[object]);
+          case 88:
+            return (min ? minLonH88[object] : maxLonH88[object]);
+          case 90:
+            return (min ? minLonH89x[object] : maxLonH89x[object]);
+        }
       case SweConst.SE_HSYS_POLICH_PAGE:
-          switch(latrange) {
-            case 10: return (min ? minLonT10[object] : maxLonT10[object]);
-            case 20: return (min ? minLonT20[object] : maxLonT20[object]);
-            case 30: return (min ? minLonT30[object] : maxLonT30[object]);
-            case 40: return (min ? minLonT40[object] : maxLonT40[object]);
-            case 50: return (min ? minLonT50[object] : maxLonT50[object]);
-            case 60: return (min ? minLonT60[object] : maxLonT60[object]);
-            case 66: return (min ? minLonT66[object] : maxLonT66[object]);
-            case 70: return (min ? minLonT70[object] : maxLonT70[object]);
-            case 80: return (min ? minLonT80[object] : maxLonT80[object]);
-            case 85: return (min ? minLonT85[object] : maxLonT85[object]);
-            case 88: return (min ? minLonT88[object] : maxLonT88[object]);
-            case 90: return (min ? minLonT89x[object] : maxLonT89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonT10[object] : maxLonT10[object]);
+          case 20:
+            return (min ? minLonT20[object] : maxLonT20[object]);
+          case 30:
+            return (min ? minLonT30[object] : maxLonT30[object]);
+          case 40:
+            return (min ? minLonT40[object] : maxLonT40[object]);
+          case 50:
+            return (min ? minLonT50[object] : maxLonT50[object]);
+          case 60:
+            return (min ? minLonT60[object] : maxLonT60[object]);
+          case 66:
+            return (min ? minLonT66[object] : maxLonT66[object]);
+          case 70:
+            return (min ? minLonT70[object] : maxLonT70[object]);
+          case 80:
+            return (min ? minLonT80[object] : maxLonT80[object]);
+          case 85:
+            return (min ? minLonT85[object] : maxLonT85[object]);
+          case 88:
+            return (min ? minLonT88[object] : maxLonT88[object]);
+          case 90:
+            return (min ? minLonT89x[object] : maxLonT89x[object]);
+        }
       case SweConst.SE_HSYS_ALCABITIUS:
-          switch(latrange) {
-            case 10: return (min ? minLonB10[object] : maxLonB10[object]);
-            case 20: return (min ? minLonB20[object] : maxLonB20[object]);
-            case 30: return (min ? minLonB30[object] : maxLonB30[object]);
-            case 40: return (min ? minLonB40[object] : maxLonB40[object]);
-            case 50: return (min ? minLonB50[object] : maxLonB50[object]);
-            case 60: return (min ? minLonB60[object] : maxLonB60[object]);
-            case 66: return (min ? minLonB66[object] : maxLonB66[object]);
-            case 70: return (min ? minLonB70[object] : maxLonB70[object]);
-            case 80: return (min ? minLonB80[object] : maxLonB80[object]);
-            case 85: return (min ? minLonB85[object] : maxLonB85[object]);
-            case 88: return (min ? minLonB88[object] : maxLonB88[object]);
-            case 90: return (min ? minLonB89x[object] : maxLonB89x[object]);
-          }
+        switch (latrange) {
+          case 10:
+            return (min ? minLonB10[object] : maxLonB10[object]);
+          case 20:
+            return (min ? minLonB20[object] : maxLonB20[object]);
+          case 30:
+            return (min ? minLonB30[object] : maxLonB30[object]);
+          case 40:
+            return (min ? minLonB40[object] : maxLonB40[object]);
+          case 50:
+            return (min ? minLonB50[object] : maxLonB50[object]);
+          case 60:
+            return (min ? minLonB60[object] : maxLonB60[object]);
+          case 66:
+            return (min ? minLonB66[object] : maxLonB66[object]);
+          case 70:
+            return (min ? minLonB70[object] : maxLonB70[object]);
+          case 80:
+            return (min ? minLonB80[object] : maxLonB80[object]);
+          case 85:
+            return (min ? minLonB85[object] : maxLonB85[object]);
+          case 88:
+            return (min ? minLonB88[object] : maxLonB88[object]);
+          case 90:
+            return (min ? minLonB89x[object] : maxLonB89x[object]);
+        }
 //      case SweConst.SE_HSYS_GAUQUELIN_SECTORS:
 //          switch(latrange) {
 //            case 10: return (min ? minLonG10[object] : maxLonG10[object]);
@@ -7204,9 +7332,10 @@ System.err.println("latrange: " + latrange + ", " + object + ", " + min + " [" +
 //            case 90: return (min ? minLonW89x[object] : maxLonW89x[object]);
 //          }
     }
-    return (min ? 3200 : 4000); 	// Some default value - whatever
+    return (min ? 3200 : 4000);  // Some default value - whatever
   }
-// Speeds:
+
+  // Speeds:
 //  'P'  Placidus
 //  'K'  Koch
 //  'O'  Porphyrius
@@ -7231,1597 +7360,1597 @@ System.err.println("latrange: " + latrange + ", " + object + ", " + min + " [" +
   //  ...
   // 19: SE_HOUSE12 [-12]
   static final double[] minLonP10 = new double[]
-      {P10_ASC_MIN,    P10_MC_MIN,      P10_ARMC_MIN,    P10_VERTEX_MIN,
-       P10_EQUASC_MIN, P10_COASC1_MIN,  P10_COASC2_MIN,  P10_POLASC_MIN,
-       P10_HOUSE1_MIN, P10_HOUSE2_MIN,  P10_HOUSE3_MIN,  P10_HOUSE4_MIN,
-       P10_HOUSE5_MIN, P10_HOUSE6_MIN,  P10_HOUSE7_MIN,  P10_HOUSE8_MIN,
-       P10_HOUSE9_MIN, P10_HOUSE10_MIN, P10_HOUSE11_MIN, P10_HOUSE12_MIN};
+      {P10_ASC_MIN, P10_MC_MIN, P10_ARMC_MIN, P10_VERTEX_MIN,
+          P10_EQUASC_MIN, P10_COASC1_MIN, P10_COASC2_MIN, P10_POLASC_MIN,
+          P10_HOUSE1_MIN, P10_HOUSE2_MIN, P10_HOUSE3_MIN, P10_HOUSE4_MIN,
+          P10_HOUSE5_MIN, P10_HOUSE6_MIN, P10_HOUSE7_MIN, P10_HOUSE8_MIN,
+          P10_HOUSE9_MIN, P10_HOUSE10_MIN, P10_HOUSE11_MIN, P10_HOUSE12_MIN};
   static final double[] maxLonP10 = new double[]
-      {P10_ASC_MAX,    P10_MC_MAX,      P10_ARMC_MAX,    P10_VERTEX_MAX,
-       P10_EQUASC_MAX, P10_COASC1_MAX,  P10_COASC2_MAX,  P10_POLASC_MAX,
-       P10_HOUSE1_MAX, P10_HOUSE2_MAX,  P10_HOUSE3_MAX,  P10_HOUSE4_MAX,
-       P10_HOUSE5_MAX, P10_HOUSE6_MAX,  P10_HOUSE7_MAX,  P10_HOUSE8_MAX,
-       P10_HOUSE9_MAX, P10_HOUSE10_MAX, P10_HOUSE11_MAX, P10_HOUSE12_MAX};
+      {P10_ASC_MAX, P10_MC_MAX, P10_ARMC_MAX, P10_VERTEX_MAX,
+          P10_EQUASC_MAX, P10_COASC1_MAX, P10_COASC2_MAX, P10_POLASC_MAX,
+          P10_HOUSE1_MAX, P10_HOUSE2_MAX, P10_HOUSE3_MAX, P10_HOUSE4_MAX,
+          P10_HOUSE5_MAX, P10_HOUSE6_MAX, P10_HOUSE7_MAX, P10_HOUSE8_MAX,
+          P10_HOUSE9_MAX, P10_HOUSE10_MAX, P10_HOUSE11_MAX, P10_HOUSE12_MAX};
   static final double[] minLonP20 = new double[]
-      {P20_ASC_MIN,    P20_MC_MIN,      P20_ARMC_MIN,    P20_VERTEX_MIN,
-       P20_EQUASC_MIN, P20_COASC1_MIN,  P20_COASC2_MIN,  P20_POLASC_MIN,
-       P20_HOUSE1_MIN, P20_HOUSE2_MIN,  P20_HOUSE3_MIN,  P20_HOUSE4_MIN,
-       P20_HOUSE5_MIN, P20_HOUSE6_MIN,  P20_HOUSE7_MIN,  P20_HOUSE8_MIN,
-       P20_HOUSE9_MIN, P20_HOUSE10_MIN, P20_HOUSE11_MIN, P20_HOUSE12_MIN};
+      {P20_ASC_MIN, P20_MC_MIN, P20_ARMC_MIN, P20_VERTEX_MIN,
+          P20_EQUASC_MIN, P20_COASC1_MIN, P20_COASC2_MIN, P20_POLASC_MIN,
+          P20_HOUSE1_MIN, P20_HOUSE2_MIN, P20_HOUSE3_MIN, P20_HOUSE4_MIN,
+          P20_HOUSE5_MIN, P20_HOUSE6_MIN, P20_HOUSE7_MIN, P20_HOUSE8_MIN,
+          P20_HOUSE9_MIN, P20_HOUSE10_MIN, P20_HOUSE11_MIN, P20_HOUSE12_MIN};
   static final double[] maxLonP20 = new double[]
-      {P20_ASC_MAX,    P20_MC_MAX,      P20_ARMC_MAX,    P20_VERTEX_MAX,
-       P20_EQUASC_MAX, P20_COASC1_MAX,  P20_COASC2_MAX,  P20_POLASC_MAX,
-       P20_HOUSE1_MAX, P20_HOUSE2_MAX,  P20_HOUSE3_MAX,  P20_HOUSE4_MAX,
-       P20_HOUSE5_MAX, P20_HOUSE6_MAX,  P20_HOUSE7_MAX,  P20_HOUSE8_MAX,
-       P20_HOUSE9_MAX, P20_HOUSE10_MAX, P20_HOUSE11_MAX, P20_HOUSE12_MAX};
+      {P20_ASC_MAX, P20_MC_MAX, P20_ARMC_MAX, P20_VERTEX_MAX,
+          P20_EQUASC_MAX, P20_COASC1_MAX, P20_COASC2_MAX, P20_POLASC_MAX,
+          P20_HOUSE1_MAX, P20_HOUSE2_MAX, P20_HOUSE3_MAX, P20_HOUSE4_MAX,
+          P20_HOUSE5_MAX, P20_HOUSE6_MAX, P20_HOUSE7_MAX, P20_HOUSE8_MAX,
+          P20_HOUSE9_MAX, P20_HOUSE10_MAX, P20_HOUSE11_MAX, P20_HOUSE12_MAX};
   static final double[] minLonP30 = new double[]
-      {P30_ASC_MIN,    P30_MC_MIN,      P30_ARMC_MIN,    P30_VERTEX_MIN,
-       P30_EQUASC_MIN, P30_COASC1_MIN,  P30_COASC2_MIN,  P30_POLASC_MIN,
-       P30_HOUSE1_MIN, P30_HOUSE2_MIN,  P30_HOUSE3_MIN,  P30_HOUSE4_MIN,
-       P30_HOUSE5_MIN, P30_HOUSE6_MIN,  P30_HOUSE7_MIN,  P30_HOUSE8_MIN,
-       P30_HOUSE9_MIN, P30_HOUSE10_MIN, P30_HOUSE11_MIN, P30_HOUSE12_MIN};
+      {P30_ASC_MIN, P30_MC_MIN, P30_ARMC_MIN, P30_VERTEX_MIN,
+          P30_EQUASC_MIN, P30_COASC1_MIN, P30_COASC2_MIN, P30_POLASC_MIN,
+          P30_HOUSE1_MIN, P30_HOUSE2_MIN, P30_HOUSE3_MIN, P30_HOUSE4_MIN,
+          P30_HOUSE5_MIN, P30_HOUSE6_MIN, P30_HOUSE7_MIN, P30_HOUSE8_MIN,
+          P30_HOUSE9_MIN, P30_HOUSE10_MIN, P30_HOUSE11_MIN, P30_HOUSE12_MIN};
   static final double[] maxLonP30 = new double[]
-      {P30_ASC_MAX,    P30_MC_MAX,      P30_ARMC_MAX,    P30_VERTEX_MAX,
-       P30_EQUASC_MAX, P30_COASC1_MAX,  P30_COASC2_MAX,  P30_POLASC_MAX,
-       P30_HOUSE1_MAX, P30_HOUSE2_MAX,  P30_HOUSE3_MAX,  P30_HOUSE4_MAX,
-       P30_HOUSE5_MAX, P30_HOUSE6_MAX,  P30_HOUSE7_MAX,  P30_HOUSE8_MAX,
-       P30_HOUSE9_MAX, P30_HOUSE10_MAX, P30_HOUSE11_MAX, P30_HOUSE12_MAX};
+      {P30_ASC_MAX, P30_MC_MAX, P30_ARMC_MAX, P30_VERTEX_MAX,
+          P30_EQUASC_MAX, P30_COASC1_MAX, P30_COASC2_MAX, P30_POLASC_MAX,
+          P30_HOUSE1_MAX, P30_HOUSE2_MAX, P30_HOUSE3_MAX, P30_HOUSE4_MAX,
+          P30_HOUSE5_MAX, P30_HOUSE6_MAX, P30_HOUSE7_MAX, P30_HOUSE8_MAX,
+          P30_HOUSE9_MAX, P30_HOUSE10_MAX, P30_HOUSE11_MAX, P30_HOUSE12_MAX};
   static final double[] minLonP40 = new double[]
-      {P40_ASC_MIN,    P40_MC_MIN,      P40_ARMC_MIN,    P40_VERTEX_MIN,
-       P40_EQUASC_MIN, P40_COASC1_MIN,  P40_COASC2_MIN,  P40_POLASC_MIN,
-       P40_HOUSE1_MIN, P40_HOUSE2_MIN,  P40_HOUSE3_MIN,  P40_HOUSE4_MIN,
-       P40_HOUSE5_MIN, P40_HOUSE6_MIN,  P40_HOUSE7_MIN,  P40_HOUSE8_MIN,
-       P40_HOUSE9_MIN, P40_HOUSE10_MIN, P40_HOUSE11_MIN, P40_HOUSE12_MIN};
+      {P40_ASC_MIN, P40_MC_MIN, P40_ARMC_MIN, P40_VERTEX_MIN,
+          P40_EQUASC_MIN, P40_COASC1_MIN, P40_COASC2_MIN, P40_POLASC_MIN,
+          P40_HOUSE1_MIN, P40_HOUSE2_MIN, P40_HOUSE3_MIN, P40_HOUSE4_MIN,
+          P40_HOUSE5_MIN, P40_HOUSE6_MIN, P40_HOUSE7_MIN, P40_HOUSE8_MIN,
+          P40_HOUSE9_MIN, P40_HOUSE10_MIN, P40_HOUSE11_MIN, P40_HOUSE12_MIN};
   static final double[] maxLonP40 = new double[]
-      {P40_ASC_MAX,    P40_MC_MAX,      P40_ARMC_MAX,    P40_VERTEX_MAX,
-       P40_EQUASC_MAX, P40_COASC1_MAX,  P40_COASC2_MAX,  P40_POLASC_MAX,
-       P40_HOUSE1_MAX, P40_HOUSE2_MAX,  P40_HOUSE3_MAX,  P40_HOUSE4_MAX,
-       P40_HOUSE5_MAX, P40_HOUSE6_MAX,  P40_HOUSE7_MAX,  P40_HOUSE8_MAX,
-       P40_HOUSE9_MAX, P40_HOUSE10_MAX, P40_HOUSE11_MAX, P40_HOUSE12_MAX};
+      {P40_ASC_MAX, P40_MC_MAX, P40_ARMC_MAX, P40_VERTEX_MAX,
+          P40_EQUASC_MAX, P40_COASC1_MAX, P40_COASC2_MAX, P40_POLASC_MAX,
+          P40_HOUSE1_MAX, P40_HOUSE2_MAX, P40_HOUSE3_MAX, P40_HOUSE4_MAX,
+          P40_HOUSE5_MAX, P40_HOUSE6_MAX, P40_HOUSE7_MAX, P40_HOUSE8_MAX,
+          P40_HOUSE9_MAX, P40_HOUSE10_MAX, P40_HOUSE11_MAX, P40_HOUSE12_MAX};
   static final double[] minLonP50 = new double[]
-      {P50_ASC_MIN,    P50_MC_MIN,      P50_ARMC_MIN,    P50_VERTEX_MIN,
-       P50_EQUASC_MIN, P50_COASC1_MIN,  P50_COASC2_MIN,  P50_POLASC_MIN,
-       P50_HOUSE1_MIN, P50_HOUSE2_MIN,  P50_HOUSE3_MIN,  P50_HOUSE4_MIN,
-       P50_HOUSE5_MIN, P50_HOUSE6_MIN,  P50_HOUSE7_MIN,  P50_HOUSE8_MIN,
-       P50_HOUSE9_MIN, P50_HOUSE10_MIN, P50_HOUSE11_MIN, P50_HOUSE12_MIN};
+      {P50_ASC_MIN, P50_MC_MIN, P50_ARMC_MIN, P50_VERTEX_MIN,
+          P50_EQUASC_MIN, P50_COASC1_MIN, P50_COASC2_MIN, P50_POLASC_MIN,
+          P50_HOUSE1_MIN, P50_HOUSE2_MIN, P50_HOUSE3_MIN, P50_HOUSE4_MIN,
+          P50_HOUSE5_MIN, P50_HOUSE6_MIN, P50_HOUSE7_MIN, P50_HOUSE8_MIN,
+          P50_HOUSE9_MIN, P50_HOUSE10_MIN, P50_HOUSE11_MIN, P50_HOUSE12_MIN};
   static final double[] maxLonP50 = new double[]
-      {P50_ASC_MAX,    P50_MC_MAX,      P50_ARMC_MAX,    P50_VERTEX_MAX,
-       P50_EQUASC_MAX, P50_COASC1_MAX,  P50_COASC2_MAX,  P50_POLASC_MAX,
-       P50_HOUSE1_MAX, P50_HOUSE2_MAX,  P50_HOUSE3_MAX,  P50_HOUSE4_MAX,
-       P50_HOUSE5_MAX, P50_HOUSE6_MAX,  P50_HOUSE7_MAX,  P50_HOUSE8_MAX,
-       P50_HOUSE9_MAX, P50_HOUSE10_MAX, P50_HOUSE11_MAX, P50_HOUSE12_MAX};
+      {P50_ASC_MAX, P50_MC_MAX, P50_ARMC_MAX, P50_VERTEX_MAX,
+          P50_EQUASC_MAX, P50_COASC1_MAX, P50_COASC2_MAX, P50_POLASC_MAX,
+          P50_HOUSE1_MAX, P50_HOUSE2_MAX, P50_HOUSE3_MAX, P50_HOUSE4_MAX,
+          P50_HOUSE5_MAX, P50_HOUSE6_MAX, P50_HOUSE7_MAX, P50_HOUSE8_MAX,
+          P50_HOUSE9_MAX, P50_HOUSE10_MAX, P50_HOUSE11_MAX, P50_HOUSE12_MAX};
   static final double[] minLonP60 = new double[]
-      {P60_ASC_MIN,    P60_MC_MIN,      P60_ARMC_MIN,    P60_VERTEX_MIN,
-       P60_EQUASC_MIN, P60_COASC1_MIN,  P60_COASC2_MIN,  P60_POLASC_MIN,
-       P60_HOUSE1_MIN, P60_HOUSE2_MIN,  P60_HOUSE3_MIN,  P60_HOUSE4_MIN,
-       P60_HOUSE5_MIN, P60_HOUSE6_MIN,  P60_HOUSE7_MIN,  P60_HOUSE8_MIN,
-       P60_HOUSE9_MIN, P60_HOUSE10_MIN, P60_HOUSE11_MIN, P60_HOUSE12_MIN};
+      {P60_ASC_MIN, P60_MC_MIN, P60_ARMC_MIN, P60_VERTEX_MIN,
+          P60_EQUASC_MIN, P60_COASC1_MIN, P60_COASC2_MIN, P60_POLASC_MIN,
+          P60_HOUSE1_MIN, P60_HOUSE2_MIN, P60_HOUSE3_MIN, P60_HOUSE4_MIN,
+          P60_HOUSE5_MIN, P60_HOUSE6_MIN, P60_HOUSE7_MIN, P60_HOUSE8_MIN,
+          P60_HOUSE9_MIN, P60_HOUSE10_MIN, P60_HOUSE11_MIN, P60_HOUSE12_MIN};
   static final double[] maxLonP60 = new double[]
-      {P60_ASC_MAX,    P60_MC_MAX,      P60_ARMC_MAX,    P60_VERTEX_MAX,
-       P60_EQUASC_MAX, P60_COASC1_MAX,  P60_COASC2_MAX,  P60_POLASC_MAX,
-       P60_HOUSE1_MAX, P60_HOUSE2_MAX,  P60_HOUSE3_MAX,  P60_HOUSE4_MAX,
-       P60_HOUSE5_MAX, P60_HOUSE6_MAX,  P60_HOUSE7_MAX,  P60_HOUSE8_MAX,
-       P60_HOUSE9_MAX, P60_HOUSE10_MAX, P60_HOUSE11_MAX, P60_HOUSE12_MAX};
+      {P60_ASC_MAX, P60_MC_MAX, P60_ARMC_MAX, P60_VERTEX_MAX,
+          P60_EQUASC_MAX, P60_COASC1_MAX, P60_COASC2_MAX, P60_POLASC_MAX,
+          P60_HOUSE1_MAX, P60_HOUSE2_MAX, P60_HOUSE3_MAX, P60_HOUSE4_MAX,
+          P60_HOUSE5_MAX, P60_HOUSE6_MAX, P60_HOUSE7_MAX, P60_HOUSE8_MAX,
+          P60_HOUSE9_MAX, P60_HOUSE10_MAX, P60_HOUSE11_MAX, P60_HOUSE12_MAX};
   static final double[] minLonP66 = new double[]
-      {P66_ASC_MIN,    P66_MC_MIN,      P66_ARMC_MIN,    P66_VERTEX_MIN,
-       P66_EQUASC_MIN, P66_COASC1_MIN,  P66_COASC2_MIN,  P66_POLASC_MIN,
-       P66_HOUSE1_MIN, P66_HOUSE2_MIN,  P66_HOUSE3_MIN,  P66_HOUSE4_MIN,
-       P66_HOUSE5_MIN, P66_HOUSE6_MIN,  P66_HOUSE7_MIN,  P66_HOUSE8_MIN,
-       P66_HOUSE9_MIN, P66_HOUSE10_MIN, P66_HOUSE11_MIN, P66_HOUSE12_MIN};
+      {P66_ASC_MIN, P66_MC_MIN, P66_ARMC_MIN, P66_VERTEX_MIN,
+          P66_EQUASC_MIN, P66_COASC1_MIN, P66_COASC2_MIN, P66_POLASC_MIN,
+          P66_HOUSE1_MIN, P66_HOUSE2_MIN, P66_HOUSE3_MIN, P66_HOUSE4_MIN,
+          P66_HOUSE5_MIN, P66_HOUSE6_MIN, P66_HOUSE7_MIN, P66_HOUSE8_MIN,
+          P66_HOUSE9_MIN, P66_HOUSE10_MIN, P66_HOUSE11_MIN, P66_HOUSE12_MIN};
   static final double[] maxLonP66 = new double[]
-      {P66_ASC_MAX,    P66_MC_MAX,      P66_ARMC_MAX,    P66_VERTEX_MAX,
-       P66_EQUASC_MAX, P66_COASC1_MAX,  P66_COASC2_MAX,  P66_POLASC_MAX,
-       P66_HOUSE1_MAX, P66_HOUSE2_MAX,  P66_HOUSE3_MAX,  P66_HOUSE4_MAX,
-       P66_HOUSE5_MAX, P66_HOUSE6_MAX,  P66_HOUSE7_MAX,  P66_HOUSE8_MAX,
-       P66_HOUSE9_MAX, P66_HOUSE10_MAX, P66_HOUSE11_MAX, P66_HOUSE12_MAX};
+      {P66_ASC_MAX, P66_MC_MAX, P66_ARMC_MAX, P66_VERTEX_MAX,
+          P66_EQUASC_MAX, P66_COASC1_MAX, P66_COASC2_MAX, P66_POLASC_MAX,
+          P66_HOUSE1_MAX, P66_HOUSE2_MAX, P66_HOUSE3_MAX, P66_HOUSE4_MAX,
+          P66_HOUSE5_MAX, P66_HOUSE6_MAX, P66_HOUSE7_MAX, P66_HOUSE8_MAX,
+          P66_HOUSE9_MAX, P66_HOUSE10_MAX, P66_HOUSE11_MAX, P66_HOUSE12_MAX};
   static final double[] minLonP70 = new double[]
-      {P70_ASC_MIN,    P70_MC_MIN,      P70_ARMC_MIN,    P70_VERTEX_MIN,
-       P70_EQUASC_MIN, P70_COASC1_MIN,  P70_COASC2_MIN,  P70_POLASC_MIN,
-       P70_HOUSE1_MIN, P70_HOUSE2_MIN,  P70_HOUSE3_MIN,  P70_HOUSE4_MIN,
-       P70_HOUSE5_MIN, P70_HOUSE6_MIN,  P70_HOUSE7_MIN,  P70_HOUSE8_MIN,
-       P70_HOUSE9_MIN, P70_HOUSE10_MIN, P70_HOUSE11_MIN, P70_HOUSE12_MIN};
+      {P70_ASC_MIN, P70_MC_MIN, P70_ARMC_MIN, P70_VERTEX_MIN,
+          P70_EQUASC_MIN, P70_COASC1_MIN, P70_COASC2_MIN, P70_POLASC_MIN,
+          P70_HOUSE1_MIN, P70_HOUSE2_MIN, P70_HOUSE3_MIN, P70_HOUSE4_MIN,
+          P70_HOUSE5_MIN, P70_HOUSE6_MIN, P70_HOUSE7_MIN, P70_HOUSE8_MIN,
+          P70_HOUSE9_MIN, P70_HOUSE10_MIN, P70_HOUSE11_MIN, P70_HOUSE12_MIN};
   static final double[] maxLonP70 = new double[]
-      {P70_ASC_MAX,    P70_MC_MAX,      P70_ARMC_MAX,    P70_VERTEX_MAX,
-       P70_EQUASC_MAX, P70_COASC1_MAX,  P70_COASC2_MAX,  P70_POLASC_MAX,
-       P70_HOUSE1_MAX, P70_HOUSE2_MAX,  P70_HOUSE3_MAX,  P70_HOUSE4_MAX,
-       P70_HOUSE5_MAX, P70_HOUSE6_MAX,  P70_HOUSE7_MAX,  P70_HOUSE8_MAX,
-       P70_HOUSE9_MAX, P70_HOUSE10_MAX, P70_HOUSE11_MAX, P70_HOUSE12_MAX};
+      {P70_ASC_MAX, P70_MC_MAX, P70_ARMC_MAX, P70_VERTEX_MAX,
+          P70_EQUASC_MAX, P70_COASC1_MAX, P70_COASC2_MAX, P70_POLASC_MAX,
+          P70_HOUSE1_MAX, P70_HOUSE2_MAX, P70_HOUSE3_MAX, P70_HOUSE4_MAX,
+          P70_HOUSE5_MAX, P70_HOUSE6_MAX, P70_HOUSE7_MAX, P70_HOUSE8_MAX,
+          P70_HOUSE9_MAX, P70_HOUSE10_MAX, P70_HOUSE11_MAX, P70_HOUSE12_MAX};
   static final double[] minLonP80 = new double[]
-      {P80_ASC_MIN,    P80_MC_MIN,      P80_ARMC_MIN,    P80_VERTEX_MIN,
-       P80_EQUASC_MIN, P80_COASC1_MIN,  P80_COASC2_MIN,  P80_POLASC_MIN,
-       P80_HOUSE1_MIN, P80_HOUSE2_MIN,  P80_HOUSE3_MIN,  P80_HOUSE4_MIN,
-       P80_HOUSE5_MIN, P80_HOUSE6_MIN,  P80_HOUSE7_MIN,  P80_HOUSE8_MIN,
-       P80_HOUSE9_MIN, P80_HOUSE10_MIN, P80_HOUSE11_MIN, P80_HOUSE12_MIN};
+      {P80_ASC_MIN, P80_MC_MIN, P80_ARMC_MIN, P80_VERTEX_MIN,
+          P80_EQUASC_MIN, P80_COASC1_MIN, P80_COASC2_MIN, P80_POLASC_MIN,
+          P80_HOUSE1_MIN, P80_HOUSE2_MIN, P80_HOUSE3_MIN, P80_HOUSE4_MIN,
+          P80_HOUSE5_MIN, P80_HOUSE6_MIN, P80_HOUSE7_MIN, P80_HOUSE8_MIN,
+          P80_HOUSE9_MIN, P80_HOUSE10_MIN, P80_HOUSE11_MIN, P80_HOUSE12_MIN};
   static final double[] maxLonP80 = new double[]
-      {P80_ASC_MAX,    P80_MC_MAX,      P80_ARMC_MAX,    P80_VERTEX_MAX,
-       P80_EQUASC_MAX, P80_COASC1_MAX,  P80_COASC2_MAX,  P80_POLASC_MAX,
-       P80_HOUSE1_MAX, P80_HOUSE2_MAX,  P80_HOUSE3_MAX,  P80_HOUSE4_MAX,
-       P80_HOUSE5_MAX, P80_HOUSE6_MAX,  P80_HOUSE7_MAX,  P80_HOUSE8_MAX,
-       P80_HOUSE9_MAX, P80_HOUSE10_MAX, P80_HOUSE11_MAX, P80_HOUSE12_MAX};
+      {P80_ASC_MAX, P80_MC_MAX, P80_ARMC_MAX, P80_VERTEX_MAX,
+          P80_EQUASC_MAX, P80_COASC1_MAX, P80_COASC2_MAX, P80_POLASC_MAX,
+          P80_HOUSE1_MAX, P80_HOUSE2_MAX, P80_HOUSE3_MAX, P80_HOUSE4_MAX,
+          P80_HOUSE5_MAX, P80_HOUSE6_MAX, P80_HOUSE7_MAX, P80_HOUSE8_MAX,
+          P80_HOUSE9_MAX, P80_HOUSE10_MAX, P80_HOUSE11_MAX, P80_HOUSE12_MAX};
   static final double[] minLonP85 = new double[]
-      {P85_ASC_MIN,    P85_MC_MIN,      P85_ARMC_MIN,    P85_VERTEX_MIN,
-       P85_EQUASC_MIN, P85_COASC1_MIN,  P85_COASC2_MIN,  P85_POLASC_MIN,
-       P85_HOUSE1_MIN, P85_HOUSE2_MIN,  P85_HOUSE3_MIN,  P85_HOUSE4_MIN,
-       P85_HOUSE5_MIN, P85_HOUSE6_MIN,  P85_HOUSE7_MIN,  P85_HOUSE8_MIN,
-       P85_HOUSE9_MIN, P85_HOUSE10_MIN, P85_HOUSE11_MIN, P85_HOUSE12_MIN};
+      {P85_ASC_MIN, P85_MC_MIN, P85_ARMC_MIN, P85_VERTEX_MIN,
+          P85_EQUASC_MIN, P85_COASC1_MIN, P85_COASC2_MIN, P85_POLASC_MIN,
+          P85_HOUSE1_MIN, P85_HOUSE2_MIN, P85_HOUSE3_MIN, P85_HOUSE4_MIN,
+          P85_HOUSE5_MIN, P85_HOUSE6_MIN, P85_HOUSE7_MIN, P85_HOUSE8_MIN,
+          P85_HOUSE9_MIN, P85_HOUSE10_MIN, P85_HOUSE11_MIN, P85_HOUSE12_MIN};
   static final double[] maxLonP85 = new double[]
-      {P85_ASC_MAX,    P85_MC_MAX,      P85_ARMC_MAX,    P85_VERTEX_MAX,
-       P85_EQUASC_MAX, P85_COASC1_MAX,  P85_COASC2_MAX,  P85_POLASC_MAX,
-       P85_HOUSE1_MAX, P85_HOUSE2_MAX,  P85_HOUSE3_MAX,  P85_HOUSE4_MAX,
-       P85_HOUSE5_MAX, P85_HOUSE6_MAX,  P85_HOUSE7_MAX,  P85_HOUSE8_MAX,
-       P85_HOUSE9_MAX, P85_HOUSE10_MAX, P85_HOUSE11_MAX, P85_HOUSE12_MAX};
+      {P85_ASC_MAX, P85_MC_MAX, P85_ARMC_MAX, P85_VERTEX_MAX,
+          P85_EQUASC_MAX, P85_COASC1_MAX, P85_COASC2_MAX, P85_POLASC_MAX,
+          P85_HOUSE1_MAX, P85_HOUSE2_MAX, P85_HOUSE3_MAX, P85_HOUSE4_MAX,
+          P85_HOUSE5_MAX, P85_HOUSE6_MAX, P85_HOUSE7_MAX, P85_HOUSE8_MAX,
+          P85_HOUSE9_MAX, P85_HOUSE10_MAX, P85_HOUSE11_MAX, P85_HOUSE12_MAX};
   static final double[] minLonP88 = new double[]
-      {P88_ASC_MIN,    P88_MC_MIN,      P88_ARMC_MIN,    P88_VERTEX_MIN,
-       P88_EQUASC_MIN, P88_COASC1_MIN,  P88_COASC2_MIN,  P88_POLASC_MIN,
-       P88_HOUSE1_MIN, P88_HOUSE2_MIN,  P88_HOUSE3_MIN,  P88_HOUSE4_MIN,
-       P88_HOUSE5_MIN, P88_HOUSE6_MIN,  P88_HOUSE7_MIN,  P88_HOUSE8_MIN,
-       P88_HOUSE9_MIN, P88_HOUSE10_MIN, P88_HOUSE11_MIN, P88_HOUSE12_MIN};
+      {P88_ASC_MIN, P88_MC_MIN, P88_ARMC_MIN, P88_VERTEX_MIN,
+          P88_EQUASC_MIN, P88_COASC1_MIN, P88_COASC2_MIN, P88_POLASC_MIN,
+          P88_HOUSE1_MIN, P88_HOUSE2_MIN, P88_HOUSE3_MIN, P88_HOUSE4_MIN,
+          P88_HOUSE5_MIN, P88_HOUSE6_MIN, P88_HOUSE7_MIN, P88_HOUSE8_MIN,
+          P88_HOUSE9_MIN, P88_HOUSE10_MIN, P88_HOUSE11_MIN, P88_HOUSE12_MIN};
   static final double[] maxLonP88 = new double[]
-      {P88_ASC_MAX,    P88_MC_MAX,      P88_ARMC_MAX,    P88_VERTEX_MAX,
-       P88_EQUASC_MAX, P88_COASC1_MAX,  P88_COASC2_MAX,  P88_POLASC_MAX,
-       P88_HOUSE1_MAX, P88_HOUSE2_MAX,  P88_HOUSE3_MAX,  P88_HOUSE4_MAX,
-       P88_HOUSE5_MAX, P88_HOUSE6_MAX,  P88_HOUSE7_MAX,  P88_HOUSE8_MAX,
-       P88_HOUSE9_MAX, P88_HOUSE10_MAX, P88_HOUSE11_MAX, P88_HOUSE12_MAX};
+      {P88_ASC_MAX, P88_MC_MAX, P88_ARMC_MAX, P88_VERTEX_MAX,
+          P88_EQUASC_MAX, P88_COASC1_MAX, P88_COASC2_MAX, P88_POLASC_MAX,
+          P88_HOUSE1_MAX, P88_HOUSE2_MAX, P88_HOUSE3_MAX, P88_HOUSE4_MAX,
+          P88_HOUSE5_MAX, P88_HOUSE6_MAX, P88_HOUSE7_MAX, P88_HOUSE8_MAX,
+          P88_HOUSE9_MAX, P88_HOUSE10_MAX, P88_HOUSE11_MAX, P88_HOUSE12_MAX};
   static final double[] minLonP89x = new double[]
-      {P89x_ASC_MIN,    P89x_MC_MIN,      P89x_ARMC_MIN,    P89x_VERTEX_MIN,
-       P89x_EQUASC_MIN, P89x_COASC1_MIN,  P89x_COASC2_MIN,  P89x_POLASC_MIN,
-       P89x_HOUSE1_MIN, P89x_HOUSE2_MIN,  P89x_HOUSE3_MIN,  P89x_HOUSE4_MIN,
-       P89x_HOUSE5_MIN, P89x_HOUSE6_MIN,  P89x_HOUSE7_MIN,  P89x_HOUSE8_MIN,
-       P89x_HOUSE9_MIN, P89x_HOUSE10_MIN, P89x_HOUSE11_MIN, P89x_HOUSE12_MIN};
+      {P89x_ASC_MIN, P89x_MC_MIN, P89x_ARMC_MIN, P89x_VERTEX_MIN,
+          P89x_EQUASC_MIN, P89x_COASC1_MIN, P89x_COASC2_MIN, P89x_POLASC_MIN,
+          P89x_HOUSE1_MIN, P89x_HOUSE2_MIN, P89x_HOUSE3_MIN, P89x_HOUSE4_MIN,
+          P89x_HOUSE5_MIN, P89x_HOUSE6_MIN, P89x_HOUSE7_MIN, P89x_HOUSE8_MIN,
+          P89x_HOUSE9_MIN, P89x_HOUSE10_MIN, P89x_HOUSE11_MIN, P89x_HOUSE12_MIN};
   static final double[] maxLonP89x = new double[]
-      {P89x_ASC_MAX,    P89x_MC_MAX,      P89x_ARMC_MAX,    P89x_VERTEX_MAX,
-       P89x_EQUASC_MAX, P89x_COASC1_MAX,  P89x_COASC2_MAX,  P89x_POLASC_MAX,
-       P89x_HOUSE1_MAX, P89x_HOUSE2_MAX,  P89x_HOUSE3_MAX,  P89x_HOUSE4_MAX,
-       P89x_HOUSE5_MAX, P89x_HOUSE6_MAX,  P89x_HOUSE7_MAX,  P89x_HOUSE8_MAX,
-       P89x_HOUSE9_MAX, P89x_HOUSE10_MAX, P89x_HOUSE11_MAX, P89x_HOUSE12_MAX};
+      {P89x_ASC_MAX, P89x_MC_MAX, P89x_ARMC_MAX, P89x_VERTEX_MAX,
+          P89x_EQUASC_MAX, P89x_COASC1_MAX, P89x_COASC2_MAX, P89x_POLASC_MAX,
+          P89x_HOUSE1_MAX, P89x_HOUSE2_MAX, P89x_HOUSE3_MAX, P89x_HOUSE4_MAX,
+          P89x_HOUSE5_MAX, P89x_HOUSE6_MAX, P89x_HOUSE7_MAX, P89x_HOUSE8_MAX,
+          P89x_HOUSE9_MAX, P89x_HOUSE10_MAX, P89x_HOUSE11_MAX, P89x_HOUSE12_MAX};
 
   static final double[] minLonK10 = new double[]
-      {K10_ASC_MIN,    K10_MC_MIN,      K10_ARMC_MIN,    K10_VERTEX_MIN,
-       K10_EQUASC_MIN, K10_COASC1_MIN,  K10_COASC2_MIN,  K10_POLASC_MIN,
-       K10_HOUSE1_MIN, K10_HOUSE2_MIN,  K10_HOUSE3_MIN,  K10_HOUSE4_MIN,
-       K10_HOUSE5_MIN, K10_HOUSE6_MIN,  K10_HOUSE7_MIN,  K10_HOUSE8_MIN,
-       K10_HOUSE9_MIN, K10_HOUSE10_MIN, K10_HOUSE11_MIN, K10_HOUSE12_MIN};
+      {K10_ASC_MIN, K10_MC_MIN, K10_ARMC_MIN, K10_VERTEX_MIN,
+          K10_EQUASC_MIN, K10_COASC1_MIN, K10_COASC2_MIN, K10_POLASC_MIN,
+          K10_HOUSE1_MIN, K10_HOUSE2_MIN, K10_HOUSE3_MIN, K10_HOUSE4_MIN,
+          K10_HOUSE5_MIN, K10_HOUSE6_MIN, K10_HOUSE7_MIN, K10_HOUSE8_MIN,
+          K10_HOUSE9_MIN, K10_HOUSE10_MIN, K10_HOUSE11_MIN, K10_HOUSE12_MIN};
   static final double[] maxLonK10 = new double[]
-      {K10_ASC_MAX,    K10_MC_MAX,      K10_ARMC_MAX,    K10_VERTEX_MAX,
-       K10_EQUASC_MAX, K10_COASC1_MAX,  K10_COASC2_MAX,  K10_POLASC_MAX,
-       K10_HOUSE1_MAX, K10_HOUSE2_MAX,  K10_HOUSE3_MAX,  K10_HOUSE4_MAX,
-       K10_HOUSE5_MAX, K10_HOUSE6_MAX,  K10_HOUSE7_MAX,  K10_HOUSE8_MAX,
-       K10_HOUSE9_MAX, K10_HOUSE10_MAX, K10_HOUSE11_MAX, K10_HOUSE12_MAX};
+      {K10_ASC_MAX, K10_MC_MAX, K10_ARMC_MAX, K10_VERTEX_MAX,
+          K10_EQUASC_MAX, K10_COASC1_MAX, K10_COASC2_MAX, K10_POLASC_MAX,
+          K10_HOUSE1_MAX, K10_HOUSE2_MAX, K10_HOUSE3_MAX, K10_HOUSE4_MAX,
+          K10_HOUSE5_MAX, K10_HOUSE6_MAX, K10_HOUSE7_MAX, K10_HOUSE8_MAX,
+          K10_HOUSE9_MAX, K10_HOUSE10_MAX, K10_HOUSE11_MAX, K10_HOUSE12_MAX};
   static final double[] minLonK20 = new double[]
-      {K20_ASC_MIN,    K20_MC_MIN,      K20_ARMC_MIN,    K20_VERTEX_MIN,
-       K20_EQUASC_MIN, K20_COASC1_MIN,  K20_COASC2_MIN,  K20_POLASC_MIN,
-       K20_HOUSE1_MIN, K20_HOUSE2_MIN,  K20_HOUSE3_MIN,  K20_HOUSE4_MIN,
-       K20_HOUSE5_MIN, K20_HOUSE6_MIN,  K20_HOUSE7_MIN,  K20_HOUSE8_MIN,
-       K20_HOUSE9_MIN, K20_HOUSE10_MIN, K20_HOUSE11_MIN, K20_HOUSE12_MIN};
+      {K20_ASC_MIN, K20_MC_MIN, K20_ARMC_MIN, K20_VERTEX_MIN,
+          K20_EQUASC_MIN, K20_COASC1_MIN, K20_COASC2_MIN, K20_POLASC_MIN,
+          K20_HOUSE1_MIN, K20_HOUSE2_MIN, K20_HOUSE3_MIN, K20_HOUSE4_MIN,
+          K20_HOUSE5_MIN, K20_HOUSE6_MIN, K20_HOUSE7_MIN, K20_HOUSE8_MIN,
+          K20_HOUSE9_MIN, K20_HOUSE10_MIN, K20_HOUSE11_MIN, K20_HOUSE12_MIN};
   static final double[] maxLonK20 = new double[]
-      {K20_ASC_MAX,    K20_MC_MAX,      K20_ARMC_MAX,    K20_VERTEX_MAX,
-       K20_EQUASC_MAX, K20_COASC1_MAX,  K20_COASC2_MAX,  K20_POLASC_MAX,
-       K20_HOUSE1_MAX, K20_HOUSE2_MAX,  K20_HOUSE3_MAX,  K20_HOUSE4_MAX,
-       K20_HOUSE5_MAX, K20_HOUSE6_MAX,  K20_HOUSE7_MAX,  K20_HOUSE8_MAX,
-       K20_HOUSE9_MAX, K20_HOUSE10_MAX, K20_HOUSE11_MAX, K20_HOUSE12_MAX};
+      {K20_ASC_MAX, K20_MC_MAX, K20_ARMC_MAX, K20_VERTEX_MAX,
+          K20_EQUASC_MAX, K20_COASC1_MAX, K20_COASC2_MAX, K20_POLASC_MAX,
+          K20_HOUSE1_MAX, K20_HOUSE2_MAX, K20_HOUSE3_MAX, K20_HOUSE4_MAX,
+          K20_HOUSE5_MAX, K20_HOUSE6_MAX, K20_HOUSE7_MAX, K20_HOUSE8_MAX,
+          K20_HOUSE9_MAX, K20_HOUSE10_MAX, K20_HOUSE11_MAX, K20_HOUSE12_MAX};
   static final double[] minLonK30 = new double[]
-      {K30_ASC_MIN,    K30_MC_MIN,      K30_ARMC_MIN,    K30_VERTEX_MIN,
-       K30_EQUASC_MIN, K30_COASC1_MIN,  K30_COASC2_MIN,  K30_POLASC_MIN,
-       K30_HOUSE1_MIN, K30_HOUSE2_MIN,  K30_HOUSE3_MIN,  K30_HOUSE4_MIN,
-       K30_HOUSE5_MIN, K30_HOUSE6_MIN,  K30_HOUSE7_MIN,  K30_HOUSE8_MIN,
-       K30_HOUSE9_MIN, K30_HOUSE10_MIN, K30_HOUSE11_MIN, K30_HOUSE12_MIN};
+      {K30_ASC_MIN, K30_MC_MIN, K30_ARMC_MIN, K30_VERTEX_MIN,
+          K30_EQUASC_MIN, K30_COASC1_MIN, K30_COASC2_MIN, K30_POLASC_MIN,
+          K30_HOUSE1_MIN, K30_HOUSE2_MIN, K30_HOUSE3_MIN, K30_HOUSE4_MIN,
+          K30_HOUSE5_MIN, K30_HOUSE6_MIN, K30_HOUSE7_MIN, K30_HOUSE8_MIN,
+          K30_HOUSE9_MIN, K30_HOUSE10_MIN, K30_HOUSE11_MIN, K30_HOUSE12_MIN};
   static final double[] maxLonK30 = new double[]
-      {K30_ASC_MAX,    K30_MC_MAX,      K30_ARMC_MAX,    K30_VERTEX_MAX,
-       K30_EQUASC_MAX, K30_COASC1_MAX,  K30_COASC2_MAX,  K30_POLASC_MAX,
-       K30_HOUSE1_MAX, K30_HOUSE2_MAX,  K30_HOUSE3_MAX,  K30_HOUSE4_MAX,
-       K30_HOUSE5_MAX, K30_HOUSE6_MAX,  K30_HOUSE7_MAX,  K30_HOUSE8_MAX,
-       K30_HOUSE9_MAX, K30_HOUSE10_MAX, K30_HOUSE11_MAX, K30_HOUSE12_MAX};
+      {K30_ASC_MAX, K30_MC_MAX, K30_ARMC_MAX, K30_VERTEX_MAX,
+          K30_EQUASC_MAX, K30_COASC1_MAX, K30_COASC2_MAX, K30_POLASC_MAX,
+          K30_HOUSE1_MAX, K30_HOUSE2_MAX, K30_HOUSE3_MAX, K30_HOUSE4_MAX,
+          K30_HOUSE5_MAX, K30_HOUSE6_MAX, K30_HOUSE7_MAX, K30_HOUSE8_MAX,
+          K30_HOUSE9_MAX, K30_HOUSE10_MAX, K30_HOUSE11_MAX, K30_HOUSE12_MAX};
   static final double[] minLonK40 = new double[]
-      {K40_ASC_MIN,    K40_MC_MIN,      K40_ARMC_MIN,    K40_VERTEX_MIN,
-       K40_EQUASC_MIN, K40_COASC1_MIN,  K40_COASC2_MIN,  K40_POLASC_MIN,
-       K40_HOUSE1_MIN, K40_HOUSE2_MIN,  K40_HOUSE3_MIN,  K40_HOUSE4_MIN,
-       K40_HOUSE5_MIN, K40_HOUSE6_MIN,  K40_HOUSE7_MIN,  K40_HOUSE8_MIN,
-       K40_HOUSE9_MIN, K40_HOUSE10_MIN, K40_HOUSE11_MIN, K40_HOUSE12_MIN};
+      {K40_ASC_MIN, K40_MC_MIN, K40_ARMC_MIN, K40_VERTEX_MIN,
+          K40_EQUASC_MIN, K40_COASC1_MIN, K40_COASC2_MIN, K40_POLASC_MIN,
+          K40_HOUSE1_MIN, K40_HOUSE2_MIN, K40_HOUSE3_MIN, K40_HOUSE4_MIN,
+          K40_HOUSE5_MIN, K40_HOUSE6_MIN, K40_HOUSE7_MIN, K40_HOUSE8_MIN,
+          K40_HOUSE9_MIN, K40_HOUSE10_MIN, K40_HOUSE11_MIN, K40_HOUSE12_MIN};
   static final double[] maxLonK40 = new double[]
-      {K40_ASC_MAX,    K40_MC_MAX,      K40_ARMC_MAX,    K40_VERTEX_MAX,
-       K40_EQUASC_MAX, K40_COASC1_MAX,  K40_COASC2_MAX,  K40_POLASC_MAX,
-       K40_HOUSE1_MAX, K40_HOUSE2_MAX,  K40_HOUSE3_MAX,  K40_HOUSE4_MAX,
-       K40_HOUSE5_MAX, K40_HOUSE6_MAX,  K40_HOUSE7_MAX,  K40_HOUSE8_MAX,
-       K40_HOUSE9_MAX, K40_HOUSE10_MAX, K40_HOUSE11_MAX, K40_HOUSE12_MAX};
+      {K40_ASC_MAX, K40_MC_MAX, K40_ARMC_MAX, K40_VERTEX_MAX,
+          K40_EQUASC_MAX, K40_COASC1_MAX, K40_COASC2_MAX, K40_POLASC_MAX,
+          K40_HOUSE1_MAX, K40_HOUSE2_MAX, K40_HOUSE3_MAX, K40_HOUSE4_MAX,
+          K40_HOUSE5_MAX, K40_HOUSE6_MAX, K40_HOUSE7_MAX, K40_HOUSE8_MAX,
+          K40_HOUSE9_MAX, K40_HOUSE10_MAX, K40_HOUSE11_MAX, K40_HOUSE12_MAX};
   static final double[] minLonK50 = new double[]
-      {K50_ASC_MIN,    K50_MC_MIN,      K50_ARMC_MIN,    K50_VERTEX_MIN,
-       K50_EQUASC_MIN, K50_COASC1_MIN,  K50_COASC2_MIN,  K50_POLASC_MIN,
-       K50_HOUSE1_MIN, K50_HOUSE2_MIN,  K50_HOUSE3_MIN,  K50_HOUSE4_MIN,
-       K50_HOUSE5_MIN, K50_HOUSE6_MIN,  K50_HOUSE7_MIN,  K50_HOUSE8_MIN,
-       K50_HOUSE9_MIN, K50_HOUSE10_MIN, K50_HOUSE11_MIN, K50_HOUSE12_MIN};
+      {K50_ASC_MIN, K50_MC_MIN, K50_ARMC_MIN, K50_VERTEX_MIN,
+          K50_EQUASC_MIN, K50_COASC1_MIN, K50_COASC2_MIN, K50_POLASC_MIN,
+          K50_HOUSE1_MIN, K50_HOUSE2_MIN, K50_HOUSE3_MIN, K50_HOUSE4_MIN,
+          K50_HOUSE5_MIN, K50_HOUSE6_MIN, K50_HOUSE7_MIN, K50_HOUSE8_MIN,
+          K50_HOUSE9_MIN, K50_HOUSE10_MIN, K50_HOUSE11_MIN, K50_HOUSE12_MIN};
   static final double[] maxLonK50 = new double[]
-      {K50_ASC_MAX,    K50_MC_MAX,      K50_ARMC_MAX,    K50_VERTEX_MAX,
-       K50_EQUASC_MAX, K50_COASC1_MAX,  K50_COASC2_MAX,  K50_POLASC_MAX,
-       K50_HOUSE1_MAX, K50_HOUSE2_MAX,  K50_HOUSE3_MAX,  K50_HOUSE4_MAX,
-       K50_HOUSE5_MAX, K50_HOUSE6_MAX,  K50_HOUSE7_MAX,  K50_HOUSE8_MAX,
-       K50_HOUSE9_MAX, K50_HOUSE10_MAX, K50_HOUSE11_MAX, K50_HOUSE12_MAX};
+      {K50_ASC_MAX, K50_MC_MAX, K50_ARMC_MAX, K50_VERTEX_MAX,
+          K50_EQUASC_MAX, K50_COASC1_MAX, K50_COASC2_MAX, K50_POLASC_MAX,
+          K50_HOUSE1_MAX, K50_HOUSE2_MAX, K50_HOUSE3_MAX, K50_HOUSE4_MAX,
+          K50_HOUSE5_MAX, K50_HOUSE6_MAX, K50_HOUSE7_MAX, K50_HOUSE8_MAX,
+          K50_HOUSE9_MAX, K50_HOUSE10_MAX, K50_HOUSE11_MAX, K50_HOUSE12_MAX};
   static final double[] minLonK60 = new double[]
-      {K60_ASC_MIN,    K60_MC_MIN,      K60_ARMC_MIN,    K60_VERTEX_MIN,
-       K60_EQUASC_MIN, K60_COASC1_MIN,  K60_COASC2_MIN,  K60_POLASC_MIN,
-       K60_HOUSE1_MIN, K60_HOUSE2_MIN,  K60_HOUSE3_MIN,  K60_HOUSE4_MIN,
-       K60_HOUSE5_MIN, K60_HOUSE6_MIN,  K60_HOUSE7_MIN,  K60_HOUSE8_MIN,
-       K60_HOUSE9_MIN, K60_HOUSE10_MIN, K60_HOUSE11_MIN, K60_HOUSE12_MIN};
+      {K60_ASC_MIN, K60_MC_MIN, K60_ARMC_MIN, K60_VERTEX_MIN,
+          K60_EQUASC_MIN, K60_COASC1_MIN, K60_COASC2_MIN, K60_POLASC_MIN,
+          K60_HOUSE1_MIN, K60_HOUSE2_MIN, K60_HOUSE3_MIN, K60_HOUSE4_MIN,
+          K60_HOUSE5_MIN, K60_HOUSE6_MIN, K60_HOUSE7_MIN, K60_HOUSE8_MIN,
+          K60_HOUSE9_MIN, K60_HOUSE10_MIN, K60_HOUSE11_MIN, K60_HOUSE12_MIN};
   static final double[] maxLonK60 = new double[]
-      {K60_ASC_MAX,    K60_MC_MAX,      K60_ARMC_MAX,    K60_VERTEX_MAX,
-       K60_EQUASC_MAX, K60_COASC1_MAX,  K60_COASC2_MAX,  K60_POLASC_MAX,
-       K60_HOUSE1_MAX, K60_HOUSE2_MAX,  K60_HOUSE3_MAX,  K60_HOUSE4_MAX,
-       K60_HOUSE5_MAX, K60_HOUSE6_MAX,  K60_HOUSE7_MAX,  K60_HOUSE8_MAX,
-       K60_HOUSE9_MAX, K60_HOUSE10_MAX, K60_HOUSE11_MAX, K60_HOUSE12_MAX};
+      {K60_ASC_MAX, K60_MC_MAX, K60_ARMC_MAX, K60_VERTEX_MAX,
+          K60_EQUASC_MAX, K60_COASC1_MAX, K60_COASC2_MAX, K60_POLASC_MAX,
+          K60_HOUSE1_MAX, K60_HOUSE2_MAX, K60_HOUSE3_MAX, K60_HOUSE4_MAX,
+          K60_HOUSE5_MAX, K60_HOUSE6_MAX, K60_HOUSE7_MAX, K60_HOUSE8_MAX,
+          K60_HOUSE9_MAX, K60_HOUSE10_MAX, K60_HOUSE11_MAX, K60_HOUSE12_MAX};
   static final double[] minLonK66 = new double[]
-      {K66_ASC_MIN,    K66_MC_MIN,      K66_ARMC_MIN,    K66_VERTEX_MIN,
-       K66_EQUASC_MIN, K66_COASC1_MIN,  K66_COASC2_MIN,  K66_POLASC_MIN,
-       K66_HOUSE1_MIN, K66_HOUSE2_MIN,  K66_HOUSE3_MIN,  K66_HOUSE4_MIN,
-       K66_HOUSE5_MIN, K66_HOUSE6_MIN,  K66_HOUSE7_MIN,  K66_HOUSE8_MIN,
-       K66_HOUSE9_MIN, K66_HOUSE10_MIN, K66_HOUSE11_MIN, K66_HOUSE12_MIN};
+      {K66_ASC_MIN, K66_MC_MIN, K66_ARMC_MIN, K66_VERTEX_MIN,
+          K66_EQUASC_MIN, K66_COASC1_MIN, K66_COASC2_MIN, K66_POLASC_MIN,
+          K66_HOUSE1_MIN, K66_HOUSE2_MIN, K66_HOUSE3_MIN, K66_HOUSE4_MIN,
+          K66_HOUSE5_MIN, K66_HOUSE6_MIN, K66_HOUSE7_MIN, K66_HOUSE8_MIN,
+          K66_HOUSE9_MIN, K66_HOUSE10_MIN, K66_HOUSE11_MIN, K66_HOUSE12_MIN};
   static final double[] maxLonK66 = new double[]
-      {K66_ASC_MAX,    K66_MC_MAX,      K66_ARMC_MAX,    K66_VERTEX_MAX,
-       K66_EQUASC_MAX, K66_COASC1_MAX,  K66_COASC2_MAX,  K66_POLASC_MAX,
-       K66_HOUSE1_MAX, K66_HOUSE2_MAX,  K66_HOUSE3_MAX,  K66_HOUSE4_MAX,
-       K66_HOUSE5_MAX, K66_HOUSE6_MAX,  K66_HOUSE7_MAX,  K66_HOUSE8_MAX,
-       K66_HOUSE9_MAX, K66_HOUSE10_MAX, K66_HOUSE11_MAX, K66_HOUSE12_MAX};
+      {K66_ASC_MAX, K66_MC_MAX, K66_ARMC_MAX, K66_VERTEX_MAX,
+          K66_EQUASC_MAX, K66_COASC1_MAX, K66_COASC2_MAX, K66_POLASC_MAX,
+          K66_HOUSE1_MAX, K66_HOUSE2_MAX, K66_HOUSE3_MAX, K66_HOUSE4_MAX,
+          K66_HOUSE5_MAX, K66_HOUSE6_MAX, K66_HOUSE7_MAX, K66_HOUSE8_MAX,
+          K66_HOUSE9_MAX, K66_HOUSE10_MAX, K66_HOUSE11_MAX, K66_HOUSE12_MAX};
   static final double[] minLonK70 = new double[]
-      {K70_ASC_MIN,    K70_MC_MIN,      K70_ARMC_MIN,    K70_VERTEX_MIN,
-       K70_EQUASC_MIN, K70_COASC1_MIN,  K70_COASC2_MIN,  K70_POLASC_MIN,
-       K70_HOUSE1_MIN, K70_HOUSE2_MIN,  K70_HOUSE3_MIN,  K70_HOUSE4_MIN,
-       K70_HOUSE5_MIN, K70_HOUSE6_MIN,  K70_HOUSE7_MIN,  K70_HOUSE8_MIN,
-       K70_HOUSE9_MIN, K70_HOUSE10_MIN, K70_HOUSE11_MIN, K70_HOUSE12_MIN};
+      {K70_ASC_MIN, K70_MC_MIN, K70_ARMC_MIN, K70_VERTEX_MIN,
+          K70_EQUASC_MIN, K70_COASC1_MIN, K70_COASC2_MIN, K70_POLASC_MIN,
+          K70_HOUSE1_MIN, K70_HOUSE2_MIN, K70_HOUSE3_MIN, K70_HOUSE4_MIN,
+          K70_HOUSE5_MIN, K70_HOUSE6_MIN, K70_HOUSE7_MIN, K70_HOUSE8_MIN,
+          K70_HOUSE9_MIN, K70_HOUSE10_MIN, K70_HOUSE11_MIN, K70_HOUSE12_MIN};
   static final double[] maxLonK70 = new double[]
-      {K70_ASC_MAX,    K70_MC_MAX,      K70_ARMC_MAX,    K70_VERTEX_MAX,
-       K70_EQUASC_MAX, K70_COASC1_MAX,  K70_COASC2_MAX,  K70_POLASC_MAX,
-       K70_HOUSE1_MAX, K70_HOUSE2_MAX,  K70_HOUSE3_MAX,  K70_HOUSE4_MAX,
-       K70_HOUSE5_MAX, K70_HOUSE6_MAX,  K70_HOUSE7_MAX,  K70_HOUSE8_MAX,
-       K70_HOUSE9_MAX, K70_HOUSE10_MAX, K70_HOUSE11_MAX, K70_HOUSE12_MAX};
+      {K70_ASC_MAX, K70_MC_MAX, K70_ARMC_MAX, K70_VERTEX_MAX,
+          K70_EQUASC_MAX, K70_COASC1_MAX, K70_COASC2_MAX, K70_POLASC_MAX,
+          K70_HOUSE1_MAX, K70_HOUSE2_MAX, K70_HOUSE3_MAX, K70_HOUSE4_MAX,
+          K70_HOUSE5_MAX, K70_HOUSE6_MAX, K70_HOUSE7_MAX, K70_HOUSE8_MAX,
+          K70_HOUSE9_MAX, K70_HOUSE10_MAX, K70_HOUSE11_MAX, K70_HOUSE12_MAX};
   static final double[] minLonK80 = new double[]
-      {K80_ASC_MIN,    K80_MC_MIN,      K80_ARMC_MIN,    K80_VERTEX_MIN,
-       K80_EQUASC_MIN, K80_COASC1_MIN,  K80_COASC2_MIN,  K80_POLASC_MIN,
-       K80_HOUSE1_MIN, K80_HOUSE2_MIN,  K80_HOUSE3_MIN,  K80_HOUSE4_MIN,
-       K80_HOUSE5_MIN, K80_HOUSE6_MIN,  K80_HOUSE7_MIN,  K80_HOUSE8_MIN,
-       K80_HOUSE9_MIN, K80_HOUSE10_MIN, K80_HOUSE11_MIN, K80_HOUSE12_MIN};
+      {K80_ASC_MIN, K80_MC_MIN, K80_ARMC_MIN, K80_VERTEX_MIN,
+          K80_EQUASC_MIN, K80_COASC1_MIN, K80_COASC2_MIN, K80_POLASC_MIN,
+          K80_HOUSE1_MIN, K80_HOUSE2_MIN, K80_HOUSE3_MIN, K80_HOUSE4_MIN,
+          K80_HOUSE5_MIN, K80_HOUSE6_MIN, K80_HOUSE7_MIN, K80_HOUSE8_MIN,
+          K80_HOUSE9_MIN, K80_HOUSE10_MIN, K80_HOUSE11_MIN, K80_HOUSE12_MIN};
   static final double[] maxLonK80 = new double[]
-      {K80_ASC_MAX,    K80_MC_MAX,      K80_ARMC_MAX,    K80_VERTEX_MAX,
-       K80_EQUASC_MAX, K80_COASC1_MAX,  K80_COASC2_MAX,  K80_POLASC_MAX,
-       K80_HOUSE1_MAX, K80_HOUSE2_MAX,  K80_HOUSE3_MAX,  K80_HOUSE4_MAX,
-       K80_HOUSE5_MAX, K80_HOUSE6_MAX,  K80_HOUSE7_MAX,  K80_HOUSE8_MAX,
-       K80_HOUSE9_MAX, K80_HOUSE10_MAX, K80_HOUSE11_MAX, K80_HOUSE12_MAX};
+      {K80_ASC_MAX, K80_MC_MAX, K80_ARMC_MAX, K80_VERTEX_MAX,
+          K80_EQUASC_MAX, K80_COASC1_MAX, K80_COASC2_MAX, K80_POLASC_MAX,
+          K80_HOUSE1_MAX, K80_HOUSE2_MAX, K80_HOUSE3_MAX, K80_HOUSE4_MAX,
+          K80_HOUSE5_MAX, K80_HOUSE6_MAX, K80_HOUSE7_MAX, K80_HOUSE8_MAX,
+          K80_HOUSE9_MAX, K80_HOUSE10_MAX, K80_HOUSE11_MAX, K80_HOUSE12_MAX};
   static final double[] minLonK85 = new double[]
-      {K85_ASC_MIN,    K85_MC_MIN,      K85_ARMC_MIN,    K85_VERTEX_MIN,
-       K85_EQUASC_MIN, K85_COASC1_MIN,  K85_COASC2_MIN,  K85_POLASC_MIN,
-       K85_HOUSE1_MIN, K85_HOUSE2_MIN,  K85_HOUSE3_MIN,  K85_HOUSE4_MIN,
-       K85_HOUSE5_MIN, K85_HOUSE6_MIN,  K85_HOUSE7_MIN,  K85_HOUSE8_MIN,
-       K85_HOUSE9_MIN, K85_HOUSE10_MIN, K85_HOUSE11_MIN, K85_HOUSE12_MIN};
+      {K85_ASC_MIN, K85_MC_MIN, K85_ARMC_MIN, K85_VERTEX_MIN,
+          K85_EQUASC_MIN, K85_COASC1_MIN, K85_COASC2_MIN, K85_POLASC_MIN,
+          K85_HOUSE1_MIN, K85_HOUSE2_MIN, K85_HOUSE3_MIN, K85_HOUSE4_MIN,
+          K85_HOUSE5_MIN, K85_HOUSE6_MIN, K85_HOUSE7_MIN, K85_HOUSE8_MIN,
+          K85_HOUSE9_MIN, K85_HOUSE10_MIN, K85_HOUSE11_MIN, K85_HOUSE12_MIN};
   static final double[] maxLonK85 = new double[]
-      {K85_ASC_MAX,    K85_MC_MAX,      K85_ARMC_MAX,    K85_VERTEX_MAX,
-       K85_EQUASC_MAX, K85_COASC1_MAX,  K85_COASC2_MAX,  K85_POLASC_MAX,
-       K85_HOUSE1_MAX, K85_HOUSE2_MAX,  K85_HOUSE3_MAX,  K85_HOUSE4_MAX,
-       K85_HOUSE5_MAX, K85_HOUSE6_MAX,  K85_HOUSE7_MAX,  K85_HOUSE8_MAX,
-       K85_HOUSE9_MAX, K85_HOUSE10_MAX, K85_HOUSE11_MAX, K85_HOUSE12_MAX};
+      {K85_ASC_MAX, K85_MC_MAX, K85_ARMC_MAX, K85_VERTEX_MAX,
+          K85_EQUASC_MAX, K85_COASC1_MAX, K85_COASC2_MAX, K85_POLASC_MAX,
+          K85_HOUSE1_MAX, K85_HOUSE2_MAX, K85_HOUSE3_MAX, K85_HOUSE4_MAX,
+          K85_HOUSE5_MAX, K85_HOUSE6_MAX, K85_HOUSE7_MAX, K85_HOUSE8_MAX,
+          K85_HOUSE9_MAX, K85_HOUSE10_MAX, K85_HOUSE11_MAX, K85_HOUSE12_MAX};
   static final double[] minLonK88 = new double[]
-      {K88_ASC_MIN,    K88_MC_MIN,      K88_ARMC_MIN,    K88_VERTEX_MIN,
-       K88_EQUASC_MIN, K88_COASC1_MIN,  K88_COASC2_MIN,  K88_POLASC_MIN,
-       K88_HOUSE1_MIN, K88_HOUSE2_MIN,  K88_HOUSE3_MIN,  K88_HOUSE4_MIN,
-       K88_HOUSE5_MIN, K88_HOUSE6_MIN,  K88_HOUSE7_MIN,  K88_HOUSE8_MIN,
-       K88_HOUSE9_MIN, K88_HOUSE10_MIN, K88_HOUSE11_MIN, K88_HOUSE12_MIN};
+      {K88_ASC_MIN, K88_MC_MIN, K88_ARMC_MIN, K88_VERTEX_MIN,
+          K88_EQUASC_MIN, K88_COASC1_MIN, K88_COASC2_MIN, K88_POLASC_MIN,
+          K88_HOUSE1_MIN, K88_HOUSE2_MIN, K88_HOUSE3_MIN, K88_HOUSE4_MIN,
+          K88_HOUSE5_MIN, K88_HOUSE6_MIN, K88_HOUSE7_MIN, K88_HOUSE8_MIN,
+          K88_HOUSE9_MIN, K88_HOUSE10_MIN, K88_HOUSE11_MIN, K88_HOUSE12_MIN};
   static final double[] maxLonK88 = new double[]
-      {K88_ASC_MAX,    K88_MC_MAX,      K88_ARMC_MAX,    K88_VERTEX_MAX,
-       K88_EQUASC_MAX, K88_COASC1_MAX,  K88_COASC2_MAX,  K88_POLASC_MAX,
-       K88_HOUSE1_MAX, K88_HOUSE2_MAX,  K88_HOUSE3_MAX,  K88_HOUSE4_MAX,
-       K88_HOUSE5_MAX, K88_HOUSE6_MAX,  K88_HOUSE7_MAX,  K88_HOUSE8_MAX,
-       K88_HOUSE9_MAX, K88_HOUSE10_MAX, K88_HOUSE11_MAX, K88_HOUSE12_MAX};
+      {K88_ASC_MAX, K88_MC_MAX, K88_ARMC_MAX, K88_VERTEX_MAX,
+          K88_EQUASC_MAX, K88_COASC1_MAX, K88_COASC2_MAX, K88_POLASC_MAX,
+          K88_HOUSE1_MAX, K88_HOUSE2_MAX, K88_HOUSE3_MAX, K88_HOUSE4_MAX,
+          K88_HOUSE5_MAX, K88_HOUSE6_MAX, K88_HOUSE7_MAX, K88_HOUSE8_MAX,
+          K88_HOUSE9_MAX, K88_HOUSE10_MAX, K88_HOUSE11_MAX, K88_HOUSE12_MAX};
   static final double[] minLonK89x = new double[]
-      {K89x_ASC_MIN,    K89x_MC_MIN,      K89x_ARMC_MIN,    K89x_VERTEX_MIN,
-       K89x_EQUASC_MIN, K89x_COASC1_MIN,  K89x_COASC2_MIN,  K89x_POLASC_MIN,
-       K89x_HOUSE1_MIN, K89x_HOUSE2_MIN,  K89x_HOUSE3_MIN,  K89x_HOUSE4_MIN,
-       K89x_HOUSE5_MIN, K89x_HOUSE6_MIN,  K89x_HOUSE7_MIN,  K89x_HOUSE8_MIN,
-       K89x_HOUSE9_MIN, K89x_HOUSE10_MIN, K89x_HOUSE11_MIN, K89x_HOUSE12_MIN};
+      {K89x_ASC_MIN, K89x_MC_MIN, K89x_ARMC_MIN, K89x_VERTEX_MIN,
+          K89x_EQUASC_MIN, K89x_COASC1_MIN, K89x_COASC2_MIN, K89x_POLASC_MIN,
+          K89x_HOUSE1_MIN, K89x_HOUSE2_MIN, K89x_HOUSE3_MIN, K89x_HOUSE4_MIN,
+          K89x_HOUSE5_MIN, K89x_HOUSE6_MIN, K89x_HOUSE7_MIN, K89x_HOUSE8_MIN,
+          K89x_HOUSE9_MIN, K89x_HOUSE10_MIN, K89x_HOUSE11_MIN, K89x_HOUSE12_MIN};
   static final double[] maxLonK89x = new double[]
-      {K89x_ASC_MAX,    K89x_MC_MAX,      K89x_ARMC_MAX,    K89x_VERTEX_MAX,
-       K89x_EQUASC_MAX, K89x_COASC1_MAX,  K89x_COASC2_MAX,  K89x_POLASC_MAX,
-       K89x_HOUSE1_MAX, K89x_HOUSE2_MAX,  K89x_HOUSE3_MAX,  K89x_HOUSE4_MAX,
-       K89x_HOUSE5_MAX, K89x_HOUSE6_MAX,  K89x_HOUSE7_MAX,  K89x_HOUSE8_MAX,
-       K89x_HOUSE9_MAX, K89x_HOUSE10_MAX, K89x_HOUSE11_MAX, K89x_HOUSE12_MAX};
+      {K89x_ASC_MAX, K89x_MC_MAX, K89x_ARMC_MAX, K89x_VERTEX_MAX,
+          K89x_EQUASC_MAX, K89x_COASC1_MAX, K89x_COASC2_MAX, K89x_POLASC_MAX,
+          K89x_HOUSE1_MAX, K89x_HOUSE2_MAX, K89x_HOUSE3_MAX, K89x_HOUSE4_MAX,
+          K89x_HOUSE5_MAX, K89x_HOUSE6_MAX, K89x_HOUSE7_MAX, K89x_HOUSE8_MAX,
+          K89x_HOUSE9_MAX, K89x_HOUSE10_MAX, K89x_HOUSE11_MAX, K89x_HOUSE12_MAX};
 
   static final double[] minLonO10 = new double[]
-      {O10_ASC_MIN,    O10_MC_MIN,      O10_ARMC_MIN,    O10_VERTEX_MIN,
-       O10_EQUASC_MIN, O10_COASC1_MIN,  O10_COASC2_MIN,  O10_POLASC_MIN,
-       O10_HOUSE1_MIN, O10_HOUSE2_MIN,  O10_HOUSE3_MIN,  O10_HOUSE4_MIN,
-       O10_HOUSE5_MIN, O10_HOUSE6_MIN,  O10_HOUSE7_MIN,  O10_HOUSE8_MIN,
-       O10_HOUSE9_MIN, O10_HOUSE10_MIN, O10_HOUSE11_MIN, O10_HOUSE12_MIN};
+      {O10_ASC_MIN, O10_MC_MIN, O10_ARMC_MIN, O10_VERTEX_MIN,
+          O10_EQUASC_MIN, O10_COASC1_MIN, O10_COASC2_MIN, O10_POLASC_MIN,
+          O10_HOUSE1_MIN, O10_HOUSE2_MIN, O10_HOUSE3_MIN, O10_HOUSE4_MIN,
+          O10_HOUSE5_MIN, O10_HOUSE6_MIN, O10_HOUSE7_MIN, O10_HOUSE8_MIN,
+          O10_HOUSE9_MIN, O10_HOUSE10_MIN, O10_HOUSE11_MIN, O10_HOUSE12_MIN};
   static final double[] maxLonO10 = new double[]
-      {O10_ASC_MAX,    O10_MC_MAX,      O10_ARMC_MAX,    O10_VERTEX_MAX,
-       O10_EQUASC_MAX, O10_COASC1_MAX,  O10_COASC2_MAX,  O10_POLASC_MAX,
-       O10_HOUSE1_MAX, O10_HOUSE2_MAX,  O10_HOUSE3_MAX,  O10_HOUSE4_MAX,
-       O10_HOUSE5_MAX, O10_HOUSE6_MAX,  O10_HOUSE7_MAX,  O10_HOUSE8_MAX,
-       O10_HOUSE9_MAX, O10_HOUSE10_MAX, O10_HOUSE11_MAX, O10_HOUSE12_MAX};
+      {O10_ASC_MAX, O10_MC_MAX, O10_ARMC_MAX, O10_VERTEX_MAX,
+          O10_EQUASC_MAX, O10_COASC1_MAX, O10_COASC2_MAX, O10_POLASC_MAX,
+          O10_HOUSE1_MAX, O10_HOUSE2_MAX, O10_HOUSE3_MAX, O10_HOUSE4_MAX,
+          O10_HOUSE5_MAX, O10_HOUSE6_MAX, O10_HOUSE7_MAX, O10_HOUSE8_MAX,
+          O10_HOUSE9_MAX, O10_HOUSE10_MAX, O10_HOUSE11_MAX, O10_HOUSE12_MAX};
   static final double[] minLonO20 = new double[]
-      {O20_ASC_MIN,    O20_MC_MIN,      O20_ARMC_MIN,    O20_VERTEX_MIN,
-       O20_EQUASC_MIN, O20_COASC1_MIN,  O20_COASC2_MIN,  O20_POLASC_MIN,
-       O20_HOUSE1_MIN, O20_HOUSE2_MIN,  O20_HOUSE3_MIN,  O20_HOUSE4_MIN,
-       O20_HOUSE5_MIN, O20_HOUSE6_MIN,  O20_HOUSE7_MIN,  O20_HOUSE8_MIN,
-       O20_HOUSE9_MIN, O20_HOUSE10_MIN, O20_HOUSE11_MIN, O20_HOUSE12_MIN};
+      {O20_ASC_MIN, O20_MC_MIN, O20_ARMC_MIN, O20_VERTEX_MIN,
+          O20_EQUASC_MIN, O20_COASC1_MIN, O20_COASC2_MIN, O20_POLASC_MIN,
+          O20_HOUSE1_MIN, O20_HOUSE2_MIN, O20_HOUSE3_MIN, O20_HOUSE4_MIN,
+          O20_HOUSE5_MIN, O20_HOUSE6_MIN, O20_HOUSE7_MIN, O20_HOUSE8_MIN,
+          O20_HOUSE9_MIN, O20_HOUSE10_MIN, O20_HOUSE11_MIN, O20_HOUSE12_MIN};
   static final double[] maxLonO20 = new double[]
-      {O20_ASC_MAX,    O20_MC_MAX,      O20_ARMC_MAX,    O20_VERTEX_MAX,
-       O20_EQUASC_MAX, O20_COASC1_MAX,  O20_COASC2_MAX,  O20_POLASC_MAX,
-       O20_HOUSE1_MAX, O20_HOUSE2_MAX,  O20_HOUSE3_MAX,  O20_HOUSE4_MAX,
-       O20_HOUSE5_MAX, O20_HOUSE6_MAX,  O20_HOUSE7_MAX,  O20_HOUSE8_MAX,
-       O20_HOUSE9_MAX, O20_HOUSE10_MAX, O20_HOUSE11_MAX, O20_HOUSE12_MAX};
+      {O20_ASC_MAX, O20_MC_MAX, O20_ARMC_MAX, O20_VERTEX_MAX,
+          O20_EQUASC_MAX, O20_COASC1_MAX, O20_COASC2_MAX, O20_POLASC_MAX,
+          O20_HOUSE1_MAX, O20_HOUSE2_MAX, O20_HOUSE3_MAX, O20_HOUSE4_MAX,
+          O20_HOUSE5_MAX, O20_HOUSE6_MAX, O20_HOUSE7_MAX, O20_HOUSE8_MAX,
+          O20_HOUSE9_MAX, O20_HOUSE10_MAX, O20_HOUSE11_MAX, O20_HOUSE12_MAX};
   static final double[] minLonO30 = new double[]
-      {O30_ASC_MIN,    O30_MC_MIN,      O30_ARMC_MIN,    O30_VERTEX_MIN,
-       O30_EQUASC_MIN, O30_COASC1_MIN,  O30_COASC2_MIN,  O30_POLASC_MIN,
-       O30_HOUSE1_MIN, O30_HOUSE2_MIN,  O30_HOUSE3_MIN,  O30_HOUSE4_MIN,
-       O30_HOUSE5_MIN, O30_HOUSE6_MIN,  O30_HOUSE7_MIN,  O30_HOUSE8_MIN,
-       O30_HOUSE9_MIN, O30_HOUSE10_MIN, O30_HOUSE11_MIN, O30_HOUSE12_MIN};
+      {O30_ASC_MIN, O30_MC_MIN, O30_ARMC_MIN, O30_VERTEX_MIN,
+          O30_EQUASC_MIN, O30_COASC1_MIN, O30_COASC2_MIN, O30_POLASC_MIN,
+          O30_HOUSE1_MIN, O30_HOUSE2_MIN, O30_HOUSE3_MIN, O30_HOUSE4_MIN,
+          O30_HOUSE5_MIN, O30_HOUSE6_MIN, O30_HOUSE7_MIN, O30_HOUSE8_MIN,
+          O30_HOUSE9_MIN, O30_HOUSE10_MIN, O30_HOUSE11_MIN, O30_HOUSE12_MIN};
   static final double[] maxLonO30 = new double[]
-      {O30_ASC_MAX,    O30_MC_MAX,      O30_ARMC_MAX,    O30_VERTEX_MAX,
-       O30_EQUASC_MAX, O30_COASC1_MAX,  O30_COASC2_MAX,  O30_POLASC_MAX,
-       O30_HOUSE1_MAX, O30_HOUSE2_MAX,  O30_HOUSE3_MAX,  O30_HOUSE4_MAX,
-       O30_HOUSE5_MAX, O30_HOUSE6_MAX,  O30_HOUSE7_MAX,  O30_HOUSE8_MAX,
-       O30_HOUSE9_MAX, O30_HOUSE10_MAX, O30_HOUSE11_MAX, O30_HOUSE12_MAX};
+      {O30_ASC_MAX, O30_MC_MAX, O30_ARMC_MAX, O30_VERTEX_MAX,
+          O30_EQUASC_MAX, O30_COASC1_MAX, O30_COASC2_MAX, O30_POLASC_MAX,
+          O30_HOUSE1_MAX, O30_HOUSE2_MAX, O30_HOUSE3_MAX, O30_HOUSE4_MAX,
+          O30_HOUSE5_MAX, O30_HOUSE6_MAX, O30_HOUSE7_MAX, O30_HOUSE8_MAX,
+          O30_HOUSE9_MAX, O30_HOUSE10_MAX, O30_HOUSE11_MAX, O30_HOUSE12_MAX};
   static final double[] minLonO40 = new double[]
-      {O40_ASC_MIN,    O40_MC_MIN,      O40_ARMC_MIN,    O40_VERTEX_MIN,
-       O40_EQUASC_MIN, O40_COASC1_MIN,  O40_COASC2_MIN,  O40_POLASC_MIN,
-       O40_HOUSE1_MIN, O40_HOUSE2_MIN,  O40_HOUSE3_MIN,  O40_HOUSE4_MIN,
-       O40_HOUSE5_MIN, O40_HOUSE6_MIN,  O40_HOUSE7_MIN,  O40_HOUSE8_MIN,
-       O40_HOUSE9_MIN, O40_HOUSE10_MIN, O40_HOUSE11_MIN, O40_HOUSE12_MIN};
+      {O40_ASC_MIN, O40_MC_MIN, O40_ARMC_MIN, O40_VERTEX_MIN,
+          O40_EQUASC_MIN, O40_COASC1_MIN, O40_COASC2_MIN, O40_POLASC_MIN,
+          O40_HOUSE1_MIN, O40_HOUSE2_MIN, O40_HOUSE3_MIN, O40_HOUSE4_MIN,
+          O40_HOUSE5_MIN, O40_HOUSE6_MIN, O40_HOUSE7_MIN, O40_HOUSE8_MIN,
+          O40_HOUSE9_MIN, O40_HOUSE10_MIN, O40_HOUSE11_MIN, O40_HOUSE12_MIN};
   static final double[] maxLonO40 = new double[]
-      {O40_ASC_MAX,    O40_MC_MAX,      O40_ARMC_MAX,    O40_VERTEX_MAX,
-       O40_EQUASC_MAX, O40_COASC1_MAX,  O40_COASC2_MAX,  O40_POLASC_MAX,
-       O40_HOUSE1_MAX, O40_HOUSE2_MAX,  O40_HOUSE3_MAX,  O40_HOUSE4_MAX,
-       O40_HOUSE5_MAX, O40_HOUSE6_MAX,  O40_HOUSE7_MAX,  O40_HOUSE8_MAX,
-       O40_HOUSE9_MAX, O40_HOUSE10_MAX, O40_HOUSE11_MAX, O40_HOUSE12_MAX};
+      {O40_ASC_MAX, O40_MC_MAX, O40_ARMC_MAX, O40_VERTEX_MAX,
+          O40_EQUASC_MAX, O40_COASC1_MAX, O40_COASC2_MAX, O40_POLASC_MAX,
+          O40_HOUSE1_MAX, O40_HOUSE2_MAX, O40_HOUSE3_MAX, O40_HOUSE4_MAX,
+          O40_HOUSE5_MAX, O40_HOUSE6_MAX, O40_HOUSE7_MAX, O40_HOUSE8_MAX,
+          O40_HOUSE9_MAX, O40_HOUSE10_MAX, O40_HOUSE11_MAX, O40_HOUSE12_MAX};
   static final double[] minLonO50 = new double[]
-      {O50_ASC_MIN,    O50_MC_MIN,      O50_ARMC_MIN,    O50_VERTEX_MIN,
-       O50_EQUASC_MIN, O50_COASC1_MIN,  O50_COASC2_MIN,  O50_POLASC_MIN,
-       O50_HOUSE1_MIN, O50_HOUSE2_MIN,  O50_HOUSE3_MIN,  O50_HOUSE4_MIN,
-       O50_HOUSE5_MIN, O50_HOUSE6_MIN,  O50_HOUSE7_MIN,  O50_HOUSE8_MIN,
-       O50_HOUSE9_MIN, O50_HOUSE10_MIN, O50_HOUSE11_MIN, O50_HOUSE12_MIN};
+      {O50_ASC_MIN, O50_MC_MIN, O50_ARMC_MIN, O50_VERTEX_MIN,
+          O50_EQUASC_MIN, O50_COASC1_MIN, O50_COASC2_MIN, O50_POLASC_MIN,
+          O50_HOUSE1_MIN, O50_HOUSE2_MIN, O50_HOUSE3_MIN, O50_HOUSE4_MIN,
+          O50_HOUSE5_MIN, O50_HOUSE6_MIN, O50_HOUSE7_MIN, O50_HOUSE8_MIN,
+          O50_HOUSE9_MIN, O50_HOUSE10_MIN, O50_HOUSE11_MIN, O50_HOUSE12_MIN};
   static final double[] maxLonO50 = new double[]
-      {O50_ASC_MAX,    O50_MC_MAX,      O50_ARMC_MAX,    O50_VERTEX_MAX,
-       O50_EQUASC_MAX, O50_COASC1_MAX,  O50_COASC2_MAX,  O50_POLASC_MAX,
-       O50_HOUSE1_MAX, O50_HOUSE2_MAX,  O50_HOUSE3_MAX,  O50_HOUSE4_MAX,
-       O50_HOUSE5_MAX, O50_HOUSE6_MAX,  O50_HOUSE7_MAX,  O50_HOUSE8_MAX,
-       O50_HOUSE9_MAX, O50_HOUSE10_MAX, O50_HOUSE11_MAX, O50_HOUSE12_MAX};
+      {O50_ASC_MAX, O50_MC_MAX, O50_ARMC_MAX, O50_VERTEX_MAX,
+          O50_EQUASC_MAX, O50_COASC1_MAX, O50_COASC2_MAX, O50_POLASC_MAX,
+          O50_HOUSE1_MAX, O50_HOUSE2_MAX, O50_HOUSE3_MAX, O50_HOUSE4_MAX,
+          O50_HOUSE5_MAX, O50_HOUSE6_MAX, O50_HOUSE7_MAX, O50_HOUSE8_MAX,
+          O50_HOUSE9_MAX, O50_HOUSE10_MAX, O50_HOUSE11_MAX, O50_HOUSE12_MAX};
   static final double[] minLonO60 = new double[]
-      {O60_ASC_MIN,    O60_MC_MIN,      O60_ARMC_MIN,    O60_VERTEX_MIN,
-       O60_EQUASC_MIN, O60_COASC1_MIN,  O60_COASC2_MIN,  O60_POLASC_MIN,
-       O60_HOUSE1_MIN, O60_HOUSE2_MIN,  O60_HOUSE3_MIN,  O60_HOUSE4_MIN,
-       O60_HOUSE5_MIN, O60_HOUSE6_MIN,  O60_HOUSE7_MIN,  O60_HOUSE8_MIN,
-       O60_HOUSE9_MIN, O60_HOUSE10_MIN, O60_HOUSE11_MIN, O60_HOUSE12_MIN};
+      {O60_ASC_MIN, O60_MC_MIN, O60_ARMC_MIN, O60_VERTEX_MIN,
+          O60_EQUASC_MIN, O60_COASC1_MIN, O60_COASC2_MIN, O60_POLASC_MIN,
+          O60_HOUSE1_MIN, O60_HOUSE2_MIN, O60_HOUSE3_MIN, O60_HOUSE4_MIN,
+          O60_HOUSE5_MIN, O60_HOUSE6_MIN, O60_HOUSE7_MIN, O60_HOUSE8_MIN,
+          O60_HOUSE9_MIN, O60_HOUSE10_MIN, O60_HOUSE11_MIN, O60_HOUSE12_MIN};
   static final double[] maxLonO60 = new double[]
-      {O60_ASC_MAX,    O60_MC_MAX,      O60_ARMC_MAX,    O60_VERTEX_MAX,
-       O60_EQUASC_MAX, O60_COASC1_MAX,  O60_COASC2_MAX,  O60_POLASC_MAX,
-       O60_HOUSE1_MAX, O60_HOUSE2_MAX,  O60_HOUSE3_MAX,  O60_HOUSE4_MAX,
-       O60_HOUSE5_MAX, O60_HOUSE6_MAX,  O60_HOUSE7_MAX,  O60_HOUSE8_MAX,
-       O60_HOUSE9_MAX, O60_HOUSE10_MAX, O60_HOUSE11_MAX, O60_HOUSE12_MAX};
+      {O60_ASC_MAX, O60_MC_MAX, O60_ARMC_MAX, O60_VERTEX_MAX,
+          O60_EQUASC_MAX, O60_COASC1_MAX, O60_COASC2_MAX, O60_POLASC_MAX,
+          O60_HOUSE1_MAX, O60_HOUSE2_MAX, O60_HOUSE3_MAX, O60_HOUSE4_MAX,
+          O60_HOUSE5_MAX, O60_HOUSE6_MAX, O60_HOUSE7_MAX, O60_HOUSE8_MAX,
+          O60_HOUSE9_MAX, O60_HOUSE10_MAX, O60_HOUSE11_MAX, O60_HOUSE12_MAX};
   static final double[] minLonO66 = new double[]
-      {O66_ASC_MIN,    O66_MC_MIN,      O66_ARMC_MIN,    O66_VERTEX_MIN,
-       O66_EQUASC_MIN, O66_COASC1_MIN,  O66_COASC2_MIN,  O66_POLASC_MIN,
-       O66_HOUSE1_MIN, O66_HOUSE2_MIN,  O66_HOUSE3_MIN,  O66_HOUSE4_MIN,
-       O66_HOUSE5_MIN, O66_HOUSE6_MIN,  O66_HOUSE7_MIN,  O66_HOUSE8_MIN,
-       O66_HOUSE9_MIN, O66_HOUSE10_MIN, O66_HOUSE11_MIN, O66_HOUSE12_MIN};
+      {O66_ASC_MIN, O66_MC_MIN, O66_ARMC_MIN, O66_VERTEX_MIN,
+          O66_EQUASC_MIN, O66_COASC1_MIN, O66_COASC2_MIN, O66_POLASC_MIN,
+          O66_HOUSE1_MIN, O66_HOUSE2_MIN, O66_HOUSE3_MIN, O66_HOUSE4_MIN,
+          O66_HOUSE5_MIN, O66_HOUSE6_MIN, O66_HOUSE7_MIN, O66_HOUSE8_MIN,
+          O66_HOUSE9_MIN, O66_HOUSE10_MIN, O66_HOUSE11_MIN, O66_HOUSE12_MIN};
   static final double[] maxLonO66 = new double[]
-      {O66_ASC_MAX,    O66_MC_MAX,      O66_ARMC_MAX,    O66_VERTEX_MAX,
-       O66_EQUASC_MAX, O66_COASC1_MAX,  O66_COASC2_MAX,  O66_POLASC_MAX,
-       O66_HOUSE1_MAX, O66_HOUSE2_MAX,  O66_HOUSE3_MAX,  O66_HOUSE4_MAX,
-       O66_HOUSE5_MAX, O66_HOUSE6_MAX,  O66_HOUSE7_MAX,  O66_HOUSE8_MAX,
-       O66_HOUSE9_MAX, O66_HOUSE10_MAX, O66_HOUSE11_MAX, O66_HOUSE12_MAX};
+      {O66_ASC_MAX, O66_MC_MAX, O66_ARMC_MAX, O66_VERTEX_MAX,
+          O66_EQUASC_MAX, O66_COASC1_MAX, O66_COASC2_MAX, O66_POLASC_MAX,
+          O66_HOUSE1_MAX, O66_HOUSE2_MAX, O66_HOUSE3_MAX, O66_HOUSE4_MAX,
+          O66_HOUSE5_MAX, O66_HOUSE6_MAX, O66_HOUSE7_MAX, O66_HOUSE8_MAX,
+          O66_HOUSE9_MAX, O66_HOUSE10_MAX, O66_HOUSE11_MAX, O66_HOUSE12_MAX};
   static final double[] minLonO70 = new double[]
-      {O70_ASC_MIN,    O70_MC_MIN,      O70_ARMC_MIN,    O70_VERTEX_MIN,
-       O70_EQUASC_MIN, O70_COASC1_MIN,  O70_COASC2_MIN,  O70_POLASC_MIN,
-       O70_HOUSE1_MIN, O70_HOUSE2_MIN,  O70_HOUSE3_MIN,  O70_HOUSE4_MIN,
-       O70_HOUSE5_MIN, O70_HOUSE6_MIN,  O70_HOUSE7_MIN,  O70_HOUSE8_MIN,
-       O70_HOUSE9_MIN, O70_HOUSE10_MIN, O70_HOUSE11_MIN, O70_HOUSE12_MIN};
+      {O70_ASC_MIN, O70_MC_MIN, O70_ARMC_MIN, O70_VERTEX_MIN,
+          O70_EQUASC_MIN, O70_COASC1_MIN, O70_COASC2_MIN, O70_POLASC_MIN,
+          O70_HOUSE1_MIN, O70_HOUSE2_MIN, O70_HOUSE3_MIN, O70_HOUSE4_MIN,
+          O70_HOUSE5_MIN, O70_HOUSE6_MIN, O70_HOUSE7_MIN, O70_HOUSE8_MIN,
+          O70_HOUSE9_MIN, O70_HOUSE10_MIN, O70_HOUSE11_MIN, O70_HOUSE12_MIN};
   static final double[] maxLonO70 = new double[]
-      {O70_ASC_MAX,    O70_MC_MAX,      O70_ARMC_MAX,    O70_VERTEX_MAX,
-       O70_EQUASC_MAX, O70_COASC1_MAX,  O70_COASC2_MAX,  O70_POLASC_MAX,
-       O70_HOUSE1_MAX, O70_HOUSE2_MAX,  O70_HOUSE3_MAX,  O70_HOUSE4_MAX,
-       O70_HOUSE5_MAX, O70_HOUSE6_MAX,  O70_HOUSE7_MAX,  O70_HOUSE8_MAX,
-       O70_HOUSE9_MAX, O70_HOUSE10_MAX, O70_HOUSE11_MAX, O70_HOUSE12_MAX};
+      {O70_ASC_MAX, O70_MC_MAX, O70_ARMC_MAX, O70_VERTEX_MAX,
+          O70_EQUASC_MAX, O70_COASC1_MAX, O70_COASC2_MAX, O70_POLASC_MAX,
+          O70_HOUSE1_MAX, O70_HOUSE2_MAX, O70_HOUSE3_MAX, O70_HOUSE4_MAX,
+          O70_HOUSE5_MAX, O70_HOUSE6_MAX, O70_HOUSE7_MAX, O70_HOUSE8_MAX,
+          O70_HOUSE9_MAX, O70_HOUSE10_MAX, O70_HOUSE11_MAX, O70_HOUSE12_MAX};
   static final double[] minLonO80 = new double[]
-      {O80_ASC_MIN,    O80_MC_MIN,      O80_ARMC_MIN,    O80_VERTEX_MIN,
-       O80_EQUASC_MIN, O80_COASC1_MIN,  O80_COASC2_MIN,  O80_POLASC_MIN,
-       O80_HOUSE1_MIN, O80_HOUSE2_MIN,  O80_HOUSE3_MIN,  O80_HOUSE4_MIN,
-       O80_HOUSE5_MIN, O80_HOUSE6_MIN,  O80_HOUSE7_MIN,  O80_HOUSE8_MIN,
-       O80_HOUSE9_MIN, O80_HOUSE10_MIN, O80_HOUSE11_MIN, O80_HOUSE12_MIN};
+      {O80_ASC_MIN, O80_MC_MIN, O80_ARMC_MIN, O80_VERTEX_MIN,
+          O80_EQUASC_MIN, O80_COASC1_MIN, O80_COASC2_MIN, O80_POLASC_MIN,
+          O80_HOUSE1_MIN, O80_HOUSE2_MIN, O80_HOUSE3_MIN, O80_HOUSE4_MIN,
+          O80_HOUSE5_MIN, O80_HOUSE6_MIN, O80_HOUSE7_MIN, O80_HOUSE8_MIN,
+          O80_HOUSE9_MIN, O80_HOUSE10_MIN, O80_HOUSE11_MIN, O80_HOUSE12_MIN};
   static final double[] maxLonO80 = new double[]
-      {O80_ASC_MAX,    O80_MC_MAX,      O80_ARMC_MAX,    O80_VERTEX_MAX,
-       O80_EQUASC_MAX, O80_COASC1_MAX,  O80_COASC2_MAX,  O80_POLASC_MAX,
-       O80_HOUSE1_MAX, O80_HOUSE2_MAX,  O80_HOUSE3_MAX,  O80_HOUSE4_MAX,
-       O80_HOUSE5_MAX, O80_HOUSE6_MAX,  O80_HOUSE7_MAX,  O80_HOUSE8_MAX,
-       O80_HOUSE9_MAX, O80_HOUSE10_MAX, O80_HOUSE11_MAX, O80_HOUSE12_MAX};
+      {O80_ASC_MAX, O80_MC_MAX, O80_ARMC_MAX, O80_VERTEX_MAX,
+          O80_EQUASC_MAX, O80_COASC1_MAX, O80_COASC2_MAX, O80_POLASC_MAX,
+          O80_HOUSE1_MAX, O80_HOUSE2_MAX, O80_HOUSE3_MAX, O80_HOUSE4_MAX,
+          O80_HOUSE5_MAX, O80_HOUSE6_MAX, O80_HOUSE7_MAX, O80_HOUSE8_MAX,
+          O80_HOUSE9_MAX, O80_HOUSE10_MAX, O80_HOUSE11_MAX, O80_HOUSE12_MAX};
   static final double[] minLonO85 = new double[]
-      {O85_ASC_MIN,    O85_MC_MIN,      O85_ARMC_MIN,    O85_VERTEX_MIN,
-       O85_EQUASC_MIN, O85_COASC1_MIN,  O85_COASC2_MIN,  O85_POLASC_MIN,
-       O85_HOUSE1_MIN, O85_HOUSE2_MIN,  O85_HOUSE3_MIN,  O85_HOUSE4_MIN,
-       O85_HOUSE5_MIN, O85_HOUSE6_MIN,  O85_HOUSE7_MIN,  O85_HOUSE8_MIN,
-       O85_HOUSE9_MIN, O85_HOUSE10_MIN, O85_HOUSE11_MIN, O85_HOUSE12_MIN};
+      {O85_ASC_MIN, O85_MC_MIN, O85_ARMC_MIN, O85_VERTEX_MIN,
+          O85_EQUASC_MIN, O85_COASC1_MIN, O85_COASC2_MIN, O85_POLASC_MIN,
+          O85_HOUSE1_MIN, O85_HOUSE2_MIN, O85_HOUSE3_MIN, O85_HOUSE4_MIN,
+          O85_HOUSE5_MIN, O85_HOUSE6_MIN, O85_HOUSE7_MIN, O85_HOUSE8_MIN,
+          O85_HOUSE9_MIN, O85_HOUSE10_MIN, O85_HOUSE11_MIN, O85_HOUSE12_MIN};
   static final double[] maxLonO85 = new double[]
-      {O85_ASC_MAX,    O85_MC_MAX,      O85_ARMC_MAX,    O85_VERTEX_MAX,
-       O85_EQUASC_MAX, O85_COASC1_MAX,  O85_COASC2_MAX,  O85_POLASC_MAX,
-       O85_HOUSE1_MAX, O85_HOUSE2_MAX,  O85_HOUSE3_MAX,  O85_HOUSE4_MAX,
-       O85_HOUSE5_MAX, O85_HOUSE6_MAX,  O85_HOUSE7_MAX,  O85_HOUSE8_MAX,
-       O85_HOUSE9_MAX, O85_HOUSE10_MAX, O85_HOUSE11_MAX, O85_HOUSE12_MAX};
+      {O85_ASC_MAX, O85_MC_MAX, O85_ARMC_MAX, O85_VERTEX_MAX,
+          O85_EQUASC_MAX, O85_COASC1_MAX, O85_COASC2_MAX, O85_POLASC_MAX,
+          O85_HOUSE1_MAX, O85_HOUSE2_MAX, O85_HOUSE3_MAX, O85_HOUSE4_MAX,
+          O85_HOUSE5_MAX, O85_HOUSE6_MAX, O85_HOUSE7_MAX, O85_HOUSE8_MAX,
+          O85_HOUSE9_MAX, O85_HOUSE10_MAX, O85_HOUSE11_MAX, O85_HOUSE12_MAX};
   static final double[] minLonO88 = new double[]
-      {O88_ASC_MIN,    O88_MC_MIN,      O88_ARMC_MIN,    O88_VERTEX_MIN,
-       O88_EQUASC_MIN, O88_COASC1_MIN,  O88_COASC2_MIN,  O88_POLASC_MIN,
-       O88_HOUSE1_MIN, O88_HOUSE2_MIN,  O88_HOUSE3_MIN,  O88_HOUSE4_MIN,
-       O88_HOUSE5_MIN, O88_HOUSE6_MIN,  O88_HOUSE7_MIN,  O88_HOUSE8_MIN,
-       O88_HOUSE9_MIN, O88_HOUSE10_MIN, O88_HOUSE11_MIN, O88_HOUSE12_MIN};
+      {O88_ASC_MIN, O88_MC_MIN, O88_ARMC_MIN, O88_VERTEX_MIN,
+          O88_EQUASC_MIN, O88_COASC1_MIN, O88_COASC2_MIN, O88_POLASC_MIN,
+          O88_HOUSE1_MIN, O88_HOUSE2_MIN, O88_HOUSE3_MIN, O88_HOUSE4_MIN,
+          O88_HOUSE5_MIN, O88_HOUSE6_MIN, O88_HOUSE7_MIN, O88_HOUSE8_MIN,
+          O88_HOUSE9_MIN, O88_HOUSE10_MIN, O88_HOUSE11_MIN, O88_HOUSE12_MIN};
   static final double[] maxLonO88 = new double[]
-      {O88_ASC_MAX,    O88_MC_MAX,      O88_ARMC_MAX,    O88_VERTEX_MAX,
-       O88_EQUASC_MAX, O88_COASC1_MAX,  O88_COASC2_MAX,  O88_POLASC_MAX,
-       O88_HOUSE1_MAX, O88_HOUSE2_MAX,  O88_HOUSE3_MAX,  O88_HOUSE4_MAX,
-       O88_HOUSE5_MAX, O88_HOUSE6_MAX,  O88_HOUSE7_MAX,  O88_HOUSE8_MAX,
-       O88_HOUSE9_MAX, O88_HOUSE10_MAX, O88_HOUSE11_MAX, O88_HOUSE12_MAX};
+      {O88_ASC_MAX, O88_MC_MAX, O88_ARMC_MAX, O88_VERTEX_MAX,
+          O88_EQUASC_MAX, O88_COASC1_MAX, O88_COASC2_MAX, O88_POLASC_MAX,
+          O88_HOUSE1_MAX, O88_HOUSE2_MAX, O88_HOUSE3_MAX, O88_HOUSE4_MAX,
+          O88_HOUSE5_MAX, O88_HOUSE6_MAX, O88_HOUSE7_MAX, O88_HOUSE8_MAX,
+          O88_HOUSE9_MAX, O88_HOUSE10_MAX, O88_HOUSE11_MAX, O88_HOUSE12_MAX};
   static final double[] minLonO89x = new double[]
-      {O89x_ASC_MIN,    O89x_MC_MIN,      O89x_ARMC_MIN,    O89x_VERTEX_MIN,
-       O89x_EQUASC_MIN, O89x_COASC1_MIN,  O89x_COASC2_MIN,  O89x_POLASC_MIN,
-       O89x_HOUSE1_MIN, O89x_HOUSE2_MIN,  O89x_HOUSE3_MIN,  O89x_HOUSE4_MIN,
-       O89x_HOUSE5_MIN, O89x_HOUSE6_MIN,  O89x_HOUSE7_MIN,  O89x_HOUSE8_MIN,
-       O89x_HOUSE9_MIN, O89x_HOUSE10_MIN, O89x_HOUSE11_MIN, O89x_HOUSE12_MIN};
+      {O89x_ASC_MIN, O89x_MC_MIN, O89x_ARMC_MIN, O89x_VERTEX_MIN,
+          O89x_EQUASC_MIN, O89x_COASC1_MIN, O89x_COASC2_MIN, O89x_POLASC_MIN,
+          O89x_HOUSE1_MIN, O89x_HOUSE2_MIN, O89x_HOUSE3_MIN, O89x_HOUSE4_MIN,
+          O89x_HOUSE5_MIN, O89x_HOUSE6_MIN, O89x_HOUSE7_MIN, O89x_HOUSE8_MIN,
+          O89x_HOUSE9_MIN, O89x_HOUSE10_MIN, O89x_HOUSE11_MIN, O89x_HOUSE12_MIN};
   static final double[] maxLonO89x = new double[]
-      {O89x_ASC_MAX,    O89x_MC_MAX,      O89x_ARMC_MAX,    O89x_VERTEX_MAX,
-       O89x_EQUASC_MAX, O89x_COASC1_MAX,  O89x_COASC2_MAX,  O89x_POLASC_MAX,
-       O89x_HOUSE1_MAX, O89x_HOUSE2_MAX,  O89x_HOUSE3_MAX,  O89x_HOUSE4_MAX,
-       O89x_HOUSE5_MAX, O89x_HOUSE6_MAX,  O89x_HOUSE7_MAX,  O89x_HOUSE8_MAX,
-       O89x_HOUSE9_MAX, O89x_HOUSE10_MAX, O89x_HOUSE11_MAX, O89x_HOUSE12_MAX};
+      {O89x_ASC_MAX, O89x_MC_MAX, O89x_ARMC_MAX, O89x_VERTEX_MAX,
+          O89x_EQUASC_MAX, O89x_COASC1_MAX, O89x_COASC2_MAX, O89x_POLASC_MAX,
+          O89x_HOUSE1_MAX, O89x_HOUSE2_MAX, O89x_HOUSE3_MAX, O89x_HOUSE4_MAX,
+          O89x_HOUSE5_MAX, O89x_HOUSE6_MAX, O89x_HOUSE7_MAX, O89x_HOUSE8_MAX,
+          O89x_HOUSE9_MAX, O89x_HOUSE10_MAX, O89x_HOUSE11_MAX, O89x_HOUSE12_MAX};
 
   static final double[] minLonR10 = new double[]
-      {R10_ASC_MIN,    R10_MC_MIN,      R10_ARMC_MIN,    R10_VERTEX_MIN,
-       R10_EQUASC_MIN, R10_COASC1_MIN,  R10_COASC2_MIN,  R10_POLASC_MIN,
-       R10_HOUSE1_MIN, R10_HOUSE2_MIN,  R10_HOUSE3_MIN,  R10_HOUSE4_MIN,
-       R10_HOUSE5_MIN, R10_HOUSE6_MIN,  R10_HOUSE7_MIN,  R10_HOUSE8_MIN,
-       R10_HOUSE9_MIN, R10_HOUSE10_MIN, R10_HOUSE11_MIN, R10_HOUSE12_MIN};
+      {R10_ASC_MIN, R10_MC_MIN, R10_ARMC_MIN, R10_VERTEX_MIN,
+          R10_EQUASC_MIN, R10_COASC1_MIN, R10_COASC2_MIN, R10_POLASC_MIN,
+          R10_HOUSE1_MIN, R10_HOUSE2_MIN, R10_HOUSE3_MIN, R10_HOUSE4_MIN,
+          R10_HOUSE5_MIN, R10_HOUSE6_MIN, R10_HOUSE7_MIN, R10_HOUSE8_MIN,
+          R10_HOUSE9_MIN, R10_HOUSE10_MIN, R10_HOUSE11_MIN, R10_HOUSE12_MIN};
   static final double[] maxLonR10 = new double[]
-      {R10_ASC_MAX,    R10_MC_MAX,      R10_ARMC_MAX,    R10_VERTEX_MAX,
-       R10_EQUASC_MAX, R10_COASC1_MAX,  R10_COASC2_MAX,  R10_POLASC_MAX,
-       R10_HOUSE1_MAX, R10_HOUSE2_MAX,  R10_HOUSE3_MAX,  R10_HOUSE4_MAX,
-       R10_HOUSE5_MAX, R10_HOUSE6_MAX,  R10_HOUSE7_MAX,  R10_HOUSE8_MAX,
-       R10_HOUSE9_MAX, R10_HOUSE10_MAX, R10_HOUSE11_MAX, R10_HOUSE12_MAX};
+      {R10_ASC_MAX, R10_MC_MAX, R10_ARMC_MAX, R10_VERTEX_MAX,
+          R10_EQUASC_MAX, R10_COASC1_MAX, R10_COASC2_MAX, R10_POLASC_MAX,
+          R10_HOUSE1_MAX, R10_HOUSE2_MAX, R10_HOUSE3_MAX, R10_HOUSE4_MAX,
+          R10_HOUSE5_MAX, R10_HOUSE6_MAX, R10_HOUSE7_MAX, R10_HOUSE8_MAX,
+          R10_HOUSE9_MAX, R10_HOUSE10_MAX, R10_HOUSE11_MAX, R10_HOUSE12_MAX};
   static final double[] minLonR20 = new double[]
-      {R20_ASC_MIN,    R20_MC_MIN,      R20_ARMC_MIN,    R20_VERTEX_MIN,
-       R20_EQUASC_MIN, R20_COASC1_MIN,  R20_COASC2_MIN,  R20_POLASC_MIN,
-       R20_HOUSE1_MIN, R20_HOUSE2_MIN,  R20_HOUSE3_MIN,  R20_HOUSE4_MIN,
-       R20_HOUSE5_MIN, R20_HOUSE6_MIN,  R20_HOUSE7_MIN,  R20_HOUSE8_MIN,
-       R20_HOUSE9_MIN, R20_HOUSE10_MIN, R20_HOUSE11_MIN, R20_HOUSE12_MIN};
+      {R20_ASC_MIN, R20_MC_MIN, R20_ARMC_MIN, R20_VERTEX_MIN,
+          R20_EQUASC_MIN, R20_COASC1_MIN, R20_COASC2_MIN, R20_POLASC_MIN,
+          R20_HOUSE1_MIN, R20_HOUSE2_MIN, R20_HOUSE3_MIN, R20_HOUSE4_MIN,
+          R20_HOUSE5_MIN, R20_HOUSE6_MIN, R20_HOUSE7_MIN, R20_HOUSE8_MIN,
+          R20_HOUSE9_MIN, R20_HOUSE10_MIN, R20_HOUSE11_MIN, R20_HOUSE12_MIN};
   static final double[] maxLonR20 = new double[]
-      {R20_ASC_MAX,    R20_MC_MAX,      R20_ARMC_MAX,    R20_VERTEX_MAX,
-       R20_EQUASC_MAX, R20_COASC1_MAX,  R20_COASC2_MAX,  R20_POLASC_MAX,
-       R20_HOUSE1_MAX, R20_HOUSE2_MAX,  R20_HOUSE3_MAX,  R20_HOUSE4_MAX,
-       R20_HOUSE5_MAX, R20_HOUSE6_MAX,  R20_HOUSE7_MAX,  R20_HOUSE8_MAX,
-       R20_HOUSE9_MAX, R20_HOUSE10_MAX, R20_HOUSE11_MAX, R20_HOUSE12_MAX};
+      {R20_ASC_MAX, R20_MC_MAX, R20_ARMC_MAX, R20_VERTEX_MAX,
+          R20_EQUASC_MAX, R20_COASC1_MAX, R20_COASC2_MAX, R20_POLASC_MAX,
+          R20_HOUSE1_MAX, R20_HOUSE2_MAX, R20_HOUSE3_MAX, R20_HOUSE4_MAX,
+          R20_HOUSE5_MAX, R20_HOUSE6_MAX, R20_HOUSE7_MAX, R20_HOUSE8_MAX,
+          R20_HOUSE9_MAX, R20_HOUSE10_MAX, R20_HOUSE11_MAX, R20_HOUSE12_MAX};
   static final double[] minLonR30 = new double[]
-      {R30_ASC_MIN,    R30_MC_MIN,      R30_ARMC_MIN,    R30_VERTEX_MIN,
-       R30_EQUASC_MIN, R30_COASC1_MIN,  R30_COASC2_MIN,  R30_POLASC_MIN,
-       R30_HOUSE1_MIN, R30_HOUSE2_MIN,  R30_HOUSE3_MIN,  R30_HOUSE4_MIN,
-       R30_HOUSE5_MIN, R30_HOUSE6_MIN,  R30_HOUSE7_MIN,  R30_HOUSE8_MIN,
-       R30_HOUSE9_MIN, R30_HOUSE10_MIN, R30_HOUSE11_MIN, R30_HOUSE12_MIN};
+      {R30_ASC_MIN, R30_MC_MIN, R30_ARMC_MIN, R30_VERTEX_MIN,
+          R30_EQUASC_MIN, R30_COASC1_MIN, R30_COASC2_MIN, R30_POLASC_MIN,
+          R30_HOUSE1_MIN, R30_HOUSE2_MIN, R30_HOUSE3_MIN, R30_HOUSE4_MIN,
+          R30_HOUSE5_MIN, R30_HOUSE6_MIN, R30_HOUSE7_MIN, R30_HOUSE8_MIN,
+          R30_HOUSE9_MIN, R30_HOUSE10_MIN, R30_HOUSE11_MIN, R30_HOUSE12_MIN};
   static final double[] maxLonR30 = new double[]
-      {R30_ASC_MAX,    R30_MC_MAX,      R30_ARMC_MAX,    R30_VERTEX_MAX,
-       R30_EQUASC_MAX, R30_COASC1_MAX,  R30_COASC2_MAX,  R30_POLASC_MAX,
-       R30_HOUSE1_MAX, R30_HOUSE2_MAX,  R30_HOUSE3_MAX,  R30_HOUSE4_MAX,
-       R30_HOUSE5_MAX, R30_HOUSE6_MAX,  R30_HOUSE7_MAX,  R30_HOUSE8_MAX,
-       R30_HOUSE9_MAX, R30_HOUSE10_MAX, R30_HOUSE11_MAX, R30_HOUSE12_MAX};
+      {R30_ASC_MAX, R30_MC_MAX, R30_ARMC_MAX, R30_VERTEX_MAX,
+          R30_EQUASC_MAX, R30_COASC1_MAX, R30_COASC2_MAX, R30_POLASC_MAX,
+          R30_HOUSE1_MAX, R30_HOUSE2_MAX, R30_HOUSE3_MAX, R30_HOUSE4_MAX,
+          R30_HOUSE5_MAX, R30_HOUSE6_MAX, R30_HOUSE7_MAX, R30_HOUSE8_MAX,
+          R30_HOUSE9_MAX, R30_HOUSE10_MAX, R30_HOUSE11_MAX, R30_HOUSE12_MAX};
   static final double[] minLonR40 = new double[]
-      {R40_ASC_MIN,    R40_MC_MIN,      R40_ARMC_MIN,    R40_VERTEX_MIN,
-       R40_EQUASC_MIN, R40_COASC1_MIN,  R40_COASC2_MIN,  R40_POLASC_MIN,
-       R40_HOUSE1_MIN, R40_HOUSE2_MIN,  R40_HOUSE3_MIN,  R40_HOUSE4_MIN,
-       R40_HOUSE5_MIN, R40_HOUSE6_MIN,  R40_HOUSE7_MIN,  R40_HOUSE8_MIN,
-       R40_HOUSE9_MIN, R40_HOUSE10_MIN, R40_HOUSE11_MIN, R40_HOUSE12_MIN};
+      {R40_ASC_MIN, R40_MC_MIN, R40_ARMC_MIN, R40_VERTEX_MIN,
+          R40_EQUASC_MIN, R40_COASC1_MIN, R40_COASC2_MIN, R40_POLASC_MIN,
+          R40_HOUSE1_MIN, R40_HOUSE2_MIN, R40_HOUSE3_MIN, R40_HOUSE4_MIN,
+          R40_HOUSE5_MIN, R40_HOUSE6_MIN, R40_HOUSE7_MIN, R40_HOUSE8_MIN,
+          R40_HOUSE9_MIN, R40_HOUSE10_MIN, R40_HOUSE11_MIN, R40_HOUSE12_MIN};
   static final double[] maxLonR40 = new double[]
-      {R40_ASC_MAX,    R40_MC_MAX,      R40_ARMC_MAX,    R40_VERTEX_MAX,
-       R40_EQUASC_MAX, R40_COASC1_MAX,  R40_COASC2_MAX,  R40_POLASC_MAX,
-       R40_HOUSE1_MAX, R40_HOUSE2_MAX,  R40_HOUSE3_MAX,  R40_HOUSE4_MAX,
-       R40_HOUSE5_MAX, R40_HOUSE6_MAX,  R40_HOUSE7_MAX,  R40_HOUSE8_MAX,
-       R40_HOUSE9_MAX, R40_HOUSE10_MAX, R40_HOUSE11_MAX, R40_HOUSE12_MAX};
+      {R40_ASC_MAX, R40_MC_MAX, R40_ARMC_MAX, R40_VERTEX_MAX,
+          R40_EQUASC_MAX, R40_COASC1_MAX, R40_COASC2_MAX, R40_POLASC_MAX,
+          R40_HOUSE1_MAX, R40_HOUSE2_MAX, R40_HOUSE3_MAX, R40_HOUSE4_MAX,
+          R40_HOUSE5_MAX, R40_HOUSE6_MAX, R40_HOUSE7_MAX, R40_HOUSE8_MAX,
+          R40_HOUSE9_MAX, R40_HOUSE10_MAX, R40_HOUSE11_MAX, R40_HOUSE12_MAX};
   static final double[] minLonR50 = new double[]
-      {R50_ASC_MIN,    R50_MC_MIN,      R50_ARMC_MIN,    R50_VERTEX_MIN,
-       R50_EQUASC_MIN, R50_COASC1_MIN,  R50_COASC2_MIN,  R50_POLASC_MIN,
-       R50_HOUSE1_MIN, R50_HOUSE2_MIN,  R50_HOUSE3_MIN,  R50_HOUSE4_MIN,
-       R50_HOUSE5_MIN, R50_HOUSE6_MIN,  R50_HOUSE7_MIN,  R50_HOUSE8_MIN,
-       R50_HOUSE9_MIN, R50_HOUSE10_MIN, R50_HOUSE11_MIN, R50_HOUSE12_MIN};
+      {R50_ASC_MIN, R50_MC_MIN, R50_ARMC_MIN, R50_VERTEX_MIN,
+          R50_EQUASC_MIN, R50_COASC1_MIN, R50_COASC2_MIN, R50_POLASC_MIN,
+          R50_HOUSE1_MIN, R50_HOUSE2_MIN, R50_HOUSE3_MIN, R50_HOUSE4_MIN,
+          R50_HOUSE5_MIN, R50_HOUSE6_MIN, R50_HOUSE7_MIN, R50_HOUSE8_MIN,
+          R50_HOUSE9_MIN, R50_HOUSE10_MIN, R50_HOUSE11_MIN, R50_HOUSE12_MIN};
   static final double[] maxLonR50 = new double[]
-      {R50_ASC_MAX,    R50_MC_MAX,      R50_ARMC_MAX,    R50_VERTEX_MAX,
-       R50_EQUASC_MAX, R50_COASC1_MAX,  R50_COASC2_MAX,  R50_POLASC_MAX,
-       R50_HOUSE1_MAX, R50_HOUSE2_MAX,  R50_HOUSE3_MAX,  R50_HOUSE4_MAX,
-       R50_HOUSE5_MAX, R50_HOUSE6_MAX,  R50_HOUSE7_MAX,  R50_HOUSE8_MAX,
-       R50_HOUSE9_MAX, R50_HOUSE10_MAX, R50_HOUSE11_MAX, R50_HOUSE12_MAX};
+      {R50_ASC_MAX, R50_MC_MAX, R50_ARMC_MAX, R50_VERTEX_MAX,
+          R50_EQUASC_MAX, R50_COASC1_MAX, R50_COASC2_MAX, R50_POLASC_MAX,
+          R50_HOUSE1_MAX, R50_HOUSE2_MAX, R50_HOUSE3_MAX, R50_HOUSE4_MAX,
+          R50_HOUSE5_MAX, R50_HOUSE6_MAX, R50_HOUSE7_MAX, R50_HOUSE8_MAX,
+          R50_HOUSE9_MAX, R50_HOUSE10_MAX, R50_HOUSE11_MAX, R50_HOUSE12_MAX};
   static final double[] minLonR60 = new double[]
-      {R60_ASC_MIN,    R60_MC_MIN,      R60_ARMC_MIN,    R60_VERTEX_MIN,
-       R60_EQUASC_MIN, R60_COASC1_MIN,  R60_COASC2_MIN,  R60_POLASC_MIN,
-       R60_HOUSE1_MIN, R60_HOUSE2_MIN,  R60_HOUSE3_MIN,  R60_HOUSE4_MIN,
-       R60_HOUSE5_MIN, R60_HOUSE6_MIN,  R60_HOUSE7_MIN,  R60_HOUSE8_MIN,
-       R60_HOUSE9_MIN, R60_HOUSE10_MIN, R60_HOUSE11_MIN, R60_HOUSE12_MIN};
+      {R60_ASC_MIN, R60_MC_MIN, R60_ARMC_MIN, R60_VERTEX_MIN,
+          R60_EQUASC_MIN, R60_COASC1_MIN, R60_COASC2_MIN, R60_POLASC_MIN,
+          R60_HOUSE1_MIN, R60_HOUSE2_MIN, R60_HOUSE3_MIN, R60_HOUSE4_MIN,
+          R60_HOUSE5_MIN, R60_HOUSE6_MIN, R60_HOUSE7_MIN, R60_HOUSE8_MIN,
+          R60_HOUSE9_MIN, R60_HOUSE10_MIN, R60_HOUSE11_MIN, R60_HOUSE12_MIN};
   static final double[] maxLonR60 = new double[]
-      {R60_ASC_MAX,    R60_MC_MAX,      R60_ARMC_MAX,    R60_VERTEX_MAX,
-       R60_EQUASC_MAX, R60_COASC1_MAX,  R60_COASC2_MAX,  R60_POLASC_MAX,
-       R60_HOUSE1_MAX, R60_HOUSE2_MAX,  R60_HOUSE3_MAX,  R60_HOUSE4_MAX,
-       R60_HOUSE5_MAX, R60_HOUSE6_MAX,  R60_HOUSE7_MAX,  R60_HOUSE8_MAX,
-       R60_HOUSE9_MAX, R60_HOUSE10_MAX, R60_HOUSE11_MAX, R60_HOUSE12_MAX};
+      {R60_ASC_MAX, R60_MC_MAX, R60_ARMC_MAX, R60_VERTEX_MAX,
+          R60_EQUASC_MAX, R60_COASC1_MAX, R60_COASC2_MAX, R60_POLASC_MAX,
+          R60_HOUSE1_MAX, R60_HOUSE2_MAX, R60_HOUSE3_MAX, R60_HOUSE4_MAX,
+          R60_HOUSE5_MAX, R60_HOUSE6_MAX, R60_HOUSE7_MAX, R60_HOUSE8_MAX,
+          R60_HOUSE9_MAX, R60_HOUSE10_MAX, R60_HOUSE11_MAX, R60_HOUSE12_MAX};
   static final double[] minLonR66 = new double[]
-      {R66_ASC_MIN,    R66_MC_MIN,      R66_ARMC_MIN,    R66_VERTEX_MIN,
-       R66_EQUASC_MIN, R66_COASC1_MIN,  R66_COASC2_MIN,  R66_POLASC_MIN,
-       R66_HOUSE1_MIN, R66_HOUSE2_MIN,  R66_HOUSE3_MIN,  R66_HOUSE4_MIN,
-       R66_HOUSE5_MIN, R66_HOUSE6_MIN,  R66_HOUSE7_MIN,  R66_HOUSE8_MIN,
-       R66_HOUSE9_MIN, R66_HOUSE10_MIN, R66_HOUSE11_MIN, R66_HOUSE12_MIN};
+      {R66_ASC_MIN, R66_MC_MIN, R66_ARMC_MIN, R66_VERTEX_MIN,
+          R66_EQUASC_MIN, R66_COASC1_MIN, R66_COASC2_MIN, R66_POLASC_MIN,
+          R66_HOUSE1_MIN, R66_HOUSE2_MIN, R66_HOUSE3_MIN, R66_HOUSE4_MIN,
+          R66_HOUSE5_MIN, R66_HOUSE6_MIN, R66_HOUSE7_MIN, R66_HOUSE8_MIN,
+          R66_HOUSE9_MIN, R66_HOUSE10_MIN, R66_HOUSE11_MIN, R66_HOUSE12_MIN};
   static final double[] maxLonR66 = new double[]
-      {R66_ASC_MAX,    R66_MC_MAX,      R66_ARMC_MAX,    R66_VERTEX_MAX,
-       R66_EQUASC_MAX, R66_COASC1_MAX,  R66_COASC2_MAX,  R66_POLASC_MAX,
-       R66_HOUSE1_MAX, R66_HOUSE2_MAX,  R66_HOUSE3_MAX,  R66_HOUSE4_MAX,
-       R66_HOUSE5_MAX, R66_HOUSE6_MAX,  R66_HOUSE7_MAX,  R66_HOUSE8_MAX,
-       R66_HOUSE9_MAX, R66_HOUSE10_MAX, R66_HOUSE11_MAX, R66_HOUSE12_MAX};
+      {R66_ASC_MAX, R66_MC_MAX, R66_ARMC_MAX, R66_VERTEX_MAX,
+          R66_EQUASC_MAX, R66_COASC1_MAX, R66_COASC2_MAX, R66_POLASC_MAX,
+          R66_HOUSE1_MAX, R66_HOUSE2_MAX, R66_HOUSE3_MAX, R66_HOUSE4_MAX,
+          R66_HOUSE5_MAX, R66_HOUSE6_MAX, R66_HOUSE7_MAX, R66_HOUSE8_MAX,
+          R66_HOUSE9_MAX, R66_HOUSE10_MAX, R66_HOUSE11_MAX, R66_HOUSE12_MAX};
   static final double[] minLonR70 = new double[]
-      {R70_ASC_MIN,    R70_MC_MIN,      R70_ARMC_MIN,    R70_VERTEX_MIN,
-       R70_EQUASC_MIN, R70_COASC1_MIN,  R70_COASC2_MIN,  R70_POLASC_MIN,
-       R70_HOUSE1_MIN, R70_HOUSE2_MIN,  R70_HOUSE3_MIN,  R70_HOUSE4_MIN,
-       R70_HOUSE5_MIN, R70_HOUSE6_MIN,  R70_HOUSE7_MIN,  R70_HOUSE8_MIN,
-       R70_HOUSE9_MIN, R70_HOUSE10_MIN, R70_HOUSE11_MIN, R70_HOUSE12_MIN};
+      {R70_ASC_MIN, R70_MC_MIN, R70_ARMC_MIN, R70_VERTEX_MIN,
+          R70_EQUASC_MIN, R70_COASC1_MIN, R70_COASC2_MIN, R70_POLASC_MIN,
+          R70_HOUSE1_MIN, R70_HOUSE2_MIN, R70_HOUSE3_MIN, R70_HOUSE4_MIN,
+          R70_HOUSE5_MIN, R70_HOUSE6_MIN, R70_HOUSE7_MIN, R70_HOUSE8_MIN,
+          R70_HOUSE9_MIN, R70_HOUSE10_MIN, R70_HOUSE11_MIN, R70_HOUSE12_MIN};
   static final double[] maxLonR70 = new double[]
-      {R70_ASC_MAX,    R70_MC_MAX,      R70_ARMC_MAX,    R70_VERTEX_MAX,
-       R70_EQUASC_MAX, R70_COASC1_MAX,  R70_COASC2_MAX,  R70_POLASC_MAX,
-       R70_HOUSE1_MAX, R70_HOUSE2_MAX,  R70_HOUSE3_MAX,  R70_HOUSE4_MAX,
-       R70_HOUSE5_MAX, R70_HOUSE6_MAX,  R70_HOUSE7_MAX,  R70_HOUSE8_MAX,
-       R70_HOUSE9_MAX, R70_HOUSE10_MAX, R70_HOUSE11_MAX, R70_HOUSE12_MAX};
+      {R70_ASC_MAX, R70_MC_MAX, R70_ARMC_MAX, R70_VERTEX_MAX,
+          R70_EQUASC_MAX, R70_COASC1_MAX, R70_COASC2_MAX, R70_POLASC_MAX,
+          R70_HOUSE1_MAX, R70_HOUSE2_MAX, R70_HOUSE3_MAX, R70_HOUSE4_MAX,
+          R70_HOUSE5_MAX, R70_HOUSE6_MAX, R70_HOUSE7_MAX, R70_HOUSE8_MAX,
+          R70_HOUSE9_MAX, R70_HOUSE10_MAX, R70_HOUSE11_MAX, R70_HOUSE12_MAX};
   static final double[] minLonR80 = new double[]
-      {R80_ASC_MIN,    R80_MC_MIN,      R80_ARMC_MIN,    R80_VERTEX_MIN,
-       R80_EQUASC_MIN, R80_COASC1_MIN,  R80_COASC2_MIN,  R80_POLASC_MIN,
-       R80_HOUSE1_MIN, R80_HOUSE2_MIN,  R80_HOUSE3_MIN,  R80_HOUSE4_MIN,
-       R80_HOUSE5_MIN, R80_HOUSE6_MIN,  R80_HOUSE7_MIN,  R80_HOUSE8_MIN,
-       R80_HOUSE9_MIN, R80_HOUSE10_MIN, R80_HOUSE11_MIN, R80_HOUSE12_MIN};
+      {R80_ASC_MIN, R80_MC_MIN, R80_ARMC_MIN, R80_VERTEX_MIN,
+          R80_EQUASC_MIN, R80_COASC1_MIN, R80_COASC2_MIN, R80_POLASC_MIN,
+          R80_HOUSE1_MIN, R80_HOUSE2_MIN, R80_HOUSE3_MIN, R80_HOUSE4_MIN,
+          R80_HOUSE5_MIN, R80_HOUSE6_MIN, R80_HOUSE7_MIN, R80_HOUSE8_MIN,
+          R80_HOUSE9_MIN, R80_HOUSE10_MIN, R80_HOUSE11_MIN, R80_HOUSE12_MIN};
   static final double[] maxLonR80 = new double[]
-      {R80_ASC_MAX,    R80_MC_MAX,      R80_ARMC_MAX,    R80_VERTEX_MAX,
-       R80_EQUASC_MAX, R80_COASC1_MAX,  R80_COASC2_MAX,  R80_POLASC_MAX,
-       R80_HOUSE1_MAX, R80_HOUSE2_MAX,  R80_HOUSE3_MAX,  R80_HOUSE4_MAX,
-       R80_HOUSE5_MAX, R80_HOUSE6_MAX,  R80_HOUSE7_MAX,  R80_HOUSE8_MAX,
-       R80_HOUSE9_MAX, R80_HOUSE10_MAX, R80_HOUSE11_MAX, R80_HOUSE12_MAX};
+      {R80_ASC_MAX, R80_MC_MAX, R80_ARMC_MAX, R80_VERTEX_MAX,
+          R80_EQUASC_MAX, R80_COASC1_MAX, R80_COASC2_MAX, R80_POLASC_MAX,
+          R80_HOUSE1_MAX, R80_HOUSE2_MAX, R80_HOUSE3_MAX, R80_HOUSE4_MAX,
+          R80_HOUSE5_MAX, R80_HOUSE6_MAX, R80_HOUSE7_MAX, R80_HOUSE8_MAX,
+          R80_HOUSE9_MAX, R80_HOUSE10_MAX, R80_HOUSE11_MAX, R80_HOUSE12_MAX};
   static final double[] minLonR85 = new double[]
-      {R85_ASC_MIN,    R85_MC_MIN,      R85_ARMC_MIN,    R85_VERTEX_MIN,
-       R85_EQUASC_MIN, R85_COASC1_MIN,  R85_COASC2_MIN,  R85_POLASC_MIN,
-       R85_HOUSE1_MIN, R85_HOUSE2_MIN,  R85_HOUSE3_MIN,  R85_HOUSE4_MIN,
-       R85_HOUSE5_MIN, R85_HOUSE6_MIN,  R85_HOUSE7_MIN,  R85_HOUSE8_MIN,
-       R85_HOUSE9_MIN, R85_HOUSE10_MIN, R85_HOUSE11_MIN, R85_HOUSE12_MIN};
+      {R85_ASC_MIN, R85_MC_MIN, R85_ARMC_MIN, R85_VERTEX_MIN,
+          R85_EQUASC_MIN, R85_COASC1_MIN, R85_COASC2_MIN, R85_POLASC_MIN,
+          R85_HOUSE1_MIN, R85_HOUSE2_MIN, R85_HOUSE3_MIN, R85_HOUSE4_MIN,
+          R85_HOUSE5_MIN, R85_HOUSE6_MIN, R85_HOUSE7_MIN, R85_HOUSE8_MIN,
+          R85_HOUSE9_MIN, R85_HOUSE10_MIN, R85_HOUSE11_MIN, R85_HOUSE12_MIN};
   static final double[] maxLonR85 = new double[]
-      {R85_ASC_MAX,    R85_MC_MAX,      R85_ARMC_MAX,    R85_VERTEX_MAX,
-       R85_EQUASC_MAX, R85_COASC1_MAX,  R85_COASC2_MAX,  R85_POLASC_MAX,
-       R85_HOUSE1_MAX, R85_HOUSE2_MAX,  R85_HOUSE3_MAX,  R85_HOUSE4_MAX,
-       R85_HOUSE5_MAX, R85_HOUSE6_MAX,  R85_HOUSE7_MAX,  R85_HOUSE8_MAX,
-       R85_HOUSE9_MAX, R85_HOUSE10_MAX, R85_HOUSE11_MAX, R85_HOUSE12_MAX};
+      {R85_ASC_MAX, R85_MC_MAX, R85_ARMC_MAX, R85_VERTEX_MAX,
+          R85_EQUASC_MAX, R85_COASC1_MAX, R85_COASC2_MAX, R85_POLASC_MAX,
+          R85_HOUSE1_MAX, R85_HOUSE2_MAX, R85_HOUSE3_MAX, R85_HOUSE4_MAX,
+          R85_HOUSE5_MAX, R85_HOUSE6_MAX, R85_HOUSE7_MAX, R85_HOUSE8_MAX,
+          R85_HOUSE9_MAX, R85_HOUSE10_MAX, R85_HOUSE11_MAX, R85_HOUSE12_MAX};
   static final double[] minLonR88 = new double[]
-      {R88_ASC_MIN,    R88_MC_MIN,      R88_ARMC_MIN,    R88_VERTEX_MIN,
-       R88_EQUASC_MIN, R88_COASC1_MIN,  R88_COASC2_MIN,  R88_POLASC_MIN,
-       R88_HOUSE1_MIN, R88_HOUSE2_MIN,  R88_HOUSE3_MIN,  R88_HOUSE4_MIN,
-       R88_HOUSE5_MIN, R88_HOUSE6_MIN,  R88_HOUSE7_MIN,  R88_HOUSE8_MIN,
-       R88_HOUSE9_MIN, R88_HOUSE10_MIN, R88_HOUSE11_MIN, R88_HOUSE12_MIN};
+      {R88_ASC_MIN, R88_MC_MIN, R88_ARMC_MIN, R88_VERTEX_MIN,
+          R88_EQUASC_MIN, R88_COASC1_MIN, R88_COASC2_MIN, R88_POLASC_MIN,
+          R88_HOUSE1_MIN, R88_HOUSE2_MIN, R88_HOUSE3_MIN, R88_HOUSE4_MIN,
+          R88_HOUSE5_MIN, R88_HOUSE6_MIN, R88_HOUSE7_MIN, R88_HOUSE8_MIN,
+          R88_HOUSE9_MIN, R88_HOUSE10_MIN, R88_HOUSE11_MIN, R88_HOUSE12_MIN};
   static final double[] maxLonR88 = new double[]
-      {R88_ASC_MAX,    R88_MC_MAX,      R88_ARMC_MAX,    R88_VERTEX_MAX,
-       R88_EQUASC_MAX, R88_COASC1_MAX,  R88_COASC2_MAX,  R88_POLASC_MAX,
-       R88_HOUSE1_MAX, R88_HOUSE2_MAX,  R88_HOUSE3_MAX,  R88_HOUSE4_MAX,
-       R88_HOUSE5_MAX, R88_HOUSE6_MAX,  R88_HOUSE7_MAX,  R88_HOUSE8_MAX,
-       R88_HOUSE9_MAX, R88_HOUSE10_MAX, R88_HOUSE11_MAX, R88_HOUSE12_MAX};
+      {R88_ASC_MAX, R88_MC_MAX, R88_ARMC_MAX, R88_VERTEX_MAX,
+          R88_EQUASC_MAX, R88_COASC1_MAX, R88_COASC2_MAX, R88_POLASC_MAX,
+          R88_HOUSE1_MAX, R88_HOUSE2_MAX, R88_HOUSE3_MAX, R88_HOUSE4_MAX,
+          R88_HOUSE5_MAX, R88_HOUSE6_MAX, R88_HOUSE7_MAX, R88_HOUSE8_MAX,
+          R88_HOUSE9_MAX, R88_HOUSE10_MAX, R88_HOUSE11_MAX, R88_HOUSE12_MAX};
   static final double[] minLonR89x = new double[]
-      {R89x_ASC_MIN,    R89x_MC_MIN,      R89x_ARMC_MIN,    R89x_VERTEX_MIN,
-       R89x_EQUASC_MIN, R89x_COASC1_MIN,  R89x_COASC2_MIN,  R89x_POLASC_MIN,
-       R89x_HOUSE1_MIN, R89x_HOUSE2_MIN,  R89x_HOUSE3_MIN,  R89x_HOUSE4_MIN,
-       R89x_HOUSE5_MIN, R89x_HOUSE6_MIN,  R89x_HOUSE7_MIN,  R89x_HOUSE8_MIN,
-       R89x_HOUSE9_MIN, R89x_HOUSE10_MIN, R89x_HOUSE11_MIN, R89x_HOUSE12_MIN};
+      {R89x_ASC_MIN, R89x_MC_MIN, R89x_ARMC_MIN, R89x_VERTEX_MIN,
+          R89x_EQUASC_MIN, R89x_COASC1_MIN, R89x_COASC2_MIN, R89x_POLASC_MIN,
+          R89x_HOUSE1_MIN, R89x_HOUSE2_MIN, R89x_HOUSE3_MIN, R89x_HOUSE4_MIN,
+          R89x_HOUSE5_MIN, R89x_HOUSE6_MIN, R89x_HOUSE7_MIN, R89x_HOUSE8_MIN,
+          R89x_HOUSE9_MIN, R89x_HOUSE10_MIN, R89x_HOUSE11_MIN, R89x_HOUSE12_MIN};
   static final double[] maxLonR89x = new double[]
-      {R89x_ASC_MAX,    R89x_MC_MAX,      R89x_ARMC_MAX,    R89x_VERTEX_MAX,
-       R89x_EQUASC_MAX, R89x_COASC1_MAX,  R89x_COASC2_MAX,  R89x_POLASC_MAX,
-       R89x_HOUSE1_MAX, R89x_HOUSE2_MAX,  R89x_HOUSE3_MAX,  R89x_HOUSE4_MAX,
-       R89x_HOUSE5_MAX, R89x_HOUSE6_MAX,  R89x_HOUSE7_MAX,  R89x_HOUSE8_MAX,
-       R89x_HOUSE9_MAX, R89x_HOUSE10_MAX, R89x_HOUSE11_MAX, R89x_HOUSE12_MAX};
+      {R89x_ASC_MAX, R89x_MC_MAX, R89x_ARMC_MAX, R89x_VERTEX_MAX,
+          R89x_EQUASC_MAX, R89x_COASC1_MAX, R89x_COASC2_MAX, R89x_POLASC_MAX,
+          R89x_HOUSE1_MAX, R89x_HOUSE2_MAX, R89x_HOUSE3_MAX, R89x_HOUSE4_MAX,
+          R89x_HOUSE5_MAX, R89x_HOUSE6_MAX, R89x_HOUSE7_MAX, R89x_HOUSE8_MAX,
+          R89x_HOUSE9_MAX, R89x_HOUSE10_MAX, R89x_HOUSE11_MAX, R89x_HOUSE12_MAX};
 
   static final double[] minLonC10 = new double[]
-      {C10_ASC_MIN,    C10_MC_MIN,      C10_ARMC_MIN,    C10_VERTEX_MIN,
-       C10_EQUASC_MIN, C10_COASC1_MIN,  C10_COASC2_MIN,  C10_POLASC_MIN,
-       C10_HOUSE1_MIN, C10_HOUSE2_MIN,  C10_HOUSE3_MIN,  C10_HOUSE4_MIN,
-       C10_HOUSE5_MIN, C10_HOUSE6_MIN,  C10_HOUSE7_MIN,  C10_HOUSE8_MIN,
-       C10_HOUSE9_MIN, C10_HOUSE10_MIN, C10_HOUSE11_MIN, C10_HOUSE12_MIN};
+      {C10_ASC_MIN, C10_MC_MIN, C10_ARMC_MIN, C10_VERTEX_MIN,
+          C10_EQUASC_MIN, C10_COASC1_MIN, C10_COASC2_MIN, C10_POLASC_MIN,
+          C10_HOUSE1_MIN, C10_HOUSE2_MIN, C10_HOUSE3_MIN, C10_HOUSE4_MIN,
+          C10_HOUSE5_MIN, C10_HOUSE6_MIN, C10_HOUSE7_MIN, C10_HOUSE8_MIN,
+          C10_HOUSE9_MIN, C10_HOUSE10_MIN, C10_HOUSE11_MIN, C10_HOUSE12_MIN};
   static final double[] maxLonC10 = new double[]
-      {C10_ASC_MAX,    C10_MC_MAX,      C10_ARMC_MAX,    C10_VERTEX_MAX,
-       C10_EQUASC_MAX, C10_COASC1_MAX,  C10_COASC2_MAX,  C10_POLASC_MAX,
-       C10_HOUSE1_MAX, C10_HOUSE2_MAX,  C10_HOUSE3_MAX,  C10_HOUSE4_MAX,
-       C10_HOUSE5_MAX, C10_HOUSE6_MAX,  C10_HOUSE7_MAX,  C10_HOUSE8_MAX,
-       C10_HOUSE9_MAX, C10_HOUSE10_MAX, C10_HOUSE11_MAX, C10_HOUSE12_MAX};
+      {C10_ASC_MAX, C10_MC_MAX, C10_ARMC_MAX, C10_VERTEX_MAX,
+          C10_EQUASC_MAX, C10_COASC1_MAX, C10_COASC2_MAX, C10_POLASC_MAX,
+          C10_HOUSE1_MAX, C10_HOUSE2_MAX, C10_HOUSE3_MAX, C10_HOUSE4_MAX,
+          C10_HOUSE5_MAX, C10_HOUSE6_MAX, C10_HOUSE7_MAX, C10_HOUSE8_MAX,
+          C10_HOUSE9_MAX, C10_HOUSE10_MAX, C10_HOUSE11_MAX, C10_HOUSE12_MAX};
   static final double[] minLonC20 = new double[]
-      {C20_ASC_MIN,    C20_MC_MIN,      C20_ARMC_MIN,    C20_VERTEX_MIN,
-       C20_EQUASC_MIN, C20_COASC1_MIN,  C20_COASC2_MIN,  C20_POLASC_MIN,
-       C20_HOUSE1_MIN, C20_HOUSE2_MIN,  C20_HOUSE3_MIN,  C20_HOUSE4_MIN,
-       C20_HOUSE5_MIN, C20_HOUSE6_MIN,  C20_HOUSE7_MIN,  C20_HOUSE8_MIN,
-       C20_HOUSE9_MIN, C20_HOUSE10_MIN, C20_HOUSE11_MIN, C20_HOUSE12_MIN};
+      {C20_ASC_MIN, C20_MC_MIN, C20_ARMC_MIN, C20_VERTEX_MIN,
+          C20_EQUASC_MIN, C20_COASC1_MIN, C20_COASC2_MIN, C20_POLASC_MIN,
+          C20_HOUSE1_MIN, C20_HOUSE2_MIN, C20_HOUSE3_MIN, C20_HOUSE4_MIN,
+          C20_HOUSE5_MIN, C20_HOUSE6_MIN, C20_HOUSE7_MIN, C20_HOUSE8_MIN,
+          C20_HOUSE9_MIN, C20_HOUSE10_MIN, C20_HOUSE11_MIN, C20_HOUSE12_MIN};
   static final double[] maxLonC20 = new double[]
-      {C20_ASC_MAX,    C20_MC_MAX,      C20_ARMC_MAX,    C20_VERTEX_MAX,
-       C20_EQUASC_MAX, C20_COASC1_MAX,  C20_COASC2_MAX,  C20_POLASC_MAX,
-       C20_HOUSE1_MAX, C20_HOUSE2_MAX,  C20_HOUSE3_MAX,  C20_HOUSE4_MAX,
-       C20_HOUSE5_MAX, C20_HOUSE6_MAX,  C20_HOUSE7_MAX,  C20_HOUSE8_MAX,
-       C20_HOUSE9_MAX, C20_HOUSE10_MAX, C20_HOUSE11_MAX, C20_HOUSE12_MAX};
+      {C20_ASC_MAX, C20_MC_MAX, C20_ARMC_MAX, C20_VERTEX_MAX,
+          C20_EQUASC_MAX, C20_COASC1_MAX, C20_COASC2_MAX, C20_POLASC_MAX,
+          C20_HOUSE1_MAX, C20_HOUSE2_MAX, C20_HOUSE3_MAX, C20_HOUSE4_MAX,
+          C20_HOUSE5_MAX, C20_HOUSE6_MAX, C20_HOUSE7_MAX, C20_HOUSE8_MAX,
+          C20_HOUSE9_MAX, C20_HOUSE10_MAX, C20_HOUSE11_MAX, C20_HOUSE12_MAX};
   static final double[] minLonC30 = new double[]
-      {C30_ASC_MIN,    C30_MC_MIN,      C30_ARMC_MIN,    C30_VERTEX_MIN,
-       C30_EQUASC_MIN, C30_COASC1_MIN,  C30_COASC2_MIN,  C30_POLASC_MIN,
-       C30_HOUSE1_MIN, C30_HOUSE2_MIN,  C30_HOUSE3_MIN,  C30_HOUSE4_MIN,
-       C30_HOUSE5_MIN, C30_HOUSE6_MIN,  C30_HOUSE7_MIN,  C30_HOUSE8_MIN,
-       C30_HOUSE9_MIN, C30_HOUSE10_MIN, C30_HOUSE11_MIN, C30_HOUSE12_MIN};
+      {C30_ASC_MIN, C30_MC_MIN, C30_ARMC_MIN, C30_VERTEX_MIN,
+          C30_EQUASC_MIN, C30_COASC1_MIN, C30_COASC2_MIN, C30_POLASC_MIN,
+          C30_HOUSE1_MIN, C30_HOUSE2_MIN, C30_HOUSE3_MIN, C30_HOUSE4_MIN,
+          C30_HOUSE5_MIN, C30_HOUSE6_MIN, C30_HOUSE7_MIN, C30_HOUSE8_MIN,
+          C30_HOUSE9_MIN, C30_HOUSE10_MIN, C30_HOUSE11_MIN, C30_HOUSE12_MIN};
   static final double[] maxLonC30 = new double[]
-      {C30_ASC_MAX,    C30_MC_MAX,      C30_ARMC_MAX,    C30_VERTEX_MAX,
-       C30_EQUASC_MAX, C30_COASC1_MAX,  C30_COASC2_MAX,  C30_POLASC_MAX,
-       C30_HOUSE1_MAX, C30_HOUSE2_MAX,  C30_HOUSE3_MAX,  C30_HOUSE4_MAX,
-       C30_HOUSE5_MAX, C30_HOUSE6_MAX,  C30_HOUSE7_MAX,  C30_HOUSE8_MAX,
-       C30_HOUSE9_MAX, C30_HOUSE10_MAX, C30_HOUSE11_MAX, C30_HOUSE12_MAX};
+      {C30_ASC_MAX, C30_MC_MAX, C30_ARMC_MAX, C30_VERTEX_MAX,
+          C30_EQUASC_MAX, C30_COASC1_MAX, C30_COASC2_MAX, C30_POLASC_MAX,
+          C30_HOUSE1_MAX, C30_HOUSE2_MAX, C30_HOUSE3_MAX, C30_HOUSE4_MAX,
+          C30_HOUSE5_MAX, C30_HOUSE6_MAX, C30_HOUSE7_MAX, C30_HOUSE8_MAX,
+          C30_HOUSE9_MAX, C30_HOUSE10_MAX, C30_HOUSE11_MAX, C30_HOUSE12_MAX};
   static final double[] minLonC40 = new double[]
-      {C40_ASC_MIN,    C40_MC_MIN,      C40_ARMC_MIN,    C40_VERTEX_MIN,
-       C40_EQUASC_MIN, C40_COASC1_MIN,  C40_COASC2_MIN,  C40_POLASC_MIN,
-       C40_HOUSE1_MIN, C40_HOUSE2_MIN,  C40_HOUSE3_MIN,  C40_HOUSE4_MIN,
-       C40_HOUSE5_MIN, C40_HOUSE6_MIN,  C40_HOUSE7_MIN,  C40_HOUSE8_MIN,
-       C40_HOUSE9_MIN, C40_HOUSE10_MIN, C40_HOUSE11_MIN, C40_HOUSE12_MIN};
+      {C40_ASC_MIN, C40_MC_MIN, C40_ARMC_MIN, C40_VERTEX_MIN,
+          C40_EQUASC_MIN, C40_COASC1_MIN, C40_COASC2_MIN, C40_POLASC_MIN,
+          C40_HOUSE1_MIN, C40_HOUSE2_MIN, C40_HOUSE3_MIN, C40_HOUSE4_MIN,
+          C40_HOUSE5_MIN, C40_HOUSE6_MIN, C40_HOUSE7_MIN, C40_HOUSE8_MIN,
+          C40_HOUSE9_MIN, C40_HOUSE10_MIN, C40_HOUSE11_MIN, C40_HOUSE12_MIN};
   static final double[] maxLonC40 = new double[]
-      {C40_ASC_MAX,    C40_MC_MAX,      C40_ARMC_MAX,    C40_VERTEX_MAX,
-       C40_EQUASC_MAX, C40_COASC1_MAX,  C40_COASC2_MAX,  C40_POLASC_MAX,
-       C40_HOUSE1_MAX, C40_HOUSE2_MAX,  C40_HOUSE3_MAX,  C40_HOUSE4_MAX,
-       C40_HOUSE5_MAX, C40_HOUSE6_MAX,  C40_HOUSE7_MAX,  C40_HOUSE8_MAX,
-       C40_HOUSE9_MAX, C40_HOUSE10_MAX, C40_HOUSE11_MAX, C40_HOUSE12_MAX};
+      {C40_ASC_MAX, C40_MC_MAX, C40_ARMC_MAX, C40_VERTEX_MAX,
+          C40_EQUASC_MAX, C40_COASC1_MAX, C40_COASC2_MAX, C40_POLASC_MAX,
+          C40_HOUSE1_MAX, C40_HOUSE2_MAX, C40_HOUSE3_MAX, C40_HOUSE4_MAX,
+          C40_HOUSE5_MAX, C40_HOUSE6_MAX, C40_HOUSE7_MAX, C40_HOUSE8_MAX,
+          C40_HOUSE9_MAX, C40_HOUSE10_MAX, C40_HOUSE11_MAX, C40_HOUSE12_MAX};
   static final double[] minLonC50 = new double[]
-      {C50_ASC_MIN,    C50_MC_MIN,      C50_ARMC_MIN,    C50_VERTEX_MIN,
-       C50_EQUASC_MIN, C50_COASC1_MIN,  C50_COASC2_MIN,  C50_POLASC_MIN,
-       C50_HOUSE1_MIN, C50_HOUSE2_MIN,  C50_HOUSE3_MIN,  C50_HOUSE4_MIN,
-       C50_HOUSE5_MIN, C50_HOUSE6_MIN,  C50_HOUSE7_MIN,  C50_HOUSE8_MIN,
-       C50_HOUSE9_MIN, C50_HOUSE10_MIN, C50_HOUSE11_MIN, C50_HOUSE12_MIN};
+      {C50_ASC_MIN, C50_MC_MIN, C50_ARMC_MIN, C50_VERTEX_MIN,
+          C50_EQUASC_MIN, C50_COASC1_MIN, C50_COASC2_MIN, C50_POLASC_MIN,
+          C50_HOUSE1_MIN, C50_HOUSE2_MIN, C50_HOUSE3_MIN, C50_HOUSE4_MIN,
+          C50_HOUSE5_MIN, C50_HOUSE6_MIN, C50_HOUSE7_MIN, C50_HOUSE8_MIN,
+          C50_HOUSE9_MIN, C50_HOUSE10_MIN, C50_HOUSE11_MIN, C50_HOUSE12_MIN};
   static final double[] maxLonC50 = new double[]
-      {C50_ASC_MAX,    C50_MC_MAX,      C50_ARMC_MAX,    C50_VERTEX_MAX,
-       C50_EQUASC_MAX, C50_COASC1_MAX,  C50_COASC2_MAX,  C50_POLASC_MAX,
-       C50_HOUSE1_MAX, C50_HOUSE2_MAX,  C50_HOUSE3_MAX,  C50_HOUSE4_MAX,
-       C50_HOUSE5_MAX, C50_HOUSE6_MAX,  C50_HOUSE7_MAX,  C50_HOUSE8_MAX,
-       C50_HOUSE9_MAX, C50_HOUSE10_MAX, C50_HOUSE11_MAX, C50_HOUSE12_MAX};
+      {C50_ASC_MAX, C50_MC_MAX, C50_ARMC_MAX, C50_VERTEX_MAX,
+          C50_EQUASC_MAX, C50_COASC1_MAX, C50_COASC2_MAX, C50_POLASC_MAX,
+          C50_HOUSE1_MAX, C50_HOUSE2_MAX, C50_HOUSE3_MAX, C50_HOUSE4_MAX,
+          C50_HOUSE5_MAX, C50_HOUSE6_MAX, C50_HOUSE7_MAX, C50_HOUSE8_MAX,
+          C50_HOUSE9_MAX, C50_HOUSE10_MAX, C50_HOUSE11_MAX, C50_HOUSE12_MAX};
   static final double[] minLonC60 = new double[]
-      {C60_ASC_MIN,    C60_MC_MIN,      C60_ARMC_MIN,    C60_VERTEX_MIN,
-       C60_EQUASC_MIN, C60_COASC1_MIN,  C60_COASC2_MIN,  C60_POLASC_MIN,
-       C60_HOUSE1_MIN, C60_HOUSE2_MIN,  C60_HOUSE3_MIN,  C60_HOUSE4_MIN,
-       C60_HOUSE5_MIN, C60_HOUSE6_MIN,  C60_HOUSE7_MIN,  C60_HOUSE8_MIN,
-       C60_HOUSE9_MIN, C60_HOUSE10_MIN, C60_HOUSE11_MIN, C60_HOUSE12_MIN};
+      {C60_ASC_MIN, C60_MC_MIN, C60_ARMC_MIN, C60_VERTEX_MIN,
+          C60_EQUASC_MIN, C60_COASC1_MIN, C60_COASC2_MIN, C60_POLASC_MIN,
+          C60_HOUSE1_MIN, C60_HOUSE2_MIN, C60_HOUSE3_MIN, C60_HOUSE4_MIN,
+          C60_HOUSE5_MIN, C60_HOUSE6_MIN, C60_HOUSE7_MIN, C60_HOUSE8_MIN,
+          C60_HOUSE9_MIN, C60_HOUSE10_MIN, C60_HOUSE11_MIN, C60_HOUSE12_MIN};
   static final double[] maxLonC60 = new double[]
-      {C60_ASC_MAX,    C60_MC_MAX,      C60_ARMC_MAX,    C60_VERTEX_MAX,
-       C60_EQUASC_MAX, C60_COASC1_MAX,  C60_COASC2_MAX,  C60_POLASC_MAX,
-       C60_HOUSE1_MAX, C60_HOUSE2_MAX,  C60_HOUSE3_MAX,  C60_HOUSE4_MAX,
-       C60_HOUSE5_MAX, C60_HOUSE6_MAX,  C60_HOUSE7_MAX,  C60_HOUSE8_MAX,
-       C60_HOUSE9_MAX, C60_HOUSE10_MAX, C60_HOUSE11_MAX, C60_HOUSE12_MAX};
+      {C60_ASC_MAX, C60_MC_MAX, C60_ARMC_MAX, C60_VERTEX_MAX,
+          C60_EQUASC_MAX, C60_COASC1_MAX, C60_COASC2_MAX, C60_POLASC_MAX,
+          C60_HOUSE1_MAX, C60_HOUSE2_MAX, C60_HOUSE3_MAX, C60_HOUSE4_MAX,
+          C60_HOUSE5_MAX, C60_HOUSE6_MAX, C60_HOUSE7_MAX, C60_HOUSE8_MAX,
+          C60_HOUSE9_MAX, C60_HOUSE10_MAX, C60_HOUSE11_MAX, C60_HOUSE12_MAX};
   static final double[] minLonC66 = new double[]
-      {C66_ASC_MIN,    C66_MC_MIN,      C66_ARMC_MIN,    C66_VERTEX_MIN,
-       C66_EQUASC_MIN, C66_COASC1_MIN,  C66_COASC2_MIN,  C66_POLASC_MIN,
-       C66_HOUSE1_MIN, C66_HOUSE2_MIN,  C66_HOUSE3_MIN,  C66_HOUSE4_MIN,
-       C66_HOUSE5_MIN, C66_HOUSE6_MIN,  C66_HOUSE7_MIN,  C66_HOUSE8_MIN,
-       C66_HOUSE9_MIN, C66_HOUSE10_MIN, C66_HOUSE11_MIN, C66_HOUSE12_MIN};
+      {C66_ASC_MIN, C66_MC_MIN, C66_ARMC_MIN, C66_VERTEX_MIN,
+          C66_EQUASC_MIN, C66_COASC1_MIN, C66_COASC2_MIN, C66_POLASC_MIN,
+          C66_HOUSE1_MIN, C66_HOUSE2_MIN, C66_HOUSE3_MIN, C66_HOUSE4_MIN,
+          C66_HOUSE5_MIN, C66_HOUSE6_MIN, C66_HOUSE7_MIN, C66_HOUSE8_MIN,
+          C66_HOUSE9_MIN, C66_HOUSE10_MIN, C66_HOUSE11_MIN, C66_HOUSE12_MIN};
   static final double[] maxLonC66 = new double[]
-      {C66_ASC_MAX,    C66_MC_MAX,      C66_ARMC_MAX,    C66_VERTEX_MAX,
-       C66_EQUASC_MAX, C66_COASC1_MAX,  C66_COASC2_MAX,  C66_POLASC_MAX,
-       C66_HOUSE1_MAX, C66_HOUSE2_MAX,  C66_HOUSE3_MAX,  C66_HOUSE4_MAX,
-       C66_HOUSE5_MAX, C66_HOUSE6_MAX,  C66_HOUSE7_MAX,  C66_HOUSE8_MAX,
-       C66_HOUSE9_MAX, C66_HOUSE10_MAX, C66_HOUSE11_MAX, C66_HOUSE12_MAX};
+      {C66_ASC_MAX, C66_MC_MAX, C66_ARMC_MAX, C66_VERTEX_MAX,
+          C66_EQUASC_MAX, C66_COASC1_MAX, C66_COASC2_MAX, C66_POLASC_MAX,
+          C66_HOUSE1_MAX, C66_HOUSE2_MAX, C66_HOUSE3_MAX, C66_HOUSE4_MAX,
+          C66_HOUSE5_MAX, C66_HOUSE6_MAX, C66_HOUSE7_MAX, C66_HOUSE8_MAX,
+          C66_HOUSE9_MAX, C66_HOUSE10_MAX, C66_HOUSE11_MAX, C66_HOUSE12_MAX};
   static final double[] minLonC70 = new double[]
-      {C70_ASC_MIN,    C70_MC_MIN,      C70_ARMC_MIN,    C70_VERTEX_MIN,
-       C70_EQUASC_MIN, C70_COASC1_MIN,  C70_COASC2_MIN,  C70_POLASC_MIN,
-       C70_HOUSE1_MIN, C70_HOUSE2_MIN,  C70_HOUSE3_MIN,  C70_HOUSE4_MIN,
-       C70_HOUSE5_MIN, C70_HOUSE6_MIN,  C70_HOUSE7_MIN,  C70_HOUSE8_MIN,
-       C70_HOUSE9_MIN, C70_HOUSE10_MIN, C70_HOUSE11_MIN, C70_HOUSE12_MIN};
+      {C70_ASC_MIN, C70_MC_MIN, C70_ARMC_MIN, C70_VERTEX_MIN,
+          C70_EQUASC_MIN, C70_COASC1_MIN, C70_COASC2_MIN, C70_POLASC_MIN,
+          C70_HOUSE1_MIN, C70_HOUSE2_MIN, C70_HOUSE3_MIN, C70_HOUSE4_MIN,
+          C70_HOUSE5_MIN, C70_HOUSE6_MIN, C70_HOUSE7_MIN, C70_HOUSE8_MIN,
+          C70_HOUSE9_MIN, C70_HOUSE10_MIN, C70_HOUSE11_MIN, C70_HOUSE12_MIN};
   static final double[] maxLonC70 = new double[]
-      {C70_ASC_MAX,    C70_MC_MAX,      C70_ARMC_MAX,    C70_VERTEX_MAX,
-       C70_EQUASC_MAX, C70_COASC1_MAX,  C70_COASC2_MAX,  C70_POLASC_MAX,
-       C70_HOUSE1_MAX, C70_HOUSE2_MAX,  C70_HOUSE3_MAX,  C70_HOUSE4_MAX,
-       C70_HOUSE5_MAX, C70_HOUSE6_MAX,  C70_HOUSE7_MAX,  C70_HOUSE8_MAX,
-       C70_HOUSE9_MAX, C70_HOUSE10_MAX, C70_HOUSE11_MAX, C70_HOUSE12_MAX};
+      {C70_ASC_MAX, C70_MC_MAX, C70_ARMC_MAX, C70_VERTEX_MAX,
+          C70_EQUASC_MAX, C70_COASC1_MAX, C70_COASC2_MAX, C70_POLASC_MAX,
+          C70_HOUSE1_MAX, C70_HOUSE2_MAX, C70_HOUSE3_MAX, C70_HOUSE4_MAX,
+          C70_HOUSE5_MAX, C70_HOUSE6_MAX, C70_HOUSE7_MAX, C70_HOUSE8_MAX,
+          C70_HOUSE9_MAX, C70_HOUSE10_MAX, C70_HOUSE11_MAX, C70_HOUSE12_MAX};
   static final double[] minLonC80 = new double[]
-      {C80_ASC_MIN,    C80_MC_MIN,      C80_ARMC_MIN,    C80_VERTEX_MIN,
-       C80_EQUASC_MIN, C80_COASC1_MIN,  C80_COASC2_MIN,  C80_POLASC_MIN,
-       C80_HOUSE1_MIN, C80_HOUSE2_MIN,  C80_HOUSE3_MIN,  C80_HOUSE4_MIN,
-       C80_HOUSE5_MIN, C80_HOUSE6_MIN,  C80_HOUSE7_MIN,  C80_HOUSE8_MIN,
-       C80_HOUSE9_MIN, C80_HOUSE10_MIN, C80_HOUSE11_MIN, C80_HOUSE12_MIN};
+      {C80_ASC_MIN, C80_MC_MIN, C80_ARMC_MIN, C80_VERTEX_MIN,
+          C80_EQUASC_MIN, C80_COASC1_MIN, C80_COASC2_MIN, C80_POLASC_MIN,
+          C80_HOUSE1_MIN, C80_HOUSE2_MIN, C80_HOUSE3_MIN, C80_HOUSE4_MIN,
+          C80_HOUSE5_MIN, C80_HOUSE6_MIN, C80_HOUSE7_MIN, C80_HOUSE8_MIN,
+          C80_HOUSE9_MIN, C80_HOUSE10_MIN, C80_HOUSE11_MIN, C80_HOUSE12_MIN};
   static final double[] maxLonC80 = new double[]
-      {C80_ASC_MAX,    C80_MC_MAX,      C80_ARMC_MAX,    C80_VERTEX_MAX,
-       C80_EQUASC_MAX, C80_COASC1_MAX,  C80_COASC2_MAX,  C80_POLASC_MAX,
-       C80_HOUSE1_MAX, C80_HOUSE2_MAX,  C80_HOUSE3_MAX,  C80_HOUSE4_MAX,
-       C80_HOUSE5_MAX, C80_HOUSE6_MAX,  C80_HOUSE7_MAX,  C80_HOUSE8_MAX,
-       C80_HOUSE9_MAX, C80_HOUSE10_MAX, C80_HOUSE11_MAX, C80_HOUSE12_MAX};
+      {C80_ASC_MAX, C80_MC_MAX, C80_ARMC_MAX, C80_VERTEX_MAX,
+          C80_EQUASC_MAX, C80_COASC1_MAX, C80_COASC2_MAX, C80_POLASC_MAX,
+          C80_HOUSE1_MAX, C80_HOUSE2_MAX, C80_HOUSE3_MAX, C80_HOUSE4_MAX,
+          C80_HOUSE5_MAX, C80_HOUSE6_MAX, C80_HOUSE7_MAX, C80_HOUSE8_MAX,
+          C80_HOUSE9_MAX, C80_HOUSE10_MAX, C80_HOUSE11_MAX, C80_HOUSE12_MAX};
   static final double[] minLonC85 = new double[]
-      {C85_ASC_MIN,    C85_MC_MIN,      C85_ARMC_MIN,    C85_VERTEX_MIN,
-       C85_EQUASC_MIN, C85_COASC1_MIN,  C85_COASC2_MIN,  C85_POLASC_MIN,
-       C85_HOUSE1_MIN, C85_HOUSE2_MIN,  C85_HOUSE3_MIN,  C85_HOUSE4_MIN,
-       C85_HOUSE5_MIN, C85_HOUSE6_MIN,  C85_HOUSE7_MIN,  C85_HOUSE8_MIN,
-       C85_HOUSE9_MIN, C85_HOUSE10_MIN, C85_HOUSE11_MIN, C85_HOUSE12_MIN};
+      {C85_ASC_MIN, C85_MC_MIN, C85_ARMC_MIN, C85_VERTEX_MIN,
+          C85_EQUASC_MIN, C85_COASC1_MIN, C85_COASC2_MIN, C85_POLASC_MIN,
+          C85_HOUSE1_MIN, C85_HOUSE2_MIN, C85_HOUSE3_MIN, C85_HOUSE4_MIN,
+          C85_HOUSE5_MIN, C85_HOUSE6_MIN, C85_HOUSE7_MIN, C85_HOUSE8_MIN,
+          C85_HOUSE9_MIN, C85_HOUSE10_MIN, C85_HOUSE11_MIN, C85_HOUSE12_MIN};
   static final double[] maxLonC85 = new double[]
-      {C85_ASC_MAX,    C85_MC_MAX,      C85_ARMC_MAX,    C85_VERTEX_MAX,
-       C85_EQUASC_MAX, C85_COASC1_MAX,  C85_COASC2_MAX,  C85_POLASC_MAX,
-       C85_HOUSE1_MAX, C85_HOUSE2_MAX,  C85_HOUSE3_MAX,  C85_HOUSE4_MAX,
-       C85_HOUSE5_MAX, C85_HOUSE6_MAX,  C85_HOUSE7_MAX,  C85_HOUSE8_MAX,
-       C85_HOUSE9_MAX, C85_HOUSE10_MAX, C85_HOUSE11_MAX, C85_HOUSE12_MAX};
+      {C85_ASC_MAX, C85_MC_MAX, C85_ARMC_MAX, C85_VERTEX_MAX,
+          C85_EQUASC_MAX, C85_COASC1_MAX, C85_COASC2_MAX, C85_POLASC_MAX,
+          C85_HOUSE1_MAX, C85_HOUSE2_MAX, C85_HOUSE3_MAX, C85_HOUSE4_MAX,
+          C85_HOUSE5_MAX, C85_HOUSE6_MAX, C85_HOUSE7_MAX, C85_HOUSE8_MAX,
+          C85_HOUSE9_MAX, C85_HOUSE10_MAX, C85_HOUSE11_MAX, C85_HOUSE12_MAX};
   static final double[] minLonC88 = new double[]
-      {C88_ASC_MIN,    C88_MC_MIN,      C88_ARMC_MIN,    C88_VERTEX_MIN,
-       C88_EQUASC_MIN, C88_COASC1_MIN,  C88_COASC2_MIN,  C88_POLASC_MIN,
-       C88_HOUSE1_MIN, C88_HOUSE2_MIN,  C88_HOUSE3_MIN,  C88_HOUSE4_MIN,
-       C88_HOUSE5_MIN, C88_HOUSE6_MIN,  C88_HOUSE7_MIN,  C88_HOUSE8_MIN,
-       C88_HOUSE9_MIN, C88_HOUSE10_MIN, C88_HOUSE11_MIN, C88_HOUSE12_MIN};
+      {C88_ASC_MIN, C88_MC_MIN, C88_ARMC_MIN, C88_VERTEX_MIN,
+          C88_EQUASC_MIN, C88_COASC1_MIN, C88_COASC2_MIN, C88_POLASC_MIN,
+          C88_HOUSE1_MIN, C88_HOUSE2_MIN, C88_HOUSE3_MIN, C88_HOUSE4_MIN,
+          C88_HOUSE5_MIN, C88_HOUSE6_MIN, C88_HOUSE7_MIN, C88_HOUSE8_MIN,
+          C88_HOUSE9_MIN, C88_HOUSE10_MIN, C88_HOUSE11_MIN, C88_HOUSE12_MIN};
   static final double[] maxLonC88 = new double[]
-      {C88_ASC_MAX,    C88_MC_MAX,      C88_ARMC_MAX,    C88_VERTEX_MAX,
-       C88_EQUASC_MAX, C88_COASC1_MAX,  C88_COASC2_MAX,  C88_POLASC_MAX,
-       C88_HOUSE1_MAX, C88_HOUSE2_MAX,  C88_HOUSE3_MAX,  C88_HOUSE4_MAX,
-       C88_HOUSE5_MAX, C88_HOUSE6_MAX,  C88_HOUSE7_MAX,  C88_HOUSE8_MAX,
-       C88_HOUSE9_MAX, C88_HOUSE10_MAX, C88_HOUSE11_MAX, C88_HOUSE12_MAX};
+      {C88_ASC_MAX, C88_MC_MAX, C88_ARMC_MAX, C88_VERTEX_MAX,
+          C88_EQUASC_MAX, C88_COASC1_MAX, C88_COASC2_MAX, C88_POLASC_MAX,
+          C88_HOUSE1_MAX, C88_HOUSE2_MAX, C88_HOUSE3_MAX, C88_HOUSE4_MAX,
+          C88_HOUSE5_MAX, C88_HOUSE6_MAX, C88_HOUSE7_MAX, C88_HOUSE8_MAX,
+          C88_HOUSE9_MAX, C88_HOUSE10_MAX, C88_HOUSE11_MAX, C88_HOUSE12_MAX};
   static final double[] minLonC89x = new double[]
-      {C89x_ASC_MIN,    C89x_MC_MIN,      C89x_ARMC_MIN,    C89x_VERTEX_MIN,
-       C89x_EQUASC_MIN, C89x_COASC1_MIN,  C89x_COASC2_MIN,  C89x_POLASC_MIN,
-       C89x_HOUSE1_MIN, C89x_HOUSE2_MIN,  C89x_HOUSE3_MIN,  C89x_HOUSE4_MIN,
-       C89x_HOUSE5_MIN, C89x_HOUSE6_MIN,  C89x_HOUSE7_MIN,  C89x_HOUSE8_MIN,
-       C89x_HOUSE9_MIN, C89x_HOUSE10_MIN, C89x_HOUSE11_MIN, C89x_HOUSE12_MIN};
+      {C89x_ASC_MIN, C89x_MC_MIN, C89x_ARMC_MIN, C89x_VERTEX_MIN,
+          C89x_EQUASC_MIN, C89x_COASC1_MIN, C89x_COASC2_MIN, C89x_POLASC_MIN,
+          C89x_HOUSE1_MIN, C89x_HOUSE2_MIN, C89x_HOUSE3_MIN, C89x_HOUSE4_MIN,
+          C89x_HOUSE5_MIN, C89x_HOUSE6_MIN, C89x_HOUSE7_MIN, C89x_HOUSE8_MIN,
+          C89x_HOUSE9_MIN, C89x_HOUSE10_MIN, C89x_HOUSE11_MIN, C89x_HOUSE12_MIN};
   static final double[] maxLonC89x = new double[]
-      {C89x_ASC_MAX,    C89x_MC_MAX,      C89x_ARMC_MAX,    C89x_VERTEX_MAX,
-       C89x_EQUASC_MAX, C89x_COASC1_MAX,  C89x_COASC2_MAX,  C89x_POLASC_MAX,
-       C89x_HOUSE1_MAX, C89x_HOUSE2_MAX,  C89x_HOUSE3_MAX,  C89x_HOUSE4_MAX,
-       C89x_HOUSE5_MAX, C89x_HOUSE6_MAX,  C89x_HOUSE7_MAX,  C89x_HOUSE8_MAX,
-       C89x_HOUSE9_MAX, C89x_HOUSE10_MAX, C89x_HOUSE11_MAX, C89x_HOUSE12_MAX};
+      {C89x_ASC_MAX, C89x_MC_MAX, C89x_ARMC_MAX, C89x_VERTEX_MAX,
+          C89x_EQUASC_MAX, C89x_COASC1_MAX, C89x_COASC2_MAX, C89x_POLASC_MAX,
+          C89x_HOUSE1_MAX, C89x_HOUSE2_MAX, C89x_HOUSE3_MAX, C89x_HOUSE4_MAX,
+          C89x_HOUSE5_MAX, C89x_HOUSE6_MAX, C89x_HOUSE7_MAX, C89x_HOUSE8_MAX,
+          C89x_HOUSE9_MAX, C89x_HOUSE10_MAX, C89x_HOUSE11_MAX, C89x_HOUSE12_MAX};
 
   static final double[] minLonE10 = new double[]
-      {E10_ASC_MIN,    E10_MC_MIN,      E10_ARMC_MIN,    E10_VERTEX_MIN,
-       E10_EQUASC_MIN, E10_COASC1_MIN,  E10_COASC2_MIN,  E10_POLASC_MIN,
-       E10_HOUSE1_MIN, E10_HOUSE2_MIN,  E10_HOUSE3_MIN,  E10_HOUSE4_MIN,
-       E10_HOUSE5_MIN, E10_HOUSE6_MIN,  E10_HOUSE7_MIN,  E10_HOUSE8_MIN,
-       E10_HOUSE9_MIN, E10_HOUSE10_MIN, E10_HOUSE11_MIN, E10_HOUSE12_MIN};
+      {E10_ASC_MIN, E10_MC_MIN, E10_ARMC_MIN, E10_VERTEX_MIN,
+          E10_EQUASC_MIN, E10_COASC1_MIN, E10_COASC2_MIN, E10_POLASC_MIN,
+          E10_HOUSE1_MIN, E10_HOUSE2_MIN, E10_HOUSE3_MIN, E10_HOUSE4_MIN,
+          E10_HOUSE5_MIN, E10_HOUSE6_MIN, E10_HOUSE7_MIN, E10_HOUSE8_MIN,
+          E10_HOUSE9_MIN, E10_HOUSE10_MIN, E10_HOUSE11_MIN, E10_HOUSE12_MIN};
   static final double[] maxLonE10 = new double[]
-      {E10_ASC_MAX,    E10_MC_MAX,      E10_ARMC_MAX,    E10_VERTEX_MAX,
-       E10_EQUASC_MAX, E10_COASC1_MAX,  E10_COASC2_MAX,  E10_POLASC_MAX,
-       E10_HOUSE1_MAX, E10_HOUSE2_MAX,  E10_HOUSE3_MAX,  E10_HOUSE4_MAX,
-       E10_HOUSE5_MAX, E10_HOUSE6_MAX,  E10_HOUSE7_MAX,  E10_HOUSE8_MAX,
-       E10_HOUSE9_MAX, E10_HOUSE10_MAX, E10_HOUSE11_MAX, E10_HOUSE12_MAX};
+      {E10_ASC_MAX, E10_MC_MAX, E10_ARMC_MAX, E10_VERTEX_MAX,
+          E10_EQUASC_MAX, E10_COASC1_MAX, E10_COASC2_MAX, E10_POLASC_MAX,
+          E10_HOUSE1_MAX, E10_HOUSE2_MAX, E10_HOUSE3_MAX, E10_HOUSE4_MAX,
+          E10_HOUSE5_MAX, E10_HOUSE6_MAX, E10_HOUSE7_MAX, E10_HOUSE8_MAX,
+          E10_HOUSE9_MAX, E10_HOUSE10_MAX, E10_HOUSE11_MAX, E10_HOUSE12_MAX};
   static final double[] minLonE20 = new double[]
-      {E20_ASC_MIN,    E20_MC_MIN,      E20_ARMC_MIN,    E20_VERTEX_MIN,
-       E20_EQUASC_MIN, E20_COASC1_MIN,  E20_COASC2_MIN,  E20_POLASC_MIN,
-       E20_HOUSE1_MIN, E20_HOUSE2_MIN,  E20_HOUSE3_MIN,  E20_HOUSE4_MIN,
-       E20_HOUSE5_MIN, E20_HOUSE6_MIN,  E20_HOUSE7_MIN,  E20_HOUSE8_MIN,
-       E20_HOUSE9_MIN, E20_HOUSE10_MIN, E20_HOUSE11_MIN, E20_HOUSE12_MIN};
+      {E20_ASC_MIN, E20_MC_MIN, E20_ARMC_MIN, E20_VERTEX_MIN,
+          E20_EQUASC_MIN, E20_COASC1_MIN, E20_COASC2_MIN, E20_POLASC_MIN,
+          E20_HOUSE1_MIN, E20_HOUSE2_MIN, E20_HOUSE3_MIN, E20_HOUSE4_MIN,
+          E20_HOUSE5_MIN, E20_HOUSE6_MIN, E20_HOUSE7_MIN, E20_HOUSE8_MIN,
+          E20_HOUSE9_MIN, E20_HOUSE10_MIN, E20_HOUSE11_MIN, E20_HOUSE12_MIN};
   static final double[] maxLonE20 = new double[]
-      {E20_ASC_MAX,    E20_MC_MAX,      E20_ARMC_MAX,    E20_VERTEX_MAX,
-       E20_EQUASC_MAX, E20_COASC1_MAX,  E20_COASC2_MAX,  E20_POLASC_MAX,
-       E20_HOUSE1_MAX, E20_HOUSE2_MAX,  E20_HOUSE3_MAX,  E20_HOUSE4_MAX,
-       E20_HOUSE5_MAX, E20_HOUSE6_MAX,  E20_HOUSE7_MAX,  E20_HOUSE8_MAX,
-       E20_HOUSE9_MAX, E20_HOUSE10_MAX, E20_HOUSE11_MAX, E20_HOUSE12_MAX};
+      {E20_ASC_MAX, E20_MC_MAX, E20_ARMC_MAX, E20_VERTEX_MAX,
+          E20_EQUASC_MAX, E20_COASC1_MAX, E20_COASC2_MAX, E20_POLASC_MAX,
+          E20_HOUSE1_MAX, E20_HOUSE2_MAX, E20_HOUSE3_MAX, E20_HOUSE4_MAX,
+          E20_HOUSE5_MAX, E20_HOUSE6_MAX, E20_HOUSE7_MAX, E20_HOUSE8_MAX,
+          E20_HOUSE9_MAX, E20_HOUSE10_MAX, E20_HOUSE11_MAX, E20_HOUSE12_MAX};
   static final double[] minLonE30 = new double[]
-      {E30_ASC_MIN,    E30_MC_MIN,      E30_ARMC_MIN,    E30_VERTEX_MIN,
-       E30_EQUASC_MIN, E30_COASC1_MIN,  E30_COASC2_MIN,  E30_POLASC_MIN,
-       E30_HOUSE1_MIN, E30_HOUSE2_MIN,  E30_HOUSE3_MIN,  E30_HOUSE4_MIN,
-       E30_HOUSE5_MIN, E30_HOUSE6_MIN,  E30_HOUSE7_MIN,  E30_HOUSE8_MIN,
-       E30_HOUSE9_MIN, E30_HOUSE10_MIN, E30_HOUSE11_MIN, E30_HOUSE12_MIN};
+      {E30_ASC_MIN, E30_MC_MIN, E30_ARMC_MIN, E30_VERTEX_MIN,
+          E30_EQUASC_MIN, E30_COASC1_MIN, E30_COASC2_MIN, E30_POLASC_MIN,
+          E30_HOUSE1_MIN, E30_HOUSE2_MIN, E30_HOUSE3_MIN, E30_HOUSE4_MIN,
+          E30_HOUSE5_MIN, E30_HOUSE6_MIN, E30_HOUSE7_MIN, E30_HOUSE8_MIN,
+          E30_HOUSE9_MIN, E30_HOUSE10_MIN, E30_HOUSE11_MIN, E30_HOUSE12_MIN};
   static final double[] maxLonE30 = new double[]
-      {E30_ASC_MAX,    E30_MC_MAX,      E30_ARMC_MAX,    E30_VERTEX_MAX,
-       E30_EQUASC_MAX, E30_COASC1_MAX,  E30_COASC2_MAX,  E30_POLASC_MAX,
-       E30_HOUSE1_MAX, E30_HOUSE2_MAX,  E30_HOUSE3_MAX,  E30_HOUSE4_MAX,
-       E30_HOUSE5_MAX, E30_HOUSE6_MAX,  E30_HOUSE7_MAX,  E30_HOUSE8_MAX,
-       E30_HOUSE9_MAX, E30_HOUSE10_MAX, E30_HOUSE11_MAX, E30_HOUSE12_MAX};
+      {E30_ASC_MAX, E30_MC_MAX, E30_ARMC_MAX, E30_VERTEX_MAX,
+          E30_EQUASC_MAX, E30_COASC1_MAX, E30_COASC2_MAX, E30_POLASC_MAX,
+          E30_HOUSE1_MAX, E30_HOUSE2_MAX, E30_HOUSE3_MAX, E30_HOUSE4_MAX,
+          E30_HOUSE5_MAX, E30_HOUSE6_MAX, E30_HOUSE7_MAX, E30_HOUSE8_MAX,
+          E30_HOUSE9_MAX, E30_HOUSE10_MAX, E30_HOUSE11_MAX, E30_HOUSE12_MAX};
   static final double[] minLonE40 = new double[]
-      {E40_ASC_MIN,    E40_MC_MIN,      E40_ARMC_MIN,    E40_VERTEX_MIN,
-       E40_EQUASC_MIN, E40_COASC1_MIN,  E40_COASC2_MIN,  E40_POLASC_MIN,
-       E40_HOUSE1_MIN, E40_HOUSE2_MIN,  E40_HOUSE3_MIN,  E40_HOUSE4_MIN,
-       E40_HOUSE5_MIN, E40_HOUSE6_MIN,  E40_HOUSE7_MIN,  E40_HOUSE8_MIN,
-       E40_HOUSE9_MIN, E40_HOUSE10_MIN, E40_HOUSE11_MIN, E40_HOUSE12_MIN};
+      {E40_ASC_MIN, E40_MC_MIN, E40_ARMC_MIN, E40_VERTEX_MIN,
+          E40_EQUASC_MIN, E40_COASC1_MIN, E40_COASC2_MIN, E40_POLASC_MIN,
+          E40_HOUSE1_MIN, E40_HOUSE2_MIN, E40_HOUSE3_MIN, E40_HOUSE4_MIN,
+          E40_HOUSE5_MIN, E40_HOUSE6_MIN, E40_HOUSE7_MIN, E40_HOUSE8_MIN,
+          E40_HOUSE9_MIN, E40_HOUSE10_MIN, E40_HOUSE11_MIN, E40_HOUSE12_MIN};
   static final double[] maxLonE40 = new double[]
-      {E40_ASC_MAX,    E40_MC_MAX,      E40_ARMC_MAX,    E40_VERTEX_MAX,
-       E40_EQUASC_MAX, E40_COASC1_MAX,  E40_COASC2_MAX,  E40_POLASC_MAX,
-       E40_HOUSE1_MAX, E40_HOUSE2_MAX,  E40_HOUSE3_MAX,  E40_HOUSE4_MAX,
-       E40_HOUSE5_MAX, E40_HOUSE6_MAX,  E40_HOUSE7_MAX,  E40_HOUSE8_MAX,
-       E40_HOUSE9_MAX, E40_HOUSE10_MAX, E40_HOUSE11_MAX, E40_HOUSE12_MAX};
+      {E40_ASC_MAX, E40_MC_MAX, E40_ARMC_MAX, E40_VERTEX_MAX,
+          E40_EQUASC_MAX, E40_COASC1_MAX, E40_COASC2_MAX, E40_POLASC_MAX,
+          E40_HOUSE1_MAX, E40_HOUSE2_MAX, E40_HOUSE3_MAX, E40_HOUSE4_MAX,
+          E40_HOUSE5_MAX, E40_HOUSE6_MAX, E40_HOUSE7_MAX, E40_HOUSE8_MAX,
+          E40_HOUSE9_MAX, E40_HOUSE10_MAX, E40_HOUSE11_MAX, E40_HOUSE12_MAX};
   static final double[] minLonE50 = new double[]
-      {E50_ASC_MIN,    E50_MC_MIN,      E50_ARMC_MIN,    E50_VERTEX_MIN,
-       E50_EQUASC_MIN, E50_COASC1_MIN,  E50_COASC2_MIN,  E50_POLASC_MIN,
-       E50_HOUSE1_MIN, E50_HOUSE2_MIN,  E50_HOUSE3_MIN,  E50_HOUSE4_MIN,
-       E50_HOUSE5_MIN, E50_HOUSE6_MIN,  E50_HOUSE7_MIN,  E50_HOUSE8_MIN,
-       E50_HOUSE9_MIN, E50_HOUSE10_MIN, E50_HOUSE11_MIN, E50_HOUSE12_MIN};
+      {E50_ASC_MIN, E50_MC_MIN, E50_ARMC_MIN, E50_VERTEX_MIN,
+          E50_EQUASC_MIN, E50_COASC1_MIN, E50_COASC2_MIN, E50_POLASC_MIN,
+          E50_HOUSE1_MIN, E50_HOUSE2_MIN, E50_HOUSE3_MIN, E50_HOUSE4_MIN,
+          E50_HOUSE5_MIN, E50_HOUSE6_MIN, E50_HOUSE7_MIN, E50_HOUSE8_MIN,
+          E50_HOUSE9_MIN, E50_HOUSE10_MIN, E50_HOUSE11_MIN, E50_HOUSE12_MIN};
   static final double[] maxLonE50 = new double[]
-      {E50_ASC_MAX,    E50_MC_MAX,      E50_ARMC_MAX,    E50_VERTEX_MAX,
-       E50_EQUASC_MAX, E50_COASC1_MAX,  E50_COASC2_MAX,  E50_POLASC_MAX,
-       E50_HOUSE1_MAX, E50_HOUSE2_MAX,  E50_HOUSE3_MAX,  E50_HOUSE4_MAX,
-       E50_HOUSE5_MAX, E50_HOUSE6_MAX,  E50_HOUSE7_MAX,  E50_HOUSE8_MAX,
-       E50_HOUSE9_MAX, E50_HOUSE10_MAX, E50_HOUSE11_MAX, E50_HOUSE12_MAX};
+      {E50_ASC_MAX, E50_MC_MAX, E50_ARMC_MAX, E50_VERTEX_MAX,
+          E50_EQUASC_MAX, E50_COASC1_MAX, E50_COASC2_MAX, E50_POLASC_MAX,
+          E50_HOUSE1_MAX, E50_HOUSE2_MAX, E50_HOUSE3_MAX, E50_HOUSE4_MAX,
+          E50_HOUSE5_MAX, E50_HOUSE6_MAX, E50_HOUSE7_MAX, E50_HOUSE8_MAX,
+          E50_HOUSE9_MAX, E50_HOUSE10_MAX, E50_HOUSE11_MAX, E50_HOUSE12_MAX};
   static final double[] minLonE60 = new double[]
-      {E60_ASC_MIN,    E60_MC_MIN,      E60_ARMC_MIN,    E60_VERTEX_MIN,
-       E60_EQUASC_MIN, E60_COASC1_MIN,  E60_COASC2_MIN,  E60_POLASC_MIN,
-       E60_HOUSE1_MIN, E60_HOUSE2_MIN,  E60_HOUSE3_MIN,  E60_HOUSE4_MIN,
-       E60_HOUSE5_MIN, E60_HOUSE6_MIN,  E60_HOUSE7_MIN,  E60_HOUSE8_MIN,
-       E60_HOUSE9_MIN, E60_HOUSE10_MIN, E60_HOUSE11_MIN, E60_HOUSE12_MIN};
+      {E60_ASC_MIN, E60_MC_MIN, E60_ARMC_MIN, E60_VERTEX_MIN,
+          E60_EQUASC_MIN, E60_COASC1_MIN, E60_COASC2_MIN, E60_POLASC_MIN,
+          E60_HOUSE1_MIN, E60_HOUSE2_MIN, E60_HOUSE3_MIN, E60_HOUSE4_MIN,
+          E60_HOUSE5_MIN, E60_HOUSE6_MIN, E60_HOUSE7_MIN, E60_HOUSE8_MIN,
+          E60_HOUSE9_MIN, E60_HOUSE10_MIN, E60_HOUSE11_MIN, E60_HOUSE12_MIN};
   static final double[] maxLonE60 = new double[]
-      {E60_ASC_MAX,    E60_MC_MAX,      E60_ARMC_MAX,    E60_VERTEX_MAX,
-       E60_EQUASC_MAX, E60_COASC1_MAX,  E60_COASC2_MAX,  E60_POLASC_MAX,
-       E60_HOUSE1_MAX, E60_HOUSE2_MAX,  E60_HOUSE3_MAX,  E60_HOUSE4_MAX,
-       E60_HOUSE5_MAX, E60_HOUSE6_MAX,  E60_HOUSE7_MAX,  E60_HOUSE8_MAX,
-       E60_HOUSE9_MAX, E60_HOUSE10_MAX, E60_HOUSE11_MAX, E60_HOUSE12_MAX};
+      {E60_ASC_MAX, E60_MC_MAX, E60_ARMC_MAX, E60_VERTEX_MAX,
+          E60_EQUASC_MAX, E60_COASC1_MAX, E60_COASC2_MAX, E60_POLASC_MAX,
+          E60_HOUSE1_MAX, E60_HOUSE2_MAX, E60_HOUSE3_MAX, E60_HOUSE4_MAX,
+          E60_HOUSE5_MAX, E60_HOUSE6_MAX, E60_HOUSE7_MAX, E60_HOUSE8_MAX,
+          E60_HOUSE9_MAX, E60_HOUSE10_MAX, E60_HOUSE11_MAX, E60_HOUSE12_MAX};
   static final double[] minLonE66 = new double[]
-      {E66_ASC_MIN,    E66_MC_MIN,      E66_ARMC_MIN,    E66_VERTEX_MIN,
-       E66_EQUASC_MIN, E66_COASC1_MIN,  E66_COASC2_MIN,  E66_POLASC_MIN,
-       E66_HOUSE1_MIN, E66_HOUSE2_MIN,  E66_HOUSE3_MIN,  E66_HOUSE4_MIN,
-       E66_HOUSE5_MIN, E66_HOUSE6_MIN,  E66_HOUSE7_MIN,  E66_HOUSE8_MIN,
-       E66_HOUSE9_MIN, E66_HOUSE10_MIN, E66_HOUSE11_MIN, E66_HOUSE12_MIN};
+      {E66_ASC_MIN, E66_MC_MIN, E66_ARMC_MIN, E66_VERTEX_MIN,
+          E66_EQUASC_MIN, E66_COASC1_MIN, E66_COASC2_MIN, E66_POLASC_MIN,
+          E66_HOUSE1_MIN, E66_HOUSE2_MIN, E66_HOUSE3_MIN, E66_HOUSE4_MIN,
+          E66_HOUSE5_MIN, E66_HOUSE6_MIN, E66_HOUSE7_MIN, E66_HOUSE8_MIN,
+          E66_HOUSE9_MIN, E66_HOUSE10_MIN, E66_HOUSE11_MIN, E66_HOUSE12_MIN};
   static final double[] maxLonE66 = new double[]
-      {E66_ASC_MAX,    E66_MC_MAX,      E66_ARMC_MAX,    E66_VERTEX_MAX,
-       E66_EQUASC_MAX, E66_COASC1_MAX,  E66_COASC2_MAX,  E66_POLASC_MAX,
-       E66_HOUSE1_MAX, E66_HOUSE2_MAX,  E66_HOUSE3_MAX,  E66_HOUSE4_MAX,
-       E66_HOUSE5_MAX, E66_HOUSE6_MAX,  E66_HOUSE7_MAX,  E66_HOUSE8_MAX,
-       E66_HOUSE9_MAX, E66_HOUSE10_MAX, E66_HOUSE11_MAX, E66_HOUSE12_MAX};
+      {E66_ASC_MAX, E66_MC_MAX, E66_ARMC_MAX, E66_VERTEX_MAX,
+          E66_EQUASC_MAX, E66_COASC1_MAX, E66_COASC2_MAX, E66_POLASC_MAX,
+          E66_HOUSE1_MAX, E66_HOUSE2_MAX, E66_HOUSE3_MAX, E66_HOUSE4_MAX,
+          E66_HOUSE5_MAX, E66_HOUSE6_MAX, E66_HOUSE7_MAX, E66_HOUSE8_MAX,
+          E66_HOUSE9_MAX, E66_HOUSE10_MAX, E66_HOUSE11_MAX, E66_HOUSE12_MAX};
   static final double[] minLonE70 = new double[]
-      {E70_ASC_MIN,    E70_MC_MIN,      E70_ARMC_MIN,    E70_VERTEX_MIN,
-       E70_EQUASC_MIN, E70_COASC1_MIN,  E70_COASC2_MIN,  E70_POLASC_MIN,
-       E70_HOUSE1_MIN, E70_HOUSE2_MIN,  E70_HOUSE3_MIN,  E70_HOUSE4_MIN,
-       E70_HOUSE5_MIN, E70_HOUSE6_MIN,  E70_HOUSE7_MIN,  E70_HOUSE8_MIN,
-       E70_HOUSE9_MIN, E70_HOUSE10_MIN, E70_HOUSE11_MIN, E70_HOUSE12_MIN};
+      {E70_ASC_MIN, E70_MC_MIN, E70_ARMC_MIN, E70_VERTEX_MIN,
+          E70_EQUASC_MIN, E70_COASC1_MIN, E70_COASC2_MIN, E70_POLASC_MIN,
+          E70_HOUSE1_MIN, E70_HOUSE2_MIN, E70_HOUSE3_MIN, E70_HOUSE4_MIN,
+          E70_HOUSE5_MIN, E70_HOUSE6_MIN, E70_HOUSE7_MIN, E70_HOUSE8_MIN,
+          E70_HOUSE9_MIN, E70_HOUSE10_MIN, E70_HOUSE11_MIN, E70_HOUSE12_MIN};
   static final double[] maxLonE70 = new double[]
-      {E70_ASC_MAX,    E70_MC_MAX,      E70_ARMC_MAX,    E70_VERTEX_MAX,
-       E70_EQUASC_MAX, E70_COASC1_MAX,  E70_COASC2_MAX,  E70_POLASC_MAX,
-       E70_HOUSE1_MAX, E70_HOUSE2_MAX,  E70_HOUSE3_MAX,  E70_HOUSE4_MAX,
-       E70_HOUSE5_MAX, E70_HOUSE6_MAX,  E70_HOUSE7_MAX,  E70_HOUSE8_MAX,
-       E70_HOUSE9_MAX, E70_HOUSE10_MAX, E70_HOUSE11_MAX, E70_HOUSE12_MAX};
+      {E70_ASC_MAX, E70_MC_MAX, E70_ARMC_MAX, E70_VERTEX_MAX,
+          E70_EQUASC_MAX, E70_COASC1_MAX, E70_COASC2_MAX, E70_POLASC_MAX,
+          E70_HOUSE1_MAX, E70_HOUSE2_MAX, E70_HOUSE3_MAX, E70_HOUSE4_MAX,
+          E70_HOUSE5_MAX, E70_HOUSE6_MAX, E70_HOUSE7_MAX, E70_HOUSE8_MAX,
+          E70_HOUSE9_MAX, E70_HOUSE10_MAX, E70_HOUSE11_MAX, E70_HOUSE12_MAX};
   static final double[] minLonE80 = new double[]
-      {E80_ASC_MIN,    E80_MC_MIN,      E80_ARMC_MIN,    E80_VERTEX_MIN,
-       E80_EQUASC_MIN, E80_COASC1_MIN,  E80_COASC2_MIN,  E80_POLASC_MIN,
-       E80_HOUSE1_MIN, E80_HOUSE2_MIN,  E80_HOUSE3_MIN,  E80_HOUSE4_MIN,
-       E80_HOUSE5_MIN, E80_HOUSE6_MIN,  E80_HOUSE7_MIN,  E80_HOUSE8_MIN,
-       E80_HOUSE9_MIN, E80_HOUSE10_MIN, E80_HOUSE11_MIN, E80_HOUSE12_MIN};
+      {E80_ASC_MIN, E80_MC_MIN, E80_ARMC_MIN, E80_VERTEX_MIN,
+          E80_EQUASC_MIN, E80_COASC1_MIN, E80_COASC2_MIN, E80_POLASC_MIN,
+          E80_HOUSE1_MIN, E80_HOUSE2_MIN, E80_HOUSE3_MIN, E80_HOUSE4_MIN,
+          E80_HOUSE5_MIN, E80_HOUSE6_MIN, E80_HOUSE7_MIN, E80_HOUSE8_MIN,
+          E80_HOUSE9_MIN, E80_HOUSE10_MIN, E80_HOUSE11_MIN, E80_HOUSE12_MIN};
   static final double[] maxLonE80 = new double[]
-      {E80_ASC_MAX,    E80_MC_MAX,      E80_ARMC_MAX,    E80_VERTEX_MAX,
-       E80_EQUASC_MAX, E80_COASC1_MAX,  E80_COASC2_MAX,  E80_POLASC_MAX,
-       E80_HOUSE1_MAX, E80_HOUSE2_MAX,  E80_HOUSE3_MAX,  E80_HOUSE4_MAX,
-       E80_HOUSE5_MAX, E80_HOUSE6_MAX,  E80_HOUSE7_MAX,  E80_HOUSE8_MAX,
-       E80_HOUSE9_MAX, E80_HOUSE10_MAX, E80_HOUSE11_MAX, E80_HOUSE12_MAX};
+      {E80_ASC_MAX, E80_MC_MAX, E80_ARMC_MAX, E80_VERTEX_MAX,
+          E80_EQUASC_MAX, E80_COASC1_MAX, E80_COASC2_MAX, E80_POLASC_MAX,
+          E80_HOUSE1_MAX, E80_HOUSE2_MAX, E80_HOUSE3_MAX, E80_HOUSE4_MAX,
+          E80_HOUSE5_MAX, E80_HOUSE6_MAX, E80_HOUSE7_MAX, E80_HOUSE8_MAX,
+          E80_HOUSE9_MAX, E80_HOUSE10_MAX, E80_HOUSE11_MAX, E80_HOUSE12_MAX};
   static final double[] minLonE85 = new double[]
-      {E85_ASC_MIN,    E85_MC_MIN,      E85_ARMC_MIN,    E85_VERTEX_MIN,
-       E85_EQUASC_MIN, E85_COASC1_MIN,  E85_COASC2_MIN,  E85_POLASC_MIN,
-       E85_HOUSE1_MIN, E85_HOUSE2_MIN,  E85_HOUSE3_MIN,  E85_HOUSE4_MIN,
-       E85_HOUSE5_MIN, E85_HOUSE6_MIN,  E85_HOUSE7_MIN,  E85_HOUSE8_MIN,
-       E85_HOUSE9_MIN, E85_HOUSE10_MIN, E85_HOUSE11_MIN, E85_HOUSE12_MIN};
+      {E85_ASC_MIN, E85_MC_MIN, E85_ARMC_MIN, E85_VERTEX_MIN,
+          E85_EQUASC_MIN, E85_COASC1_MIN, E85_COASC2_MIN, E85_POLASC_MIN,
+          E85_HOUSE1_MIN, E85_HOUSE2_MIN, E85_HOUSE3_MIN, E85_HOUSE4_MIN,
+          E85_HOUSE5_MIN, E85_HOUSE6_MIN, E85_HOUSE7_MIN, E85_HOUSE8_MIN,
+          E85_HOUSE9_MIN, E85_HOUSE10_MIN, E85_HOUSE11_MIN, E85_HOUSE12_MIN};
   static final double[] maxLonE85 = new double[]
-      {E85_ASC_MAX,    E85_MC_MAX,      E85_ARMC_MAX,    E85_VERTEX_MAX,
-       E85_EQUASC_MAX, E85_COASC1_MAX,  E85_COASC2_MAX,  E85_POLASC_MAX,
-       E85_HOUSE1_MAX, E85_HOUSE2_MAX,  E85_HOUSE3_MAX,  E85_HOUSE4_MAX,
-       E85_HOUSE5_MAX, E85_HOUSE6_MAX,  E85_HOUSE7_MAX,  E85_HOUSE8_MAX,
-       E85_HOUSE9_MAX, E85_HOUSE10_MAX, E85_HOUSE11_MAX, E85_HOUSE12_MAX};
+      {E85_ASC_MAX, E85_MC_MAX, E85_ARMC_MAX, E85_VERTEX_MAX,
+          E85_EQUASC_MAX, E85_COASC1_MAX, E85_COASC2_MAX, E85_POLASC_MAX,
+          E85_HOUSE1_MAX, E85_HOUSE2_MAX, E85_HOUSE3_MAX, E85_HOUSE4_MAX,
+          E85_HOUSE5_MAX, E85_HOUSE6_MAX, E85_HOUSE7_MAX, E85_HOUSE8_MAX,
+          E85_HOUSE9_MAX, E85_HOUSE10_MAX, E85_HOUSE11_MAX, E85_HOUSE12_MAX};
   static final double[] minLonE88 = new double[]
-      {E88_ASC_MIN,    E88_MC_MIN,      E88_ARMC_MIN,    E88_VERTEX_MIN,
-       E88_EQUASC_MIN, E88_COASC1_MIN,  E88_COASC2_MIN,  E88_POLASC_MIN,
-       E88_HOUSE1_MIN, E88_HOUSE2_MIN,  E88_HOUSE3_MIN,  E88_HOUSE4_MIN,
-       E88_HOUSE5_MIN, E88_HOUSE6_MIN,  E88_HOUSE7_MIN,  E88_HOUSE8_MIN,
-       E88_HOUSE9_MIN, E88_HOUSE10_MIN, E88_HOUSE11_MIN, E88_HOUSE12_MIN};
+      {E88_ASC_MIN, E88_MC_MIN, E88_ARMC_MIN, E88_VERTEX_MIN,
+          E88_EQUASC_MIN, E88_COASC1_MIN, E88_COASC2_MIN, E88_POLASC_MIN,
+          E88_HOUSE1_MIN, E88_HOUSE2_MIN, E88_HOUSE3_MIN, E88_HOUSE4_MIN,
+          E88_HOUSE5_MIN, E88_HOUSE6_MIN, E88_HOUSE7_MIN, E88_HOUSE8_MIN,
+          E88_HOUSE9_MIN, E88_HOUSE10_MIN, E88_HOUSE11_MIN, E88_HOUSE12_MIN};
   static final double[] maxLonE88 = new double[]
-      {E88_ASC_MAX,    E88_MC_MAX,      E88_ARMC_MAX,    E88_VERTEX_MAX,
-       E88_EQUASC_MAX, E88_COASC1_MAX,  E88_COASC2_MAX,  E88_POLASC_MAX,
-       E88_HOUSE1_MAX, E88_HOUSE2_MAX,  E88_HOUSE3_MAX,  E88_HOUSE4_MAX,
-       E88_HOUSE5_MAX, E88_HOUSE6_MAX,  E88_HOUSE7_MAX,  E88_HOUSE8_MAX,
-       E88_HOUSE9_MAX, E88_HOUSE10_MAX, E88_HOUSE11_MAX, E88_HOUSE12_MAX};
+      {E88_ASC_MAX, E88_MC_MAX, E88_ARMC_MAX, E88_VERTEX_MAX,
+          E88_EQUASC_MAX, E88_COASC1_MAX, E88_COASC2_MAX, E88_POLASC_MAX,
+          E88_HOUSE1_MAX, E88_HOUSE2_MAX, E88_HOUSE3_MAX, E88_HOUSE4_MAX,
+          E88_HOUSE5_MAX, E88_HOUSE6_MAX, E88_HOUSE7_MAX, E88_HOUSE8_MAX,
+          E88_HOUSE9_MAX, E88_HOUSE10_MAX, E88_HOUSE11_MAX, E88_HOUSE12_MAX};
   static final double[] minLonE89x = new double[]
-      {E89x_ASC_MIN,    E89x_MC_MIN,      E89x_ARMC_MIN,    E89x_VERTEX_MIN,
-       E89x_EQUASC_MIN, E89x_COASC1_MIN,  E89x_COASC2_MIN,  E89x_POLASC_MIN,
-       E89x_HOUSE1_MIN, E89x_HOUSE2_MIN,  E89x_HOUSE3_MIN,  E89x_HOUSE4_MIN,
-       E89x_HOUSE5_MIN, E89x_HOUSE6_MIN,  E89x_HOUSE7_MIN,  E89x_HOUSE8_MIN,
-       E89x_HOUSE9_MIN, E89x_HOUSE10_MIN, E89x_HOUSE11_MIN, E89x_HOUSE12_MIN};
+      {E89x_ASC_MIN, E89x_MC_MIN, E89x_ARMC_MIN, E89x_VERTEX_MIN,
+          E89x_EQUASC_MIN, E89x_COASC1_MIN, E89x_COASC2_MIN, E89x_POLASC_MIN,
+          E89x_HOUSE1_MIN, E89x_HOUSE2_MIN, E89x_HOUSE3_MIN, E89x_HOUSE4_MIN,
+          E89x_HOUSE5_MIN, E89x_HOUSE6_MIN, E89x_HOUSE7_MIN, E89x_HOUSE8_MIN,
+          E89x_HOUSE9_MIN, E89x_HOUSE10_MIN, E89x_HOUSE11_MIN, E89x_HOUSE12_MIN};
   static final double[] maxLonE89x = new double[]
-      {E89x_ASC_MAX,    E89x_MC_MAX,      E89x_ARMC_MAX,    E89x_VERTEX_MAX,
-       E89x_EQUASC_MAX, E89x_COASC1_MAX,  E89x_COASC2_MAX,  E89x_POLASC_MAX,
-       E89x_HOUSE1_MAX, E89x_HOUSE2_MAX,  E89x_HOUSE3_MAX,  E89x_HOUSE4_MAX,
-       E89x_HOUSE5_MAX, E89x_HOUSE6_MAX,  E89x_HOUSE7_MAX,  E89x_HOUSE8_MAX,
-       E89x_HOUSE9_MAX, E89x_HOUSE10_MAX, E89x_HOUSE11_MAX, E89x_HOUSE12_MAX};
+      {E89x_ASC_MAX, E89x_MC_MAX, E89x_ARMC_MAX, E89x_VERTEX_MAX,
+          E89x_EQUASC_MAX, E89x_COASC1_MAX, E89x_COASC2_MAX, E89x_POLASC_MAX,
+          E89x_HOUSE1_MAX, E89x_HOUSE2_MAX, E89x_HOUSE3_MAX, E89x_HOUSE4_MAX,
+          E89x_HOUSE5_MAX, E89x_HOUSE6_MAX, E89x_HOUSE7_MAX, E89x_HOUSE8_MAX,
+          E89x_HOUSE9_MAX, E89x_HOUSE10_MAX, E89x_HOUSE11_MAX, E89x_HOUSE12_MAX};
 
   static final double[] minLonV10 = new double[]
-      {V10_ASC_MIN,    V10_MC_MIN,      V10_ARMC_MIN,    V10_VERTEX_MIN,
-       V10_EQUASC_MIN, V10_COASC1_MIN,  V10_COASC2_MIN,  V10_POLASC_MIN,
-       V10_HOUSE1_MIN, V10_HOUSE2_MIN,  V10_HOUSE3_MIN,  V10_HOUSE4_MIN,
-       V10_HOUSE5_MIN, V10_HOUSE6_MIN,  V10_HOUSE7_MIN,  V10_HOUSE8_MIN,
-       V10_HOUSE9_MIN, V10_HOUSE10_MIN, V10_HOUSE11_MIN, V10_HOUSE12_MIN};
+      {V10_ASC_MIN, V10_MC_MIN, V10_ARMC_MIN, V10_VERTEX_MIN,
+          V10_EQUASC_MIN, V10_COASC1_MIN, V10_COASC2_MIN, V10_POLASC_MIN,
+          V10_HOUSE1_MIN, V10_HOUSE2_MIN, V10_HOUSE3_MIN, V10_HOUSE4_MIN,
+          V10_HOUSE5_MIN, V10_HOUSE6_MIN, V10_HOUSE7_MIN, V10_HOUSE8_MIN,
+          V10_HOUSE9_MIN, V10_HOUSE10_MIN, V10_HOUSE11_MIN, V10_HOUSE12_MIN};
   static final double[] maxLonV10 = new double[]
-      {V10_ASC_MAX,    V10_MC_MAX,      V10_ARMC_MAX,    V10_VERTEX_MAX,
-       V10_EQUASC_MAX, V10_COASC1_MAX,  V10_COASC2_MAX,  V10_POLASC_MAX,
-       V10_HOUSE1_MAX, V10_HOUSE2_MAX,  V10_HOUSE3_MAX,  V10_HOUSE4_MAX,
-       V10_HOUSE5_MAX, V10_HOUSE6_MAX,  V10_HOUSE7_MAX,  V10_HOUSE8_MAX,
-       V10_HOUSE9_MAX, V10_HOUSE10_MAX, V10_HOUSE11_MAX, V10_HOUSE12_MAX};
+      {V10_ASC_MAX, V10_MC_MAX, V10_ARMC_MAX, V10_VERTEX_MAX,
+          V10_EQUASC_MAX, V10_COASC1_MAX, V10_COASC2_MAX, V10_POLASC_MAX,
+          V10_HOUSE1_MAX, V10_HOUSE2_MAX, V10_HOUSE3_MAX, V10_HOUSE4_MAX,
+          V10_HOUSE5_MAX, V10_HOUSE6_MAX, V10_HOUSE7_MAX, V10_HOUSE8_MAX,
+          V10_HOUSE9_MAX, V10_HOUSE10_MAX, V10_HOUSE11_MAX, V10_HOUSE12_MAX};
   static final double[] minLonV20 = new double[]
-      {V20_ASC_MIN,    V20_MC_MIN,      V20_ARMC_MIN,    V20_VERTEX_MIN,
-       V20_EQUASC_MIN, V20_COASC1_MIN,  V20_COASC2_MIN,  V20_POLASC_MIN,
-       V20_HOUSE1_MIN, V20_HOUSE2_MIN,  V20_HOUSE3_MIN,  V20_HOUSE4_MIN,
-       V20_HOUSE5_MIN, V20_HOUSE6_MIN,  V20_HOUSE7_MIN,  V20_HOUSE8_MIN,
-       V20_HOUSE9_MIN, V20_HOUSE10_MIN, V20_HOUSE11_MIN, V20_HOUSE12_MIN};
+      {V20_ASC_MIN, V20_MC_MIN, V20_ARMC_MIN, V20_VERTEX_MIN,
+          V20_EQUASC_MIN, V20_COASC1_MIN, V20_COASC2_MIN, V20_POLASC_MIN,
+          V20_HOUSE1_MIN, V20_HOUSE2_MIN, V20_HOUSE3_MIN, V20_HOUSE4_MIN,
+          V20_HOUSE5_MIN, V20_HOUSE6_MIN, V20_HOUSE7_MIN, V20_HOUSE8_MIN,
+          V20_HOUSE9_MIN, V20_HOUSE10_MIN, V20_HOUSE11_MIN, V20_HOUSE12_MIN};
   static final double[] maxLonV20 = new double[]
-      {V20_ASC_MAX,    V20_MC_MAX,      V20_ARMC_MAX,    V20_VERTEX_MAX,
-       V20_EQUASC_MAX, V20_COASC1_MAX,  V20_COASC2_MAX,  V20_POLASC_MAX,
-       V20_HOUSE1_MAX, V20_HOUSE2_MAX,  V20_HOUSE3_MAX,  V20_HOUSE4_MAX,
-       V20_HOUSE5_MAX, V20_HOUSE6_MAX,  V20_HOUSE7_MAX,  V20_HOUSE8_MAX,
-       V20_HOUSE9_MAX, V20_HOUSE10_MAX, V20_HOUSE11_MAX, V20_HOUSE12_MAX};
+      {V20_ASC_MAX, V20_MC_MAX, V20_ARMC_MAX, V20_VERTEX_MAX,
+          V20_EQUASC_MAX, V20_COASC1_MAX, V20_COASC2_MAX, V20_POLASC_MAX,
+          V20_HOUSE1_MAX, V20_HOUSE2_MAX, V20_HOUSE3_MAX, V20_HOUSE4_MAX,
+          V20_HOUSE5_MAX, V20_HOUSE6_MAX, V20_HOUSE7_MAX, V20_HOUSE8_MAX,
+          V20_HOUSE9_MAX, V20_HOUSE10_MAX, V20_HOUSE11_MAX, V20_HOUSE12_MAX};
   static final double[] minLonV30 = new double[]
-      {V30_ASC_MIN,    V30_MC_MIN,      V30_ARMC_MIN,    V30_VERTEX_MIN,
-       V30_EQUASC_MIN, V30_COASC1_MIN,  V30_COASC2_MIN,  V30_POLASC_MIN,
-       V30_HOUSE1_MIN, V30_HOUSE2_MIN,  V30_HOUSE3_MIN,  V30_HOUSE4_MIN,
-       V30_HOUSE5_MIN, V30_HOUSE6_MIN,  V30_HOUSE7_MIN,  V30_HOUSE8_MIN,
-       V30_HOUSE9_MIN, V30_HOUSE10_MIN, V30_HOUSE11_MIN, V30_HOUSE12_MIN};
+      {V30_ASC_MIN, V30_MC_MIN, V30_ARMC_MIN, V30_VERTEX_MIN,
+          V30_EQUASC_MIN, V30_COASC1_MIN, V30_COASC2_MIN, V30_POLASC_MIN,
+          V30_HOUSE1_MIN, V30_HOUSE2_MIN, V30_HOUSE3_MIN, V30_HOUSE4_MIN,
+          V30_HOUSE5_MIN, V30_HOUSE6_MIN, V30_HOUSE7_MIN, V30_HOUSE8_MIN,
+          V30_HOUSE9_MIN, V30_HOUSE10_MIN, V30_HOUSE11_MIN, V30_HOUSE12_MIN};
   static final double[] maxLonV30 = new double[]
-      {V30_ASC_MAX,    V30_MC_MAX,      V30_ARMC_MAX,    V30_VERTEX_MAX,
-       V30_EQUASC_MAX, V30_COASC1_MAX,  V30_COASC2_MAX,  V30_POLASC_MAX,
-       V30_HOUSE1_MAX, V30_HOUSE2_MAX,  V30_HOUSE3_MAX,  V30_HOUSE4_MAX,
-       V30_HOUSE5_MAX, V30_HOUSE6_MAX,  V30_HOUSE7_MAX,  V30_HOUSE8_MAX,
-       V30_HOUSE9_MAX, V30_HOUSE10_MAX, V30_HOUSE11_MAX, V30_HOUSE12_MAX};
+      {V30_ASC_MAX, V30_MC_MAX, V30_ARMC_MAX, V30_VERTEX_MAX,
+          V30_EQUASC_MAX, V30_COASC1_MAX, V30_COASC2_MAX, V30_POLASC_MAX,
+          V30_HOUSE1_MAX, V30_HOUSE2_MAX, V30_HOUSE3_MAX, V30_HOUSE4_MAX,
+          V30_HOUSE5_MAX, V30_HOUSE6_MAX, V30_HOUSE7_MAX, V30_HOUSE8_MAX,
+          V30_HOUSE9_MAX, V30_HOUSE10_MAX, V30_HOUSE11_MAX, V30_HOUSE12_MAX};
   static final double[] minLonV40 = new double[]
-      {V40_ASC_MIN,    V40_MC_MIN,      V40_ARMC_MIN,    V40_VERTEX_MIN,
-       V40_EQUASC_MIN, V40_COASC1_MIN,  V40_COASC2_MIN,  V40_POLASC_MIN,
-       V40_HOUSE1_MIN, V40_HOUSE2_MIN,  V40_HOUSE3_MIN,  V40_HOUSE4_MIN,
-       V40_HOUSE5_MIN, V40_HOUSE6_MIN,  V40_HOUSE7_MIN,  V40_HOUSE8_MIN,
-       V40_HOUSE9_MIN, V40_HOUSE10_MIN, V40_HOUSE11_MIN, V40_HOUSE12_MIN};
+      {V40_ASC_MIN, V40_MC_MIN, V40_ARMC_MIN, V40_VERTEX_MIN,
+          V40_EQUASC_MIN, V40_COASC1_MIN, V40_COASC2_MIN, V40_POLASC_MIN,
+          V40_HOUSE1_MIN, V40_HOUSE2_MIN, V40_HOUSE3_MIN, V40_HOUSE4_MIN,
+          V40_HOUSE5_MIN, V40_HOUSE6_MIN, V40_HOUSE7_MIN, V40_HOUSE8_MIN,
+          V40_HOUSE9_MIN, V40_HOUSE10_MIN, V40_HOUSE11_MIN, V40_HOUSE12_MIN};
   static final double[] maxLonV40 = new double[]
-      {V40_ASC_MAX,    V40_MC_MAX,      V40_ARMC_MAX,    V40_VERTEX_MAX,
-       V40_EQUASC_MAX, V40_COASC1_MAX,  V40_COASC2_MAX,  V40_POLASC_MAX,
-       V40_HOUSE1_MAX, V40_HOUSE2_MAX,  V40_HOUSE3_MAX,  V40_HOUSE4_MAX,
-       V40_HOUSE5_MAX, V40_HOUSE6_MAX,  V40_HOUSE7_MAX,  V40_HOUSE8_MAX,
-       V40_HOUSE9_MAX, V40_HOUSE10_MAX, V40_HOUSE11_MAX, V40_HOUSE12_MAX};
+      {V40_ASC_MAX, V40_MC_MAX, V40_ARMC_MAX, V40_VERTEX_MAX,
+          V40_EQUASC_MAX, V40_COASC1_MAX, V40_COASC2_MAX, V40_POLASC_MAX,
+          V40_HOUSE1_MAX, V40_HOUSE2_MAX, V40_HOUSE3_MAX, V40_HOUSE4_MAX,
+          V40_HOUSE5_MAX, V40_HOUSE6_MAX, V40_HOUSE7_MAX, V40_HOUSE8_MAX,
+          V40_HOUSE9_MAX, V40_HOUSE10_MAX, V40_HOUSE11_MAX, V40_HOUSE12_MAX};
   static final double[] minLonV50 = new double[]
-      {V50_ASC_MIN,    V50_MC_MIN,      V50_ARMC_MIN,    V50_VERTEX_MIN,
-       V50_EQUASC_MIN, V50_COASC1_MIN,  V50_COASC2_MIN,  V50_POLASC_MIN,
-       V50_HOUSE1_MIN, V50_HOUSE2_MIN,  V50_HOUSE3_MIN,  V50_HOUSE4_MIN,
-       V50_HOUSE5_MIN, V50_HOUSE6_MIN,  V50_HOUSE7_MIN,  V50_HOUSE8_MIN,
-       V50_HOUSE9_MIN, V50_HOUSE10_MIN, V50_HOUSE11_MIN, V50_HOUSE12_MIN};
+      {V50_ASC_MIN, V50_MC_MIN, V50_ARMC_MIN, V50_VERTEX_MIN,
+          V50_EQUASC_MIN, V50_COASC1_MIN, V50_COASC2_MIN, V50_POLASC_MIN,
+          V50_HOUSE1_MIN, V50_HOUSE2_MIN, V50_HOUSE3_MIN, V50_HOUSE4_MIN,
+          V50_HOUSE5_MIN, V50_HOUSE6_MIN, V50_HOUSE7_MIN, V50_HOUSE8_MIN,
+          V50_HOUSE9_MIN, V50_HOUSE10_MIN, V50_HOUSE11_MIN, V50_HOUSE12_MIN};
   static final double[] maxLonV50 = new double[]
-      {V50_ASC_MAX,    V50_MC_MAX,      V50_ARMC_MAX,    V50_VERTEX_MAX,
-       V50_EQUASC_MAX, V50_COASC1_MAX,  V50_COASC2_MAX,  V50_POLASC_MAX,
-       V50_HOUSE1_MAX, V50_HOUSE2_MAX,  V50_HOUSE3_MAX,  V50_HOUSE4_MAX,
-       V50_HOUSE5_MAX, V50_HOUSE6_MAX,  V50_HOUSE7_MAX,  V50_HOUSE8_MAX,
-       V50_HOUSE9_MAX, V50_HOUSE10_MAX, V50_HOUSE11_MAX, V50_HOUSE12_MAX};
+      {V50_ASC_MAX, V50_MC_MAX, V50_ARMC_MAX, V50_VERTEX_MAX,
+          V50_EQUASC_MAX, V50_COASC1_MAX, V50_COASC2_MAX, V50_POLASC_MAX,
+          V50_HOUSE1_MAX, V50_HOUSE2_MAX, V50_HOUSE3_MAX, V50_HOUSE4_MAX,
+          V50_HOUSE5_MAX, V50_HOUSE6_MAX, V50_HOUSE7_MAX, V50_HOUSE8_MAX,
+          V50_HOUSE9_MAX, V50_HOUSE10_MAX, V50_HOUSE11_MAX, V50_HOUSE12_MAX};
   static final double[] minLonV60 = new double[]
-      {V60_ASC_MIN,    V60_MC_MIN,      V60_ARMC_MIN,    V60_VERTEX_MIN,
-       V60_EQUASC_MIN, V60_COASC1_MIN,  V60_COASC2_MIN,  V60_POLASC_MIN,
-       V60_HOUSE1_MIN, V60_HOUSE2_MIN,  V60_HOUSE3_MIN,  V60_HOUSE4_MIN,
-       V60_HOUSE5_MIN, V60_HOUSE6_MIN,  V60_HOUSE7_MIN,  V60_HOUSE8_MIN,
-       V60_HOUSE9_MIN, V60_HOUSE10_MIN, V60_HOUSE11_MIN, V60_HOUSE12_MIN};
+      {V60_ASC_MIN, V60_MC_MIN, V60_ARMC_MIN, V60_VERTEX_MIN,
+          V60_EQUASC_MIN, V60_COASC1_MIN, V60_COASC2_MIN, V60_POLASC_MIN,
+          V60_HOUSE1_MIN, V60_HOUSE2_MIN, V60_HOUSE3_MIN, V60_HOUSE4_MIN,
+          V60_HOUSE5_MIN, V60_HOUSE6_MIN, V60_HOUSE7_MIN, V60_HOUSE8_MIN,
+          V60_HOUSE9_MIN, V60_HOUSE10_MIN, V60_HOUSE11_MIN, V60_HOUSE12_MIN};
   static final double[] maxLonV60 = new double[]
-      {V60_ASC_MAX,    V60_MC_MAX,      V60_ARMC_MAX,    V60_VERTEX_MAX,
-       V60_EQUASC_MAX, V60_COASC1_MAX,  V60_COASC2_MAX,  V60_POLASC_MAX,
-       V60_HOUSE1_MAX, V60_HOUSE2_MAX,  V60_HOUSE3_MAX,  V60_HOUSE4_MAX,
-       V60_HOUSE5_MAX, V60_HOUSE6_MAX,  V60_HOUSE7_MAX,  V60_HOUSE8_MAX,
-       V60_HOUSE9_MAX, V60_HOUSE10_MAX, V60_HOUSE11_MAX, V60_HOUSE12_MAX};
+      {V60_ASC_MAX, V60_MC_MAX, V60_ARMC_MAX, V60_VERTEX_MAX,
+          V60_EQUASC_MAX, V60_COASC1_MAX, V60_COASC2_MAX, V60_POLASC_MAX,
+          V60_HOUSE1_MAX, V60_HOUSE2_MAX, V60_HOUSE3_MAX, V60_HOUSE4_MAX,
+          V60_HOUSE5_MAX, V60_HOUSE6_MAX, V60_HOUSE7_MAX, V60_HOUSE8_MAX,
+          V60_HOUSE9_MAX, V60_HOUSE10_MAX, V60_HOUSE11_MAX, V60_HOUSE12_MAX};
   static final double[] minLonV66 = new double[]
-      {V66_ASC_MIN,    V66_MC_MIN,      V66_ARMC_MIN,    V66_VERTEX_MIN,
-       V66_EQUASC_MIN, V66_COASC1_MIN,  V66_COASC2_MIN,  V66_POLASC_MIN,
-       V66_HOUSE1_MIN, V66_HOUSE2_MIN,  V66_HOUSE3_MIN,  V66_HOUSE4_MIN,
-       V66_HOUSE5_MIN, V66_HOUSE6_MIN,  V66_HOUSE7_MIN,  V66_HOUSE8_MIN,
-       V66_HOUSE9_MIN, V66_HOUSE10_MIN, V66_HOUSE11_MIN, V66_HOUSE12_MIN};
+      {V66_ASC_MIN, V66_MC_MIN, V66_ARMC_MIN, V66_VERTEX_MIN,
+          V66_EQUASC_MIN, V66_COASC1_MIN, V66_COASC2_MIN, V66_POLASC_MIN,
+          V66_HOUSE1_MIN, V66_HOUSE2_MIN, V66_HOUSE3_MIN, V66_HOUSE4_MIN,
+          V66_HOUSE5_MIN, V66_HOUSE6_MIN, V66_HOUSE7_MIN, V66_HOUSE8_MIN,
+          V66_HOUSE9_MIN, V66_HOUSE10_MIN, V66_HOUSE11_MIN, V66_HOUSE12_MIN};
   static final double[] maxLonV66 = new double[]
-      {V66_ASC_MAX,    V66_MC_MAX,      V66_ARMC_MAX,    V66_VERTEX_MAX,
-       V66_EQUASC_MAX, V66_COASC1_MAX,  V66_COASC2_MAX,  V66_POLASC_MAX,
-       V66_HOUSE1_MAX, V66_HOUSE2_MAX,  V66_HOUSE3_MAX,  V66_HOUSE4_MAX,
-       V66_HOUSE5_MAX, V66_HOUSE6_MAX,  V66_HOUSE7_MAX,  V66_HOUSE8_MAX,
-       V66_HOUSE9_MAX, V66_HOUSE10_MAX, V66_HOUSE11_MAX, V66_HOUSE12_MAX};
+      {V66_ASC_MAX, V66_MC_MAX, V66_ARMC_MAX, V66_VERTEX_MAX,
+          V66_EQUASC_MAX, V66_COASC1_MAX, V66_COASC2_MAX, V66_POLASC_MAX,
+          V66_HOUSE1_MAX, V66_HOUSE2_MAX, V66_HOUSE3_MAX, V66_HOUSE4_MAX,
+          V66_HOUSE5_MAX, V66_HOUSE6_MAX, V66_HOUSE7_MAX, V66_HOUSE8_MAX,
+          V66_HOUSE9_MAX, V66_HOUSE10_MAX, V66_HOUSE11_MAX, V66_HOUSE12_MAX};
   static final double[] minLonV70 = new double[]
-      {V70_ASC_MIN,    V70_MC_MIN,      V70_ARMC_MIN,    V70_VERTEX_MIN,
-       V70_EQUASC_MIN, V70_COASC1_MIN,  V70_COASC2_MIN,  V70_POLASC_MIN,
-       V70_HOUSE1_MIN, V70_HOUSE2_MIN,  V70_HOUSE3_MIN,  V70_HOUSE4_MIN,
-       V70_HOUSE5_MIN, V70_HOUSE6_MIN,  V70_HOUSE7_MIN,  V70_HOUSE8_MIN,
-       V70_HOUSE9_MIN, V70_HOUSE10_MIN, V70_HOUSE11_MIN, V70_HOUSE12_MIN};
+      {V70_ASC_MIN, V70_MC_MIN, V70_ARMC_MIN, V70_VERTEX_MIN,
+          V70_EQUASC_MIN, V70_COASC1_MIN, V70_COASC2_MIN, V70_POLASC_MIN,
+          V70_HOUSE1_MIN, V70_HOUSE2_MIN, V70_HOUSE3_MIN, V70_HOUSE4_MIN,
+          V70_HOUSE5_MIN, V70_HOUSE6_MIN, V70_HOUSE7_MIN, V70_HOUSE8_MIN,
+          V70_HOUSE9_MIN, V70_HOUSE10_MIN, V70_HOUSE11_MIN, V70_HOUSE12_MIN};
   static final double[] maxLonV70 = new double[]
-      {V70_ASC_MAX,    V70_MC_MAX,      V70_ARMC_MAX,    V70_VERTEX_MAX,
-       V70_EQUASC_MAX, V70_COASC1_MAX,  V70_COASC2_MAX,  V70_POLASC_MAX,
-       V70_HOUSE1_MAX, V70_HOUSE2_MAX,  V70_HOUSE3_MAX,  V70_HOUSE4_MAX,
-       V70_HOUSE5_MAX, V70_HOUSE6_MAX,  V70_HOUSE7_MAX,  V70_HOUSE8_MAX,
-       V70_HOUSE9_MAX, V70_HOUSE10_MAX, V70_HOUSE11_MAX, V70_HOUSE12_MAX};
+      {V70_ASC_MAX, V70_MC_MAX, V70_ARMC_MAX, V70_VERTEX_MAX,
+          V70_EQUASC_MAX, V70_COASC1_MAX, V70_COASC2_MAX, V70_POLASC_MAX,
+          V70_HOUSE1_MAX, V70_HOUSE2_MAX, V70_HOUSE3_MAX, V70_HOUSE4_MAX,
+          V70_HOUSE5_MAX, V70_HOUSE6_MAX, V70_HOUSE7_MAX, V70_HOUSE8_MAX,
+          V70_HOUSE9_MAX, V70_HOUSE10_MAX, V70_HOUSE11_MAX, V70_HOUSE12_MAX};
   static final double[] minLonV80 = new double[]
-      {V80_ASC_MIN,    V80_MC_MIN,      V80_ARMC_MIN,    V80_VERTEX_MIN,
-       V80_EQUASC_MIN, V80_COASC1_MIN,  V80_COASC2_MIN,  V80_POLASC_MIN,
-       V80_HOUSE1_MIN, V80_HOUSE2_MIN,  V80_HOUSE3_MIN,  V80_HOUSE4_MIN,
-       V80_HOUSE5_MIN, V80_HOUSE6_MIN,  V80_HOUSE7_MIN,  V80_HOUSE8_MIN,
-       V80_HOUSE9_MIN, V80_HOUSE10_MIN, V80_HOUSE11_MIN, V80_HOUSE12_MIN};
+      {V80_ASC_MIN, V80_MC_MIN, V80_ARMC_MIN, V80_VERTEX_MIN,
+          V80_EQUASC_MIN, V80_COASC1_MIN, V80_COASC2_MIN, V80_POLASC_MIN,
+          V80_HOUSE1_MIN, V80_HOUSE2_MIN, V80_HOUSE3_MIN, V80_HOUSE4_MIN,
+          V80_HOUSE5_MIN, V80_HOUSE6_MIN, V80_HOUSE7_MIN, V80_HOUSE8_MIN,
+          V80_HOUSE9_MIN, V80_HOUSE10_MIN, V80_HOUSE11_MIN, V80_HOUSE12_MIN};
   static final double[] maxLonV80 = new double[]
-      {V80_ASC_MAX,    V80_MC_MAX,      V80_ARMC_MAX,    V80_VERTEX_MAX,
-       V80_EQUASC_MAX, V80_COASC1_MAX,  V80_COASC2_MAX,  V80_POLASC_MAX,
-       V80_HOUSE1_MAX, V80_HOUSE2_MAX,  V80_HOUSE3_MAX,  V80_HOUSE4_MAX,
-       V80_HOUSE5_MAX, V80_HOUSE6_MAX,  V80_HOUSE7_MAX,  V80_HOUSE8_MAX,
-       V80_HOUSE9_MAX, V80_HOUSE10_MAX, V80_HOUSE11_MAX, V80_HOUSE12_MAX};
+      {V80_ASC_MAX, V80_MC_MAX, V80_ARMC_MAX, V80_VERTEX_MAX,
+          V80_EQUASC_MAX, V80_COASC1_MAX, V80_COASC2_MAX, V80_POLASC_MAX,
+          V80_HOUSE1_MAX, V80_HOUSE2_MAX, V80_HOUSE3_MAX, V80_HOUSE4_MAX,
+          V80_HOUSE5_MAX, V80_HOUSE6_MAX, V80_HOUSE7_MAX, V80_HOUSE8_MAX,
+          V80_HOUSE9_MAX, V80_HOUSE10_MAX, V80_HOUSE11_MAX, V80_HOUSE12_MAX};
   static final double[] minLonV85 = new double[]
-      {V85_ASC_MIN,    V85_MC_MIN,      V85_ARMC_MIN,    V85_VERTEX_MIN,
-       V85_EQUASC_MIN, V85_COASC1_MIN,  V85_COASC2_MIN,  V85_POLASC_MIN,
-       V85_HOUSE1_MIN, V85_HOUSE2_MIN,  V85_HOUSE3_MIN,  V85_HOUSE4_MIN,
-       V85_HOUSE5_MIN, V85_HOUSE6_MIN,  V85_HOUSE7_MIN,  V85_HOUSE8_MIN,
-       V85_HOUSE9_MIN, V85_HOUSE10_MIN, V85_HOUSE11_MIN, V85_HOUSE12_MIN};
+      {V85_ASC_MIN, V85_MC_MIN, V85_ARMC_MIN, V85_VERTEX_MIN,
+          V85_EQUASC_MIN, V85_COASC1_MIN, V85_COASC2_MIN, V85_POLASC_MIN,
+          V85_HOUSE1_MIN, V85_HOUSE2_MIN, V85_HOUSE3_MIN, V85_HOUSE4_MIN,
+          V85_HOUSE5_MIN, V85_HOUSE6_MIN, V85_HOUSE7_MIN, V85_HOUSE8_MIN,
+          V85_HOUSE9_MIN, V85_HOUSE10_MIN, V85_HOUSE11_MIN, V85_HOUSE12_MIN};
   static final double[] maxLonV85 = new double[]
-      {V85_ASC_MAX,    V85_MC_MAX,      V85_ARMC_MAX,    V85_VERTEX_MAX,
-       V85_EQUASC_MAX, V85_COASC1_MAX,  V85_COASC2_MAX,  V85_POLASC_MAX,
-       V85_HOUSE1_MAX, V85_HOUSE2_MAX,  V85_HOUSE3_MAX,  V85_HOUSE4_MAX,
-       V85_HOUSE5_MAX, V85_HOUSE6_MAX,  V85_HOUSE7_MAX,  V85_HOUSE8_MAX,
-       V85_HOUSE9_MAX, V85_HOUSE10_MAX, V85_HOUSE11_MAX, V85_HOUSE12_MAX};
+      {V85_ASC_MAX, V85_MC_MAX, V85_ARMC_MAX, V85_VERTEX_MAX,
+          V85_EQUASC_MAX, V85_COASC1_MAX, V85_COASC2_MAX, V85_POLASC_MAX,
+          V85_HOUSE1_MAX, V85_HOUSE2_MAX, V85_HOUSE3_MAX, V85_HOUSE4_MAX,
+          V85_HOUSE5_MAX, V85_HOUSE6_MAX, V85_HOUSE7_MAX, V85_HOUSE8_MAX,
+          V85_HOUSE9_MAX, V85_HOUSE10_MAX, V85_HOUSE11_MAX, V85_HOUSE12_MAX};
   static final double[] minLonV88 = new double[]
-      {V88_ASC_MIN,    V88_MC_MIN,      V88_ARMC_MIN,    V88_VERTEX_MIN,
-       V88_EQUASC_MIN, V88_COASC1_MIN,  V88_COASC2_MIN,  V88_POLASC_MIN,
-       V88_HOUSE1_MIN, V88_HOUSE2_MIN,  V88_HOUSE3_MIN,  V88_HOUSE4_MIN,
-       V88_HOUSE5_MIN, V88_HOUSE6_MIN,  V88_HOUSE7_MIN,  V88_HOUSE8_MIN,
-       V88_HOUSE9_MIN, V88_HOUSE10_MIN, V88_HOUSE11_MIN, V88_HOUSE12_MIN};
+      {V88_ASC_MIN, V88_MC_MIN, V88_ARMC_MIN, V88_VERTEX_MIN,
+          V88_EQUASC_MIN, V88_COASC1_MIN, V88_COASC2_MIN, V88_POLASC_MIN,
+          V88_HOUSE1_MIN, V88_HOUSE2_MIN, V88_HOUSE3_MIN, V88_HOUSE4_MIN,
+          V88_HOUSE5_MIN, V88_HOUSE6_MIN, V88_HOUSE7_MIN, V88_HOUSE8_MIN,
+          V88_HOUSE9_MIN, V88_HOUSE10_MIN, V88_HOUSE11_MIN, V88_HOUSE12_MIN};
   static final double[] maxLonV88 = new double[]
-      {V88_ASC_MAX,    V88_MC_MAX,      V88_ARMC_MAX,    V88_VERTEX_MAX,
-       V88_EQUASC_MAX, V88_COASC1_MAX,  V88_COASC2_MAX,  V88_POLASC_MAX,
-       V88_HOUSE1_MAX, V88_HOUSE2_MAX,  V88_HOUSE3_MAX,  V88_HOUSE4_MAX,
-       V88_HOUSE5_MAX, V88_HOUSE6_MAX,  V88_HOUSE7_MAX,  V88_HOUSE8_MAX,
-       V88_HOUSE9_MAX, V88_HOUSE10_MAX, V88_HOUSE11_MAX, V88_HOUSE12_MAX};
+      {V88_ASC_MAX, V88_MC_MAX, V88_ARMC_MAX, V88_VERTEX_MAX,
+          V88_EQUASC_MAX, V88_COASC1_MAX, V88_COASC2_MAX, V88_POLASC_MAX,
+          V88_HOUSE1_MAX, V88_HOUSE2_MAX, V88_HOUSE3_MAX, V88_HOUSE4_MAX,
+          V88_HOUSE5_MAX, V88_HOUSE6_MAX, V88_HOUSE7_MAX, V88_HOUSE8_MAX,
+          V88_HOUSE9_MAX, V88_HOUSE10_MAX, V88_HOUSE11_MAX, V88_HOUSE12_MAX};
   static final double[] minLonV89x = new double[]
-      {V89x_ASC_MIN,    V89x_MC_MIN,      V89x_ARMC_MIN,    V89x_VERTEX_MIN,
-       V89x_EQUASC_MIN, V89x_COASC1_MIN,  V89x_COASC2_MIN,  V89x_POLASC_MIN,
-       V89x_HOUSE1_MIN, V89x_HOUSE2_MIN,  V89x_HOUSE3_MIN,  V89x_HOUSE4_MIN,
-       V89x_HOUSE5_MIN, V89x_HOUSE6_MIN,  V89x_HOUSE7_MIN,  V89x_HOUSE8_MIN,
-       V89x_HOUSE9_MIN, V89x_HOUSE10_MIN, V89x_HOUSE11_MIN, V89x_HOUSE12_MIN};
+      {V89x_ASC_MIN, V89x_MC_MIN, V89x_ARMC_MIN, V89x_VERTEX_MIN,
+          V89x_EQUASC_MIN, V89x_COASC1_MIN, V89x_COASC2_MIN, V89x_POLASC_MIN,
+          V89x_HOUSE1_MIN, V89x_HOUSE2_MIN, V89x_HOUSE3_MIN, V89x_HOUSE4_MIN,
+          V89x_HOUSE5_MIN, V89x_HOUSE6_MIN, V89x_HOUSE7_MIN, V89x_HOUSE8_MIN,
+          V89x_HOUSE9_MIN, V89x_HOUSE10_MIN, V89x_HOUSE11_MIN, V89x_HOUSE12_MIN};
   static final double[] maxLonV89x = new double[]
-      {V89x_ASC_MAX,    V89x_MC_MAX,      V89x_ARMC_MAX,    V89x_VERTEX_MAX,
-       V89x_EQUASC_MAX, V89x_COASC1_MAX,  V89x_COASC2_MAX,  V89x_POLASC_MAX,
-       V89x_HOUSE1_MAX, V89x_HOUSE2_MAX,  V89x_HOUSE3_MAX,  V89x_HOUSE4_MAX,
-       V89x_HOUSE5_MAX, V89x_HOUSE6_MAX,  V89x_HOUSE7_MAX,  V89x_HOUSE8_MAX,
-       V89x_HOUSE9_MAX, V89x_HOUSE10_MAX, V89x_HOUSE11_MAX, V89x_HOUSE12_MAX};
+      {V89x_ASC_MAX, V89x_MC_MAX, V89x_ARMC_MAX, V89x_VERTEX_MAX,
+          V89x_EQUASC_MAX, V89x_COASC1_MAX, V89x_COASC2_MAX, V89x_POLASC_MAX,
+          V89x_HOUSE1_MAX, V89x_HOUSE2_MAX, V89x_HOUSE3_MAX, V89x_HOUSE4_MAX,
+          V89x_HOUSE5_MAX, V89x_HOUSE6_MAX, V89x_HOUSE7_MAX, V89x_HOUSE8_MAX,
+          V89x_HOUSE9_MAX, V89x_HOUSE10_MAX, V89x_HOUSE11_MAX, V89x_HOUSE12_MAX};
 
   static final double[] minLonX10 = new double[]
-      {X10_ASC_MIN,    X10_MC_MIN,      X10_ARMC_MIN,    X10_VERTEX_MIN,
-       X10_EQUASC_MIN, X10_COASC1_MIN,  X10_COASC2_MIN,  X10_POLASC_MIN,
-       X10_HOUSE1_MIN, X10_HOUSE2_MIN,  X10_HOUSE3_MIN,  X10_HOUSE4_MIN,
-       X10_HOUSE5_MIN, X10_HOUSE6_MIN,  X10_HOUSE7_MIN,  X10_HOUSE8_MIN,
-       X10_HOUSE9_MIN, X10_HOUSE10_MIN, X10_HOUSE11_MIN, X10_HOUSE12_MIN};
+      {X10_ASC_MIN, X10_MC_MIN, X10_ARMC_MIN, X10_VERTEX_MIN,
+          X10_EQUASC_MIN, X10_COASC1_MIN, X10_COASC2_MIN, X10_POLASC_MIN,
+          X10_HOUSE1_MIN, X10_HOUSE2_MIN, X10_HOUSE3_MIN, X10_HOUSE4_MIN,
+          X10_HOUSE5_MIN, X10_HOUSE6_MIN, X10_HOUSE7_MIN, X10_HOUSE8_MIN,
+          X10_HOUSE9_MIN, X10_HOUSE10_MIN, X10_HOUSE11_MIN, X10_HOUSE12_MIN};
   static final double[] maxLonX10 = new double[]
-      {X10_ASC_MAX,    X10_MC_MAX,      X10_ARMC_MAX,    X10_VERTEX_MAX,
-       X10_EQUASC_MAX, X10_COASC1_MAX,  X10_COASC2_MAX,  X10_POLASC_MAX,
-       X10_HOUSE1_MAX, X10_HOUSE2_MAX,  X10_HOUSE3_MAX,  X10_HOUSE4_MAX,
-       X10_HOUSE5_MAX, X10_HOUSE6_MAX,  X10_HOUSE7_MAX,  X10_HOUSE8_MAX,
-       X10_HOUSE9_MAX, X10_HOUSE10_MAX, X10_HOUSE11_MAX, X10_HOUSE12_MAX};
+      {X10_ASC_MAX, X10_MC_MAX, X10_ARMC_MAX, X10_VERTEX_MAX,
+          X10_EQUASC_MAX, X10_COASC1_MAX, X10_COASC2_MAX, X10_POLASC_MAX,
+          X10_HOUSE1_MAX, X10_HOUSE2_MAX, X10_HOUSE3_MAX, X10_HOUSE4_MAX,
+          X10_HOUSE5_MAX, X10_HOUSE6_MAX, X10_HOUSE7_MAX, X10_HOUSE8_MAX,
+          X10_HOUSE9_MAX, X10_HOUSE10_MAX, X10_HOUSE11_MAX, X10_HOUSE12_MAX};
   static final double[] minLonX20 = new double[]
-      {X20_ASC_MIN,    X20_MC_MIN,      X20_ARMC_MIN,    X20_VERTEX_MIN,
-       X20_EQUASC_MIN, X20_COASC1_MIN,  X20_COASC2_MIN,  X20_POLASC_MIN,
-       X20_HOUSE1_MIN, X20_HOUSE2_MIN,  X20_HOUSE3_MIN,  X20_HOUSE4_MIN,
-       X20_HOUSE5_MIN, X20_HOUSE6_MIN,  X20_HOUSE7_MIN,  X20_HOUSE8_MIN,
-       X20_HOUSE9_MIN, X20_HOUSE10_MIN, X20_HOUSE11_MIN, X20_HOUSE12_MIN};
+      {X20_ASC_MIN, X20_MC_MIN, X20_ARMC_MIN, X20_VERTEX_MIN,
+          X20_EQUASC_MIN, X20_COASC1_MIN, X20_COASC2_MIN, X20_POLASC_MIN,
+          X20_HOUSE1_MIN, X20_HOUSE2_MIN, X20_HOUSE3_MIN, X20_HOUSE4_MIN,
+          X20_HOUSE5_MIN, X20_HOUSE6_MIN, X20_HOUSE7_MIN, X20_HOUSE8_MIN,
+          X20_HOUSE9_MIN, X20_HOUSE10_MIN, X20_HOUSE11_MIN, X20_HOUSE12_MIN};
   static final double[] maxLonX20 = new double[]
-      {X20_ASC_MAX,    X20_MC_MAX,      X20_ARMC_MAX,    X20_VERTEX_MAX,
-       X20_EQUASC_MAX, X20_COASC1_MAX,  X20_COASC2_MAX,  X20_POLASC_MAX,
-       X20_HOUSE1_MAX, X20_HOUSE2_MAX,  X20_HOUSE3_MAX,  X20_HOUSE4_MAX,
-       X20_HOUSE5_MAX, X20_HOUSE6_MAX,  X20_HOUSE7_MAX,  X20_HOUSE8_MAX,
-       X20_HOUSE9_MAX, X20_HOUSE10_MAX, X20_HOUSE11_MAX, X20_HOUSE12_MAX};
+      {X20_ASC_MAX, X20_MC_MAX, X20_ARMC_MAX, X20_VERTEX_MAX,
+          X20_EQUASC_MAX, X20_COASC1_MAX, X20_COASC2_MAX, X20_POLASC_MAX,
+          X20_HOUSE1_MAX, X20_HOUSE2_MAX, X20_HOUSE3_MAX, X20_HOUSE4_MAX,
+          X20_HOUSE5_MAX, X20_HOUSE6_MAX, X20_HOUSE7_MAX, X20_HOUSE8_MAX,
+          X20_HOUSE9_MAX, X20_HOUSE10_MAX, X20_HOUSE11_MAX, X20_HOUSE12_MAX};
   static final double[] minLonX30 = new double[]
-      {X30_ASC_MIN,    X30_MC_MIN,      X30_ARMC_MIN,    X30_VERTEX_MIN,
-       X30_EQUASC_MIN, X30_COASC1_MIN,  X30_COASC2_MIN,  X30_POLASC_MIN,
-       X30_HOUSE1_MIN, X30_HOUSE2_MIN,  X30_HOUSE3_MIN,  X30_HOUSE4_MIN,
-       X30_HOUSE5_MIN, X30_HOUSE6_MIN,  X30_HOUSE7_MIN,  X30_HOUSE8_MIN,
-       X30_HOUSE9_MIN, X30_HOUSE10_MIN, X30_HOUSE11_MIN, X30_HOUSE12_MIN};
+      {X30_ASC_MIN, X30_MC_MIN, X30_ARMC_MIN, X30_VERTEX_MIN,
+          X30_EQUASC_MIN, X30_COASC1_MIN, X30_COASC2_MIN, X30_POLASC_MIN,
+          X30_HOUSE1_MIN, X30_HOUSE2_MIN, X30_HOUSE3_MIN, X30_HOUSE4_MIN,
+          X30_HOUSE5_MIN, X30_HOUSE6_MIN, X30_HOUSE7_MIN, X30_HOUSE8_MIN,
+          X30_HOUSE9_MIN, X30_HOUSE10_MIN, X30_HOUSE11_MIN, X30_HOUSE12_MIN};
   static final double[] maxLonX30 = new double[]
-      {X30_ASC_MAX,    X30_MC_MAX,      X30_ARMC_MAX,    X30_VERTEX_MAX,
-       X30_EQUASC_MAX, X30_COASC1_MAX,  X30_COASC2_MAX,  X30_POLASC_MAX,
-       X30_HOUSE1_MAX, X30_HOUSE2_MAX,  X30_HOUSE3_MAX,  X30_HOUSE4_MAX,
-       X30_HOUSE5_MAX, X30_HOUSE6_MAX,  X30_HOUSE7_MAX,  X30_HOUSE8_MAX,
-       X30_HOUSE9_MAX, X30_HOUSE10_MAX, X30_HOUSE11_MAX, X30_HOUSE12_MAX};
+      {X30_ASC_MAX, X30_MC_MAX, X30_ARMC_MAX, X30_VERTEX_MAX,
+          X30_EQUASC_MAX, X30_COASC1_MAX, X30_COASC2_MAX, X30_POLASC_MAX,
+          X30_HOUSE1_MAX, X30_HOUSE2_MAX, X30_HOUSE3_MAX, X30_HOUSE4_MAX,
+          X30_HOUSE5_MAX, X30_HOUSE6_MAX, X30_HOUSE7_MAX, X30_HOUSE8_MAX,
+          X30_HOUSE9_MAX, X30_HOUSE10_MAX, X30_HOUSE11_MAX, X30_HOUSE12_MAX};
   static final double[] minLonX40 = new double[]
-      {X40_ASC_MIN,    X40_MC_MIN,      X40_ARMC_MIN,    X40_VERTEX_MIN,
-       X40_EQUASC_MIN, X40_COASC1_MIN,  X40_COASC2_MIN,  X40_POLASC_MIN,
-       X40_HOUSE1_MIN, X40_HOUSE2_MIN,  X40_HOUSE3_MIN,  X40_HOUSE4_MIN,
-       X40_HOUSE5_MIN, X40_HOUSE6_MIN,  X40_HOUSE7_MIN,  X40_HOUSE8_MIN,
-       X40_HOUSE9_MIN, X40_HOUSE10_MIN, X40_HOUSE11_MIN, X40_HOUSE12_MIN};
+      {X40_ASC_MIN, X40_MC_MIN, X40_ARMC_MIN, X40_VERTEX_MIN,
+          X40_EQUASC_MIN, X40_COASC1_MIN, X40_COASC2_MIN, X40_POLASC_MIN,
+          X40_HOUSE1_MIN, X40_HOUSE2_MIN, X40_HOUSE3_MIN, X40_HOUSE4_MIN,
+          X40_HOUSE5_MIN, X40_HOUSE6_MIN, X40_HOUSE7_MIN, X40_HOUSE8_MIN,
+          X40_HOUSE9_MIN, X40_HOUSE10_MIN, X40_HOUSE11_MIN, X40_HOUSE12_MIN};
   static final double[] maxLonX40 = new double[]
-      {X40_ASC_MAX,    X40_MC_MAX,      X40_ARMC_MAX,    X40_VERTEX_MAX,
-       X40_EQUASC_MAX, X40_COASC1_MAX,  X40_COASC2_MAX,  X40_POLASC_MAX,
-       X40_HOUSE1_MAX, X40_HOUSE2_MAX,  X40_HOUSE3_MAX,  X40_HOUSE4_MAX,
-       X40_HOUSE5_MAX, X40_HOUSE6_MAX,  X40_HOUSE7_MAX,  X40_HOUSE8_MAX,
-       X40_HOUSE9_MAX, X40_HOUSE10_MAX, X40_HOUSE11_MAX, X40_HOUSE12_MAX};
+      {X40_ASC_MAX, X40_MC_MAX, X40_ARMC_MAX, X40_VERTEX_MAX,
+          X40_EQUASC_MAX, X40_COASC1_MAX, X40_COASC2_MAX, X40_POLASC_MAX,
+          X40_HOUSE1_MAX, X40_HOUSE2_MAX, X40_HOUSE3_MAX, X40_HOUSE4_MAX,
+          X40_HOUSE5_MAX, X40_HOUSE6_MAX, X40_HOUSE7_MAX, X40_HOUSE8_MAX,
+          X40_HOUSE9_MAX, X40_HOUSE10_MAX, X40_HOUSE11_MAX, X40_HOUSE12_MAX};
   static final double[] minLonX50 = new double[]
-      {X50_ASC_MIN,    X50_MC_MIN,      X50_ARMC_MIN,    X50_VERTEX_MIN,
-       X50_EQUASC_MIN, X50_COASC1_MIN,  X50_COASC2_MIN,  X50_POLASC_MIN,
-       X50_HOUSE1_MIN, X50_HOUSE2_MIN,  X50_HOUSE3_MIN,  X50_HOUSE4_MIN,
-       X50_HOUSE5_MIN, X50_HOUSE6_MIN,  X50_HOUSE7_MIN,  X50_HOUSE8_MIN,
-       X50_HOUSE9_MIN, X50_HOUSE10_MIN, X50_HOUSE11_MIN, X50_HOUSE12_MIN};
+      {X50_ASC_MIN, X50_MC_MIN, X50_ARMC_MIN, X50_VERTEX_MIN,
+          X50_EQUASC_MIN, X50_COASC1_MIN, X50_COASC2_MIN, X50_POLASC_MIN,
+          X50_HOUSE1_MIN, X50_HOUSE2_MIN, X50_HOUSE3_MIN, X50_HOUSE4_MIN,
+          X50_HOUSE5_MIN, X50_HOUSE6_MIN, X50_HOUSE7_MIN, X50_HOUSE8_MIN,
+          X50_HOUSE9_MIN, X50_HOUSE10_MIN, X50_HOUSE11_MIN, X50_HOUSE12_MIN};
   static final double[] maxLonX50 = new double[]
-      {X50_ASC_MAX,    X50_MC_MAX,      X50_ARMC_MAX,    X50_VERTEX_MAX,
-       X50_EQUASC_MAX, X50_COASC1_MAX,  X50_COASC2_MAX,  X50_POLASC_MAX,
-       X50_HOUSE1_MAX, X50_HOUSE2_MAX,  X50_HOUSE3_MAX,  X50_HOUSE4_MAX,
-       X50_HOUSE5_MAX, X50_HOUSE6_MAX,  X50_HOUSE7_MAX,  X50_HOUSE8_MAX,
-       X50_HOUSE9_MAX, X50_HOUSE10_MAX, X50_HOUSE11_MAX, X50_HOUSE12_MAX};
+      {X50_ASC_MAX, X50_MC_MAX, X50_ARMC_MAX, X50_VERTEX_MAX,
+          X50_EQUASC_MAX, X50_COASC1_MAX, X50_COASC2_MAX, X50_POLASC_MAX,
+          X50_HOUSE1_MAX, X50_HOUSE2_MAX, X50_HOUSE3_MAX, X50_HOUSE4_MAX,
+          X50_HOUSE5_MAX, X50_HOUSE6_MAX, X50_HOUSE7_MAX, X50_HOUSE8_MAX,
+          X50_HOUSE9_MAX, X50_HOUSE10_MAX, X50_HOUSE11_MAX, X50_HOUSE12_MAX};
   static final double[] minLonX60 = new double[]
-      {X60_ASC_MIN,    X60_MC_MIN,      X60_ARMC_MIN,    X60_VERTEX_MIN,
-       X60_EQUASC_MIN, X60_COASC1_MIN,  X60_COASC2_MIN,  X60_POLASC_MIN,
-       X60_HOUSE1_MIN, X60_HOUSE2_MIN,  X60_HOUSE3_MIN,  X60_HOUSE4_MIN,
-       X60_HOUSE5_MIN, X60_HOUSE6_MIN,  X60_HOUSE7_MIN,  X60_HOUSE8_MIN,
-       X60_HOUSE9_MIN, X60_HOUSE10_MIN, X60_HOUSE11_MIN, X60_HOUSE12_MIN};
+      {X60_ASC_MIN, X60_MC_MIN, X60_ARMC_MIN, X60_VERTEX_MIN,
+          X60_EQUASC_MIN, X60_COASC1_MIN, X60_COASC2_MIN, X60_POLASC_MIN,
+          X60_HOUSE1_MIN, X60_HOUSE2_MIN, X60_HOUSE3_MIN, X60_HOUSE4_MIN,
+          X60_HOUSE5_MIN, X60_HOUSE6_MIN, X60_HOUSE7_MIN, X60_HOUSE8_MIN,
+          X60_HOUSE9_MIN, X60_HOUSE10_MIN, X60_HOUSE11_MIN, X60_HOUSE12_MIN};
   static final double[] maxLonX60 = new double[]
-      {X60_ASC_MAX,    X60_MC_MAX,      X60_ARMC_MAX,    X60_VERTEX_MAX,
-       X60_EQUASC_MAX, X60_COASC1_MAX,  X60_COASC2_MAX,  X60_POLASC_MAX,
-       X60_HOUSE1_MAX, X60_HOUSE2_MAX,  X60_HOUSE3_MAX,  X60_HOUSE4_MAX,
-       X60_HOUSE5_MAX, X60_HOUSE6_MAX,  X60_HOUSE7_MAX,  X60_HOUSE8_MAX,
-       X60_HOUSE9_MAX, X60_HOUSE10_MAX, X60_HOUSE11_MAX, X60_HOUSE12_MAX};
+      {X60_ASC_MAX, X60_MC_MAX, X60_ARMC_MAX, X60_VERTEX_MAX,
+          X60_EQUASC_MAX, X60_COASC1_MAX, X60_COASC2_MAX, X60_POLASC_MAX,
+          X60_HOUSE1_MAX, X60_HOUSE2_MAX, X60_HOUSE3_MAX, X60_HOUSE4_MAX,
+          X60_HOUSE5_MAX, X60_HOUSE6_MAX, X60_HOUSE7_MAX, X60_HOUSE8_MAX,
+          X60_HOUSE9_MAX, X60_HOUSE10_MAX, X60_HOUSE11_MAX, X60_HOUSE12_MAX};
   static final double[] minLonX66 = new double[]
-      {X66_ASC_MIN,    X66_MC_MIN,      X66_ARMC_MIN,    X66_VERTEX_MIN,
-       X66_EQUASC_MIN, X66_COASC1_MIN,  X66_COASC2_MIN,  X66_POLASC_MIN,
-       X66_HOUSE1_MIN, X66_HOUSE2_MIN,  X66_HOUSE3_MIN,  X66_HOUSE4_MIN,
-       X66_HOUSE5_MIN, X66_HOUSE6_MIN,  X66_HOUSE7_MIN,  X66_HOUSE8_MIN,
-       X66_HOUSE9_MIN, X66_HOUSE10_MIN, X66_HOUSE11_MIN, X66_HOUSE12_MIN};
+      {X66_ASC_MIN, X66_MC_MIN, X66_ARMC_MIN, X66_VERTEX_MIN,
+          X66_EQUASC_MIN, X66_COASC1_MIN, X66_COASC2_MIN, X66_POLASC_MIN,
+          X66_HOUSE1_MIN, X66_HOUSE2_MIN, X66_HOUSE3_MIN, X66_HOUSE4_MIN,
+          X66_HOUSE5_MIN, X66_HOUSE6_MIN, X66_HOUSE7_MIN, X66_HOUSE8_MIN,
+          X66_HOUSE9_MIN, X66_HOUSE10_MIN, X66_HOUSE11_MIN, X66_HOUSE12_MIN};
   static final double[] maxLonX66 = new double[]
-      {X66_ASC_MAX,    X66_MC_MAX,      X66_ARMC_MAX,    X66_VERTEX_MAX,
-       X66_EQUASC_MAX, X66_COASC1_MAX,  X66_COASC2_MAX,  X66_POLASC_MAX,
-       X66_HOUSE1_MAX, X66_HOUSE2_MAX,  X66_HOUSE3_MAX,  X66_HOUSE4_MAX,
-       X66_HOUSE5_MAX, X66_HOUSE6_MAX,  X66_HOUSE7_MAX,  X66_HOUSE8_MAX,
-       X66_HOUSE9_MAX, X66_HOUSE10_MAX, X66_HOUSE11_MAX, X66_HOUSE12_MAX};
+      {X66_ASC_MAX, X66_MC_MAX, X66_ARMC_MAX, X66_VERTEX_MAX,
+          X66_EQUASC_MAX, X66_COASC1_MAX, X66_COASC2_MAX, X66_POLASC_MAX,
+          X66_HOUSE1_MAX, X66_HOUSE2_MAX, X66_HOUSE3_MAX, X66_HOUSE4_MAX,
+          X66_HOUSE5_MAX, X66_HOUSE6_MAX, X66_HOUSE7_MAX, X66_HOUSE8_MAX,
+          X66_HOUSE9_MAX, X66_HOUSE10_MAX, X66_HOUSE11_MAX, X66_HOUSE12_MAX};
   static final double[] minLonX70 = new double[]
-      {X70_ASC_MIN,    X70_MC_MIN,      X70_ARMC_MIN,    X70_VERTEX_MIN,
-       X70_EQUASC_MIN, X70_COASC1_MIN,  X70_COASC2_MIN,  X70_POLASC_MIN,
-       X70_HOUSE1_MIN, X70_HOUSE2_MIN,  X70_HOUSE3_MIN,  X70_HOUSE4_MIN,
-       X70_HOUSE5_MIN, X70_HOUSE6_MIN,  X70_HOUSE7_MIN,  X70_HOUSE8_MIN,
-       X70_HOUSE9_MIN, X70_HOUSE10_MIN, X70_HOUSE11_MIN, X70_HOUSE12_MIN};
+      {X70_ASC_MIN, X70_MC_MIN, X70_ARMC_MIN, X70_VERTEX_MIN,
+          X70_EQUASC_MIN, X70_COASC1_MIN, X70_COASC2_MIN, X70_POLASC_MIN,
+          X70_HOUSE1_MIN, X70_HOUSE2_MIN, X70_HOUSE3_MIN, X70_HOUSE4_MIN,
+          X70_HOUSE5_MIN, X70_HOUSE6_MIN, X70_HOUSE7_MIN, X70_HOUSE8_MIN,
+          X70_HOUSE9_MIN, X70_HOUSE10_MIN, X70_HOUSE11_MIN, X70_HOUSE12_MIN};
   static final double[] maxLonX70 = new double[]
-      {X70_ASC_MAX,    X70_MC_MAX,      X70_ARMC_MAX,    X70_VERTEX_MAX,
-       X70_EQUASC_MAX, X70_COASC1_MAX,  X70_COASC2_MAX,  X70_POLASC_MAX,
-       X70_HOUSE1_MAX, X70_HOUSE2_MAX,  X70_HOUSE3_MAX,  X70_HOUSE4_MAX,
-       X70_HOUSE5_MAX, X70_HOUSE6_MAX,  X70_HOUSE7_MAX,  X70_HOUSE8_MAX,
-       X70_HOUSE9_MAX, X70_HOUSE10_MAX, X70_HOUSE11_MAX, X70_HOUSE12_MAX};
+      {X70_ASC_MAX, X70_MC_MAX, X70_ARMC_MAX, X70_VERTEX_MAX,
+          X70_EQUASC_MAX, X70_COASC1_MAX, X70_COASC2_MAX, X70_POLASC_MAX,
+          X70_HOUSE1_MAX, X70_HOUSE2_MAX, X70_HOUSE3_MAX, X70_HOUSE4_MAX,
+          X70_HOUSE5_MAX, X70_HOUSE6_MAX, X70_HOUSE7_MAX, X70_HOUSE8_MAX,
+          X70_HOUSE9_MAX, X70_HOUSE10_MAX, X70_HOUSE11_MAX, X70_HOUSE12_MAX};
   static final double[] minLonX80 = new double[]
-      {X80_ASC_MIN,    X80_MC_MIN,      X80_ARMC_MIN,    X80_VERTEX_MIN,
-       X80_EQUASC_MIN, X80_COASC1_MIN,  X80_COASC2_MIN,  X80_POLASC_MIN,
-       X80_HOUSE1_MIN, X80_HOUSE2_MIN,  X80_HOUSE3_MIN,  X80_HOUSE4_MIN,
-       X80_HOUSE5_MIN, X80_HOUSE6_MIN,  X80_HOUSE7_MIN,  X80_HOUSE8_MIN,
-       X80_HOUSE9_MIN, X80_HOUSE10_MIN, X80_HOUSE11_MIN, X80_HOUSE12_MIN};
+      {X80_ASC_MIN, X80_MC_MIN, X80_ARMC_MIN, X80_VERTEX_MIN,
+          X80_EQUASC_MIN, X80_COASC1_MIN, X80_COASC2_MIN, X80_POLASC_MIN,
+          X80_HOUSE1_MIN, X80_HOUSE2_MIN, X80_HOUSE3_MIN, X80_HOUSE4_MIN,
+          X80_HOUSE5_MIN, X80_HOUSE6_MIN, X80_HOUSE7_MIN, X80_HOUSE8_MIN,
+          X80_HOUSE9_MIN, X80_HOUSE10_MIN, X80_HOUSE11_MIN, X80_HOUSE12_MIN};
   static final double[] maxLonX80 = new double[]
-      {X80_ASC_MAX,    X80_MC_MAX,      X80_ARMC_MAX,    X80_VERTEX_MAX,
-       X80_EQUASC_MAX, X80_COASC1_MAX,  X80_COASC2_MAX,  X80_POLASC_MAX,
-       X80_HOUSE1_MAX, X80_HOUSE2_MAX,  X80_HOUSE3_MAX,  X80_HOUSE4_MAX,
-       X80_HOUSE5_MAX, X80_HOUSE6_MAX,  X80_HOUSE7_MAX,  X80_HOUSE8_MAX,
-       X80_HOUSE9_MAX, X80_HOUSE10_MAX, X80_HOUSE11_MAX, X80_HOUSE12_MAX};
+      {X80_ASC_MAX, X80_MC_MAX, X80_ARMC_MAX, X80_VERTEX_MAX,
+          X80_EQUASC_MAX, X80_COASC1_MAX, X80_COASC2_MAX, X80_POLASC_MAX,
+          X80_HOUSE1_MAX, X80_HOUSE2_MAX, X80_HOUSE3_MAX, X80_HOUSE4_MAX,
+          X80_HOUSE5_MAX, X80_HOUSE6_MAX, X80_HOUSE7_MAX, X80_HOUSE8_MAX,
+          X80_HOUSE9_MAX, X80_HOUSE10_MAX, X80_HOUSE11_MAX, X80_HOUSE12_MAX};
   static final double[] minLonX85 = new double[]
-      {X85_ASC_MIN,    X85_MC_MIN,      X85_ARMC_MIN,    X85_VERTEX_MIN,
-       X85_EQUASC_MIN, X85_COASC1_MIN,  X85_COASC2_MIN,  X85_POLASC_MIN,
-       X85_HOUSE1_MIN, X85_HOUSE2_MIN,  X85_HOUSE3_MIN,  X85_HOUSE4_MIN,
-       X85_HOUSE5_MIN, X85_HOUSE6_MIN,  X85_HOUSE7_MIN,  X85_HOUSE8_MIN,
-       X85_HOUSE9_MIN, X85_HOUSE10_MIN, X85_HOUSE11_MIN, X85_HOUSE12_MIN};
+      {X85_ASC_MIN, X85_MC_MIN, X85_ARMC_MIN, X85_VERTEX_MIN,
+          X85_EQUASC_MIN, X85_COASC1_MIN, X85_COASC2_MIN, X85_POLASC_MIN,
+          X85_HOUSE1_MIN, X85_HOUSE2_MIN, X85_HOUSE3_MIN, X85_HOUSE4_MIN,
+          X85_HOUSE5_MIN, X85_HOUSE6_MIN, X85_HOUSE7_MIN, X85_HOUSE8_MIN,
+          X85_HOUSE9_MIN, X85_HOUSE10_MIN, X85_HOUSE11_MIN, X85_HOUSE12_MIN};
   static final double[] maxLonX85 = new double[]
-      {X85_ASC_MAX,    X85_MC_MAX,      X85_ARMC_MAX,    X85_VERTEX_MAX,
-       X85_EQUASC_MAX, X85_COASC1_MAX,  X85_COASC2_MAX,  X85_POLASC_MAX,
-       X85_HOUSE1_MAX, X85_HOUSE2_MAX,  X85_HOUSE3_MAX,  X85_HOUSE4_MAX,
-       X85_HOUSE5_MAX, X85_HOUSE6_MAX,  X85_HOUSE7_MAX,  X85_HOUSE8_MAX,
-       X85_HOUSE9_MAX, X85_HOUSE10_MAX, X85_HOUSE11_MAX, X85_HOUSE12_MAX};
+      {X85_ASC_MAX, X85_MC_MAX, X85_ARMC_MAX, X85_VERTEX_MAX,
+          X85_EQUASC_MAX, X85_COASC1_MAX, X85_COASC2_MAX, X85_POLASC_MAX,
+          X85_HOUSE1_MAX, X85_HOUSE2_MAX, X85_HOUSE3_MAX, X85_HOUSE4_MAX,
+          X85_HOUSE5_MAX, X85_HOUSE6_MAX, X85_HOUSE7_MAX, X85_HOUSE8_MAX,
+          X85_HOUSE9_MAX, X85_HOUSE10_MAX, X85_HOUSE11_MAX, X85_HOUSE12_MAX};
   static final double[] minLonX88 = new double[]
-      {X88_ASC_MIN,    X88_MC_MIN,      X88_ARMC_MIN,    X88_VERTEX_MIN,
-       X88_EQUASC_MIN, X88_COASC1_MIN,  X88_COASC2_MIN,  X88_POLASC_MIN,
-       X88_HOUSE1_MIN, X88_HOUSE2_MIN,  X88_HOUSE3_MIN,  X88_HOUSE4_MIN,
-       X88_HOUSE5_MIN, X88_HOUSE6_MIN,  X88_HOUSE7_MIN,  X88_HOUSE8_MIN,
-       X88_HOUSE9_MIN, X88_HOUSE10_MIN, X88_HOUSE11_MIN, X88_HOUSE12_MIN};
+      {X88_ASC_MIN, X88_MC_MIN, X88_ARMC_MIN, X88_VERTEX_MIN,
+          X88_EQUASC_MIN, X88_COASC1_MIN, X88_COASC2_MIN, X88_POLASC_MIN,
+          X88_HOUSE1_MIN, X88_HOUSE2_MIN, X88_HOUSE3_MIN, X88_HOUSE4_MIN,
+          X88_HOUSE5_MIN, X88_HOUSE6_MIN, X88_HOUSE7_MIN, X88_HOUSE8_MIN,
+          X88_HOUSE9_MIN, X88_HOUSE10_MIN, X88_HOUSE11_MIN, X88_HOUSE12_MIN};
   static final double[] maxLonX88 = new double[]
-      {X88_ASC_MAX,    X88_MC_MAX,      X88_ARMC_MAX,    X88_VERTEX_MAX,
-       X88_EQUASC_MAX, X88_COASC1_MAX,  X88_COASC2_MAX,  X88_POLASC_MAX,
-       X88_HOUSE1_MAX, X88_HOUSE2_MAX,  X88_HOUSE3_MAX,  X88_HOUSE4_MAX,
-       X88_HOUSE5_MAX, X88_HOUSE6_MAX,  X88_HOUSE7_MAX,  X88_HOUSE8_MAX,
-       X88_HOUSE9_MAX, X88_HOUSE10_MAX, X88_HOUSE11_MAX, X88_HOUSE12_MAX};
+      {X88_ASC_MAX, X88_MC_MAX, X88_ARMC_MAX, X88_VERTEX_MAX,
+          X88_EQUASC_MAX, X88_COASC1_MAX, X88_COASC2_MAX, X88_POLASC_MAX,
+          X88_HOUSE1_MAX, X88_HOUSE2_MAX, X88_HOUSE3_MAX, X88_HOUSE4_MAX,
+          X88_HOUSE5_MAX, X88_HOUSE6_MAX, X88_HOUSE7_MAX, X88_HOUSE8_MAX,
+          X88_HOUSE9_MAX, X88_HOUSE10_MAX, X88_HOUSE11_MAX, X88_HOUSE12_MAX};
   static final double[] minLonX89x = new double[]
-      {X89x_ASC_MIN,    X89x_MC_MIN,      X89x_ARMC_MIN,    X89x_VERTEX_MIN,
-       X89x_EQUASC_MIN, X89x_COASC1_MIN,  X89x_COASC2_MIN,  X89x_POLASC_MIN,
-       X89x_HOUSE1_MIN, X89x_HOUSE2_MIN,  X89x_HOUSE3_MIN,  X89x_HOUSE4_MIN,
-       X89x_HOUSE5_MIN, X89x_HOUSE6_MIN,  X89x_HOUSE7_MIN,  X89x_HOUSE8_MIN,
-       X89x_HOUSE9_MIN, X89x_HOUSE10_MIN, X89x_HOUSE11_MIN, X89x_HOUSE12_MIN};
+      {X89x_ASC_MIN, X89x_MC_MIN, X89x_ARMC_MIN, X89x_VERTEX_MIN,
+          X89x_EQUASC_MIN, X89x_COASC1_MIN, X89x_COASC2_MIN, X89x_POLASC_MIN,
+          X89x_HOUSE1_MIN, X89x_HOUSE2_MIN, X89x_HOUSE3_MIN, X89x_HOUSE4_MIN,
+          X89x_HOUSE5_MIN, X89x_HOUSE6_MIN, X89x_HOUSE7_MIN, X89x_HOUSE8_MIN,
+          X89x_HOUSE9_MIN, X89x_HOUSE10_MIN, X89x_HOUSE11_MIN, X89x_HOUSE12_MIN};
   static final double[] maxLonX89x = new double[]
-      {X89x_ASC_MAX,    X89x_MC_MAX,      X89x_ARMC_MAX,    X89x_VERTEX_MAX,
-       X89x_EQUASC_MAX, X89x_COASC1_MAX,  X89x_COASC2_MAX,  X89x_POLASC_MAX,
-       X89x_HOUSE1_MAX, X89x_HOUSE2_MAX,  X89x_HOUSE3_MAX,  X89x_HOUSE4_MAX,
-       X89x_HOUSE5_MAX, X89x_HOUSE6_MAX,  X89x_HOUSE7_MAX,  X89x_HOUSE8_MAX,
-       X89x_HOUSE9_MAX, X89x_HOUSE10_MAX, X89x_HOUSE11_MAX, X89x_HOUSE12_MAX};
+      {X89x_ASC_MAX, X89x_MC_MAX, X89x_ARMC_MAX, X89x_VERTEX_MAX,
+          X89x_EQUASC_MAX, X89x_COASC1_MAX, X89x_COASC2_MAX, X89x_POLASC_MAX,
+          X89x_HOUSE1_MAX, X89x_HOUSE2_MAX, X89x_HOUSE3_MAX, X89x_HOUSE4_MAX,
+          X89x_HOUSE5_MAX, X89x_HOUSE6_MAX, X89x_HOUSE7_MAX, X89x_HOUSE8_MAX,
+          X89x_HOUSE9_MAX, X89x_HOUSE10_MAX, X89x_HOUSE11_MAX, X89x_HOUSE12_MAX};
 
   static final double[] minLonH10 = new double[]
-      {H10_ASC_MIN,    H10_MC_MIN,      H10_ARMC_MIN,    H10_VERTEX_MIN,
-       H10_EQUASC_MIN, H10_COASC1_MIN,  H10_COASC2_MIN,  H10_POLASC_MIN,
-       H10_HOUSE1_MIN, H10_HOUSE2_MIN,  H10_HOUSE3_MIN,  H10_HOUSE4_MIN,
-       H10_HOUSE5_MIN, H10_HOUSE6_MIN,  H10_HOUSE7_MIN,  H10_HOUSE8_MIN,
-       H10_HOUSE9_MIN, H10_HOUSE10_MIN, H10_HOUSE11_MIN, H10_HOUSE12_MIN};
+      {H10_ASC_MIN, H10_MC_MIN, H10_ARMC_MIN, H10_VERTEX_MIN,
+          H10_EQUASC_MIN, H10_COASC1_MIN, H10_COASC2_MIN, H10_POLASC_MIN,
+          H10_HOUSE1_MIN, H10_HOUSE2_MIN, H10_HOUSE3_MIN, H10_HOUSE4_MIN,
+          H10_HOUSE5_MIN, H10_HOUSE6_MIN, H10_HOUSE7_MIN, H10_HOUSE8_MIN,
+          H10_HOUSE9_MIN, H10_HOUSE10_MIN, H10_HOUSE11_MIN, H10_HOUSE12_MIN};
   static final double[] maxLonH10 = new double[]
-      {H10_ASC_MAX,    H10_MC_MAX,      H10_ARMC_MAX,    H10_VERTEX_MAX,
-       H10_EQUASC_MAX, H10_COASC1_MAX,  H10_COASC2_MAX,  H10_POLASC_MAX,
-       H10_HOUSE1_MAX, H10_HOUSE2_MAX,  H10_HOUSE3_MAX,  H10_HOUSE4_MAX,
-       H10_HOUSE5_MAX, H10_HOUSE6_MAX,  H10_HOUSE7_MAX,  H10_HOUSE8_MAX,
-       H10_HOUSE9_MAX, H10_HOUSE10_MAX, H10_HOUSE11_MAX, H10_HOUSE12_MAX};
+      {H10_ASC_MAX, H10_MC_MAX, H10_ARMC_MAX, H10_VERTEX_MAX,
+          H10_EQUASC_MAX, H10_COASC1_MAX, H10_COASC2_MAX, H10_POLASC_MAX,
+          H10_HOUSE1_MAX, H10_HOUSE2_MAX, H10_HOUSE3_MAX, H10_HOUSE4_MAX,
+          H10_HOUSE5_MAX, H10_HOUSE6_MAX, H10_HOUSE7_MAX, H10_HOUSE8_MAX,
+          H10_HOUSE9_MAX, H10_HOUSE10_MAX, H10_HOUSE11_MAX, H10_HOUSE12_MAX};
   static final double[] minLonH20 = new double[]
-      {H20_ASC_MIN,    H20_MC_MIN,      H20_ARMC_MIN,    H20_VERTEX_MIN,
-       H20_EQUASC_MIN, H20_COASC1_MIN,  H20_COASC2_MIN,  H20_POLASC_MIN,
-       H20_HOUSE1_MIN, H20_HOUSE2_MIN,  H20_HOUSE3_MIN,  H20_HOUSE4_MIN,
-       H20_HOUSE5_MIN, H20_HOUSE6_MIN,  H20_HOUSE7_MIN,  H20_HOUSE8_MIN,
-       H20_HOUSE9_MIN, H20_HOUSE10_MIN, H20_HOUSE11_MIN, H20_HOUSE12_MIN};
+      {H20_ASC_MIN, H20_MC_MIN, H20_ARMC_MIN, H20_VERTEX_MIN,
+          H20_EQUASC_MIN, H20_COASC1_MIN, H20_COASC2_MIN, H20_POLASC_MIN,
+          H20_HOUSE1_MIN, H20_HOUSE2_MIN, H20_HOUSE3_MIN, H20_HOUSE4_MIN,
+          H20_HOUSE5_MIN, H20_HOUSE6_MIN, H20_HOUSE7_MIN, H20_HOUSE8_MIN,
+          H20_HOUSE9_MIN, H20_HOUSE10_MIN, H20_HOUSE11_MIN, H20_HOUSE12_MIN};
   static final double[] maxLonH20 = new double[]
-      {H20_ASC_MAX,    H20_MC_MAX,      H20_ARMC_MAX,    H20_VERTEX_MAX,
-       H20_EQUASC_MAX, H20_COASC1_MAX,  H20_COASC2_MAX,  H20_POLASC_MAX,
-       H20_HOUSE1_MAX, H20_HOUSE2_MAX,  H20_HOUSE3_MAX,  H20_HOUSE4_MAX,
-       H20_HOUSE5_MAX, H20_HOUSE6_MAX,  H20_HOUSE7_MAX,  H20_HOUSE8_MAX,
-       H20_HOUSE9_MAX, H20_HOUSE10_MAX, H20_HOUSE11_MAX, H20_HOUSE12_MAX};
+      {H20_ASC_MAX, H20_MC_MAX, H20_ARMC_MAX, H20_VERTEX_MAX,
+          H20_EQUASC_MAX, H20_COASC1_MAX, H20_COASC2_MAX, H20_POLASC_MAX,
+          H20_HOUSE1_MAX, H20_HOUSE2_MAX, H20_HOUSE3_MAX, H20_HOUSE4_MAX,
+          H20_HOUSE5_MAX, H20_HOUSE6_MAX, H20_HOUSE7_MAX, H20_HOUSE8_MAX,
+          H20_HOUSE9_MAX, H20_HOUSE10_MAX, H20_HOUSE11_MAX, H20_HOUSE12_MAX};
   static final double[] minLonH30 = new double[]
-      {H30_ASC_MIN,    H30_MC_MIN,      H30_ARMC_MIN,    H30_VERTEX_MIN,
-       H30_EQUASC_MIN, H30_COASC1_MIN,  H30_COASC2_MIN,  H30_POLASC_MIN,
-       H30_HOUSE1_MIN, H30_HOUSE2_MIN,  H30_HOUSE3_MIN,  H30_HOUSE4_MIN,
-       H30_HOUSE5_MIN, H30_HOUSE6_MIN,  H30_HOUSE7_MIN,  H30_HOUSE8_MIN,
-       H30_HOUSE9_MIN, H30_HOUSE10_MIN, H30_HOUSE11_MIN, H30_HOUSE12_MIN};
+      {H30_ASC_MIN, H30_MC_MIN, H30_ARMC_MIN, H30_VERTEX_MIN,
+          H30_EQUASC_MIN, H30_COASC1_MIN, H30_COASC2_MIN, H30_POLASC_MIN,
+          H30_HOUSE1_MIN, H30_HOUSE2_MIN, H30_HOUSE3_MIN, H30_HOUSE4_MIN,
+          H30_HOUSE5_MIN, H30_HOUSE6_MIN, H30_HOUSE7_MIN, H30_HOUSE8_MIN,
+          H30_HOUSE9_MIN, H30_HOUSE10_MIN, H30_HOUSE11_MIN, H30_HOUSE12_MIN};
   static final double[] maxLonH30 = new double[]
-      {H30_ASC_MAX,    H30_MC_MAX,      H30_ARMC_MAX,    H30_VERTEX_MAX,
-       H30_EQUASC_MAX, H30_COASC1_MAX,  H30_COASC2_MAX,  H30_POLASC_MAX,
-       H30_HOUSE1_MAX, H30_HOUSE2_MAX,  H30_HOUSE3_MAX,  H30_HOUSE4_MAX,
-       H30_HOUSE5_MAX, H30_HOUSE6_MAX,  H30_HOUSE7_MAX,  H30_HOUSE8_MAX,
-       H30_HOUSE9_MAX, H30_HOUSE10_MAX, H30_HOUSE11_MAX, H30_HOUSE12_MAX};
+      {H30_ASC_MAX, H30_MC_MAX, H30_ARMC_MAX, H30_VERTEX_MAX,
+          H30_EQUASC_MAX, H30_COASC1_MAX, H30_COASC2_MAX, H30_POLASC_MAX,
+          H30_HOUSE1_MAX, H30_HOUSE2_MAX, H30_HOUSE3_MAX, H30_HOUSE4_MAX,
+          H30_HOUSE5_MAX, H30_HOUSE6_MAX, H30_HOUSE7_MAX, H30_HOUSE8_MAX,
+          H30_HOUSE9_MAX, H30_HOUSE10_MAX, H30_HOUSE11_MAX, H30_HOUSE12_MAX};
   static final double[] minLonH40 = new double[]
-      {H40_ASC_MIN,    H40_MC_MIN,      H40_ARMC_MIN,    H40_VERTEX_MIN,
-       H40_EQUASC_MIN, H40_COASC1_MIN,  H40_COASC2_MIN,  H40_POLASC_MIN,
-       H40_HOUSE1_MIN, H40_HOUSE2_MIN,  H40_HOUSE3_MIN,  H40_HOUSE4_MIN,
-       H40_HOUSE5_MIN, H40_HOUSE6_MIN,  H40_HOUSE7_MIN,  H40_HOUSE8_MIN,
-       H40_HOUSE9_MIN, H40_HOUSE10_MIN, H40_HOUSE11_MIN, H40_HOUSE12_MIN};
+      {H40_ASC_MIN, H40_MC_MIN, H40_ARMC_MIN, H40_VERTEX_MIN,
+          H40_EQUASC_MIN, H40_COASC1_MIN, H40_COASC2_MIN, H40_POLASC_MIN,
+          H40_HOUSE1_MIN, H40_HOUSE2_MIN, H40_HOUSE3_MIN, H40_HOUSE4_MIN,
+          H40_HOUSE5_MIN, H40_HOUSE6_MIN, H40_HOUSE7_MIN, H40_HOUSE8_MIN,
+          H40_HOUSE9_MIN, H40_HOUSE10_MIN, H40_HOUSE11_MIN, H40_HOUSE12_MIN};
   static final double[] maxLonH40 = new double[]
-      {H40_ASC_MAX,    H40_MC_MAX,      H40_ARMC_MAX,    H40_VERTEX_MAX,
-       H40_EQUASC_MAX, H40_COASC1_MAX,  H40_COASC2_MAX,  H40_POLASC_MAX,
-       H40_HOUSE1_MAX, H40_HOUSE2_MAX,  H40_HOUSE3_MAX,  H40_HOUSE4_MAX,
-       H40_HOUSE5_MAX, H40_HOUSE6_MAX,  H40_HOUSE7_MAX,  H40_HOUSE8_MAX,
-       H40_HOUSE9_MAX, H40_HOUSE10_MAX, H40_HOUSE11_MAX, H40_HOUSE12_MAX};
+      {H40_ASC_MAX, H40_MC_MAX, H40_ARMC_MAX, H40_VERTEX_MAX,
+          H40_EQUASC_MAX, H40_COASC1_MAX, H40_COASC2_MAX, H40_POLASC_MAX,
+          H40_HOUSE1_MAX, H40_HOUSE2_MAX, H40_HOUSE3_MAX, H40_HOUSE4_MAX,
+          H40_HOUSE5_MAX, H40_HOUSE6_MAX, H40_HOUSE7_MAX, H40_HOUSE8_MAX,
+          H40_HOUSE9_MAX, H40_HOUSE10_MAX, H40_HOUSE11_MAX, H40_HOUSE12_MAX};
   static final double[] minLonH50 = new double[]
-      {H50_ASC_MIN,    H50_MC_MIN,      H50_ARMC_MIN,    H50_VERTEX_MIN,
-       H50_EQUASC_MIN, H50_COASC1_MIN,  H50_COASC2_MIN,  H50_POLASC_MIN,
-       H50_HOUSE1_MIN, H50_HOUSE2_MIN,  H50_HOUSE3_MIN,  H50_HOUSE4_MIN,
-       H50_HOUSE5_MIN, H50_HOUSE6_MIN,  H50_HOUSE7_MIN,  H50_HOUSE8_MIN,
-       H50_HOUSE9_MIN, H50_HOUSE10_MIN, H50_HOUSE11_MIN, H50_HOUSE12_MIN};
+      {H50_ASC_MIN, H50_MC_MIN, H50_ARMC_MIN, H50_VERTEX_MIN,
+          H50_EQUASC_MIN, H50_COASC1_MIN, H50_COASC2_MIN, H50_POLASC_MIN,
+          H50_HOUSE1_MIN, H50_HOUSE2_MIN, H50_HOUSE3_MIN, H50_HOUSE4_MIN,
+          H50_HOUSE5_MIN, H50_HOUSE6_MIN, H50_HOUSE7_MIN, H50_HOUSE8_MIN,
+          H50_HOUSE9_MIN, H50_HOUSE10_MIN, H50_HOUSE11_MIN, H50_HOUSE12_MIN};
   static final double[] maxLonH50 = new double[]
-      {H50_ASC_MAX,    H50_MC_MAX,      H50_ARMC_MAX,    H50_VERTEX_MAX,
-       H50_EQUASC_MAX, H50_COASC1_MAX,  H50_COASC2_MAX,  H50_POLASC_MAX,
-       H50_HOUSE1_MAX, H50_HOUSE2_MAX,  H50_HOUSE3_MAX,  H50_HOUSE4_MAX,
-       H50_HOUSE5_MAX, H50_HOUSE6_MAX,  H50_HOUSE7_MAX,  H50_HOUSE8_MAX,
-       H50_HOUSE9_MAX, H50_HOUSE10_MAX, H50_HOUSE11_MAX, H50_HOUSE12_MAX};
+      {H50_ASC_MAX, H50_MC_MAX, H50_ARMC_MAX, H50_VERTEX_MAX,
+          H50_EQUASC_MAX, H50_COASC1_MAX, H50_COASC2_MAX, H50_POLASC_MAX,
+          H50_HOUSE1_MAX, H50_HOUSE2_MAX, H50_HOUSE3_MAX, H50_HOUSE4_MAX,
+          H50_HOUSE5_MAX, H50_HOUSE6_MAX, H50_HOUSE7_MAX, H50_HOUSE8_MAX,
+          H50_HOUSE9_MAX, H50_HOUSE10_MAX, H50_HOUSE11_MAX, H50_HOUSE12_MAX};
   static final double[] minLonH60 = new double[]
-      {H60_ASC_MIN,    H60_MC_MIN,      H60_ARMC_MIN,    H60_VERTEX_MIN,
-       H60_EQUASC_MIN, H60_COASC1_MIN,  H60_COASC2_MIN,  H60_POLASC_MIN,
-       H60_HOUSE1_MIN, H60_HOUSE2_MIN,  H60_HOUSE3_MIN,  H60_HOUSE4_MIN,
-       H60_HOUSE5_MIN, H60_HOUSE6_MIN,  H60_HOUSE7_MIN,  H60_HOUSE8_MIN,
-       H60_HOUSE9_MIN, H60_HOUSE10_MIN, H60_HOUSE11_MIN, H60_HOUSE12_MIN};
+      {H60_ASC_MIN, H60_MC_MIN, H60_ARMC_MIN, H60_VERTEX_MIN,
+          H60_EQUASC_MIN, H60_COASC1_MIN, H60_COASC2_MIN, H60_POLASC_MIN,
+          H60_HOUSE1_MIN, H60_HOUSE2_MIN, H60_HOUSE3_MIN, H60_HOUSE4_MIN,
+          H60_HOUSE5_MIN, H60_HOUSE6_MIN, H60_HOUSE7_MIN, H60_HOUSE8_MIN,
+          H60_HOUSE9_MIN, H60_HOUSE10_MIN, H60_HOUSE11_MIN, H60_HOUSE12_MIN};
   static final double[] maxLonH60 = new double[]
-      {H60_ASC_MAX,    H60_MC_MAX,      H60_ARMC_MAX,    H60_VERTEX_MAX,
-       H60_EQUASC_MAX, H60_COASC1_MAX,  H60_COASC2_MAX,  H60_POLASC_MAX,
-       H60_HOUSE1_MAX, H60_HOUSE2_MAX,  H60_HOUSE3_MAX,  H60_HOUSE4_MAX,
-       H60_HOUSE5_MAX, H60_HOUSE6_MAX,  H60_HOUSE7_MAX,  H60_HOUSE8_MAX,
-       H60_HOUSE9_MAX, H60_HOUSE10_MAX, H60_HOUSE11_MAX, H60_HOUSE12_MAX};
+      {H60_ASC_MAX, H60_MC_MAX, H60_ARMC_MAX, H60_VERTEX_MAX,
+          H60_EQUASC_MAX, H60_COASC1_MAX, H60_COASC2_MAX, H60_POLASC_MAX,
+          H60_HOUSE1_MAX, H60_HOUSE2_MAX, H60_HOUSE3_MAX, H60_HOUSE4_MAX,
+          H60_HOUSE5_MAX, H60_HOUSE6_MAX, H60_HOUSE7_MAX, H60_HOUSE8_MAX,
+          H60_HOUSE9_MAX, H60_HOUSE10_MAX, H60_HOUSE11_MAX, H60_HOUSE12_MAX};
   static final double[] minLonH66 = new double[]
-      {H66_ASC_MIN,    H66_MC_MIN,      H66_ARMC_MIN,    H66_VERTEX_MIN,
-       H66_EQUASC_MIN, H66_COASC1_MIN,  H66_COASC2_MIN,  H66_POLASC_MIN,
-       H66_HOUSE1_MIN, H66_HOUSE2_MIN,  H66_HOUSE3_MIN,  H66_HOUSE4_MIN,
-       H66_HOUSE5_MIN, H66_HOUSE6_MIN,  H66_HOUSE7_MIN,  H66_HOUSE8_MIN,
-       H66_HOUSE9_MIN, H66_HOUSE10_MIN, H66_HOUSE11_MIN, H66_HOUSE12_MIN};
+      {H66_ASC_MIN, H66_MC_MIN, H66_ARMC_MIN, H66_VERTEX_MIN,
+          H66_EQUASC_MIN, H66_COASC1_MIN, H66_COASC2_MIN, H66_POLASC_MIN,
+          H66_HOUSE1_MIN, H66_HOUSE2_MIN, H66_HOUSE3_MIN, H66_HOUSE4_MIN,
+          H66_HOUSE5_MIN, H66_HOUSE6_MIN, H66_HOUSE7_MIN, H66_HOUSE8_MIN,
+          H66_HOUSE9_MIN, H66_HOUSE10_MIN, H66_HOUSE11_MIN, H66_HOUSE12_MIN};
   static final double[] maxLonH66 = new double[]
-      {H66_ASC_MAX,    H66_MC_MAX,      H66_ARMC_MAX,    H66_VERTEX_MAX,
-       H66_EQUASC_MAX, H66_COASC1_MAX,  H66_COASC2_MAX,  H66_POLASC_MAX,
-       H66_HOUSE1_MAX, H66_HOUSE2_MAX,  H66_HOUSE3_MAX,  H66_HOUSE4_MAX,
-       H66_HOUSE5_MAX, H66_HOUSE6_MAX,  H66_HOUSE7_MAX,  H66_HOUSE8_MAX,
-       H66_HOUSE9_MAX, H66_HOUSE10_MAX, H66_HOUSE11_MAX, H66_HOUSE12_MAX};
+      {H66_ASC_MAX, H66_MC_MAX, H66_ARMC_MAX, H66_VERTEX_MAX,
+          H66_EQUASC_MAX, H66_COASC1_MAX, H66_COASC2_MAX, H66_POLASC_MAX,
+          H66_HOUSE1_MAX, H66_HOUSE2_MAX, H66_HOUSE3_MAX, H66_HOUSE4_MAX,
+          H66_HOUSE5_MAX, H66_HOUSE6_MAX, H66_HOUSE7_MAX, H66_HOUSE8_MAX,
+          H66_HOUSE9_MAX, H66_HOUSE10_MAX, H66_HOUSE11_MAX, H66_HOUSE12_MAX};
   static final double[] minLonH70 = new double[]
-      {H70_ASC_MIN,    H70_MC_MIN,      H70_ARMC_MIN,    H70_VERTEX_MIN,
-       H70_EQUASC_MIN, H70_COASC1_MIN,  H70_COASC2_MIN,  H70_POLASC_MIN,
-       H70_HOUSE1_MIN, H70_HOUSE2_MIN,  H70_HOUSE3_MIN,  H70_HOUSE4_MIN,
-       H70_HOUSE5_MIN, H70_HOUSE6_MIN,  H70_HOUSE7_MIN,  H70_HOUSE8_MIN,
-       H70_HOUSE9_MIN, H70_HOUSE10_MIN, H70_HOUSE11_MIN, H70_HOUSE12_MIN};
+      {H70_ASC_MIN, H70_MC_MIN, H70_ARMC_MIN, H70_VERTEX_MIN,
+          H70_EQUASC_MIN, H70_COASC1_MIN, H70_COASC2_MIN, H70_POLASC_MIN,
+          H70_HOUSE1_MIN, H70_HOUSE2_MIN, H70_HOUSE3_MIN, H70_HOUSE4_MIN,
+          H70_HOUSE5_MIN, H70_HOUSE6_MIN, H70_HOUSE7_MIN, H70_HOUSE8_MIN,
+          H70_HOUSE9_MIN, H70_HOUSE10_MIN, H70_HOUSE11_MIN, H70_HOUSE12_MIN};
   static final double[] maxLonH70 = new double[]
-      {H70_ASC_MAX,    H70_MC_MAX,      H70_ARMC_MAX,    H70_VERTEX_MAX,
-       H70_EQUASC_MAX, H70_COASC1_MAX,  H70_COASC2_MAX,  H70_POLASC_MAX,
-       H70_HOUSE1_MAX, H70_HOUSE2_MAX,  H70_HOUSE3_MAX,  H70_HOUSE4_MAX,
-       H70_HOUSE5_MAX, H70_HOUSE6_MAX,  H70_HOUSE7_MAX,  H70_HOUSE8_MAX,
-       H70_HOUSE9_MAX, H70_HOUSE10_MAX, H70_HOUSE11_MAX, H70_HOUSE12_MAX};
+      {H70_ASC_MAX, H70_MC_MAX, H70_ARMC_MAX, H70_VERTEX_MAX,
+          H70_EQUASC_MAX, H70_COASC1_MAX, H70_COASC2_MAX, H70_POLASC_MAX,
+          H70_HOUSE1_MAX, H70_HOUSE2_MAX, H70_HOUSE3_MAX, H70_HOUSE4_MAX,
+          H70_HOUSE5_MAX, H70_HOUSE6_MAX, H70_HOUSE7_MAX, H70_HOUSE8_MAX,
+          H70_HOUSE9_MAX, H70_HOUSE10_MAX, H70_HOUSE11_MAX, H70_HOUSE12_MAX};
   static final double[] minLonH80 = new double[]
-      {H80_ASC_MIN,    H80_MC_MIN,      H80_ARMC_MIN,    H80_VERTEX_MIN,
-       H80_EQUASC_MIN, H80_COASC1_MIN,  H80_COASC2_MIN,  H80_POLASC_MIN,
-       H80_HOUSE1_MIN, H80_HOUSE2_MIN,  H80_HOUSE3_MIN,  H80_HOUSE4_MIN,
-       H80_HOUSE5_MIN, H80_HOUSE6_MIN,  H80_HOUSE7_MIN,  H80_HOUSE8_MIN,
-       H80_HOUSE9_MIN, H80_HOUSE10_MIN, H80_HOUSE11_MIN, H80_HOUSE12_MIN};
+      {H80_ASC_MIN, H80_MC_MIN, H80_ARMC_MIN, H80_VERTEX_MIN,
+          H80_EQUASC_MIN, H80_COASC1_MIN, H80_COASC2_MIN, H80_POLASC_MIN,
+          H80_HOUSE1_MIN, H80_HOUSE2_MIN, H80_HOUSE3_MIN, H80_HOUSE4_MIN,
+          H80_HOUSE5_MIN, H80_HOUSE6_MIN, H80_HOUSE7_MIN, H80_HOUSE8_MIN,
+          H80_HOUSE9_MIN, H80_HOUSE10_MIN, H80_HOUSE11_MIN, H80_HOUSE12_MIN};
   static final double[] maxLonH80 = new double[]
-      {H80_ASC_MAX,    H80_MC_MAX,      H80_ARMC_MAX,    H80_VERTEX_MAX,
-       H80_EQUASC_MAX, H80_COASC1_MAX,  H80_COASC2_MAX,  H80_POLASC_MAX,
-       H80_HOUSE1_MAX, H80_HOUSE2_MAX,  H80_HOUSE3_MAX,  H80_HOUSE4_MAX,
-       H80_HOUSE5_MAX, H80_HOUSE6_MAX,  H80_HOUSE7_MAX,  H80_HOUSE8_MAX,
-       H80_HOUSE9_MAX, H80_HOUSE10_MAX, H80_HOUSE11_MAX, H80_HOUSE12_MAX};
+      {H80_ASC_MAX, H80_MC_MAX, H80_ARMC_MAX, H80_VERTEX_MAX,
+          H80_EQUASC_MAX, H80_COASC1_MAX, H80_COASC2_MAX, H80_POLASC_MAX,
+          H80_HOUSE1_MAX, H80_HOUSE2_MAX, H80_HOUSE3_MAX, H80_HOUSE4_MAX,
+          H80_HOUSE5_MAX, H80_HOUSE6_MAX, H80_HOUSE7_MAX, H80_HOUSE8_MAX,
+          H80_HOUSE9_MAX, H80_HOUSE10_MAX, H80_HOUSE11_MAX, H80_HOUSE12_MAX};
   static final double[] minLonH85 = new double[]
-      {H85_ASC_MIN,    H85_MC_MIN,      H85_ARMC_MIN,    H85_VERTEX_MIN,
-       H85_EQUASC_MIN, H85_COASC1_MIN,  H85_COASC2_MIN,  H85_POLASC_MIN,
-       H85_HOUSE1_MIN, H85_HOUSE2_MIN,  H85_HOUSE3_MIN,  H85_HOUSE4_MIN,
-       H85_HOUSE5_MIN, H85_HOUSE6_MIN,  H85_HOUSE7_MIN,  H85_HOUSE8_MIN,
-       H85_HOUSE9_MIN, H85_HOUSE10_MIN, H85_HOUSE11_MIN, H85_HOUSE12_MIN};
+      {H85_ASC_MIN, H85_MC_MIN, H85_ARMC_MIN, H85_VERTEX_MIN,
+          H85_EQUASC_MIN, H85_COASC1_MIN, H85_COASC2_MIN, H85_POLASC_MIN,
+          H85_HOUSE1_MIN, H85_HOUSE2_MIN, H85_HOUSE3_MIN, H85_HOUSE4_MIN,
+          H85_HOUSE5_MIN, H85_HOUSE6_MIN, H85_HOUSE7_MIN, H85_HOUSE8_MIN,
+          H85_HOUSE9_MIN, H85_HOUSE10_MIN, H85_HOUSE11_MIN, H85_HOUSE12_MIN};
   static final double[] maxLonH85 = new double[]
-      {H85_ASC_MAX,    H85_MC_MAX,      H85_ARMC_MAX,    H85_VERTEX_MAX,
-       H85_EQUASC_MAX, H85_COASC1_MAX,  H85_COASC2_MAX,  H85_POLASC_MAX,
-       H85_HOUSE1_MAX, H85_HOUSE2_MAX,  H85_HOUSE3_MAX,  H85_HOUSE4_MAX,
-       H85_HOUSE5_MAX, H85_HOUSE6_MAX,  H85_HOUSE7_MAX,  H85_HOUSE8_MAX,
-       H85_HOUSE9_MAX, H85_HOUSE10_MAX, H85_HOUSE11_MAX, H85_HOUSE12_MAX};
+      {H85_ASC_MAX, H85_MC_MAX, H85_ARMC_MAX, H85_VERTEX_MAX,
+          H85_EQUASC_MAX, H85_COASC1_MAX, H85_COASC2_MAX, H85_POLASC_MAX,
+          H85_HOUSE1_MAX, H85_HOUSE2_MAX, H85_HOUSE3_MAX, H85_HOUSE4_MAX,
+          H85_HOUSE5_MAX, H85_HOUSE6_MAX, H85_HOUSE7_MAX, H85_HOUSE8_MAX,
+          H85_HOUSE9_MAX, H85_HOUSE10_MAX, H85_HOUSE11_MAX, H85_HOUSE12_MAX};
   static final double[] minLonH88 = new double[]
-      {H88_ASC_MIN,    H88_MC_MIN,      H88_ARMC_MIN,    H88_VERTEX_MIN,
-       H88_EQUASC_MIN, H88_COASC1_MIN,  H88_COASC2_MIN,  H88_POLASC_MIN,
-       H88_HOUSE1_MIN, H88_HOUSE2_MIN,  H88_HOUSE3_MIN,  H88_HOUSE4_MIN,
-       H88_HOUSE5_MIN, H88_HOUSE6_MIN,  H88_HOUSE7_MIN,  H88_HOUSE8_MIN,
-       H88_HOUSE9_MIN, H88_HOUSE10_MIN, H88_HOUSE11_MIN, H88_HOUSE12_MIN};
+      {H88_ASC_MIN, H88_MC_MIN, H88_ARMC_MIN, H88_VERTEX_MIN,
+          H88_EQUASC_MIN, H88_COASC1_MIN, H88_COASC2_MIN, H88_POLASC_MIN,
+          H88_HOUSE1_MIN, H88_HOUSE2_MIN, H88_HOUSE3_MIN, H88_HOUSE4_MIN,
+          H88_HOUSE5_MIN, H88_HOUSE6_MIN, H88_HOUSE7_MIN, H88_HOUSE8_MIN,
+          H88_HOUSE9_MIN, H88_HOUSE10_MIN, H88_HOUSE11_MIN, H88_HOUSE12_MIN};
   static final double[] maxLonH88 = new double[]
-      {H88_ASC_MAX,    H88_MC_MAX,      H88_ARMC_MAX,    H88_VERTEX_MAX,
-       H88_EQUASC_MAX, H88_COASC1_MAX,  H88_COASC2_MAX,  H88_POLASC_MAX,
-       H88_HOUSE1_MAX, H88_HOUSE2_MAX,  H88_HOUSE3_MAX,  H88_HOUSE4_MAX,
-       H88_HOUSE5_MAX, H88_HOUSE6_MAX,  H88_HOUSE7_MAX,  H88_HOUSE8_MAX,
-       H88_HOUSE9_MAX, H88_HOUSE10_MAX, H88_HOUSE11_MAX, H88_HOUSE12_MAX};
+      {H88_ASC_MAX, H88_MC_MAX, H88_ARMC_MAX, H88_VERTEX_MAX,
+          H88_EQUASC_MAX, H88_COASC1_MAX, H88_COASC2_MAX, H88_POLASC_MAX,
+          H88_HOUSE1_MAX, H88_HOUSE2_MAX, H88_HOUSE3_MAX, H88_HOUSE4_MAX,
+          H88_HOUSE5_MAX, H88_HOUSE6_MAX, H88_HOUSE7_MAX, H88_HOUSE8_MAX,
+          H88_HOUSE9_MAX, H88_HOUSE10_MAX, H88_HOUSE11_MAX, H88_HOUSE12_MAX};
   static final double[] minLonH89x = new double[]
-      {H89x_ASC_MIN,    H89x_MC_MIN,      H89x_ARMC_MIN,    H89x_VERTEX_MIN,
-       H89x_EQUASC_MIN, H89x_COASC1_MIN,  H89x_COASC2_MIN,  H89x_POLASC_MIN,
-       H89x_HOUSE1_MIN, H89x_HOUSE2_MIN,  H89x_HOUSE3_MIN,  H89x_HOUSE4_MIN,
-       H89x_HOUSE5_MIN, H89x_HOUSE6_MIN,  H89x_HOUSE7_MIN,  H89x_HOUSE8_MIN,
-       H89x_HOUSE9_MIN, H89x_HOUSE10_MIN, H89x_HOUSE11_MIN, H89x_HOUSE12_MIN};
+      {H89x_ASC_MIN, H89x_MC_MIN, H89x_ARMC_MIN, H89x_VERTEX_MIN,
+          H89x_EQUASC_MIN, H89x_COASC1_MIN, H89x_COASC2_MIN, H89x_POLASC_MIN,
+          H89x_HOUSE1_MIN, H89x_HOUSE2_MIN, H89x_HOUSE3_MIN, H89x_HOUSE4_MIN,
+          H89x_HOUSE5_MIN, H89x_HOUSE6_MIN, H89x_HOUSE7_MIN, H89x_HOUSE8_MIN,
+          H89x_HOUSE9_MIN, H89x_HOUSE10_MIN, H89x_HOUSE11_MIN, H89x_HOUSE12_MIN};
   static final double[] maxLonH89x = new double[]
-      {H89x_ASC_MAX,    H89x_MC_MAX,      H89x_ARMC_MAX,    H89x_VERTEX_MAX,
-       H89x_EQUASC_MAX, H89x_COASC1_MAX,  H89x_COASC2_MAX,  H89x_POLASC_MAX,
-       H89x_HOUSE1_MAX, H89x_HOUSE2_MAX,  H89x_HOUSE3_MAX,  H89x_HOUSE4_MAX,
-       H89x_HOUSE5_MAX, H89x_HOUSE6_MAX,  H89x_HOUSE7_MAX,  H89x_HOUSE8_MAX,
-       H89x_HOUSE9_MAX, H89x_HOUSE10_MAX, H89x_HOUSE11_MAX, H89x_HOUSE12_MAX};
+      {H89x_ASC_MAX, H89x_MC_MAX, H89x_ARMC_MAX, H89x_VERTEX_MAX,
+          H89x_EQUASC_MAX, H89x_COASC1_MAX, H89x_COASC2_MAX, H89x_POLASC_MAX,
+          H89x_HOUSE1_MAX, H89x_HOUSE2_MAX, H89x_HOUSE3_MAX, H89x_HOUSE4_MAX,
+          H89x_HOUSE5_MAX, H89x_HOUSE6_MAX, H89x_HOUSE7_MAX, H89x_HOUSE8_MAX,
+          H89x_HOUSE9_MAX, H89x_HOUSE10_MAX, H89x_HOUSE11_MAX, H89x_HOUSE12_MAX};
 
   static final double[] minLonT10 = new double[]
-      {T10_ASC_MIN,    T10_MC_MIN,      T10_ARMC_MIN,    T10_VERTEX_MIN,
-       T10_EQUASC_MIN, T10_COASC1_MIN,  T10_COASC2_MIN,  T10_POLASC_MIN,
-       T10_HOUSE1_MIN, T10_HOUSE2_MIN,  T10_HOUSE3_MIN,  T10_HOUSE4_MIN,
-       T10_HOUSE5_MIN, T10_HOUSE6_MIN,  T10_HOUSE7_MIN,  T10_HOUSE8_MIN,
-       T10_HOUSE9_MIN, T10_HOUSE10_MIN, T10_HOUSE11_MIN, T10_HOUSE12_MIN};
+      {T10_ASC_MIN, T10_MC_MIN, T10_ARMC_MIN, T10_VERTEX_MIN,
+          T10_EQUASC_MIN, T10_COASC1_MIN, T10_COASC2_MIN, T10_POLASC_MIN,
+          T10_HOUSE1_MIN, T10_HOUSE2_MIN, T10_HOUSE3_MIN, T10_HOUSE4_MIN,
+          T10_HOUSE5_MIN, T10_HOUSE6_MIN, T10_HOUSE7_MIN, T10_HOUSE8_MIN,
+          T10_HOUSE9_MIN, T10_HOUSE10_MIN, T10_HOUSE11_MIN, T10_HOUSE12_MIN};
   static final double[] maxLonT10 = new double[]
-      {T10_ASC_MAX,    T10_MC_MAX,      T10_ARMC_MAX,    T10_VERTEX_MAX,
-       T10_EQUASC_MAX, T10_COASC1_MAX,  T10_COASC2_MAX,  T10_POLASC_MAX,
-       T10_HOUSE1_MAX, T10_HOUSE2_MAX,  T10_HOUSE3_MAX,  T10_HOUSE4_MAX,
-       T10_HOUSE5_MAX, T10_HOUSE6_MAX,  T10_HOUSE7_MAX,  T10_HOUSE8_MAX,
-       T10_HOUSE9_MAX, T10_HOUSE10_MAX, T10_HOUSE11_MAX, T10_HOUSE12_MAX};
+      {T10_ASC_MAX, T10_MC_MAX, T10_ARMC_MAX, T10_VERTEX_MAX,
+          T10_EQUASC_MAX, T10_COASC1_MAX, T10_COASC2_MAX, T10_POLASC_MAX,
+          T10_HOUSE1_MAX, T10_HOUSE2_MAX, T10_HOUSE3_MAX, T10_HOUSE4_MAX,
+          T10_HOUSE5_MAX, T10_HOUSE6_MAX, T10_HOUSE7_MAX, T10_HOUSE8_MAX,
+          T10_HOUSE9_MAX, T10_HOUSE10_MAX, T10_HOUSE11_MAX, T10_HOUSE12_MAX};
   static final double[] minLonT20 = new double[]
-      {T20_ASC_MIN,    T20_MC_MIN,      T20_ARMC_MIN,    T20_VERTEX_MIN,
-       T20_EQUASC_MIN, T20_COASC1_MIN,  T20_COASC2_MIN,  T20_POLASC_MIN,
-       T20_HOUSE1_MIN, T20_HOUSE2_MIN,  T20_HOUSE3_MIN,  T20_HOUSE4_MIN,
-       T20_HOUSE5_MIN, T20_HOUSE6_MIN,  T20_HOUSE7_MIN,  T20_HOUSE8_MIN,
-       T20_HOUSE9_MIN, T20_HOUSE10_MIN, T20_HOUSE11_MIN, T20_HOUSE12_MIN};
+      {T20_ASC_MIN, T20_MC_MIN, T20_ARMC_MIN, T20_VERTEX_MIN,
+          T20_EQUASC_MIN, T20_COASC1_MIN, T20_COASC2_MIN, T20_POLASC_MIN,
+          T20_HOUSE1_MIN, T20_HOUSE2_MIN, T20_HOUSE3_MIN, T20_HOUSE4_MIN,
+          T20_HOUSE5_MIN, T20_HOUSE6_MIN, T20_HOUSE7_MIN, T20_HOUSE8_MIN,
+          T20_HOUSE9_MIN, T20_HOUSE10_MIN, T20_HOUSE11_MIN, T20_HOUSE12_MIN};
   static final double[] maxLonT20 = new double[]
-      {T20_ASC_MAX,    T20_MC_MAX,      T20_ARMC_MAX,    T20_VERTEX_MAX,
-       T20_EQUASC_MAX, T20_COASC1_MAX,  T20_COASC2_MAX,  T20_POLASC_MAX,
-       T20_HOUSE1_MAX, T20_HOUSE2_MAX,  T20_HOUSE3_MAX,  T20_HOUSE4_MAX,
-       T20_HOUSE5_MAX, T20_HOUSE6_MAX,  T20_HOUSE7_MAX,  T20_HOUSE8_MAX,
-       T20_HOUSE9_MAX, T20_HOUSE10_MAX, T20_HOUSE11_MAX, T20_HOUSE12_MAX};
+      {T20_ASC_MAX, T20_MC_MAX, T20_ARMC_MAX, T20_VERTEX_MAX,
+          T20_EQUASC_MAX, T20_COASC1_MAX, T20_COASC2_MAX, T20_POLASC_MAX,
+          T20_HOUSE1_MAX, T20_HOUSE2_MAX, T20_HOUSE3_MAX, T20_HOUSE4_MAX,
+          T20_HOUSE5_MAX, T20_HOUSE6_MAX, T20_HOUSE7_MAX, T20_HOUSE8_MAX,
+          T20_HOUSE9_MAX, T20_HOUSE10_MAX, T20_HOUSE11_MAX, T20_HOUSE12_MAX};
   static final double[] minLonT30 = new double[]
-      {T30_ASC_MIN,    T30_MC_MIN,      T30_ARMC_MIN,    T30_VERTEX_MIN,
-       T30_EQUASC_MIN, T30_COASC1_MIN,  T30_COASC2_MIN,  T30_POLASC_MIN,
-       T30_HOUSE1_MIN, T30_HOUSE2_MIN,  T30_HOUSE3_MIN,  T30_HOUSE4_MIN,
-       T30_HOUSE5_MIN, T30_HOUSE6_MIN,  T30_HOUSE7_MIN,  T30_HOUSE8_MIN,
-       T30_HOUSE9_MIN, T30_HOUSE10_MIN, T30_HOUSE11_MIN, T30_HOUSE12_MIN};
+      {T30_ASC_MIN, T30_MC_MIN, T30_ARMC_MIN, T30_VERTEX_MIN,
+          T30_EQUASC_MIN, T30_COASC1_MIN, T30_COASC2_MIN, T30_POLASC_MIN,
+          T30_HOUSE1_MIN, T30_HOUSE2_MIN, T30_HOUSE3_MIN, T30_HOUSE4_MIN,
+          T30_HOUSE5_MIN, T30_HOUSE6_MIN, T30_HOUSE7_MIN, T30_HOUSE8_MIN,
+          T30_HOUSE9_MIN, T30_HOUSE10_MIN, T30_HOUSE11_MIN, T30_HOUSE12_MIN};
   static final double[] maxLonT30 = new double[]
-      {T30_ASC_MAX,    T30_MC_MAX,      T30_ARMC_MAX,    T30_VERTEX_MAX,
-       T30_EQUASC_MAX, T30_COASC1_MAX,  T30_COASC2_MAX,  T30_POLASC_MAX,
-       T30_HOUSE1_MAX, T30_HOUSE2_MAX,  T30_HOUSE3_MAX,  T30_HOUSE4_MAX,
-       T30_HOUSE5_MAX, T30_HOUSE6_MAX,  T30_HOUSE7_MAX,  T30_HOUSE8_MAX,
-       T30_HOUSE9_MAX, T30_HOUSE10_MAX, T30_HOUSE11_MAX, T30_HOUSE12_MAX};
+      {T30_ASC_MAX, T30_MC_MAX, T30_ARMC_MAX, T30_VERTEX_MAX,
+          T30_EQUASC_MAX, T30_COASC1_MAX, T30_COASC2_MAX, T30_POLASC_MAX,
+          T30_HOUSE1_MAX, T30_HOUSE2_MAX, T30_HOUSE3_MAX, T30_HOUSE4_MAX,
+          T30_HOUSE5_MAX, T30_HOUSE6_MAX, T30_HOUSE7_MAX, T30_HOUSE8_MAX,
+          T30_HOUSE9_MAX, T30_HOUSE10_MAX, T30_HOUSE11_MAX, T30_HOUSE12_MAX};
   static final double[] minLonT40 = new double[]
-      {T40_ASC_MIN,    T40_MC_MIN,      T40_ARMC_MIN,    T40_VERTEX_MIN,
-       T40_EQUASC_MIN, T40_COASC1_MIN,  T40_COASC2_MIN,  T40_POLASC_MIN,
-       T40_HOUSE1_MIN, T40_HOUSE2_MIN,  T40_HOUSE3_MIN,  T40_HOUSE4_MIN,
-       T40_HOUSE5_MIN, T40_HOUSE6_MIN,  T40_HOUSE7_MIN,  T40_HOUSE8_MIN,
-       T40_HOUSE9_MIN, T40_HOUSE10_MIN, T40_HOUSE11_MIN, T40_HOUSE12_MIN};
+      {T40_ASC_MIN, T40_MC_MIN, T40_ARMC_MIN, T40_VERTEX_MIN,
+          T40_EQUASC_MIN, T40_COASC1_MIN, T40_COASC2_MIN, T40_POLASC_MIN,
+          T40_HOUSE1_MIN, T40_HOUSE2_MIN, T40_HOUSE3_MIN, T40_HOUSE4_MIN,
+          T40_HOUSE5_MIN, T40_HOUSE6_MIN, T40_HOUSE7_MIN, T40_HOUSE8_MIN,
+          T40_HOUSE9_MIN, T40_HOUSE10_MIN, T40_HOUSE11_MIN, T40_HOUSE12_MIN};
   static final double[] maxLonT40 = new double[]
-      {T40_ASC_MAX,    T40_MC_MAX,      T40_ARMC_MAX,    T40_VERTEX_MAX,
-       T40_EQUASC_MAX, T40_COASC1_MAX,  T40_COASC2_MAX,  T40_POLASC_MAX,
-       T40_HOUSE1_MAX, T40_HOUSE2_MAX,  T40_HOUSE3_MAX,  T40_HOUSE4_MAX,
-       T40_HOUSE5_MAX, T40_HOUSE6_MAX,  T40_HOUSE7_MAX,  T40_HOUSE8_MAX,
-       T40_HOUSE9_MAX, T40_HOUSE10_MAX, T40_HOUSE11_MAX, T40_HOUSE12_MAX};
+      {T40_ASC_MAX, T40_MC_MAX, T40_ARMC_MAX, T40_VERTEX_MAX,
+          T40_EQUASC_MAX, T40_COASC1_MAX, T40_COASC2_MAX, T40_POLASC_MAX,
+          T40_HOUSE1_MAX, T40_HOUSE2_MAX, T40_HOUSE3_MAX, T40_HOUSE4_MAX,
+          T40_HOUSE5_MAX, T40_HOUSE6_MAX, T40_HOUSE7_MAX, T40_HOUSE8_MAX,
+          T40_HOUSE9_MAX, T40_HOUSE10_MAX, T40_HOUSE11_MAX, T40_HOUSE12_MAX};
   static final double[] minLonT50 = new double[]
-      {T50_ASC_MIN,    T50_MC_MIN,      T50_ARMC_MIN,    T50_VERTEX_MIN,
-       T50_EQUASC_MIN, T50_COASC1_MIN,  T50_COASC2_MIN,  T50_POLASC_MIN,
-       T50_HOUSE1_MIN, T50_HOUSE2_MIN,  T50_HOUSE3_MIN,  T50_HOUSE4_MIN,
-       T50_HOUSE5_MIN, T50_HOUSE6_MIN,  T50_HOUSE7_MIN,  T50_HOUSE8_MIN,
-       T50_HOUSE9_MIN, T50_HOUSE10_MIN, T50_HOUSE11_MIN, T50_HOUSE12_MIN};
+      {T50_ASC_MIN, T50_MC_MIN, T50_ARMC_MIN, T50_VERTEX_MIN,
+          T50_EQUASC_MIN, T50_COASC1_MIN, T50_COASC2_MIN, T50_POLASC_MIN,
+          T50_HOUSE1_MIN, T50_HOUSE2_MIN, T50_HOUSE3_MIN, T50_HOUSE4_MIN,
+          T50_HOUSE5_MIN, T50_HOUSE6_MIN, T50_HOUSE7_MIN, T50_HOUSE8_MIN,
+          T50_HOUSE9_MIN, T50_HOUSE10_MIN, T50_HOUSE11_MIN, T50_HOUSE12_MIN};
   static final double[] maxLonT50 = new double[]
-      {T50_ASC_MAX,    T50_MC_MAX,      T50_ARMC_MAX,    T50_VERTEX_MAX,
-       T50_EQUASC_MAX, T50_COASC1_MAX,  T50_COASC2_MAX,  T50_POLASC_MAX,
-       T50_HOUSE1_MAX, T50_HOUSE2_MAX,  T50_HOUSE3_MAX,  T50_HOUSE4_MAX,
-       T50_HOUSE5_MAX, T50_HOUSE6_MAX,  T50_HOUSE7_MAX,  T50_HOUSE8_MAX,
-       T50_HOUSE9_MAX, T50_HOUSE10_MAX, T50_HOUSE11_MAX, T50_HOUSE12_MAX};
+      {T50_ASC_MAX, T50_MC_MAX, T50_ARMC_MAX, T50_VERTEX_MAX,
+          T50_EQUASC_MAX, T50_COASC1_MAX, T50_COASC2_MAX, T50_POLASC_MAX,
+          T50_HOUSE1_MAX, T50_HOUSE2_MAX, T50_HOUSE3_MAX, T50_HOUSE4_MAX,
+          T50_HOUSE5_MAX, T50_HOUSE6_MAX, T50_HOUSE7_MAX, T50_HOUSE8_MAX,
+          T50_HOUSE9_MAX, T50_HOUSE10_MAX, T50_HOUSE11_MAX, T50_HOUSE12_MAX};
   static final double[] minLonT60 = new double[]
-      {T60_ASC_MIN,    T60_MC_MIN,      T60_ARMC_MIN,    T60_VERTEX_MIN,
-       T60_EQUASC_MIN, T60_COASC1_MIN,  T60_COASC2_MIN,  T60_POLASC_MIN,
-       T60_HOUSE1_MIN, T60_HOUSE2_MIN,  T60_HOUSE3_MIN,  T60_HOUSE4_MIN,
-       T60_HOUSE5_MIN, T60_HOUSE6_MIN,  T60_HOUSE7_MIN,  T60_HOUSE8_MIN,
-       T60_HOUSE9_MIN, T60_HOUSE10_MIN, T60_HOUSE11_MIN, T60_HOUSE12_MIN};
+      {T60_ASC_MIN, T60_MC_MIN, T60_ARMC_MIN, T60_VERTEX_MIN,
+          T60_EQUASC_MIN, T60_COASC1_MIN, T60_COASC2_MIN, T60_POLASC_MIN,
+          T60_HOUSE1_MIN, T60_HOUSE2_MIN, T60_HOUSE3_MIN, T60_HOUSE4_MIN,
+          T60_HOUSE5_MIN, T60_HOUSE6_MIN, T60_HOUSE7_MIN, T60_HOUSE8_MIN,
+          T60_HOUSE9_MIN, T60_HOUSE10_MIN, T60_HOUSE11_MIN, T60_HOUSE12_MIN};
   static final double[] maxLonT60 = new double[]
-      {T60_ASC_MAX,    T60_MC_MAX,      T60_ARMC_MAX,    T60_VERTEX_MAX,
-       T60_EQUASC_MAX, T60_COASC1_MAX,  T60_COASC2_MAX,  T60_POLASC_MAX,
-       T60_HOUSE1_MAX, T60_HOUSE2_MAX,  T60_HOUSE3_MAX,  T60_HOUSE4_MAX,
-       T60_HOUSE5_MAX, T60_HOUSE6_MAX,  T60_HOUSE7_MAX,  T60_HOUSE8_MAX,
-       T60_HOUSE9_MAX, T60_HOUSE10_MAX, T60_HOUSE11_MAX, T60_HOUSE12_MAX};
+      {T60_ASC_MAX, T60_MC_MAX, T60_ARMC_MAX, T60_VERTEX_MAX,
+          T60_EQUASC_MAX, T60_COASC1_MAX, T60_COASC2_MAX, T60_POLASC_MAX,
+          T60_HOUSE1_MAX, T60_HOUSE2_MAX, T60_HOUSE3_MAX, T60_HOUSE4_MAX,
+          T60_HOUSE5_MAX, T60_HOUSE6_MAX, T60_HOUSE7_MAX, T60_HOUSE8_MAX,
+          T60_HOUSE9_MAX, T60_HOUSE10_MAX, T60_HOUSE11_MAX, T60_HOUSE12_MAX};
   static final double[] minLonT66 = new double[]
-      {T66_ASC_MIN,    T66_MC_MIN,      T66_ARMC_MIN,    T66_VERTEX_MIN,
-       T66_EQUASC_MIN, T66_COASC1_MIN,  T66_COASC2_MIN,  T66_POLASC_MIN,
-       T66_HOUSE1_MIN, T66_HOUSE2_MIN,  T66_HOUSE3_MIN,  T66_HOUSE4_MIN,
-       T66_HOUSE5_MIN, T66_HOUSE6_MIN,  T66_HOUSE7_MIN,  T66_HOUSE8_MIN,
-       T66_HOUSE9_MIN, T66_HOUSE10_MIN, T66_HOUSE11_MIN, T66_HOUSE12_MIN};
+      {T66_ASC_MIN, T66_MC_MIN, T66_ARMC_MIN, T66_VERTEX_MIN,
+          T66_EQUASC_MIN, T66_COASC1_MIN, T66_COASC2_MIN, T66_POLASC_MIN,
+          T66_HOUSE1_MIN, T66_HOUSE2_MIN, T66_HOUSE3_MIN, T66_HOUSE4_MIN,
+          T66_HOUSE5_MIN, T66_HOUSE6_MIN, T66_HOUSE7_MIN, T66_HOUSE8_MIN,
+          T66_HOUSE9_MIN, T66_HOUSE10_MIN, T66_HOUSE11_MIN, T66_HOUSE12_MIN};
   static final double[] maxLonT66 = new double[]
-      {T66_ASC_MAX,    T66_MC_MAX,      T66_ARMC_MAX,    T66_VERTEX_MAX,
-       T66_EQUASC_MAX, T66_COASC1_MAX,  T66_COASC2_MAX,  T66_POLASC_MAX,
-       T66_HOUSE1_MAX, T66_HOUSE2_MAX,  T66_HOUSE3_MAX,  T66_HOUSE4_MAX,
-       T66_HOUSE5_MAX, T66_HOUSE6_MAX,  T66_HOUSE7_MAX,  T66_HOUSE8_MAX,
-       T66_HOUSE9_MAX, T66_HOUSE10_MAX, T66_HOUSE11_MAX, T66_HOUSE12_MAX};
+      {T66_ASC_MAX, T66_MC_MAX, T66_ARMC_MAX, T66_VERTEX_MAX,
+          T66_EQUASC_MAX, T66_COASC1_MAX, T66_COASC2_MAX, T66_POLASC_MAX,
+          T66_HOUSE1_MAX, T66_HOUSE2_MAX, T66_HOUSE3_MAX, T66_HOUSE4_MAX,
+          T66_HOUSE5_MAX, T66_HOUSE6_MAX, T66_HOUSE7_MAX, T66_HOUSE8_MAX,
+          T66_HOUSE9_MAX, T66_HOUSE10_MAX, T66_HOUSE11_MAX, T66_HOUSE12_MAX};
   static final double[] minLonT70 = new double[]
-      {T70_ASC_MIN,    T70_MC_MIN,      T70_ARMC_MIN,    T70_VERTEX_MIN,
-       T70_EQUASC_MIN, T70_COASC1_MIN,  T70_COASC2_MIN,  T70_POLASC_MIN,
-       T70_HOUSE1_MIN, T70_HOUSE2_MIN,  T70_HOUSE3_MIN,  T70_HOUSE4_MIN,
-       T70_HOUSE5_MIN, T70_HOUSE6_MIN,  T70_HOUSE7_MIN,  T70_HOUSE8_MIN,
-       T70_HOUSE9_MIN, T70_HOUSE10_MIN, T70_HOUSE11_MIN, T70_HOUSE12_MIN};
+      {T70_ASC_MIN, T70_MC_MIN, T70_ARMC_MIN, T70_VERTEX_MIN,
+          T70_EQUASC_MIN, T70_COASC1_MIN, T70_COASC2_MIN, T70_POLASC_MIN,
+          T70_HOUSE1_MIN, T70_HOUSE2_MIN, T70_HOUSE3_MIN, T70_HOUSE4_MIN,
+          T70_HOUSE5_MIN, T70_HOUSE6_MIN, T70_HOUSE7_MIN, T70_HOUSE8_MIN,
+          T70_HOUSE9_MIN, T70_HOUSE10_MIN, T70_HOUSE11_MIN, T70_HOUSE12_MIN};
   static final double[] maxLonT70 = new double[]
-      {T70_ASC_MAX,    T70_MC_MAX,      T70_ARMC_MAX,    T70_VERTEX_MAX,
-       T70_EQUASC_MAX, T70_COASC1_MAX,  T70_COASC2_MAX,  T70_POLASC_MAX,
-       T70_HOUSE1_MAX, T70_HOUSE2_MAX,  T70_HOUSE3_MAX,  T70_HOUSE4_MAX,
-       T70_HOUSE5_MAX, T70_HOUSE6_MAX,  T70_HOUSE7_MAX,  T70_HOUSE8_MAX,
-       T70_HOUSE9_MAX, T70_HOUSE10_MAX, T70_HOUSE11_MAX, T70_HOUSE12_MAX};
+      {T70_ASC_MAX, T70_MC_MAX, T70_ARMC_MAX, T70_VERTEX_MAX,
+          T70_EQUASC_MAX, T70_COASC1_MAX, T70_COASC2_MAX, T70_POLASC_MAX,
+          T70_HOUSE1_MAX, T70_HOUSE2_MAX, T70_HOUSE3_MAX, T70_HOUSE4_MAX,
+          T70_HOUSE5_MAX, T70_HOUSE6_MAX, T70_HOUSE7_MAX, T70_HOUSE8_MAX,
+          T70_HOUSE9_MAX, T70_HOUSE10_MAX, T70_HOUSE11_MAX, T70_HOUSE12_MAX};
   static final double[] minLonT80 = new double[]
-      {T80_ASC_MIN,    T80_MC_MIN,      T80_ARMC_MIN,    T80_VERTEX_MIN,
-       T80_EQUASC_MIN, T80_COASC1_MIN,  T80_COASC2_MIN,  T80_POLASC_MIN,
-       T80_HOUSE1_MIN, T80_HOUSE2_MIN,  T80_HOUSE3_MIN,  T80_HOUSE4_MIN,
-       T80_HOUSE5_MIN, T80_HOUSE6_MIN,  T80_HOUSE7_MIN,  T80_HOUSE8_MIN,
-       T80_HOUSE9_MIN, T80_HOUSE10_MIN, T80_HOUSE11_MIN, T80_HOUSE12_MIN};
+      {T80_ASC_MIN, T80_MC_MIN, T80_ARMC_MIN, T80_VERTEX_MIN,
+          T80_EQUASC_MIN, T80_COASC1_MIN, T80_COASC2_MIN, T80_POLASC_MIN,
+          T80_HOUSE1_MIN, T80_HOUSE2_MIN, T80_HOUSE3_MIN, T80_HOUSE4_MIN,
+          T80_HOUSE5_MIN, T80_HOUSE6_MIN, T80_HOUSE7_MIN, T80_HOUSE8_MIN,
+          T80_HOUSE9_MIN, T80_HOUSE10_MIN, T80_HOUSE11_MIN, T80_HOUSE12_MIN};
   static final double[] maxLonT80 = new double[]
-      {T80_ASC_MAX,    T80_MC_MAX,      T80_ARMC_MAX,    T80_VERTEX_MAX,
-       T80_EQUASC_MAX, T80_COASC1_MAX,  T80_COASC2_MAX,  T80_POLASC_MAX,
-       T80_HOUSE1_MAX, T80_HOUSE2_MAX,  T80_HOUSE3_MAX,  T80_HOUSE4_MAX,
-       T80_HOUSE5_MAX, T80_HOUSE6_MAX,  T80_HOUSE7_MAX,  T80_HOUSE8_MAX,
-       T80_HOUSE9_MAX, T80_HOUSE10_MAX, T80_HOUSE11_MAX, T80_HOUSE12_MAX};
+      {T80_ASC_MAX, T80_MC_MAX, T80_ARMC_MAX, T80_VERTEX_MAX,
+          T80_EQUASC_MAX, T80_COASC1_MAX, T80_COASC2_MAX, T80_POLASC_MAX,
+          T80_HOUSE1_MAX, T80_HOUSE2_MAX, T80_HOUSE3_MAX, T80_HOUSE4_MAX,
+          T80_HOUSE5_MAX, T80_HOUSE6_MAX, T80_HOUSE7_MAX, T80_HOUSE8_MAX,
+          T80_HOUSE9_MAX, T80_HOUSE10_MAX, T80_HOUSE11_MAX, T80_HOUSE12_MAX};
   static final double[] minLonT85 = new double[]
-      {T85_ASC_MIN,    T85_MC_MIN,      T85_ARMC_MIN,    T85_VERTEX_MIN,
-       T85_EQUASC_MIN, T85_COASC1_MIN,  T85_COASC2_MIN,  T85_POLASC_MIN,
-       T85_HOUSE1_MIN, T85_HOUSE2_MIN,  T85_HOUSE3_MIN,  T85_HOUSE4_MIN,
-       T85_HOUSE5_MIN, T85_HOUSE6_MIN,  T85_HOUSE7_MIN,  T85_HOUSE8_MIN,
-       T85_HOUSE9_MIN, T85_HOUSE10_MIN, T85_HOUSE11_MIN, T85_HOUSE12_MIN};
+      {T85_ASC_MIN, T85_MC_MIN, T85_ARMC_MIN, T85_VERTEX_MIN,
+          T85_EQUASC_MIN, T85_COASC1_MIN, T85_COASC2_MIN, T85_POLASC_MIN,
+          T85_HOUSE1_MIN, T85_HOUSE2_MIN, T85_HOUSE3_MIN, T85_HOUSE4_MIN,
+          T85_HOUSE5_MIN, T85_HOUSE6_MIN, T85_HOUSE7_MIN, T85_HOUSE8_MIN,
+          T85_HOUSE9_MIN, T85_HOUSE10_MIN, T85_HOUSE11_MIN, T85_HOUSE12_MIN};
   static final double[] maxLonT85 = new double[]
-      {T85_ASC_MAX,    T85_MC_MAX,      T85_ARMC_MAX,    T85_VERTEX_MAX,
-       T85_EQUASC_MAX, T85_COASC1_MAX,  T85_COASC2_MAX,  T85_POLASC_MAX,
-       T85_HOUSE1_MAX, T85_HOUSE2_MAX,  T85_HOUSE3_MAX,  T85_HOUSE4_MAX,
-       T85_HOUSE5_MAX, T85_HOUSE6_MAX,  T85_HOUSE7_MAX,  T85_HOUSE8_MAX,
-       T85_HOUSE9_MAX, T85_HOUSE10_MAX, T85_HOUSE11_MAX, T85_HOUSE12_MAX};
+      {T85_ASC_MAX, T85_MC_MAX, T85_ARMC_MAX, T85_VERTEX_MAX,
+          T85_EQUASC_MAX, T85_COASC1_MAX, T85_COASC2_MAX, T85_POLASC_MAX,
+          T85_HOUSE1_MAX, T85_HOUSE2_MAX, T85_HOUSE3_MAX, T85_HOUSE4_MAX,
+          T85_HOUSE5_MAX, T85_HOUSE6_MAX, T85_HOUSE7_MAX, T85_HOUSE8_MAX,
+          T85_HOUSE9_MAX, T85_HOUSE10_MAX, T85_HOUSE11_MAX, T85_HOUSE12_MAX};
   static final double[] minLonT88 = new double[]
-      {T88_ASC_MIN,    T88_MC_MIN,      T88_ARMC_MIN,    T88_VERTEX_MIN,
-       T88_EQUASC_MIN, T88_COASC1_MIN,  T88_COASC2_MIN,  T88_POLASC_MIN,
-       T88_HOUSE1_MIN, T88_HOUSE2_MIN,  T88_HOUSE3_MIN,  T88_HOUSE4_MIN,
-       T88_HOUSE5_MIN, T88_HOUSE6_MIN,  T88_HOUSE7_MIN,  T88_HOUSE8_MIN,
-       T88_HOUSE9_MIN, T88_HOUSE10_MIN, T88_HOUSE11_MIN, T88_HOUSE12_MIN};
+      {T88_ASC_MIN, T88_MC_MIN, T88_ARMC_MIN, T88_VERTEX_MIN,
+          T88_EQUASC_MIN, T88_COASC1_MIN, T88_COASC2_MIN, T88_POLASC_MIN,
+          T88_HOUSE1_MIN, T88_HOUSE2_MIN, T88_HOUSE3_MIN, T88_HOUSE4_MIN,
+          T88_HOUSE5_MIN, T88_HOUSE6_MIN, T88_HOUSE7_MIN, T88_HOUSE8_MIN,
+          T88_HOUSE9_MIN, T88_HOUSE10_MIN, T88_HOUSE11_MIN, T88_HOUSE12_MIN};
   static final double[] maxLonT88 = new double[]
-      {T88_ASC_MAX,    T88_MC_MAX,      T88_ARMC_MAX,    T88_VERTEX_MAX,
-       T88_EQUASC_MAX, T88_COASC1_MAX,  T88_COASC2_MAX,  T88_POLASC_MAX,
-       T88_HOUSE1_MAX, T88_HOUSE2_MAX,  T88_HOUSE3_MAX,  T88_HOUSE4_MAX,
-       T88_HOUSE5_MAX, T88_HOUSE6_MAX,  T88_HOUSE7_MAX,  T88_HOUSE8_MAX,
-       T88_HOUSE9_MAX, T88_HOUSE10_MAX, T88_HOUSE11_MAX, T88_HOUSE12_MAX};
+      {T88_ASC_MAX, T88_MC_MAX, T88_ARMC_MAX, T88_VERTEX_MAX,
+          T88_EQUASC_MAX, T88_COASC1_MAX, T88_COASC2_MAX, T88_POLASC_MAX,
+          T88_HOUSE1_MAX, T88_HOUSE2_MAX, T88_HOUSE3_MAX, T88_HOUSE4_MAX,
+          T88_HOUSE5_MAX, T88_HOUSE6_MAX, T88_HOUSE7_MAX, T88_HOUSE8_MAX,
+          T88_HOUSE9_MAX, T88_HOUSE10_MAX, T88_HOUSE11_MAX, T88_HOUSE12_MAX};
   static final double[] minLonT89x = new double[]
-      {T89x_ASC_MIN,    T89x_MC_MIN,      T89x_ARMC_MIN,    T89x_VERTEX_MIN,
-       T89x_EQUASC_MIN, T89x_COASC1_MIN,  T89x_COASC2_MIN,  T89x_POLASC_MIN,
-       T89x_HOUSE1_MIN, T89x_HOUSE2_MIN,  T89x_HOUSE3_MIN,  T89x_HOUSE4_MIN,
-       T89x_HOUSE5_MIN, T89x_HOUSE6_MIN,  T89x_HOUSE7_MIN,  T89x_HOUSE8_MIN,
-       T89x_HOUSE9_MIN, T89x_HOUSE10_MIN, T89x_HOUSE11_MIN, T89x_HOUSE12_MIN};
+      {T89x_ASC_MIN, T89x_MC_MIN, T89x_ARMC_MIN, T89x_VERTEX_MIN,
+          T89x_EQUASC_MIN, T89x_COASC1_MIN, T89x_COASC2_MIN, T89x_POLASC_MIN,
+          T89x_HOUSE1_MIN, T89x_HOUSE2_MIN, T89x_HOUSE3_MIN, T89x_HOUSE4_MIN,
+          T89x_HOUSE5_MIN, T89x_HOUSE6_MIN, T89x_HOUSE7_MIN, T89x_HOUSE8_MIN,
+          T89x_HOUSE9_MIN, T89x_HOUSE10_MIN, T89x_HOUSE11_MIN, T89x_HOUSE12_MIN};
   static final double[] maxLonT89x = new double[]
-      {T89x_ASC_MAX,    T89x_MC_MAX,      T89x_ARMC_MAX,    T89x_VERTEX_MAX,
-       T89x_EQUASC_MAX, T89x_COASC1_MAX,  T89x_COASC2_MAX,  T89x_POLASC_MAX,
-       T89x_HOUSE1_MAX, T89x_HOUSE2_MAX,  T89x_HOUSE3_MAX,  T89x_HOUSE4_MAX,
-       T89x_HOUSE5_MAX, T89x_HOUSE6_MAX,  T89x_HOUSE7_MAX,  T89x_HOUSE8_MAX,
-       T89x_HOUSE9_MAX, T89x_HOUSE10_MAX, T89x_HOUSE11_MAX, T89x_HOUSE12_MAX};
+      {T89x_ASC_MAX, T89x_MC_MAX, T89x_ARMC_MAX, T89x_VERTEX_MAX,
+          T89x_EQUASC_MAX, T89x_COASC1_MAX, T89x_COASC2_MAX, T89x_POLASC_MAX,
+          T89x_HOUSE1_MAX, T89x_HOUSE2_MAX, T89x_HOUSE3_MAX, T89x_HOUSE4_MAX,
+          T89x_HOUSE5_MAX, T89x_HOUSE6_MAX, T89x_HOUSE7_MAX, T89x_HOUSE8_MAX,
+          T89x_HOUSE9_MAX, T89x_HOUSE10_MAX, T89x_HOUSE11_MAX, T89x_HOUSE12_MAX};
 
   static final double[] minLonB10 = new double[]
-      {B10_ASC_MIN,    B10_MC_MIN,      B10_ARMC_MIN,    B10_VERTEX_MIN,
-       B10_EQUASC_MIN, B10_COASC1_MIN,  B10_COASC2_MIN,  B10_POLASC_MIN,
-       B10_HOUSE1_MIN, B10_HOUSE2_MIN,  B10_HOUSE3_MIN,  B10_HOUSE4_MIN,
-       B10_HOUSE5_MIN, B10_HOUSE6_MIN,  B10_HOUSE7_MIN,  B10_HOUSE8_MIN,
-       B10_HOUSE9_MIN, B10_HOUSE10_MIN, B10_HOUSE11_MIN, B10_HOUSE12_MIN};
+      {B10_ASC_MIN, B10_MC_MIN, B10_ARMC_MIN, B10_VERTEX_MIN,
+          B10_EQUASC_MIN, B10_COASC1_MIN, B10_COASC2_MIN, B10_POLASC_MIN,
+          B10_HOUSE1_MIN, B10_HOUSE2_MIN, B10_HOUSE3_MIN, B10_HOUSE4_MIN,
+          B10_HOUSE5_MIN, B10_HOUSE6_MIN, B10_HOUSE7_MIN, B10_HOUSE8_MIN,
+          B10_HOUSE9_MIN, B10_HOUSE10_MIN, B10_HOUSE11_MIN, B10_HOUSE12_MIN};
   static final double[] maxLonB10 = new double[]
-      {B10_ASC_MAX,    B10_MC_MAX,      B10_ARMC_MAX,    B10_VERTEX_MAX,
-       B10_EQUASC_MAX, B10_COASC1_MAX,  B10_COASC2_MAX,  B10_POLASC_MAX,
-       B10_HOUSE1_MAX, B10_HOUSE2_MAX,  B10_HOUSE3_MAX,  B10_HOUSE4_MAX,
-       B10_HOUSE5_MAX, B10_HOUSE6_MAX,  B10_HOUSE7_MAX,  B10_HOUSE8_MAX,
-       B10_HOUSE9_MAX, B10_HOUSE10_MAX, B10_HOUSE11_MAX, B10_HOUSE12_MAX};
+      {B10_ASC_MAX, B10_MC_MAX, B10_ARMC_MAX, B10_VERTEX_MAX,
+          B10_EQUASC_MAX, B10_COASC1_MAX, B10_COASC2_MAX, B10_POLASC_MAX,
+          B10_HOUSE1_MAX, B10_HOUSE2_MAX, B10_HOUSE3_MAX, B10_HOUSE4_MAX,
+          B10_HOUSE5_MAX, B10_HOUSE6_MAX, B10_HOUSE7_MAX, B10_HOUSE8_MAX,
+          B10_HOUSE9_MAX, B10_HOUSE10_MAX, B10_HOUSE11_MAX, B10_HOUSE12_MAX};
   static final double[] minLonB20 = new double[]
-      {B20_ASC_MIN,    B20_MC_MIN,      B20_ARMC_MIN,    B20_VERTEX_MIN,
-       B20_EQUASC_MIN, B20_COASC1_MIN,  B20_COASC2_MIN,  B20_POLASC_MIN,
-       B20_HOUSE1_MIN, B20_HOUSE2_MIN,  B20_HOUSE3_MIN,  B20_HOUSE4_MIN,
-       B20_HOUSE5_MIN, B20_HOUSE6_MIN,  B20_HOUSE7_MIN,  B20_HOUSE8_MIN,
-       B20_HOUSE9_MIN, B20_HOUSE10_MIN, B20_HOUSE11_MIN, B20_HOUSE12_MIN};
+      {B20_ASC_MIN, B20_MC_MIN, B20_ARMC_MIN, B20_VERTEX_MIN,
+          B20_EQUASC_MIN, B20_COASC1_MIN, B20_COASC2_MIN, B20_POLASC_MIN,
+          B20_HOUSE1_MIN, B20_HOUSE2_MIN, B20_HOUSE3_MIN, B20_HOUSE4_MIN,
+          B20_HOUSE5_MIN, B20_HOUSE6_MIN, B20_HOUSE7_MIN, B20_HOUSE8_MIN,
+          B20_HOUSE9_MIN, B20_HOUSE10_MIN, B20_HOUSE11_MIN, B20_HOUSE12_MIN};
   static final double[] maxLonB20 = new double[]
-      {B20_ASC_MAX,    B20_MC_MAX,      B20_ARMC_MAX,    B20_VERTEX_MAX,
-       B20_EQUASC_MAX, B20_COASC1_MAX,  B20_COASC2_MAX,  B20_POLASC_MAX,
-       B20_HOUSE1_MAX, B20_HOUSE2_MAX,  B20_HOUSE3_MAX,  B20_HOUSE4_MAX,
-       B20_HOUSE5_MAX, B20_HOUSE6_MAX,  B20_HOUSE7_MAX,  B20_HOUSE8_MAX,
-       B20_HOUSE9_MAX, B20_HOUSE10_MAX, B20_HOUSE11_MAX, B20_HOUSE12_MAX};
+      {B20_ASC_MAX, B20_MC_MAX, B20_ARMC_MAX, B20_VERTEX_MAX,
+          B20_EQUASC_MAX, B20_COASC1_MAX, B20_COASC2_MAX, B20_POLASC_MAX,
+          B20_HOUSE1_MAX, B20_HOUSE2_MAX, B20_HOUSE3_MAX, B20_HOUSE4_MAX,
+          B20_HOUSE5_MAX, B20_HOUSE6_MAX, B20_HOUSE7_MAX, B20_HOUSE8_MAX,
+          B20_HOUSE9_MAX, B20_HOUSE10_MAX, B20_HOUSE11_MAX, B20_HOUSE12_MAX};
   static final double[] minLonB30 = new double[]
-      {B30_ASC_MIN,    B30_MC_MIN,      B30_ARMC_MIN,    B30_VERTEX_MIN,
-       B30_EQUASC_MIN, B30_COASC1_MIN,  B30_COASC2_MIN,  B30_POLASC_MIN,
-       B30_HOUSE1_MIN, B30_HOUSE2_MIN,  B30_HOUSE3_MIN,  B30_HOUSE4_MIN,
-       B30_HOUSE5_MIN, B30_HOUSE6_MIN,  B30_HOUSE7_MIN,  B30_HOUSE8_MIN,
-       B30_HOUSE9_MIN, B30_HOUSE10_MIN, B30_HOUSE11_MIN, B30_HOUSE12_MIN};
+      {B30_ASC_MIN, B30_MC_MIN, B30_ARMC_MIN, B30_VERTEX_MIN,
+          B30_EQUASC_MIN, B30_COASC1_MIN, B30_COASC2_MIN, B30_POLASC_MIN,
+          B30_HOUSE1_MIN, B30_HOUSE2_MIN, B30_HOUSE3_MIN, B30_HOUSE4_MIN,
+          B30_HOUSE5_MIN, B30_HOUSE6_MIN, B30_HOUSE7_MIN, B30_HOUSE8_MIN,
+          B30_HOUSE9_MIN, B30_HOUSE10_MIN, B30_HOUSE11_MIN, B30_HOUSE12_MIN};
   static final double[] maxLonB30 = new double[]
-      {B30_ASC_MAX,    B30_MC_MAX,      B30_ARMC_MAX,    B30_VERTEX_MAX,
-       B30_EQUASC_MAX, B30_COASC1_MAX,  B30_COASC2_MAX,  B30_POLASC_MAX,
-       B30_HOUSE1_MAX, B30_HOUSE2_MAX,  B30_HOUSE3_MAX,  B30_HOUSE4_MAX,
-       B30_HOUSE5_MAX, B30_HOUSE6_MAX,  B30_HOUSE7_MAX,  B30_HOUSE8_MAX,
-       B30_HOUSE9_MAX, B30_HOUSE10_MAX, B30_HOUSE11_MAX, B30_HOUSE12_MAX};
+      {B30_ASC_MAX, B30_MC_MAX, B30_ARMC_MAX, B30_VERTEX_MAX,
+          B30_EQUASC_MAX, B30_COASC1_MAX, B30_COASC2_MAX, B30_POLASC_MAX,
+          B30_HOUSE1_MAX, B30_HOUSE2_MAX, B30_HOUSE3_MAX, B30_HOUSE4_MAX,
+          B30_HOUSE5_MAX, B30_HOUSE6_MAX, B30_HOUSE7_MAX, B30_HOUSE8_MAX,
+          B30_HOUSE9_MAX, B30_HOUSE10_MAX, B30_HOUSE11_MAX, B30_HOUSE12_MAX};
   static final double[] minLonB40 = new double[]
-      {B40_ASC_MIN,    B40_MC_MIN,      B40_ARMC_MIN,    B40_VERTEX_MIN,
-       B40_EQUASC_MIN, B40_COASC1_MIN,  B40_COASC2_MIN,  B40_POLASC_MIN,
-       B40_HOUSE1_MIN, B40_HOUSE2_MIN,  B40_HOUSE3_MIN,  B40_HOUSE4_MIN,
-       B40_HOUSE5_MIN, B40_HOUSE6_MIN,  B40_HOUSE7_MIN,  B40_HOUSE8_MIN,
-       B40_HOUSE9_MIN, B40_HOUSE10_MIN, B40_HOUSE11_MIN, B40_HOUSE12_MIN};
+      {B40_ASC_MIN, B40_MC_MIN, B40_ARMC_MIN, B40_VERTEX_MIN,
+          B40_EQUASC_MIN, B40_COASC1_MIN, B40_COASC2_MIN, B40_POLASC_MIN,
+          B40_HOUSE1_MIN, B40_HOUSE2_MIN, B40_HOUSE3_MIN, B40_HOUSE4_MIN,
+          B40_HOUSE5_MIN, B40_HOUSE6_MIN, B40_HOUSE7_MIN, B40_HOUSE8_MIN,
+          B40_HOUSE9_MIN, B40_HOUSE10_MIN, B40_HOUSE11_MIN, B40_HOUSE12_MIN};
   static final double[] maxLonB40 = new double[]
-      {B40_ASC_MAX,    B40_MC_MAX,      B40_ARMC_MAX,    B40_VERTEX_MAX,
-       B40_EQUASC_MAX, B40_COASC1_MAX,  B40_COASC2_MAX,  B40_POLASC_MAX,
-       B40_HOUSE1_MAX, B40_HOUSE2_MAX,  B40_HOUSE3_MAX,  B40_HOUSE4_MAX,
-       B40_HOUSE5_MAX, B40_HOUSE6_MAX,  B40_HOUSE7_MAX,  B40_HOUSE8_MAX,
-       B40_HOUSE9_MAX, B40_HOUSE10_MAX, B40_HOUSE11_MAX, B40_HOUSE12_MAX};
+      {B40_ASC_MAX, B40_MC_MAX, B40_ARMC_MAX, B40_VERTEX_MAX,
+          B40_EQUASC_MAX, B40_COASC1_MAX, B40_COASC2_MAX, B40_POLASC_MAX,
+          B40_HOUSE1_MAX, B40_HOUSE2_MAX, B40_HOUSE3_MAX, B40_HOUSE4_MAX,
+          B40_HOUSE5_MAX, B40_HOUSE6_MAX, B40_HOUSE7_MAX, B40_HOUSE8_MAX,
+          B40_HOUSE9_MAX, B40_HOUSE10_MAX, B40_HOUSE11_MAX, B40_HOUSE12_MAX};
   static final double[] minLonB50 = new double[]
-      {B50_ASC_MIN,    B50_MC_MIN,      B50_ARMC_MIN,    B50_VERTEX_MIN,
-       B50_EQUASC_MIN, B50_COASC1_MIN,  B50_COASC2_MIN,  B50_POLASC_MIN,
-       B50_HOUSE1_MIN, B50_HOUSE2_MIN,  B50_HOUSE3_MIN,  B50_HOUSE4_MIN,
-       B50_HOUSE5_MIN, B50_HOUSE6_MIN,  B50_HOUSE7_MIN,  B50_HOUSE8_MIN,
-       B50_HOUSE9_MIN, B50_HOUSE10_MIN, B50_HOUSE11_MIN, B50_HOUSE12_MIN};
+      {B50_ASC_MIN, B50_MC_MIN, B50_ARMC_MIN, B50_VERTEX_MIN,
+          B50_EQUASC_MIN, B50_COASC1_MIN, B50_COASC2_MIN, B50_POLASC_MIN,
+          B50_HOUSE1_MIN, B50_HOUSE2_MIN, B50_HOUSE3_MIN, B50_HOUSE4_MIN,
+          B50_HOUSE5_MIN, B50_HOUSE6_MIN, B50_HOUSE7_MIN, B50_HOUSE8_MIN,
+          B50_HOUSE9_MIN, B50_HOUSE10_MIN, B50_HOUSE11_MIN, B50_HOUSE12_MIN};
   static final double[] maxLonB50 = new double[]
-      {B50_ASC_MAX,    B50_MC_MAX,      B50_ARMC_MAX,    B50_VERTEX_MAX,
-       B50_EQUASC_MAX, B50_COASC1_MAX,  B50_COASC2_MAX,  B50_POLASC_MAX,
-       B50_HOUSE1_MAX, B50_HOUSE2_MAX,  B50_HOUSE3_MAX,  B50_HOUSE4_MAX,
-       B50_HOUSE5_MAX, B50_HOUSE6_MAX,  B50_HOUSE7_MAX,  B50_HOUSE8_MAX,
-       B50_HOUSE9_MAX, B50_HOUSE10_MAX, B50_HOUSE11_MAX, B50_HOUSE12_MAX};
+      {B50_ASC_MAX, B50_MC_MAX, B50_ARMC_MAX, B50_VERTEX_MAX,
+          B50_EQUASC_MAX, B50_COASC1_MAX, B50_COASC2_MAX, B50_POLASC_MAX,
+          B50_HOUSE1_MAX, B50_HOUSE2_MAX, B50_HOUSE3_MAX, B50_HOUSE4_MAX,
+          B50_HOUSE5_MAX, B50_HOUSE6_MAX, B50_HOUSE7_MAX, B50_HOUSE8_MAX,
+          B50_HOUSE9_MAX, B50_HOUSE10_MAX, B50_HOUSE11_MAX, B50_HOUSE12_MAX};
   static final double[] minLonB60 = new double[]
-      {B60_ASC_MIN,    B60_MC_MIN,      B60_ARMC_MIN,    B60_VERTEX_MIN,
-       B60_EQUASC_MIN, B60_COASC1_MIN,  B60_COASC2_MIN,  B60_POLASC_MIN,
-       B60_HOUSE1_MIN, B60_HOUSE2_MIN,  B60_HOUSE3_MIN,  B60_HOUSE4_MIN,
-       B60_HOUSE5_MIN, B60_HOUSE6_MIN,  B60_HOUSE7_MIN,  B60_HOUSE8_MIN,
-       B60_HOUSE9_MIN, B60_HOUSE10_MIN, B60_HOUSE11_MIN, B60_HOUSE12_MIN};
+      {B60_ASC_MIN, B60_MC_MIN, B60_ARMC_MIN, B60_VERTEX_MIN,
+          B60_EQUASC_MIN, B60_COASC1_MIN, B60_COASC2_MIN, B60_POLASC_MIN,
+          B60_HOUSE1_MIN, B60_HOUSE2_MIN, B60_HOUSE3_MIN, B60_HOUSE4_MIN,
+          B60_HOUSE5_MIN, B60_HOUSE6_MIN, B60_HOUSE7_MIN, B60_HOUSE8_MIN,
+          B60_HOUSE9_MIN, B60_HOUSE10_MIN, B60_HOUSE11_MIN, B60_HOUSE12_MIN};
   static final double[] maxLonB60 = new double[]
-      {B60_ASC_MAX,    B60_MC_MAX,      B60_ARMC_MAX,    B60_VERTEX_MAX,
-       B60_EQUASC_MAX, B60_COASC1_MAX,  B60_COASC2_MAX,  B60_POLASC_MAX,
-       B60_HOUSE1_MAX, B60_HOUSE2_MAX,  B60_HOUSE3_MAX,  B60_HOUSE4_MAX,
-       B60_HOUSE5_MAX, B60_HOUSE6_MAX,  B60_HOUSE7_MAX,  B60_HOUSE8_MAX,
-       B60_HOUSE9_MAX, B60_HOUSE10_MAX, B60_HOUSE11_MAX, B60_HOUSE12_MAX};
+      {B60_ASC_MAX, B60_MC_MAX, B60_ARMC_MAX, B60_VERTEX_MAX,
+          B60_EQUASC_MAX, B60_COASC1_MAX, B60_COASC2_MAX, B60_POLASC_MAX,
+          B60_HOUSE1_MAX, B60_HOUSE2_MAX, B60_HOUSE3_MAX, B60_HOUSE4_MAX,
+          B60_HOUSE5_MAX, B60_HOUSE6_MAX, B60_HOUSE7_MAX, B60_HOUSE8_MAX,
+          B60_HOUSE9_MAX, B60_HOUSE10_MAX, B60_HOUSE11_MAX, B60_HOUSE12_MAX};
   static final double[] minLonB66 = new double[]
-      {B66_ASC_MIN,    B66_MC_MIN,      B66_ARMC_MIN,    B66_VERTEX_MIN,
-       B66_EQUASC_MIN, B66_COASC1_MIN,  B66_COASC2_MIN,  B66_POLASC_MIN,
-       B66_HOUSE1_MIN, B66_HOUSE2_MIN,  B66_HOUSE3_MIN,  B66_HOUSE4_MIN,
-       B66_HOUSE5_MIN, B66_HOUSE6_MIN,  B66_HOUSE7_MIN,  B66_HOUSE8_MIN,
-       B66_HOUSE9_MIN, B66_HOUSE10_MIN, B66_HOUSE11_MIN, B66_HOUSE12_MIN};
+      {B66_ASC_MIN, B66_MC_MIN, B66_ARMC_MIN, B66_VERTEX_MIN,
+          B66_EQUASC_MIN, B66_COASC1_MIN, B66_COASC2_MIN, B66_POLASC_MIN,
+          B66_HOUSE1_MIN, B66_HOUSE2_MIN, B66_HOUSE3_MIN, B66_HOUSE4_MIN,
+          B66_HOUSE5_MIN, B66_HOUSE6_MIN, B66_HOUSE7_MIN, B66_HOUSE8_MIN,
+          B66_HOUSE9_MIN, B66_HOUSE10_MIN, B66_HOUSE11_MIN, B66_HOUSE12_MIN};
   static final double[] maxLonB66 = new double[]
-      {B66_ASC_MAX,    B66_MC_MAX,      B66_ARMC_MAX,    B66_VERTEX_MAX,
-       B66_EQUASC_MAX, B66_COASC1_MAX,  B66_COASC2_MAX,  B66_POLASC_MAX,
-       B66_HOUSE1_MAX, B66_HOUSE2_MAX,  B66_HOUSE3_MAX,  B66_HOUSE4_MAX,
-       B66_HOUSE5_MAX, B66_HOUSE6_MAX,  B66_HOUSE7_MAX,  B66_HOUSE8_MAX,
-       B66_HOUSE9_MAX, B66_HOUSE10_MAX, B66_HOUSE11_MAX, B66_HOUSE12_MAX};
+      {B66_ASC_MAX, B66_MC_MAX, B66_ARMC_MAX, B66_VERTEX_MAX,
+          B66_EQUASC_MAX, B66_COASC1_MAX, B66_COASC2_MAX, B66_POLASC_MAX,
+          B66_HOUSE1_MAX, B66_HOUSE2_MAX, B66_HOUSE3_MAX, B66_HOUSE4_MAX,
+          B66_HOUSE5_MAX, B66_HOUSE6_MAX, B66_HOUSE7_MAX, B66_HOUSE8_MAX,
+          B66_HOUSE9_MAX, B66_HOUSE10_MAX, B66_HOUSE11_MAX, B66_HOUSE12_MAX};
   static final double[] minLonB70 = new double[]
-      {B70_ASC_MIN,    B70_MC_MIN,      B70_ARMC_MIN,    B70_VERTEX_MIN,
-       B70_EQUASC_MIN, B70_COASC1_MIN,  B70_COASC2_MIN,  B70_POLASC_MIN,
-       B70_HOUSE1_MIN, B70_HOUSE2_MIN,  B70_HOUSE3_MIN,  B70_HOUSE4_MIN,
-       B70_HOUSE5_MIN, B70_HOUSE6_MIN,  B70_HOUSE7_MIN,  B70_HOUSE8_MIN,
-       B70_HOUSE9_MIN, B70_HOUSE10_MIN, B70_HOUSE11_MIN, B70_HOUSE12_MIN};
+      {B70_ASC_MIN, B70_MC_MIN, B70_ARMC_MIN, B70_VERTEX_MIN,
+          B70_EQUASC_MIN, B70_COASC1_MIN, B70_COASC2_MIN, B70_POLASC_MIN,
+          B70_HOUSE1_MIN, B70_HOUSE2_MIN, B70_HOUSE3_MIN, B70_HOUSE4_MIN,
+          B70_HOUSE5_MIN, B70_HOUSE6_MIN, B70_HOUSE7_MIN, B70_HOUSE8_MIN,
+          B70_HOUSE9_MIN, B70_HOUSE10_MIN, B70_HOUSE11_MIN, B70_HOUSE12_MIN};
   static final double[] maxLonB70 = new double[]
-      {B70_ASC_MAX,    B70_MC_MAX,      B70_ARMC_MAX,    B70_VERTEX_MAX,
-       B70_EQUASC_MAX, B70_COASC1_MAX,  B70_COASC2_MAX,  B70_POLASC_MAX,
-       B70_HOUSE1_MAX, B70_HOUSE2_MAX,  B70_HOUSE3_MAX,  B70_HOUSE4_MAX,
-       B70_HOUSE5_MAX, B70_HOUSE6_MAX,  B70_HOUSE7_MAX,  B70_HOUSE8_MAX,
-       B70_HOUSE9_MAX, B70_HOUSE10_MAX, B70_HOUSE11_MAX, B70_HOUSE12_MAX};
+      {B70_ASC_MAX, B70_MC_MAX, B70_ARMC_MAX, B70_VERTEX_MAX,
+          B70_EQUASC_MAX, B70_COASC1_MAX, B70_COASC2_MAX, B70_POLASC_MAX,
+          B70_HOUSE1_MAX, B70_HOUSE2_MAX, B70_HOUSE3_MAX, B70_HOUSE4_MAX,
+          B70_HOUSE5_MAX, B70_HOUSE6_MAX, B70_HOUSE7_MAX, B70_HOUSE8_MAX,
+          B70_HOUSE9_MAX, B70_HOUSE10_MAX, B70_HOUSE11_MAX, B70_HOUSE12_MAX};
   static final double[] minLonB80 = new double[]
-      {B80_ASC_MIN,    B80_MC_MIN,      B80_ARMC_MIN,    B80_VERTEX_MIN,
-       B80_EQUASC_MIN, B80_COASC1_MIN,  B80_COASC2_MIN,  B80_POLASC_MIN,
-       B80_HOUSE1_MIN, B80_HOUSE2_MIN,  B80_HOUSE3_MIN,  B80_HOUSE4_MIN,
-       B80_HOUSE5_MIN, B80_HOUSE6_MIN,  B80_HOUSE7_MIN,  B80_HOUSE8_MIN,
-       B80_HOUSE9_MIN, B80_HOUSE10_MIN, B80_HOUSE11_MIN, B80_HOUSE12_MIN};
+      {B80_ASC_MIN, B80_MC_MIN, B80_ARMC_MIN, B80_VERTEX_MIN,
+          B80_EQUASC_MIN, B80_COASC1_MIN, B80_COASC2_MIN, B80_POLASC_MIN,
+          B80_HOUSE1_MIN, B80_HOUSE2_MIN, B80_HOUSE3_MIN, B80_HOUSE4_MIN,
+          B80_HOUSE5_MIN, B80_HOUSE6_MIN, B80_HOUSE7_MIN, B80_HOUSE8_MIN,
+          B80_HOUSE9_MIN, B80_HOUSE10_MIN, B80_HOUSE11_MIN, B80_HOUSE12_MIN};
   static final double[] maxLonB80 = new double[]
-      {B80_ASC_MAX,    B80_MC_MAX,      B80_ARMC_MAX,    B80_VERTEX_MAX,
-       B80_EQUASC_MAX, B80_COASC1_MAX,  B80_COASC2_MAX,  B80_POLASC_MAX,
-       B80_HOUSE1_MAX, B80_HOUSE2_MAX,  B80_HOUSE3_MAX,  B80_HOUSE4_MAX,
-       B80_HOUSE5_MAX, B80_HOUSE6_MAX,  B80_HOUSE7_MAX,  B80_HOUSE8_MAX,
-       B80_HOUSE9_MAX, B80_HOUSE10_MAX, B80_HOUSE11_MAX, B80_HOUSE12_MAX};
+      {B80_ASC_MAX, B80_MC_MAX, B80_ARMC_MAX, B80_VERTEX_MAX,
+          B80_EQUASC_MAX, B80_COASC1_MAX, B80_COASC2_MAX, B80_POLASC_MAX,
+          B80_HOUSE1_MAX, B80_HOUSE2_MAX, B80_HOUSE3_MAX, B80_HOUSE4_MAX,
+          B80_HOUSE5_MAX, B80_HOUSE6_MAX, B80_HOUSE7_MAX, B80_HOUSE8_MAX,
+          B80_HOUSE9_MAX, B80_HOUSE10_MAX, B80_HOUSE11_MAX, B80_HOUSE12_MAX};
   static final double[] minLonB85 = new double[]
-      {B85_ASC_MIN,    B85_MC_MIN,      B85_ARMC_MIN,    B85_VERTEX_MIN,
-       B85_EQUASC_MIN, B85_COASC1_MIN,  B85_COASC2_MIN,  B85_POLASC_MIN,
-       B85_HOUSE1_MIN, B85_HOUSE2_MIN,  B85_HOUSE3_MIN,  B85_HOUSE4_MIN,
-       B85_HOUSE5_MIN, B85_HOUSE6_MIN,  B85_HOUSE7_MIN,  B85_HOUSE8_MIN,
-       B85_HOUSE9_MIN, B85_HOUSE10_MIN, B85_HOUSE11_MIN, B85_HOUSE12_MIN};
+      {B85_ASC_MIN, B85_MC_MIN, B85_ARMC_MIN, B85_VERTEX_MIN,
+          B85_EQUASC_MIN, B85_COASC1_MIN, B85_COASC2_MIN, B85_POLASC_MIN,
+          B85_HOUSE1_MIN, B85_HOUSE2_MIN, B85_HOUSE3_MIN, B85_HOUSE4_MIN,
+          B85_HOUSE5_MIN, B85_HOUSE6_MIN, B85_HOUSE7_MIN, B85_HOUSE8_MIN,
+          B85_HOUSE9_MIN, B85_HOUSE10_MIN, B85_HOUSE11_MIN, B85_HOUSE12_MIN};
   static final double[] maxLonB85 = new double[]
-      {B85_ASC_MAX,    B85_MC_MAX,      B85_ARMC_MAX,    B85_VERTEX_MAX,
-       B85_EQUASC_MAX, B85_COASC1_MAX,  B85_COASC2_MAX,  B85_POLASC_MAX,
-       B85_HOUSE1_MAX, B85_HOUSE2_MAX,  B85_HOUSE3_MAX,  B85_HOUSE4_MAX,
-       B85_HOUSE5_MAX, B85_HOUSE6_MAX,  B85_HOUSE7_MAX,  B85_HOUSE8_MAX,
-       B85_HOUSE9_MAX, B85_HOUSE10_MAX, B85_HOUSE11_MAX, B85_HOUSE12_MAX};
+      {B85_ASC_MAX, B85_MC_MAX, B85_ARMC_MAX, B85_VERTEX_MAX,
+          B85_EQUASC_MAX, B85_COASC1_MAX, B85_COASC2_MAX, B85_POLASC_MAX,
+          B85_HOUSE1_MAX, B85_HOUSE2_MAX, B85_HOUSE3_MAX, B85_HOUSE4_MAX,
+          B85_HOUSE5_MAX, B85_HOUSE6_MAX, B85_HOUSE7_MAX, B85_HOUSE8_MAX,
+          B85_HOUSE9_MAX, B85_HOUSE10_MAX, B85_HOUSE11_MAX, B85_HOUSE12_MAX};
   static final double[] minLonB88 = new double[]
-      {B88_ASC_MIN,    B88_MC_MIN,      B88_ARMC_MIN,    B88_VERTEX_MIN,
-       B88_EQUASC_MIN, B88_COASC1_MIN,  B88_COASC2_MIN,  B88_POLASC_MIN,
-       B88_HOUSE1_MIN, B88_HOUSE2_MIN,  B88_HOUSE3_MIN,  B88_HOUSE4_MIN,
-       B88_HOUSE5_MIN, B88_HOUSE6_MIN,  B88_HOUSE7_MIN,  B88_HOUSE8_MIN,
-       B88_HOUSE9_MIN, B88_HOUSE10_MIN, B88_HOUSE11_MIN, B88_HOUSE12_MIN};
+      {B88_ASC_MIN, B88_MC_MIN, B88_ARMC_MIN, B88_VERTEX_MIN,
+          B88_EQUASC_MIN, B88_COASC1_MIN, B88_COASC2_MIN, B88_POLASC_MIN,
+          B88_HOUSE1_MIN, B88_HOUSE2_MIN, B88_HOUSE3_MIN, B88_HOUSE4_MIN,
+          B88_HOUSE5_MIN, B88_HOUSE6_MIN, B88_HOUSE7_MIN, B88_HOUSE8_MIN,
+          B88_HOUSE9_MIN, B88_HOUSE10_MIN, B88_HOUSE11_MIN, B88_HOUSE12_MIN};
   static final double[] maxLonB88 = new double[]
-      {B88_ASC_MAX,    B88_MC_MAX,      B88_ARMC_MAX,    B88_VERTEX_MAX,
-       B88_EQUASC_MAX, B88_COASC1_MAX,  B88_COASC2_MAX,  B88_POLASC_MAX,
-       B88_HOUSE1_MAX, B88_HOUSE2_MAX,  B88_HOUSE3_MAX,  B88_HOUSE4_MAX,
-       B88_HOUSE5_MAX, B88_HOUSE6_MAX,  B88_HOUSE7_MAX,  B88_HOUSE8_MAX,
-       B88_HOUSE9_MAX, B88_HOUSE10_MAX, B88_HOUSE11_MAX, B88_HOUSE12_MAX};
+      {B88_ASC_MAX, B88_MC_MAX, B88_ARMC_MAX, B88_VERTEX_MAX,
+          B88_EQUASC_MAX, B88_COASC1_MAX, B88_COASC2_MAX, B88_POLASC_MAX,
+          B88_HOUSE1_MAX, B88_HOUSE2_MAX, B88_HOUSE3_MAX, B88_HOUSE4_MAX,
+          B88_HOUSE5_MAX, B88_HOUSE6_MAX, B88_HOUSE7_MAX, B88_HOUSE8_MAX,
+          B88_HOUSE9_MAX, B88_HOUSE10_MAX, B88_HOUSE11_MAX, B88_HOUSE12_MAX};
   static final double[] minLonB89x = new double[]
-      {B89x_ASC_MIN,    B89x_MC_MIN,      B89x_ARMC_MIN,    B89x_VERTEX_MIN,
-       B89x_EQUASC_MIN, B89x_COASC1_MIN,  B89x_COASC2_MIN,  B89x_POLASC_MIN,
-       B89x_HOUSE1_MIN, B89x_HOUSE2_MIN,  B89x_HOUSE3_MIN,  B89x_HOUSE4_MIN,
-       B89x_HOUSE5_MIN, B89x_HOUSE6_MIN,  B89x_HOUSE7_MIN,  B89x_HOUSE8_MIN,
-       B89x_HOUSE9_MIN, B89x_HOUSE10_MIN, B89x_HOUSE11_MIN, B89x_HOUSE12_MIN};
+      {B89x_ASC_MIN, B89x_MC_MIN, B89x_ARMC_MIN, B89x_VERTEX_MIN,
+          B89x_EQUASC_MIN, B89x_COASC1_MIN, B89x_COASC2_MIN, B89x_POLASC_MIN,
+          B89x_HOUSE1_MIN, B89x_HOUSE2_MIN, B89x_HOUSE3_MIN, B89x_HOUSE4_MIN,
+          B89x_HOUSE5_MIN, B89x_HOUSE6_MIN, B89x_HOUSE7_MIN, B89x_HOUSE8_MIN,
+          B89x_HOUSE9_MIN, B89x_HOUSE10_MIN, B89x_HOUSE11_MIN, B89x_HOUSE12_MIN};
   static final double[] maxLonB89x = new double[]
-      {B89x_ASC_MAX,    B89x_MC_MAX,      B89x_ARMC_MAX,    B89x_VERTEX_MAX,
-       B89x_EQUASC_MAX, B89x_COASC1_MAX,  B89x_COASC2_MAX,  B89x_POLASC_MAX,
-       B89x_HOUSE1_MAX, B89x_HOUSE2_MAX,  B89x_HOUSE3_MAX,  B89x_HOUSE4_MAX,
-       B89x_HOUSE5_MAX, B89x_HOUSE6_MAX,  B89x_HOUSE7_MAX,  B89x_HOUSE8_MAX,
-       B89x_HOUSE9_MAX, B89x_HOUSE10_MAX, B89x_HOUSE11_MAX, B89x_HOUSE12_MAX};
+      {B89x_ASC_MAX, B89x_MC_MAX, B89x_ARMC_MAX, B89x_VERTEX_MAX,
+          B89x_EQUASC_MAX, B89x_COASC1_MAX, B89x_COASC2_MAX, B89x_POLASC_MAX,
+          B89x_HOUSE1_MAX, B89x_HOUSE2_MAX, B89x_HOUSE3_MAX, B89x_HOUSE4_MAX,
+          B89x_HOUSE5_MAX, B89x_HOUSE6_MAX, B89x_HOUSE7_MAX, B89x_HOUSE8_MAX,
+          B89x_HOUSE9_MAX, B89x_HOUSE10_MAX, B89x_HOUSE11_MAX, B89x_HOUSE12_MAX};
 }

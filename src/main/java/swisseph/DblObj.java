@@ -68,28 +68,27 @@
 */
 package swisseph;
 
+import java.io.Serializable;
+
 /**
-* This class enables methods to return doubles by reference. We need this
-* here, as this is a very direct port from C to Java, where reference
-* parameters are used from time to time.
-* <P><I><B>You will find the complete documentation for the original
-* SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
-* http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information
-* there is directly valid for this port to Java as well.</B></I>
-* @version 1.0.0b
-*/
-public class DblObj
-		implements java.io.Serializable
-		{
-	public DblObj() {
-		this.val = 0;
-	}
-	public DblObj(double val) {
-		this.val = val;
-	}
+ * This class enables methods to return doubles by reference. We need this
+ * here, as this is a very direct port from C to Java, where reference
+ * parameters are used from time to time.
+ * <P><I><B>You will find the complete documentation for the original
+ * SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
+ * http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information
+ * there is directly valid for this port to Java as well.</B></I>
+ *
+ * @version 1.0.0b
+ */
+public class DblObj implements Serializable {
+
+  public DblObj(double val) {
+    this.val = val;
+  }
 
   /**
-  * This is the double value that has become wrapped up into a real object.
-  */
+   * This is the double value that has become wrapped up into a real object.
+   */
   public double val;
 }

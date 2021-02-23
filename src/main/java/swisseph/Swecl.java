@@ -1258,14 +1258,14 @@ class Swecl
     int retflag = 0, retflag2 = 0;
     double de = 6378.140, a;
     double t, tt, tjd, tjds, dt, dta, dtb;
-    DblObj dtint=new DblObj();
+    DblObj dtint=new DblObj(0);
     double T, T2, T3, T4, K, M, Mm;
     double E, Ff;
     double xs[]=new double[6], xm[]=new double[6],
            ls[]=new double[6], lm[]=new double[6];
     double rmoon, rsun, dcore[]=new double[10];
     double dc[]=new double[3];
-    DblObj dctr=new DblObj();
+    DblObj dctr=new DblObj(0);
     double twohr = 2.0 / 24.0;
     double tenmin = 10.0 / 24.0 / 60.0;
     DblObj dt1=new DblObj(0), dt2=new DblObj(0);
@@ -1692,12 +1692,12 @@ class Swecl
     int retflag = 0, retflag2 = 0;
     double de = 6378.140, a;
     double t, tt, tjd=0, tjds, dt, dta, dtb;
-    DblObj dtint=new DblObj();
+    DblObj dtint=new DblObj(0);
     double drad, dl;
     double xs[]=new double[6], xm[]=new double[6], ls[]=new double[6], lm[]=new double[6];
     double rmoon, rsun, dcore[]=new double[10];
     double dc[]=new double[20];
-    DblObj dctr=new DblObj();
+    DblObj dctr=new DblObj(0);
     double twohr = 2.0 / 24.0;
     double tenmin = 10.0 / 24.0 / 60.0;
     DblObj dt1=new DblObj(0), dt2=new DblObj(0);
@@ -2292,15 +2292,15 @@ class Swecl
     int i, j, k, m;
     int retflag = 0, retc;
     double t, tjd, dt, K, T, T2, T3, T4, F, M, Mm;
-    DblObj tjdr = new DblObj(), tjds = new DblObj();
-    DblObj dtint=new DblObj();
+    DblObj tjdr = new DblObj(0), tjds = new DblObj(0);
+    DblObj dtint=new DblObj(0);
     double E, Ff, A1, Om;
     double xs[]=new double[6], xm[]=new double[6],
            ls[]=new double[6], lm[]=new double[6],
            x1[]=new double[6], x2[]=new double[6], dm, ds;
     double rmoon, rsun, rsplusrm, rsminusrm;
     double dc[]=new double[3], dctrmin;
-    DblObj dctr=new DblObj();
+    DblObj dctr=new DblObj(0);
     double twomin = 2.0 / 24.0 / 60.0;
     double tensec = 10.0 / 24.0 / 60.0 / 60.0;
     double twohr = 2.0 / 24.0;
@@ -2655,12 +2655,12 @@ class Swecl
     int i, j, k, m;
     int retflag = 0;
     double t, tjd, dt;
-    DblObj dtint=new DblObj();
-    DblObj tjdr=new DblObj(), tjds=new DblObj();
+    DblObj dtint=new DblObj(0);
+    DblObj tjdr=new DblObj(0), tjds=new DblObj(0);
     double xs[]=new double[6], xm[]=new double[6], ls[]=new double[6], lm[]=new double[6], x1[]=new double[6], x2[]=new double[6], dm, ds;
     double rmoon, rsun, rsplusrm, rsminusrm;
     double dc[]=new double[20], dctrmin;
-    DblObj dctr=new DblObj();
+    DblObj dctr=new DblObj(0);
     double twomin = 2.0 / 24.0 / 60.0;
     double tensec = 10.0 / 24.0 / 60.0 / 60.0;
     double twohr = 2.0 / 24.0;
@@ -3666,13 +3666,13 @@ class Swecl
     int i, j, m, n, o, i1 = 0, i2 = 0;
     int retflag = 0, retflag2 = 0;
     double t, tjd, tjd2, dt, dta, dtb;
-    DblObj dtint=new DblObj();
+    DblObj dtint=new DblObj(0);
     double T, T2, T3, T4, K, F, M, Mm;
     double E, Ff, F1, A1, Om;
     double xs[]=new double[6], xm[]=new double[6], dm, ds;
     double rsun, rearth, dcore[]=new double[10];
     double dc[]=new double[3];
-    DblObj dctr=new DblObj();
+    DblObj dctr=new DblObj(0);
     double twohr = 2.0 / 24.0;
     double tenmin = 10.0 / 24.0 / 60.0;
     DblObj dt1=new DblObj(0), dt2=new DblObj(0);
@@ -3929,7 +3929,7 @@ class Swecl
   int swe_lun_eclipse_when_loc(double tjd_start, int ifl,
        double geopos[], double tret[], double attr[], int backward, StringBuffer serr) {
     int retflag = 0, retflag2 = 0;
-    DblObj tjdr = new DblObj(), tjds = new DblObj();
+    DblObj tjdr = new DblObj(0), tjds = new DblObj(0);
     double tjd_max = 0;
     int i;
     if (geopos != null && (geopos[2] < SwephData.SEI_ECL_GEOALT_MIN || geopos[2] > SwephData.SEI_ECL_GEOALT_MAX)) {
@@ -4452,8 +4452,8 @@ class Swecl
            aha;
     double tculm[]=new double[4], tcu, tc[]=new double[20], h[]=new double[20],
            t2[]=new double[6], dc[]=new double[6];
-    DblObj dtint=new DblObj();
-    DblObj dx=new DblObj();
+    DblObj dtint=new DblObj(0);
+    DblObj dx=new DblObj(0);
     double rdi, dd = 0;
     int iflag = epheflag;
     int jmax = 14;
@@ -5229,10 +5229,10 @@ class Swecl
                                                     ipl == SweConst.SE_EARTH)) {
       if (ipl == SweConst.SE_MOON) {
 //      sm.swi_mean_lunar_elements(tjd_et, &xna[0], &xna[3], &xpe[0], &xpe[3]);
-        DblObj xna0=new DblObj(); xna0.val=xna[0];
-        DblObj xna3=new DblObj(); xna3.val=xna[3];
-        DblObj xpe0=new DblObj(); xpe0.val=xpe[0+xpeOffs];
-        DblObj xpe3=new DblObj(); xpe3.val=xpe[3+xpeOffs];
+        DblObj xna0=new DblObj(0.0); xna0.val=xna[0];
+        DblObj xna3=new DblObj(0.0); xna3.val=xna[3];
+        DblObj xpe0=new DblObj(0.0); xpe0.val=xpe[0+xpeOffs];
+        DblObj xpe3=new DblObj(0.0); xpe3.val=xpe[3+xpeOffs];
         sm.swi_mean_lunar_elements(tjd_et, xna0, xna3, xpe0, xpe3);
         xna[0]=xna0.val;
         xna[3]=xna3.val;
@@ -5847,7 +5847,7 @@ class Swecl
    * serr is pointer to error string, may be NULL
    */
   int swe_gauquelin_sector(double t_ut, int ipl, StringBuffer starname, int iflag, int imeth, double[] geopos, double atpress, double attemp, DblObj dgsect, StringBuffer serr) {
-    DblObj dtmp=new DblObj();
+    DblObj dtmp=new DblObj(0);
     boolean rise_found = true;
     boolean set_found = true;
     int retval;

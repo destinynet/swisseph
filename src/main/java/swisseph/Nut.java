@@ -68,14 +68,15 @@
 */
 package swisseph;
 
-class Nut
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class Nut implements Serializable {
   /* nutation */
   double tnut;
-  double nutlo[];      /* nutation in longitude and obliquity */
-  double snut, cnut;    /* sine and cosine of nutation in obliquity */
-  double matrix[][];
+  double[] nutlo;      /* nutation in longitude and obliquity */
+  double snut;
+  double cnut;    /* sine and cosine of nutation in obliquity */
+  double[][] matrix;
 
   Nut() {
     nutlo = new double[2];
@@ -83,14 +84,17 @@ class Nut
   }
 
   void clearData() {
-    int i,j;
-    tnut=0.0;
-    snut=0.0;
-    cnut=0.0;
-    for(j=0; j<nutlo.length; j++) { nutlo[j]=0.0; }
-    for(j=0; j<matrix.length; j++) {
-      for(i=0; i<matrix[j].length; i++) {
-        matrix[j][i]=0.0;
+    int i;
+    int j;
+    tnut = 0.0;
+    snut = 0.0;
+    cnut = 0.0;
+    for (j = 0; j < nutlo.length; j++) {
+      nutlo[j] = 0.0;
+    }
+    for (j = 0; j < matrix.length; j++) {
+      for (i = 0; i < matrix[j].length; i++) {
+        matrix[j][i] = 0.0;
       }
     }
   }

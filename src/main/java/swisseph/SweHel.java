@@ -358,7 +358,7 @@ StringBuffer call_swe_fixstar_mag__star_save = new StringBuffer();
     int retval;
     int iflag = helflag & (SweConst.SEFLG_JPLEPH|SweConst.SEFLG_SWIEPH|SweConst.SEFLG_MOSEPH);
     StringBuffer star2 = new StringBuffer(star);
-    DblObj oTret = new DblObj();
+    DblObj oTret = new DblObj(0);
     oTret.val = tret[0];
     retval = sc.swe_rise_trans(tjd, ipl, star2, iflag, eventtype, dgeo, atpress, attemp, oTret, serr);
     tret[0] = oTret.val;

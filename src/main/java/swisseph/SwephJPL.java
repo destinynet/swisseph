@@ -80,9 +80,9 @@
 package swisseph;
 
 
-class SwephJPL
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwephJPL implements Serializable {
   static final int J_MERCURY =  0;
   static final int J_VENUS   =  1;
   static final int J_EARTH   =  2;
@@ -99,22 +99,27 @@ class SwephJPL
   static final int J_NUT     = 13;
   static final int J_LIB     = 14;
 
-  JplSave js=new JplSave();
+  JplSave js = new JplSave();
 
 
-  SwissEph  sw=null;
-  SwissData swed=null;
-  SwissLib  sl=null;
-
+  SwissEph  sw;
+  SwissData swed;
+  SwissLib  sl;
 
 
   SwephJPL(SwissEph sw, SwissData swed, SwissLib sl) {
-    this.sw=sw;
-    this.swed=swed;
-    this.sl=sl;
-    if (this.sw==null) { this.sw=new SwissEph(); }
-    if (this.swed==null) { this.swed=new SwissData(); }
-    if (this.sl==null) { this.sl=new SwissLib(); }
+    this.sw = sw;
+    this.swed = swed;
+    this.sl = sl;
+    if (this.sw == null) {
+      this.sw = new SwissEph();
+    }
+    if (this.swed == null) {
+      this.swed = new SwissData();
+    }
+    if (this.sl == null) {
+      this.sl = new SwissLib();
+    }
   }
 
 
@@ -985,21 +990,19 @@ class SwephJPL
 }
 
 
-class JplSave
-		implements java.io.Serializable
-		{
-  String jplfname=null;
-  String jplfpath=null;
-  FilePtr jplfptr=null;
-//  boolean do_reorder;
-  double eh_cval[]=new double[400];
-  double eh_ss[]=new double[3], eh_au, eh_emrat;
-  int eh_denum, eh_ncon, eh_ipt[]=new int[39];
-  String ch_cnam="";
-  double pv[]=new double[78];
-  double pvsun[]=new double[6];
-  double buf[]=new double[1500];
-  double pc[]=new double[18], vc[]=new double[18],
-         ac[]=new double[18], jc[]=new double[18];
+class JplSave implements Serializable {
+  String jplfname = null;
+  String jplfpath = null;
+  FilePtr jplfptr = null;
+  //  boolean do_reorder;
+  double eh_cval[] = new double[400];
+  double eh_ss[] = new double[3], eh_au, eh_emrat;
+  int eh_denum, eh_ncon, eh_ipt[] = new int[39];
+  String ch_cnam = "";
+  double pv[] = new double[78];
+  double pvsun[] = new double[6];
+  double buf[] = new double[1500];
+  double pc[] = new double[18], vc[] = new double[18],
+      ac[] = new double[18], jc[] = new double[18];
   boolean do_km;
 }
