@@ -74,11 +74,12 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabMer
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabMer implements Serializable {
   /*
   First date in file = 1228000.50
   Number of records = 397276.0
@@ -95,7 +96,7 @@ class SwemptabMer
     2500.0 to   3000.0:   0.42   0.13   0.16
     3000.0 to   3000.8:  0.252  0.087  0.115
   */
-  static final double mertabl[] = {
+  static final double[] mertabl = {
           35.85255,        -163.26379, 53810162857.56026,      908082.18475,
 
            0.05214,          -0.07712,
@@ -381,7 +382,7 @@ class SwemptabMer
           -0.00013,          -0.00986,
 
   };
-  static final double mertabb[] = {
+  static final double[] mertabb = {
           68.33369,         422.77623,       -2057.26405,       -2522.29068,
 
           -0.00030,          -0.00009,
@@ -667,7 +668,7 @@ class SwemptabMer
           -0.01665,          -0.00199,
 
   };
-  static final double mertabr[] = {
+  static final double[] mertabr = {
           -8.30490,         -11.68232,          86.54880,        4361.05018,
 
            0.00002,          -0.00001,
@@ -1088,8 +1089,8 @@ class SwemptabMer
    (byte)-1
   };
   /* Total terms = 130, small = 128 */
-  static Plantbl mer404=new Plantbl(
-                            new short[]{11, 14, 10, 11,  4,  5,  2,  0,  0},
-                            (short)6,merargs,mertabl,mertabb,mertabr,
-                            3.8709830979999998e-01);
+  static Plantbl mer404 = new Plantbl(
+      new short[]{11, 14, 10, 11, 4, 5, 2, 0, 0},
+      (short) 6, merargs, mertabl, mertabb, mertabr,
+      3.8709830979999998e-01);
 }

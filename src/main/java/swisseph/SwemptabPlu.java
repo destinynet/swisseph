@@ -1,4 +1,3 @@
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -74,11 +73,12 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabPlu
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabPlu implements Serializable {
   /*
   First date in file = 625296.50
   Number of records = 16731.0
@@ -98,7 +98,7 @@ class SwemptabPlu
     2500.0 to   3000.0:   1.09   0.70   0.46
     3000.0 to   3000.4:  0.871  0.395  0.051
   */
-  static final double plutabl[] = {
+  static final double[] plutabl = {
     74986469.33577,   100898343.73690,    48199471.54076,     9520076.03177,
       690431.67340,     -427355.12716,    52266623.77862,      860190.70714,
 
@@ -489,7 +489,7 @@ class SwemptabPlu
           -0.06243,           0.04306,
 
   };
-  static final double plutabb[] = {
+  static final double[] plutabb = {
    -35042727.30412,   -49049197.81293,   -25374963.60995,    -5761406.03035,
      -467370.57540,       14040.11453,        2329.15763,      -13978.69390,
 
@@ -880,7 +880,7 @@ class SwemptabPlu
            0.05985,           0.04130,
 
   };
-  static final double plutabr[] = {
+  static final double[] plutabr = {
     17990649.12487,    24806479.30874,    12690953.00645,     2892671.69562,
       249947.71316,       -5138.71425,        1142.68629,        6075.25751,
 
@@ -1272,7 +1272,7 @@ class SwemptabPlu
 
   };
 
-  static byte pluargs[] = {
+  static byte[] pluargs = {
   (byte)0,  (byte)7,
   (byte)2,  (byte)3,  (byte)7, (byte)-9,  (byte)9,  (byte)0,
   (byte)2,  (byte)4,  (byte)7,(byte)-12,  (byte)9,  (byte)0,
@@ -1450,12 +1450,12 @@ class SwemptabPlu
   };
   /* Total terms = 173, small = 156 */
   static Plantbl plu404 = new Plantbl(
-                               new short[]{0,  0,  0,  0,  2,  2,  9, 13, 13},
-                               (short)7,
-                               pluargs,
-                               plutabl,
-                               plutabb,
-                               plutabr,
-                               3.9539999999999999e+01
+      new short[]{0, 0, 0, 0, 2, 2, 9, 13, 13},
+      (short) 7,
+      pluargs,
+      plutabl,
+      plutabb,
+      plutabr,
+      3.9539999999999999e+01
   );
 }

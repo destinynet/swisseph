@@ -1,4 +1,3 @@
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -74,11 +73,13 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabEar
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabEar implements Serializable {
+
   /*
   First date in file = 1228000.50
   Number of records = 264850.0
@@ -95,8 +96,7 @@ class SwemptabEar
     2500.0 to   3000.0:   0.14   0.06   0.07
     3000.0 to   3000.8:  0.074  0.048  0.044
   */
-
-  static final double eartabl[] = {
+  static final double[] eartabl = {
          -65.54655,        -232.74963, 12959774227.57587,      361678.59587,
 
            2.52679,          -4.93511,           2.46852,          -8.88928,
@@ -388,7 +388,7 @@ class SwemptabEar
            0.00002,          -0.00623,
 
   };
-  static final double eartabb[] = {
+  static final double[] eartabb = {
          -41.97860,         -48.43539,          74.72897,           0.00075,
 
           -0.12774,          -0.10188,          -0.00943,          -0.04574,
@@ -680,7 +680,7 @@ class SwemptabEar
            0.00025,           0.00021,
 
   };
-  static final double eartabr[] = {
+  static final double[] eartabr = {
            0.64577,          -2.90183,         -14.50280,          28.85196,
 
            0.08672,          -0.05643,           0.02353,          -0.00404,
@@ -973,7 +973,7 @@ class SwemptabEar
 
   };
 
-  static final byte earargs[] = {
+  static final byte[] earargs = {
   (byte)0,  (byte)3,
   (byte)3,  (byte)4,  (byte)3, (byte)-8,  (byte)4,  (byte)3,  (byte)5,  (byte)2,
   (byte)2,  (byte)2,  (byte)5, (byte)-5,  (byte)6,  (byte)1,

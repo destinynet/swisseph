@@ -1,4 +1,3 @@
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -74,11 +73,12 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabSat
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabSat implements Serializable {
   /*
   First date in file = 625296.50
   Number of records = 16731.0
@@ -98,7 +98,7 @@ class SwemptabSat
     2500.0 to   3000.0:   0.63   0.22   0.53
     3000.0 to   3000.4:  0.047  0.073  0.086
   */
-  static final double sattabl[] = {
+  static final double[] sattabl = {
      1788381.26240,     2460423.68044,     1370113.15868,      415406.99187,
        72040.39885,       12669.58806,   439960754.85333,      180256.80433,
 
@@ -587,7 +587,7 @@ class SwemptabSat
           -0.00010,           0.06547,
 
   };
-  static final double sattabb[] = {
+  static final double[] sattabb = {
      -567865.62548,     -796277.29029,     -410804.00791,      -91793.12562,
        -6268.13975,         398.64391,        -710.67442,         175.29456,
 
@@ -1076,7 +1076,7 @@ class SwemptabSat
           -0.00003,          -0.00013,
 
   };
-  static final double sattabr[] = {
+  static final double[] sattabr = {
       -38127.94034,      -48221.08524,      -20986.93487,       -3422.75861,
           -8.97362,          53.34259,        -404.15708,          -0.05434,
 
@@ -1566,7 +1566,7 @@ class SwemptabSat
 
   };
 
-  static final byte satargs[] = {
+  static final byte[] satargs = {
   (byte)0,  (byte)7,
   (byte)3,  (byte)2,  (byte)5, (byte)-6,  (byte)6,  (byte)3,  (byte)7,  (byte)0,
   (byte)2,  (byte)2,  (byte)5, (byte)-5,  (byte)6,  (byte)5,
@@ -1786,12 +1786,12 @@ class SwemptabSat
   };
   /* Total terms = 215, small = 211 */
   static Plantbl sat404 = new Plantbl(
-                               new short[]{0,  0,  1,  0,  8, 18,  9,  5,  0},
-                               (short)7,
-                               satargs,
-                               sattabl,
-                               sattabb,
-                               sattabr,
-                               9.5575813548599999e+00
+      new short[]{0, 0, 1, 0, 8, 18, 9, 5, 0},
+      (short) 7,
+      satargs,
+      sattabl,
+      sattabb,
+      sattabr,
+      9.5575813548599999e+00
   );
 }

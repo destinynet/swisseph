@@ -1,4 +1,3 @@
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -74,11 +73,12 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabVen
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabVen implements Serializable {
   /*
   First date in file = 1228000.50
   Number of records = 397276.0
@@ -95,7 +95,7 @@ class SwemptabVen
     2500.0 to   3000.0:   0.30   0.15   0.10
     3000.0 to   3000.8:  0.116  0.062  0.058
   */
-  static final double ventabl[] = {
+  static final double[] ventabl = {
            9.08078,          55.42416, 21066413644.98911,      655127.20186,
 
            0.00329,           0.10408,
@@ -323,7 +323,7 @@ class SwemptabVen
           -0.00004,           0.00645,
 
   };
-  static final double ventabb[] = {
+  static final double[] ventabb = {
          -23.91858,          31.44154,          25.93273,         -67.68643,
 
           -0.00171,           0.00123,
@@ -551,7 +551,7 @@ class SwemptabVen
            0.00002,           0.00020,
 
   };
-  static final double ventabr[] = {
+  static final double[] ventabr = {
           -0.24459,           3.72698,          -6.67281,           5.24378,
 
            0.00030,           0.00003,
@@ -780,7 +780,7 @@ class SwemptabVen
 
   };
 
-  static byte venargs[] = {
+  static byte[] venargs = {
   (byte)0,  (byte)3,
   (byte)2,  (byte)2,  (byte)5, (byte)-5,  (byte)6,  (byte)0,
   (byte)3,  (byte)2,  (byte)2,  (byte)1,  (byte)3, (byte)-8,  (byte)4,  (byte)0,
@@ -893,12 +893,12 @@ class SwemptabVen
   };
   /* Total terms = 108, small = 107 */
   static Plantbl ven404 = new Plantbl(
-                               new short[]{5, 14, 13,  8,  4,  5,  1,  0,  0},
-                               (short)5,
-                               venargs,
-                               ventabl,
-                               ventabb,
-                               ventabr,
-                               7.2332982000000001e-01
-                              );
+      new short[]{5, 14, 13, 8, 4, 5, 1, 0, 0},
+      (short) 5,
+      venargs,
+      ventabl,
+      ventabb,
+      ventabr,
+      7.2332982000000001e-01
+  );
 }

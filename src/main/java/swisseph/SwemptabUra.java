@@ -1,4 +1,3 @@
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -74,11 +73,12 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabUra
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabUra implements Serializable {
   /*
   First date in file = 625296.50
   Number of records = 16731.0
@@ -98,7 +98,7 @@ class SwemptabUra
     2500.0 to   3000.0:   0.34   0.06   0.32
     3000.0 to   3000.4:  0.406  0.035  0.172
   */
-  static final double uratabl[] = {
+  static final double[] uratabl = {
           21.56000,       -4652.06828,   154246324.90417,     1130486.05080,
 
          330.11531,       -3020.20235,
@@ -482,7 +482,7 @@ class SwemptabUra
           -0.01517,           0.03748,
 
   };
-  static final double uratabb[] = {
+  static final double[] uratabb = {
            0.00000,         107.91527,          83.39404,        -124.29804,
 
           -7.73277,          -3.99442,
@@ -866,7 +866,7 @@ class SwemptabUra
            0.00005,           0.00003,
 
   };
-  static final double uratabr[] = {
+  static final double[] uratabr = {
            0.00000,         -53.23277,         -44.70609,         -62.54432,
 
          -19.15218,           0.10867,
@@ -1251,7 +1251,7 @@ class SwemptabUra
 
   };
 
-  static byte uraargs[] = {
+  static byte[] uraargs = {
   (byte)0,  (byte)3,
   (byte)2,  (byte)1,  (byte)7, (byte)-2,  (byte)8,  (byte)0,
   (byte)2,  (byte)2,  (byte)7, (byte)-4,  (byte)8,  (byte)0,
@@ -1433,12 +1433,12 @@ class SwemptabUra
   };
   /* Total terms = 177, small = 171 */
   static Plantbl ura404 = new Plantbl(
-                               new short[]{0,  0,  0,  0,  5, 10,  9, 12,  0},
-                               (short)6,
-                               uraargs,
-                               uratabl,
-                               uratabb,
-                               uratabr,
-                               1.9218446061800002e+01
+      new short[]{0, 0, 0, 0, 5, 10, 9, 12, 0},
+      (short) 6,
+      uraargs,
+      uratabl,
+      uratabb,
+      uratabr,
+      1.9218446061800002e+01
   );
 }

@@ -1,4 +1,3 @@
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -74,11 +73,12 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabNep
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabNep implements Serializable	{
   /*
   First date in file = 625296.50
   Number of records = 16731.0
@@ -98,7 +98,7 @@ class SwemptabNep
     2500.0 to   3000.0:   0.43   0.25   0.46
     3000.0 to   3000.4:  0.122  0.071  0.260
   */
-  static final double neptabl[] = {
+  static final double[] neptabl = {
        -1376.86480,         730.38970,    78655362.50948,     1095691.38676,
 
         -196.19023,        2086.77782,
@@ -220,7 +220,7 @@ class SwemptabNep
           -0.28141,           0.25061,          -0.20293,           0.79930,
 
   };
-  static final double neptabb[] = {
+  static final double[] neptabb = {
         -391.05987,        -243.95958,         -23.83558,          58.13857,
 
            5.04859,          -3.93183,
@@ -342,7 +342,7 @@ class SwemptabNep
            0.00106,           0.00025,           0.00013,          -0.00019,
 
   };
-  static final double neptabr[] = {
+  static final double[] neptabr = {
         -767.68936,        -460.59576,         -52.41861,        -273.85897,
 
           59.52489,           1.85006,
@@ -465,7 +465,7 @@ class SwemptabNep
 
   };
 
-  static byte nepargs[] = {
+  static byte[] nepargs = {
   (byte)0,  (byte)3,
   (byte)2,  (byte)1,  (byte)7, (byte)-2,  (byte)8,  (byte)0,
   (byte)3,  (byte)3,  (byte)5, (byte)-8,  (byte)6,  (byte)3,  (byte)8,  (byte)0,
@@ -529,12 +529,12 @@ class SwemptabNep
   };
   /* Total terms = 59, small = 58 */
   static Plantbl nep404 = new Plantbl(
-                               new short[]{0,  0,  0,  0,  3,  8,  7,  9,  0},
-                               (short)3,
-                               nepargs,
-                               neptabl,
-                               neptabb,
-                               neptabr,
-                               3.0110386869399999e+01
+      new short[]{0, 0, 0, 0, 3, 8, 7, 9, 0},
+      (short) 3,
+      nepargs,
+      neptabl,
+      neptabb,
+      neptabr,
+      3.0110386869399999e+01
   );
 }

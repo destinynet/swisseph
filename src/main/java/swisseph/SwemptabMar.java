@@ -1,4 +1,3 @@
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -74,11 +73,12 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabMar
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabMar implements Serializable {
   /*
   First date in file = 1228000.50
   Number of records = 397276.0
@@ -96,7 +96,7 @@ class SwemptabMar
     3000.0 to   3000.8:  0.182  0.125  0.087
   */
 
-  static final double martabl[] = {
+  static final double[] martabl = {
        43471.66140,       21291.11063,        2033.37848,  6890507597.78366,
      1279543.73631,
 
@@ -538,7 +538,7 @@ class SwemptabMar
           -0.00723,          -0.01536,
 
   };
-  static final double martabb[] = {
+  static final double[] martabb = {
         -364.49380,         -47.17612,        -554.97858,        -430.63121,
          596.44312,
 
@@ -980,7 +980,7 @@ class SwemptabMar
            0.00826,          -0.00524,
 
   };
-  static final double martabr[] = {
+  static final double[] martabr = {
         -816.07287,        -381.41365,         -33.69436,         177.22955,
            0.18630,
 
@@ -1423,7 +1423,7 @@ class SwemptabMar
 
   };
 
-  static final byte marargs[] = {
+  static final byte[] marargs = {
   (byte)0,  (byte)4,
   (byte)3,  (byte)4,  (byte)3, (byte)-8,  (byte)4,  (byte)3,  (byte)5,  (byte)2,
   (byte)3,  (byte)5,  (byte)2, (byte)-6,  (byte)3, (byte)-4,  (byte)4,  (byte)0,

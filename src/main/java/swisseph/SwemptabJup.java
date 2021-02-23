@@ -1,4 +1,3 @@
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -74,11 +73,12 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwemptabJup
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class SwemptabJup implements Serializable {
   /*
   First date in file = 625296.50
   Number of records = 16731.0
@@ -98,7 +98,7 @@ class SwemptabJup
     2500.0 to   3000.0:   0.70   0.09   0.36
     3000.0 to   3000.4:  0.526  0.023  0.190
   */
-  static final double juptabl[] = {
+  static final double[] juptabl = {
       153429.13855,      130818.16897,       18120.42948,       -8463.12663,
        -5058.91447,  1092566021.02148,      123671.25097,
 
@@ -444,7 +444,7 @@ class SwemptabJup
            0.00011,           0.12033,
 
   };
-  static final double juptabb[] = {
+  static final double[] juptabb = {
          548.59659,         594.29629,         219.97664,          59.71822,
           23.62157,          40.77732,         227.07380,
 
@@ -790,7 +790,7 @@ class SwemptabJup
           -0.00006,           0.00001,
 
   };
-  static final double juptabr[] = {
+  static final double[] juptabr = {
         -734.58857,       -1081.04460,        -551.65750,        -148.79782,
          -25.23171,         164.64781,         248.64813,
 
@@ -1137,7 +1137,7 @@ class SwemptabJup
 
   };
 
-  static byte jupargs[] = {
+  static byte[] jupargs = {
   (byte)0,  (byte)6,
   (byte)3,  (byte)2,  (byte)5, (byte)-6,  (byte)6,  (byte)3,  (byte)7,  (byte)0,
   (byte)2,  (byte)2,  (byte)5, (byte)-5,  (byte)6,  (byte)6,
