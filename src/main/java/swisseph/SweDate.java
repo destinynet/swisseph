@@ -68,6 +68,7 @@
 */
 package swisseph;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -89,7 +90,7 @@ import java.util.TimeZone;
 * @version 1.0.0c
 */
 public class SweDate
-		implements java.io.Serializable
+		implements Serializable
 		{
 
   private static SwissEph sw = new SwissEph();	// Just a default
@@ -2238,15 +2239,15 @@ public class SweDate
 
 
   /**
-  * Returns a LocalDateTime object to be used with DateTimeFormatters.
-  * E.g.:
-  * <pre>
-  * DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/mm/dd-hh:mm:ss-a (HH:mm:ss'h')");
-
-  * System.out.println(new SweDate(2016, 5, 31, 0 + 9/60. + 53/3600.).getLocalDateTime().format(dtf));
-  * </pre>
-  * @return The java.time.LocalDateTime object for this SweDate object
-  */
+   * Returns a LocalDateTime object to be used with DateTimeFormatters.
+   * E.g.:
+   * <pre>
+   * DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/mm/dd-hh:mm:ss-a (HH:mm:ss'h')");
+   *
+   * System.out.println(new SweDate(2016, 5, 31, 0 + 9/60. + 53/3600.).getLocalDateTime().format(dtf));
+   * </pre>
+   * @return The java.time.LocalDateTime object for this SweDate object
+   */
   public LocalDateTime getLocalDateTime() {
     return getLocalDateTime(this);
   }
@@ -2279,11 +2280,3 @@ public class SweDate
 } // end of class SweDate
 
 
-class IDate
-		implements java.io.Serializable
-		{
-  public int year;
-  public int month;
-  public int day;
-  public double hour;
-}

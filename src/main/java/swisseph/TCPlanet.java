@@ -1,5 +1,7 @@
 package swisseph;
 
+import java.io.Serializable;
+
 /**
 * This class implements a TransitCalculator for one planet's
 * position or speed.<p>
@@ -25,9 +27,7 @@ package swisseph;
 * This would calculate the (ET-) date, when the Saturn will
 * change from retrograde to direct movement or vice versa.
 */
-public class TCPlanet extends TransitCalculator
-		implements java.io.Serializable
-		{
+public class TCPlanet extends TransitCalculator implements Serializable {
 
 
   private int planet;

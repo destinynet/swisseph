@@ -77,8 +77,8 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
-package swisseph;
 
+package swisseph;
 
 import java.io.Serializable;
 
@@ -990,25 +990,3 @@ class SwephJPL implements Serializable {
 }
 
 
-class JplSave implements Serializable {
-  String jplfname = null;
-  String jplfpath = null;
-  FilePtr jplfptr = null;
-  //  boolean do_reorder;
-  double[] eh_cval = new double[400];
-  double[] eh_ss = new double[3];
-  double eh_au;
-  double eh_emrat;
-  int eh_denum;
-  int eh_ncon;
-  int[] eh_ipt = new int[39];
-  String ch_cnam = "";
-  double[] pv = new double[78];
-  double[] pvsun = new double[6];
-  double[] buf = new double[1500];
-  double[] pc = new double[18];
-  double[] vc = new double[18];
-  double[] ac = new double[18];
-  double[] jc = new double[18];
-  boolean do_km;
-}

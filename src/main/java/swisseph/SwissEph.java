@@ -1,8 +1,3 @@
-
-
-
-
-
 /*
    This is a port of the Swiss Ephemeris Free Edition, Version 2.00.00
    of Astrodienst AG, Switzerland from the original C Code to Java. For
@@ -79,6 +74,7 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
 import java.io.BufferedOutputStream;
@@ -8468,24 +8464,3 @@ if (false) {
   }
 } // Ende class SwissEph
 
-class MeffEle
-		implements java.io.Serializable
-		{
-  double r;
-  double m;
-
-  MeffEle(double r, double m) {
-////#ifdef TRACE0
-//    Trace.level++;
-//    Trace.log("MeffEle(double, double)");
-////#ifdef TRACE1
-//    Trace.log("   r: " + Trace.fmtDbl(r) + "\n    m: " + Trace.fmtDbl(m));
-////#endif /* TRACE1 */
-////#endif /* TRACE0 */
-    this.r=r; this.m=m;
-////#ifdef TRACE0
-//    Trace.level--;
-////#endif /* TRACE0 */
-  }
-
-}
