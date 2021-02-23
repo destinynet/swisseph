@@ -385,8 +385,8 @@ class SwephMosh
     double cu, su, cv, sv, s;
     int i;
 
-    su = SMath.sin (arg);
-    cu = SMath.cos (arg);
+    su = Math.sin (arg);
+    cu = Math.cos (arg);
     ss[k][0] = su;                /* sin(L) */
     cc[k][0] = cu;                /* cos(L) */
     sv = 2.0 * su * cu;
@@ -422,20 +422,20 @@ class SwephMosh
     /* Mean anomaly of moon (MP) */
     a = sl.swe_degnorm(((1.44e-5*T + 0.009192)*T + 477198.8491)*T + 296.104608);
     a *= SwissData.DEGTORAD;
-    smp = SMath.sin(a);
-    cmp = SMath.cos(a);
+    smp = Math.sin(a);
+    cmp = Math.cos(a);
     s2mp = 2.0*smp*cmp;           /* sin(2MP) */
     c2mp = cmp*cmp - smp*smp;     /* cos(2MP) */
     /* Mean elongation of moon (D) */
     a = sl.swe_degnorm(((1.9e-6*T - 0.001436)*T + 445267.1142)*T + 350.737486);
     a  = 2.0 * SwissData.DEGTORAD * a;
-    s2d = SMath.sin(a);
-    c2d = SMath.cos(a);
+    s2d = Math.sin(a);
+    c2d = Math.cos(a);
     /* Mean distance of moon from its ascending node (F) */
     a = sl.swe_degnorm((( -3.e-7*T - 0.003211)*T + 483202.0251)*T + 11.250889);
     a  *= SwissData.DEGTORAD;
-    sf = SMath.sin(a);
-    cf = SMath.cos(a);
+    sf = Math.sin(a);
+    cf = Math.cos(a);
     s2f = 2.0*sf*cf;      /* sin(2F) */
     sx = s2d*cmp - c2d*smp;       /* sin(2D - MP) */
     cx = c2d*cmp + s2d*smp;       /* cos(2D - MP) */
@@ -449,7 +449,7 @@ class SwephMosh
           + 1.274018*sx
           + 0.658309*s2d
           + 0.213616*s2mp
-          - 0.185596*SMath.sin( SwissData.DEGTORAD * M )
+          - 0.185596*Math.sin( SwissData.DEGTORAD * M )
           - 0.114336*s2f;
     /* Ecliptic latitude of the moon */
     a = smp*cf;
@@ -471,7 +471,7 @@ class SwephMosh
     L = sl.swe_degnorm(L);
     L *= SwissData.DEGTORAD;
     /* Distance in au */
-    a = 4.263523e-5/SMath.sin(p);
+    a = 4.263523e-5/Math.sin(p);
     /* Convert to rectangular ecliptic coordinates */
     xyz[0] = L;
     xyz[1] = B;
@@ -580,17 +580,17 @@ class SwephMosh
          null, fict_ifl, serr) == SweConst.ERR) {
       return SweConst.ERR;
     }
-    dmot = 0.9856076686 * SwissData.DEGTORAD / sema.val / SMath.sqrt(sema.val);
+    dmot = 0.9856076686 * SwissData.DEGTORAD / sema.val / Math.sqrt(sema.val);
                                                             /* daily motion */
     if ((fict_ifl.val & FICT_GEO) != 0) {
-      dmot /= SMath.sqrt(SwephData.SUN_EARTH_MRAT);
+      dmot /= Math.sqrt(SwephData.SUN_EARTH_MRAT);
     }
-    cosnode = SMath.cos(node.val);
-    sinnode = SMath.sin(node.val);
-    cosincl = SMath.cos(incl.val);
-    sinincl = SMath.sin(incl.val);
-    cosparg = SMath.cos(parg.val);
-    sinparg = SMath.sin(parg.val);
+    cosnode = Math.cos(node.val);
+    sinnode = Math.sin(node.val);
+    cosincl = Math.cos(incl.val);
+    sinincl = Math.sin(incl.val);
+    cosparg = Math.cos(parg.val);
+    sinparg = Math.sin(parg.val);
     /* Gaussian vector */
     pqr[0] = cosparg * cosnode - sinparg * cosincl * sinnode;
     pqr[1] = -sinparg * cosnode - cosparg * cosincl * sinnode;
@@ -624,7 +624,7 @@ class SwephMosh
         M2 *= SwissData.DEGTORAD;
         alpha = (1 - ecce.val) / (4 * ecce.val + 0.5);
         beta = M2 / (8 * ecce.val + 1);
-        zeta = SMath.pow(beta + SMath.sqrt(beta * beta + alpha * alpha), 1/3);
+        zeta = Math.pow(beta + Math.sqrt(beta * beta + alpha * alpha), 1/3);
         sigma = zeta - alpha / 2;
         sigma = sigma - 0.078 * sigma * sigma * sigma * sigma * sigma / (1 + ecce.val)
   ;
@@ -635,13 +635,13 @@ class SwephMosh
     E = sl.swi_kepler(E, M, ecce.val);
     /* position and speed, referred to orbital plane */
     if ((fict_ifl.val & FICT_GEO) != 0) {
-      K = SwephData.KGAUSS_GEO / SMath.sqrt(sema.val); 
+      K = SwephData.KGAUSS_GEO / Math.sqrt(sema.val); 
     } else {
-      K = SwephData.KGAUSS / SMath.sqrt(sema.val);
+      K = SwephData.KGAUSS / Math.sqrt(sema.val);
     }
-    cose = SMath.cos(E);
-    sine = SMath.sin(E);
-    fac = SMath.sqrt((1 - ecce.val) * (1 + ecce.val));
+    cose = Math.cos(E);
+    sine = Math.sin(E);
+    fac = Math.sqrt((1 - ecce.val) * (1 + ecce.val));
     rho = 1 - ecce.val * cose;
     x[0] = sema.val * (cose - ecce.val);
     x[1] = sema.val * fac * sine;
@@ -933,8 +933,8 @@ class SwephMosh
         if (fict_ifl != null && ncpos > 9) {
 //          for (sp = cpos[9]; *sp != '\0'; sp++)
 //            *sp = tolower(*sp);
-          sp = sp.substring(0,SMath.min(sp.length(),spIdx+9)) +
-               sp.substring(SMath.min(sp.length(),spIdx+9)).toLowerCase();
+          sp = sp.substring(0,Math.min(sp.length(),spIdx+9)) +
+               sp.substring(Math.min(sp.length(),spIdx+9)).toLowerCase();
 //          if (strstr(cpos[9], "geo") != NULL)
 //            fict_ifl.val |= FICT_GEO;
           if (cpos[9].indexOf("geo") >= 0) {
@@ -1008,7 +1008,7 @@ class SwephMosh
           if (spidx<sinp.length() &&
               (sinp.charAt(spidx)=='+' || sinp.charAt(spidx)=='-')) {
             fac *= tt[0];
-          } else if ((i = SwissLib.atoi(sinp.substring(SMath.min(sinp.length(),spidx)))) <= 4 && i >= 0) {
+          } else if ((i = SwissLib.atoi(sinp.substring(Math.min(sinp.length(),spidx)))) <= 4 && i >= 0) {
             fac *= tt[i];
           }
         } else {

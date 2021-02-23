@@ -470,7 +470,7 @@ public class FilePtr
              "User-Agent: " + useragent + "\r\n" +
              "Host: " + host + ":" + port + "\r\n" +
              "Range: bytes=" + fpos + "-" +
-                                SMath.min(length()-1, fpos+BUFSIZE-1) + "\r\n\r\n";
+                                Math.min(length()-1, fpos+BUFSIZE-1) + "\r\n\r\n";
     String sout = "";
     int slen = 0;
     int failures = 0;

@@ -68,11 +68,12 @@
 */
 package swisseph;
 
-class SavePositions
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+import java.util.Arrays;
+
+class SavePositions implements Serializable {
   int ipl;
-  double tsave=0.;
+  double tsave = 0.;
   int iflgsave;
   /* position at t = tsave,
    * in ecliptic polar (offset 0),
@@ -81,15 +82,14 @@ class SavePositions
    *    and equatorial cartesian coordinates (offset 18).
    * 6 doubles each for position and speed coordinates.
    */
-  double xsaves[]=new double[24];
+  double[] xsaves = new double[24];
 
   void clearData() {
-    for (int i=0; i<xsaves.length; i++) {
-      xsaves[i]=0.;
-    }
-    ipl=0; tsave=0.; iflgsave=0;
+    Arrays.fill(xsaves, 0.);
+    ipl = 0;
+    tsave = 0.;
+    iflgsave = 0;
   }
-
 
 
 }

@@ -117,7 +117,7 @@ class Extensions
 
 
       // Add at least "timePrec" time to the last time:
-      if (SMath.abs(jdET - lastJD) < timePrec) {
+      if (Math.abs(jdET - lastJD) < timePrec) {
         jdET = lastJD + (back?-timePrec:+timePrec);
       }
       if (jdET == lastJD) {
@@ -146,7 +146,7 @@ class Extensions
         if (deltadeg1<0) { deltadeg1+=tc.rolloverVal; }
         double deltadeg2 = lastVal-val;
         if (deltadeg2<0) { deltadeg2+=tc.rolloverVal; }
-        pxway = SMath.abs(deltadeg1/max)<SMath.abs(deltadeg2/min);
+        pxway = Math.abs(deltadeg1/max)<Math.abs(deltadeg2/min);
       } else {
         pxway = lastVal<=val;
       }
@@ -156,7 +156,7 @@ class Extensions
       if (found) { // Return an interpolated value, but not prior to (after)
                    // the initial time (if backward):
         if (tc.rollover) {
-          if (tc.rollover && SMath.abs(val - lastVal) > 300.) {   // How to do it formally correct???
+          if (tc.rollover && Math.abs(val - lastVal) > 300.) {   // How to do it formally correct???
             // Probably one value is about 359.99 and the other one is in the area of 0.01
             if (val > lastVal) { lastVal += tc.rolloverVal; } else { val += tc.rolloverVal; }
             if (offset < 10.) { offset += tc.rolloverVal; } // How to do it formally correct???
@@ -170,9 +170,9 @@ class Extensions
         }
         double jdRet = lastJD+(jdET-lastJD)*(offset-lastVal)/(val-lastVal);
         if (back) {
-          return SMath.max(jdRet, jdET);
+          return Math.max(jdRet, jdET);
         } else {
-          return SMath.min(jdRet, jdET);
+          return Math.min(jdRet, jdET);
         }
       }
       if ((back && jdET < jdMax) ||

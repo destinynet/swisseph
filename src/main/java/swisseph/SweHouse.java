@@ -132,25 +132,25 @@ class SweHouse
 //  }
 
   private double sind(double x) {
-    return SMath.sin(x * SwissData.DEGTORAD);
+    return Math.sin(x * SwissData.DEGTORAD);
   }
   private double cosd(double x) {
-    return SMath.cos(x * SwissData.DEGTORAD);
+    return Math.cos(x * SwissData.DEGTORAD);
   }
   private double tand(double x) {
-    return SMath.tan(x * SwissData.DEGTORAD);
+    return Math.tan(x * SwissData.DEGTORAD);
   }
   private double asind(double x) {
-    return (SMath.asin(x) * SwissData.RADTODEG);
+    return (Math.asin(x) * SwissData.RADTODEG);
   }
 //Never used anywhere//  private double acosd(double x) {
-//Never used anywhere//    return (SMath.acos(x) * SwissData.RADTODEG);
+//Never used anywhere//    return (Math.acos(x) * SwissData.RADTODEG);
 //Never used anywhere//  }
   private double atand(double x) {
-    return (SMath.atan(x) * SwissData.RADTODEG);
+    return (Math.atan(x) * SwissData.RADTODEG);
   }
 //Never used anywhere//  private double atan2d(double y, double x) {
-//Never used anywhere//    return (SMath.atan2(y, x) * SwissData.RADTODEG);
+//Never used anywhere//    return (Math.atan2(y, x) * SwissData.RADTODEG);
 //Never used anywhere//  }
 
 
@@ -358,15 +358,15 @@ class SweHouse
     sl.swi_cross_prod(x, 0, x, 3, xnorm, 0);
     rxy =  xnorm[0] * xnorm[0] + xnorm[1] * xnorm[1];
     c2 = (rxy + xnorm[2] * xnorm[2]);
-    rxyz = SMath.sqrt(c2);
-    rxy = SMath.sqrt(rxy);
-    epsx = SMath.asin(rxy / rxyz) * SwissData.RADTODEG;           /* 1a */
+    rxyz = Math.sqrt(c2);
+    rxy = Math.sqrt(rxy);
+    epsx = Math.asin(rxy / rxyz) * SwissData.RADTODEG;           /* 1a */
     /* auxiliary vernal point */
-    if (SMath.abs(x[5]) < 1e-15) {
+    if (Math.abs(x[5]) < 1e-15) {
       x[5] = 1e-15;
     }
     fac = x[2] / x[5];
-    sgn = x[5] / SMath.abs(x[5]);
+    sgn = x[5] / Math.abs(x[5]);
     for (j = 0; j <= 2; j++)
       xvpx[j] = (x[j] - fac * x[j+3]) * sgn;      /* 1b */
     /* distance of the auxiliary vernal point from
@@ -379,7 +379,7 @@ class SweHouse
     retc = swe_houses_armc(armcx, lat, epsx, hsys, cusp, ascmc, aOffs);  /* 4 */
     /* distance between auxiliary vernal point and
      * vernal point of t0 (a section on the sidereal plane) */
-    dvpxe = SMath.acos(sl.swi_dot_prod_unit(x, xvpx)) * SwissData.RADTODEG;  /* 5 */
+    dvpxe = Math.acos(sl.swi_dot_prod_unit(x, xvpx)) * SwissData.RADTODEG;  /* 5 */
     if (tjde < sip.t0) {
       dvpxe = -dvpxe;
     }
@@ -461,15 +461,15 @@ class SweHouse
     sl.swi_cross_prod(x, 0, x, 3, xnorm, 0);
     rxy =  xnorm[0] * xnorm[0] + xnorm[1] * xnorm[1];
     c2 = (rxy + xnorm[2] * xnorm[2]);
-    rxyz = SMath.sqrt(c2);
-    rxy = SMath.sqrt(rxy);
-    epsx = SMath.asin(rxy / rxyz) * SwissData.RADTODEG;           /* 1a */
+    rxyz = Math.sqrt(c2);
+    rxy = Math.sqrt(rxy);
+    epsx = Math.asin(rxy / rxyz) * SwissData.RADTODEG;           /* 1a */
     /* auxiliary vernal point */
-    if (SMath.abs(x[5]) < 1e-15) {
+    if (Math.abs(x[5]) < 1e-15) {
       x[5] = 1e-15;
     }
     fac = x[2] / x[5];
-    sgn = x[5] / SMath.abs(x[5]);
+    sgn = x[5] / Math.abs(x[5]);
     for (j = 0; j <= 2; j++)
       xvpx[j] = (x[j] - fac * x[j+3]) * sgn;      /* 1b */
     /* distance of the auxiliary vernal point from
@@ -484,7 +484,7 @@ class SweHouse
      * the sidereal zero point of 2000 at t
      * (a section on the sidereal plane).
      */
-    dvpxe = SMath.acos(sl.swi_dot_prod_unit(x, xvpx)) * SwissData.RADTODEG;  /* 5 */
+    dvpxe = Math.acos(sl.swi_dot_prod_unit(x, xvpx)) * SwissData.RADTODEG;  /* 5 */
                   /* (always positive for dates after 5400 bc) */
     dvpxe -= SwephData.SSY_PLANE_NODE * SwissData.RADTODEG;
     /* ayanamsa between t0 and J2000, measured on solar system plane: */
@@ -629,9 +629,9 @@ class SweHouse
     int k, is_below_hor = 0;
     double dasc, kv, a, dret;
     /* ascensional difference of the ascendant */
-    kv   = SMath.atan(SMath.tan(ph) * SMath.tan(e) * SMath.cos(az)/(1 + SMath.tan(ph) * SMath.tan(e) * SMath.sin(az)));
+    kv   = Math.atan(Math.tan(ph) * Math.tan(e) * Math.cos(az)/(1 + Math.tan(ph) * Math.tan(e) * Math.sin(az)));
     /* declination of the ascendant */
-    dasc = SMath.atan(SMath.sin(kv) / SMath.tan(ph));
+    dasc = Math.atan(Math.sin(kv) / Math.tan(ph));
     /* note, at polar circles, when the mc sinks below the horizon,
      * kv and dasc change sign in the above formulae.
      * this is what we need, because the ascendand jumps by 180 deg */
@@ -647,13 +647,13 @@ class SweHouse
      * a = right ascension of house cusp on apc circle (ascendant-parallel
      * circle), with declination dasc */
     if (is_below_hor != 0) {
-      a = kv + az + SMath.PI/2 + k * (SMath.PI/2 - kv) / 3;
+      a = kv + az + Math.PI/2 + k * (Math.PI/2 - kv) / 3;
     } else {
-      a = kv + az + SMath.PI/2 + k * (SMath.PI/2 + kv) / 3;
+      a = kv + az + Math.PI/2 + k * (Math.PI/2 + kv) / 3;
     }
     a = sl.swe_radnorm(a);
-    dret = SMath.atan2(SMath.tan(dasc) * SMath.tan(ph) * SMath.sin(az) + SMath.sin(a),
-      SMath.cos(e) * (SMath.tan(dasc) * SMath.tan(ph) * SMath.cos(az) + SMath.cos(a)) + SMath.sin(e) * SMath.tan(ph) * SMath.sin(az - a));
+    dret = Math.atan2(Math.tan(dasc) * Math.tan(ph) * Math.sin(az) + Math.sin(a),
+      Math.cos(e) * (Math.tan(dasc) * Math.tan(ph) * Math.cos(az) + Math.cos(a)) + Math.sin(e) * Math.tan(ph) * Math.sin(az - a));
     dret = sl.swe_degnorm(dret * SwissData.RADTODEG);
     return dret;
   }
@@ -725,7 +725,7 @@ class SweHouse
     sine  = sind(ekl);
     tane  = tand(ekl);
     /* north and south poles */
-    if (SMath.abs(SMath.abs(fi) - 90) < VERY_SMALL) {
+    if (Math.abs(Math.abs(fi) - 90) < VERY_SMALL) {
       if (fi < 0) {
         fi = -90 + VERY_SMALL;
       } else {
@@ -734,15 +734,15 @@ class SweHouse
     }
     tanfi = tand(fi);
     /* mc */
-    if (SMath.abs(th - 90) > VERY_SMALL
-      && SMath.abs(th - 270) > VERY_SMALL) {
+    if (Math.abs(th - 90) > VERY_SMALL
+      && Math.abs(th - 270) > VERY_SMALL) {
       tant = tand(th);
       hsp.mc = atand(tant / cose);
       if (th > 90 && th <= 270) {
         hsp.mc = sl.swe_degnorm(hsp.mc + 180);
       }
     } else {
-      if (SMath.abs(th - 90) <= VERY_SMALL) {
+      if (Math.abs(th - 90) <= VERY_SMALL) {
         hsp.mc = 90;
       } else {
         hsp.mc = 270;
@@ -777,7 +777,7 @@ class SweHouse
             fi = -90 - fi;
           }
           /* equator */
-          if (SMath.abs(SMath.abs(fi) - 90) < VERY_SMALL) {
+          if (Math.abs(Math.abs(fi) - 90) < VERY_SMALL) {
             if (fi < 0) {
               fi = -90 + VERY_SMALL;
             } else {
@@ -787,17 +787,17 @@ class SweHouse
           th = sl.swe_degnorm(th + 180);
         }
         fh1 = asind(sind (fi) / 2);
-        fh2 = asind(SMath.sqrt (3.0) / 2 * sind(fi));
+        fh2 = asind(Math.sqrt (3.0) / 2 * sind(fi));
         cosfi = cosd(fi);
-        if (SMath.abs(cosfi) == 0) {        /* '==' should be save! */
+        if (Math.abs(cosfi) == 0) {        /* '==' should be save! */
           if (fi > 0) {
             xh1 = xh2 = 90; /* cosfi = VERY_SMALL; */
           } else {
             xh1 = xh2 = 270; /* cosfi = -VERY_SMALL; */
           }
         } else {
-          xh1 = atand(SMath.sqrt (3.0) / cosfi);
-          xh2 = atand(1 / SMath.sqrt (3.0) / cosfi);
+          xh1 = atand(Math.sqrt (3.0) / cosfi);
+          xh2 = atand(1 / Math.sqrt (3.0) / cosfi);
         }
         hsp.cusp [11] = Asc1 (th + 90 - xh1, fh1, sine, cose);
         hsp.cusp [12] = Asc1 (th + 90 - xh2, fh2, sine, cose);
@@ -810,7 +810,7 @@ class SweHouse
          * ascendant changes to western hemisphere, all cusps
          * must be added 180 degrees.
          * houses will be in clockwise direction */
-        if (SMath.abs(fi) >= 90 - ekl) {  /* within polar circle */
+        if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           acmc = sl.swe_difdeg2n(hsp.ac, hsp.mc);
           if (acmc < 0) {
             hsp.ac = sl.swe_degnorm(hsp.ac + 180);
@@ -838,7 +838,7 @@ class SweHouse
         }
         break;
       case 'K': /* Koch houses */
-        if (SMath.abs(fi) >= 90 - ekl) {  /* within polar circle */
+        if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           retc = SweConst.ERR;
 //          goto porphyry;
           makePorphyry(hsp);
@@ -847,7 +847,7 @@ class SweHouse
         sina = sind(hsp.mc) * sine / cosd(fi);
         if (sina > 1) sina = 1;
         if (sina < -1) sina = -1;
-        cosa = SMath.sqrt(1 - sina * sina);          /* always >> 0 */
+        cosa = Math.sqrt(1 - sina * sina);          /* always >> 0 */
         c = atand(tanfi / cosa);
         ad3 = asind(sind(c) * sina) / 3.0;
         hsp.cusp [11] = Asc1 (th + 30 - 2 * ad3, fi, sine, cose);
@@ -870,7 +870,7 @@ class SweHouse
          * ascendant changes to western hemisphere, all cusps
          * must be added 180 degrees.
          * houses will be in clockwise direction */
-        if (SMath.abs(fi) >= 90 - ekl) {  /* within polar circle */
+        if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           acmc = sl.swe_difdeg2n(hsp.ac, hsp.mc);
           if (acmc < 0) {
             hsp.ac = sl.swe_degnorm(hsp.ac + 180);
@@ -891,7 +891,7 @@ class SweHouse
          * ascendant changes to western hemisphere, all cusps
          * must be added 180 degrees.
          * houses will be in clockwise direction */
-        if (SMath.abs(fi) >= 90 - ekl) {  /* within polar circle */
+        if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           acmc = sl.swe_difdeg2n(hsp.ac, hsp.mc);
           if (acmc < 0) {
             hsp.ac = sl.swe_degnorm(hsp.ac + 180);
@@ -941,15 +941,15 @@ class SweHouse
             j -= 12;
           }
           a2 = sl.swe_degnorm(a2 + 30);
-          if (SMath.abs(a2 - 90) > VERY_SMALL
-            && SMath.abs(a2 - 270) > VERY_SMALL) {
+          if (Math.abs(a2 - 90) > VERY_SMALL
+            && Math.abs(a2 - 270) > VERY_SMALL) {
             tant = tand(a2);
             hsp.cusp[j] = atand(tant / cose);
             if (a2 > 90 && a2 <= 270) {
               hsp.cusp[j] = sl.swe_degnorm(hsp.cusp[j] + 180);
             }
           } else {
-            if (SMath.abs(a2 - 90) <= VERY_SMALL) {
+            if (Math.abs(a2 - 90) <= VERY_SMALL) {
               hsp.cusp[j] = 90;
             } else {
               hsp.cusp[j] = 270;
@@ -1009,7 +1009,7 @@ class SweHouse
          * because dek becomes smaller when fi is large, as ac is close to
          * zero Aries/Libra in that case.
          */
-        sda = SMath.acos(r) * SwissData.RADTODEG; /* semidiurnal arc, measured on equator */
+        sda = Math.acos(r) * SwissData.RADTODEG; /* semidiurnal arc, measured on equator */
         sna = 180 - sda;          /* complement, seminocturnal arc */
         sd3 = sda / 3;
         sn3 = sna / 3;
@@ -1029,7 +1029,7 @@ class SweHouse
         for (i = 1; i <= 36; i++) {
           hsp.cusp[i] = 0;
         }
-        if (SMath.abs(fi) >= 90 - ekl) {  /* within polar circle */
+        if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           retc = SweConst.ERR;
           // goto porphyry;
           makePorphyry(hsp);
@@ -1042,7 +1042,7 @@ class SweHouse
           fh1 = atand(sind(a * ih2 / 9) / tane);
           rectasc = sl.swe_degnorm((90 / 9) * ih2 + th);
           tant = tand(asind(sine * sind(Asc1 (rectasc, fh1, sine, cose))));
-          if (SMath.abs(tant) < VERY_SMALL) {
+          if (Math.abs(tant) < VERY_SMALL) {
             hsp.cusp[ih] = rectasc;
           } else {
             /* pole height */
@@ -1050,7 +1050,7 @@ class SweHouse
             hsp.cusp [ih] = Asc1 (rectasc, f, sine, cose);
             for (i = 1; i <= iteration_count; i++) {
             tant = tand(asind(sine * sind(hsp.cusp[ih])));
-            if (SMath.abs(tant) < VERY_SMALL) {
+            if (Math.abs(tant) < VERY_SMALL) {
               hsp.cusp[ih] = rectasc;
               break;
             }
@@ -1067,7 +1067,7 @@ class SweHouse
           fh1 = atand(sind(a * ih2 / 9) / tane);
           rectasc = sl.swe_degnorm(180 - ih2 * 90 / 9 + th);
           tant = tand(asind(sine * sind(Asc1 (rectasc, fh1, sine, cose))));
-          if (SMath.abs(tant) < VERY_SMALL) {
+          if (Math.abs(tant) < VERY_SMALL) {
             hsp.cusp[ih] = rectasc;
           } else {
             f = atand(sind(asind(tanfi * tant) * ih2 / 9) / tant);
@@ -1075,7 +1075,7 @@ class SweHouse
             hsp.cusp[ih] = Asc1 (rectasc, f, sine, cose);
             for (i = 1; i <= iteration_count; i++) {
             tant = tand(asind(sine * sind(hsp.cusp[ih])));
-            if (SMath.abs(tant) < VERY_SMALL) {
+            if (Math.abs(tant) < VERY_SMALL) {
               hsp.cusp[ih] = rectasc;
               break;
             }
@@ -1177,7 +1177,7 @@ class SweHouse
          * ascendant changes to western hemisphere, all cusps
          * must be added 180 degrees. 
          * houses will be in clockwise direction */
-        if (SMath.abs(fi) >= 90 - ekl) {  /* within polar circle */
+        if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           acmc = sl.swe_difdeg2n(hsp.ac, hsp.mc);
           if (acmc < 0) {
             hsp.ac = sl.swe_degnorm(hsp.ac + 180);
@@ -1191,7 +1191,7 @@ class SweHouse
         if (hsy != 'P') {
           System.err.println("swe_houses: make Placidus, unknown key "+hsy);
         }
-        if (SMath.abs(fi) >= 90 - ekl) {  /* within polar circle */
+        if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           retc = SweConst.ERR;
 //          goto porphyry;
           makePorphyry(hsp);
@@ -1203,7 +1203,7 @@ class SweHouse
         /* ************  house 11 ******************** */
         rectasc = sl.swe_degnorm(30 + th);
         tant = tand(asind(sine * sind(Asc1 (rectasc, fh1, sine, cose))));
-        if (SMath.abs(tant) < VERY_SMALL) {
+        if (Math.abs(tant) < VERY_SMALL) {
           hsp.cusp [11] = rectasc;
         } else {
           /* pole height */
@@ -1211,7 +1211,7 @@ class SweHouse
           hsp.cusp [11] = Asc1 (rectasc, f, sine, cose);
           for (i = 1; i <= iteration_count; i++) {
             tant = tand(asind(sine * sind(hsp.cusp [11])));
-            if (SMath.abs(tant) < VERY_SMALL) {
+            if (Math.abs(tant) < VERY_SMALL) {
               hsp.cusp [11] = rectasc;
               break;
             }
@@ -1223,7 +1223,7 @@ class SweHouse
         /* ************  house 12 ******************** */
         rectasc = sl.swe_degnorm(60 + th);
         tant = tand(asind(sine*sind(Asc1 (rectasc,  fh2, sine, cose))));
-        if (SMath.abs(tant) < VERY_SMALL) {
+        if (Math.abs(tant) < VERY_SMALL) {
           hsp.cusp [12] = rectasc;
         } else {
           f = atand(sind(asind(tanfi * tant) / 1.5) / tant);
@@ -1231,7 +1231,7 @@ class SweHouse
           hsp.cusp [12] = Asc1 (rectasc, f, sine, cose);
           for (i = 1; i <= iteration_count; i++) {
             tant = tand(asind(sine * sind(hsp.cusp [12])));
-            if (SMath.abs(tant) < VERY_SMALL) {
+            if (Math.abs(tant) < VERY_SMALL) {
               hsp.cusp [12] = rectasc;
               break;
             }
@@ -1243,7 +1243,7 @@ class SweHouse
         /* ************  house  2 ******************** */
         rectasc = sl.swe_degnorm(120 + th);
         tant = tand(asind(sine * sind(Asc1 (rectasc, fh2, sine, cose))));
-        if (SMath.abs(tant) < VERY_SMALL) {
+        if (Math.abs(tant) < VERY_SMALL) {
           hsp.cusp [2] = rectasc;
         } else {
           f = atand(sind(asind(tanfi * tant) / 1.5) / tant);
@@ -1251,7 +1251,7 @@ class SweHouse
           hsp.cusp [2] = Asc1 (rectasc, f, sine, cose);
           for (i = 1; i <= iteration_count; i++) {
             tant = tand(asind(sine * sind(hsp.cusp [2])));
-            if (SMath.abs(tant) < VERY_SMALL) {
+            if (Math.abs(tant) < VERY_SMALL) {
               hsp.cusp [2] = rectasc;
               break;
             }
@@ -1263,7 +1263,7 @@ class SweHouse
         /* ************  house  3 ******************** */
         rectasc = sl.swe_degnorm(150 + th);
         tant = tand(asind(sine * sind(Asc1 (rectasc, fh1, sine, cose))));
-        if (SMath.abs(tant) < VERY_SMALL) {
+        if (Math.abs(tant) < VERY_SMALL) {
           hsp.cusp [3] = rectasc;
         } else {
           f = atand(sind(asind(tanfi * tant) / 3) / tant);
@@ -1271,7 +1271,7 @@ class SweHouse
           hsp.cusp [3] = Asc1(rectasc, f, sine, cose);
           for (i = 1; i <= iteration_count; i++) {
             tant = tand(asind(sine * sind(hsp.cusp [3])));
-            if (SMath.abs(tant) < VERY_SMALL) {
+            if (Math.abs(tant) < VERY_SMALL) {
               hsp.cusp [3] = rectasc;
               break;
             }
@@ -1300,7 +1300,7 @@ class SweHouse
     /* with tropical latitudes, the vertex behaves strange,
      * in a similar way as the ascendant within the polar
      * circle. we keep it always on the western hemisphere.*/
-    if (SMath.abs(fi) <= ekl) {
+    if (Math.abs(fi) <= ekl) {
       vemc = sl.swe_difdeg2n(hsp.vertex, hsp.mc);
       if (vemc > 0) {
         hsp.vertex = sl.swe_degnorm(hsp.vertex + 180);
@@ -1311,15 +1311,15 @@ class SweHouse
      */
     /* equasc (equatorial ascendant) */
     th2 = sl.swe_degnorm(th + 90);
-    if (SMath.abs(th2 - 90) > VERY_SMALL
-      && SMath.abs(th2 - 270) > VERY_SMALL) {
+    if (Math.abs(th2 - 90) > VERY_SMALL
+      && Math.abs(th2 - 270) > VERY_SMALL) {
       tant = tand(th2);
       hsp.equasc = atand(tant / cose);
       if (th2 > 90 && th2 <= 270) {
         hsp.equasc = sl.swe_degnorm(hsp.equasc + 180);
       }
     } else {
-      if (SMath.abs(th2 - 90) <= VERY_SMALL) {
+      if (Math.abs(th2 - 90) <= VERY_SMALL) {
         hsp.equasc = 90;
       } else {
         hsp.equasc = 270;
@@ -1375,16 +1375,16 @@ class SweHouse
       ass = (360 - Asc2 (360- x1,  f, sine, cose));
     }
     ass = sl.swe_degnorm(ass);
-    if (SMath.abs(ass - 90) < VERY_SMALL)        /* rounding, e.g.: if */ {
+    if (Math.abs(ass - 90) < VERY_SMALL)        /* rounding, e.g.: if */ {
       ass = 90;                           /* fi = 0 & st = 0, ac = 89.999... */
     }
-    if (SMath.abs(ass - 180) < VERY_SMALL) {
+    if (Math.abs(ass - 180) < VERY_SMALL) {
       ass = 180;
     }
-    if (SMath.abs(ass - 270) < VERY_SMALL)        /* rounding, e.g.: if */ {
+    if (Math.abs(ass - 270) < VERY_SMALL)        /* rounding, e.g.: if */ {
       ass = 270;                          /* fi = 0 & st = 0, ac = 89.999... */
     }
-    if (SMath.abs(ass - 360) < VERY_SMALL) {
+    if (Math.abs(ass - 360) < VERY_SMALL) {
       ass = 0;
     }
     return ass;
@@ -1394,11 +1394,11 @@ class SweHouse
     int n;
     double ass, sinx;
     ass = - tand(f) * sine + cose * cosd(x);
-    if (SMath.abs(ass) < VERY_SMALL) {
+    if (Math.abs(ass) < VERY_SMALL) {
       ass = 0;
     }
     sinx = sind(x);
-    if (SMath.abs(sinx) < VERY_SMALL) {
+    if (Math.abs(sinx) < VERY_SMALL) {
       sinx = 0;
     }
     if (sinx == 0) {
@@ -1527,15 +1527,15 @@ class SweHouse
         asc = Asc1 (sl.swe_degnorm(armc + 90), geolat, sine, cose);
         demc = atand(sind(armc) * tand(eps));
         /* mc */
-        if (SMath.abs(armc - 90) > VERY_SMALL
-                && SMath.abs(armc - 270) > VERY_SMALL) {
+        if (Math.abs(armc - 90) > VERY_SMALL
+                && Math.abs(armc - 270) > VERY_SMALL) {
           tant = tand(armc);
           mc = sl.swe_degnorm(atand(tant / cose));
           if (armc > 90 && armc <= 270) {
             mc = sl.swe_degnorm(mc + 180);
           }
         } else {
-          if (SMath.abs(armc - 90) <= VERY_SMALL) {
+          if (Math.abs(armc - 90) <= VERY_SMALL) {
             mc = 90;
           } else {
             mc = 270;
@@ -1576,7 +1576,7 @@ class SweHouse
            * because dek becomes smaller when fi is large, as ac is close to
            * zero Aries/Libra in that case.
            */
-          sda = SMath.acos(r) * SwissData.RADTODEG;       /* semidiurnal arc, measured on equator */
+          sda = Math.acos(r) * SwissData.RADTODEG;       /* semidiurnal arc, measured on equator */
           sna = 180 - sda;                /* complement, seminocturnal arc */
           if (mdd > 0) {
             if (mdd < sda)
@@ -1598,15 +1598,15 @@ class SweHouse
       break;
       case 'M': { /* Morinus */
         double am = xpin[0];
-        if (SMath.abs(am - 90) > VERY_SMALL
-          && SMath.abs(am - 270) > VERY_SMALL) {
+        if (Math.abs(am - 90) > VERY_SMALL
+          && Math.abs(am - 270) > VERY_SMALL) {
           tant = tand(am);
           hpos = atand(tant / cose);
           if (am > 90 && am <= 270) {
             hpos = sl.swe_degnorm(hpos + 180);
           }
         } else {
-          if (SMath.abs(am - 90) <= VERY_SMALL) {
+          if (Math.abs(am - 90) <= VERY_SMALL) {
             hpos = 90;
           } else {
             hpos = 270;
@@ -1639,7 +1639,7 @@ class SweHouse
         }
         admc = tand(eps) * tand(geolat) * sind(armc);
         /* midheaven is circumpolar */
-        if (SMath.abs(admc) > 1) {
+        if (Math.abs(admc) > 1) {
           if (admc > 1)
             admc = 1;
           else
@@ -1650,7 +1650,7 @@ class SweHouse
         samc = 90 + admc;
         if (samc == 0)
           is_invalid = true;
-        if (SMath.abs(samc) > 0) {
+        if (Math.abs(samc) > 0) {
           if (mdd >= 0) { /* east */
             dfac = (mdd - adp + admc) / samc;
             xp[0] = sl.swe_degnorm((dfac - 1) * 90);
@@ -1774,19 +1774,19 @@ class SweHouse
         hpos = xp[0] / 30.0 + 1;
         break;
       case 'R':
-        if (SMath.abs(mdd) < VERY_SMALL) {
+        if (Math.abs(mdd) < VERY_SMALL) {
           xp[0] = 270;
-        } else if (180 - SMath.abs(mdd) < VERY_SMALL) {
+        } else if (180 - Math.abs(mdd) < VERY_SMALL) {
           xp[0] = 90;
         } else {
-          if (90 - SMath.abs(geolat) < VERY_SMALL) {
+          if (90 - Math.abs(geolat) < VERY_SMALL) {
             if (geolat > 0) {
               geolat = 90 - VERY_SMALL;
             } else {
               geolat = -90 + VERY_SMALL;
             }
           }
-          if (90 - SMath.abs(de) < VERY_SMALL) {
+          if (90 - Math.abs(de) < VERY_SMALL) {
             if (de > 0) {
               de = 90 - VERY_SMALL;
             } else {
@@ -1837,7 +1837,7 @@ class SweHouse
         xp[1] = 1;
         xeq[1] = de;
         fac = 2;
-        while (SMath.abs(xp[1]) > 0.000001) {
+        while (Math.abs(xp[1]) > 0.000001) {
           if (xp[1] > 0) {
             fh = atand(tand(fh) - tanfi / fac);
             ra0 -= 90 / fac;
@@ -1864,7 +1864,7 @@ class SweHouse
       case 'G':
       default:
          /* circumpolar region */
-        if (90 - SMath.abs(de) <= SMath.abs(geolat)) {
+        if (90 - Math.abs(de) <= Math.abs(geolat)) {
           if (de * geolat < 0) {
             xp[0] = sl.swe_degnorm(90 + mdn / 2);
           } else {

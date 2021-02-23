@@ -236,7 +236,7 @@ class FileData
         swed.ast_diam = SwissLib.atof(s2);
         if (swed.ast_diam == 0) {
           /* estimate the diameter from magnitude; assume albedo = 0.15 */
-          swed.ast_diam = 1329/SMath.sqrt(0.15) * SMath.pow(10, -0.2 * swed.ast_H);
+          swed.ast_diam = 1329/Math.sqrt(0.15) * Math.pow(10, -0.2 * swed.ast_H);
         }
       }
       /*************************************
@@ -333,7 +333,7 @@ lng = 0;
         while (sastnam.charAt(j) != ' ' && j < 10) {  /* new astorb.dat has 5 */
           j++;
         }
-        sastno=sastnam.substring(0,SMath.min(sastnam.length(),j)).trim();
+        sastno=sastnam.substring(0,Math.min(sastnam.length(),j)).trim();
         try {
           i = Integer.parseInt(sastno);
         } catch (NumberFormatException nf) {
@@ -341,8 +341,8 @@ lng = 0;
         }
         if (i == ipl[0] - SweConst.SE_AST_OFFSET) {
           /* element record is from bowell database */
-          astnam=sastnam.substring(SMath.min(sastnam.length(),j+1),
-                                   SMath.min(sastnam.length(),j+1+lastnam));
+          astnam=sastnam.substring(Math.min(sastnam.length(),j+1),
+                                   Math.min(sastnam.length(),j+1+lastnam));
           /* overread old ast. name field */
           s="";
           for(i=0; i<30; i++) {

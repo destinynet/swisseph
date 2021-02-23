@@ -66,14 +66,16 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
 /**
-* This class keeps date and time values in just one place.<p>
-* Use it for UTC time conversions.
-* @author Thomas Mack / mack@ifis.cs.tu-bs.de
-* @version 1.0.0a
-*/
+ * This class keeps date and time values in just one place.<p>
+ * Use it for UTC time conversions.
+ *
+ * @author Thomas Mack / mack@ifis.cs.tu-bs.de
+ * @version 1.0.0a
+ */
 
 public class SDate {
   public int year;
@@ -87,13 +89,14 @@ public class SDate {
     this.year = year;
     this.month = month;
     this.day = day;
-    this.hour = (int)hour;
+    this.hour = (int) hour;
     double d = hour;
     d -= this.hour;
     d *= 60.;
     this.minute = (int) d;
     this.second = (d - this.minute) * 60.0;
   }
+
   public SDate(int year, int month, int day, int hour, int minute, double second) {
     this.year = year;
     this.month = month;

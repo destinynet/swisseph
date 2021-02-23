@@ -353,7 +353,7 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
   protected double getTimePrecision(double degPrec) {
     // Recalculate degPrec to mean the minimum  time, in which the planet can
     // possibly move that degree:
-    double maxTimePerDeg = SMath.max(SMath.abs(min),SMath.abs(max));
+    double maxTimePerDeg = Math.max(Math.abs(min),Math.abs(max));
     if (maxTimePerDeg != 0.) {
       return degPrec / maxTimePerDeg;
     }

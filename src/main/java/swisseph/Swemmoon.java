@@ -233,19 +233,19 @@ class Swemmoon
      5.722859298199e-03, /* L, t^3 */
     -8.466472828815e-05, /* L, t^4 */
     /* The following longitude terms are in arc seconds times 10^5.  */
-    -8.429817796435e+01, /* t^2 SMath.cos(18V - 16E - l) */
-    -2.072552484689e+02, /* t^2 SMath.sin(18V - 16E - l) */
-     7.876842214863e+00, /* t^2 SMath.cos(10V - 3E - l) */
-     1.836463749022e+00, /* t^2 SMath.sin(10V - 3E - l) */
-    -1.557471855361e+01, /* t^2 SMath.cos(8V - 13E) */
-    -2.006969124724e+01, /* t^2 SMath.sin(8V - 13E) */
-     2.152670284757e+01, /* t^2 SMath.cos(4E - 8M + 3J) */
-    -6.179946916139e+00, /* t^2 SMath.sin(4E - 8M + 3J) */
-    -9.070028191196e-01, /* t^2 SMath.cos(18V - 16E) */
-    -1.270848233038e+01, /* t^2 SMath.sin(18V - 16E) */
-    -2.145589319058e+00, /* t^2 SMath.cos(2J - 5S) */
-     1.381936399935e+01, /* t^2 SMath.sin(2J - 5S) */
-    -1.999840061168e+00, /* t^3 SMath.sin(l') */
+    -8.429817796435e+01, /* t^2 Math.cos(18V - 16E - l) */
+    -2.072552484689e+02, /* t^2 Math.sin(18V - 16E - l) */
+     7.876842214863e+00, /* t^2 Math.cos(10V - 3E - l) */
+     1.836463749022e+00, /* t^2 Math.sin(10V - 3E - l) */
+    -1.557471855361e+01, /* t^2 Math.cos(8V - 13E) */
+    -2.006969124724e+01, /* t^2 Math.sin(8V - 13E) */
+     2.152670284757e+01, /* t^2 Math.cos(4E - 8M + 3J) */
+    -6.179946916139e+00, /* t^2 Math.sin(4E - 8M + 3J) */
+    -9.070028191196e-01, /* t^2 Math.cos(18V - 16E) */
+    -1.270848233038e+01, /* t^2 Math.sin(18V - 16E) */
+    -2.145589319058e+00, /* t^2 Math.cos(2J - 5S) */
+     1.381936399935e+01, /* t^2 Math.sin(2J - 5S) */
+    -1.999840061168e+00, /* t^3 Math.sin(l') */
   };
 
 
@@ -826,77 +826,77 @@ class Swemmoon
     chewm( BT2, NBT2, 4, 4, moonpol );
     f = 18 * Ve - 16 * Ea;
     g = SwephData.STR*(f - MP );  /* 18V - 16E - l */
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l = 6.367278 * cg + 12.747036 * sg;  /* t^0 */
     l1 = 23123.70 * cg - 10570.02 * sg;  /* t^1 */
     l2 = z[12] * cg + z[13] * sg;        /* t^2 */
     moonpol[2] += 5.01 * cg + 2.72 * sg;
     g = SwephData.STR * (10.*Ve - 3.*Ea - MP);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.253102 * cg + 0.503359 * sg;
     l1 += 1258.46 * cg + 707.29 * sg;
     l2 += z[14] * cg + z[15] * sg;
     g = SwephData.STR*(8.*Ve - 13.*Ea);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.187231 * cg - 0.127481 * sg;
     l1 += -319.87 * cg - 18.34 * sg;
     l2 += z[16] * cg + z[17] * sg;
     a = 4.0*Ea - 8.0*Ma + 3.0*Ju;
     g = SwephData.STR * a;
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.866287 * cg + 0.248192 * sg;
     l1 += 41.87 * cg + 1053.97 * sg;
     l2 += z[18] * cg + z[19] * sg;
     g = SwephData.STR*(a - MP);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.165009 * cg + 0.044176 * sg;
     l1 += 4.67 * cg + 201.55 * sg;
     g = SwephData.STR*f;  /* 18V - 16E */
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.330401 * cg + 0.661362 * sg;
     l1 += 1202.67 * cg - 555.59 * sg;
     l2 += z[20] * cg + z[21] * sg;
     g = SwephData.STR*(f - 2.0*MP );  /* 18V - 16E - 2l */
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.352185 * cg + 0.705041 * sg;
     l1 += 1283.59 * cg - 586.43 * sg;
     g = SwephData.STR * (2.0*Ju - 5.0*Sa);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.034700 * cg + 0.160041 * sg;
     l2 += z[22] * cg + z[23] * sg;
     g = SwephData.STR * (SWELP - NF);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.000116 * cg + 7.063040 * sg;
     l1 +=  298.8 * sg;
     /* T^3 terms */
-    sg = SMath.sin( SwephData.STR * M );
+    sg = Math.sin( SwephData.STR * M );
     /* l3 +=  z[24] * sg;                   moshier! l3 not initialized! */
     l3 =  z[24] * sg;
     l4 = 0;
     g = SwephData.STR * (2.0*D - M);
-    sg = SMath.sin(g);
-    cg = SMath.cos(g);
+    sg = Math.sin(g);
+    cg = Math.cos(g);
     moonpol[2] +=  -0.2655 * cg * T;
     g = SwephData.STR * (M - MP);
-    moonpol[2] +=  -0.1568 * SMath.cos( g ) * T;
+    moonpol[2] +=  -0.1568 * Math.cos( g ) * T;
     g = SwephData.STR * (M + MP);
-    moonpol[2] +=  0.1309 * SMath.cos( g ) * T;
+    moonpol[2] +=  0.1309 * Math.cos( g ) * T;
     g = SwephData.STR * (2.0*(D + M) - MP);
-    sg = SMath.sin(g);
-    cg = SMath.cos(g);
+    sg = Math.sin(g);
+    cg = Math.cos(g);
     moonpol[2] +=   0.5568 * cg * T;
     l2 += moonpol[0];
     g = SwephData.STR*(2.0*D - M - MP);
-    moonpol[2] +=  -0.1910 * SMath.cos( g ) * T;
+    moonpol[2] +=  -0.1910 * Math.cos( g ) * T;
     moonpol[1] *= T;
     moonpol[2] *= T;
     /* terms in T */
@@ -904,75 +904,75 @@ class Swemmoon
     chewm( BT, NBT, 4, 4, moonpol );
     chewm( LRT, NLRT, 4, 1, moonpol );
     g = SwephData.STR*(f - MP - NF - 2355767.6); /* 18V - 16E - l - F */
-    moonpol[1] +=  -1127. * SMath.sin(g);
+    moonpol[1] +=  -1127. * Math.sin(g);
     g = SwephData.STR*(f - MP + NF - 235353.6); /* 18V - 16E - l + F */
-    moonpol[1] +=  -1123. * SMath.sin(g);
+    moonpol[1] +=  -1123. * Math.sin(g);
     g = SwephData.STR*(Ea + D + 51987.6);
-    moonpol[1] +=  1303. * SMath.sin(g);
+    moonpol[1] +=  1303. * Math.sin(g);
     g = SwephData.STR*SWELP;
-    moonpol[1] +=  342. * SMath.sin(g);
+    moonpol[1] +=  342. * Math.sin(g);
     g = SwephData.STR*(2.*Ve - 3.*Ea);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l +=  -0.343550 * cg - 0.000276 * sg;
     l1 +=  105.90 * cg + 336.53 * sg;
     g = SwephData.STR*(f - 2.*D); /* 18V - 16E - 2D */
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.074668 * cg + 0.149501 * sg;
     l1 += 271.77 * cg - 124.20 * sg;
     g = SwephData.STR*(f - 2.*D - MP);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.073444 * cg + 0.147094 * sg;
     l1 += 265.24 * cg - 121.16 * sg;
     g = SwephData.STR*(f + 2.*D - MP);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.072844 * cg + 0.145829 * sg;
     l1 += 265.18 * cg - 121.29 * sg;
     g = SwephData.STR*(f + 2.*(D - MP));
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.070201 * cg + 0.140542 * sg;
     l1 += 255.36 * cg - 116.79 * sg;
     g = SwephData.STR*(Ea + D - NF);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.288209 * cg - 0.025901 * sg;
     l1 += -63.51 * cg - 240.14 * sg;
     g = SwephData.STR*(2.*Ea - 3.*Ju + 2.*D - MP);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += 0.077865 * cg + 0.438460 * sg;
     l1 += 210.57 * cg + 124.84 * sg;
     g = SwephData.STR*(Ea - 2.*Ma);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.216579 * cg + 0.241702 * sg;
     l1 += 197.67 * cg + 125.23 * sg;
     g = SwephData.STR*(a + MP);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.165009 * cg + 0.044176 * sg;
     l1 += 4.67 * cg + 201.55 * sg;
     g = SwephData.STR*(a + 2.*D - MP);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.133533 * cg + 0.041116 * sg;
     l1 +=  6.95 * cg + 187.07 * sg;
     g = SwephData.STR*(a - 2.*D + MP);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.133430 * cg + 0.041079 * sg;
     l1 +=  6.28 * cg + 169.08 * sg;
     g = SwephData.STR*(3.*Ve - 4.*Ea);
-    cg = SMath.cos(g);
-    sg = SMath.sin(g);
+    cg = Math.cos(g);
+    sg = Math.sin(g);
     l += -0.175074 * cg + 0.003035 * sg;
     l1 +=  49.17 * cg + 150.57 * sg;
     g = SwephData.STR*(2.*(Ea + D - MP) - 3.*Ju + 213534.);
-    l1 +=  158.4 * SMath.sin(g);
+    l1 +=  158.4 * Math.sin(g);
     l1 += moonpol[0];
     a = 0.1 * T; /* set amplitude scale of 1.0 = 10^-4 arcsec */
     moonpol[1] *= a;
@@ -982,77 +982,77 @@ class Swemmoon
   void moon2() {
     /* terms in T^0 */
     g = SwephData.STR*(2*(Ea-Ju+D)-MP+648431.172);
-    l += 1.14307 * SMath.sin(g);
+    l += 1.14307 * Math.sin(g);
     g = SwephData.STR*(Ve-Ea+648035.568);
-    l += 0.82155 * SMath.sin(g);
+    l += 0.82155 * Math.sin(g);
     g = SwephData.STR*(3*(Ve-Ea)+2*D-MP+647933.184);
-    l += 0.64371 * SMath.sin(g);
+    l += 0.64371 * Math.sin(g);
     g = SwephData.STR*(Ea-Ju+4424.04);
-    l += 0.63880 * SMath.sin(g);
+    l += 0.63880 * Math.sin(g);
     g = SwephData.STR*(SWELP + MP - NF + 4.68);
-    l += 0.49331 * SMath.sin(g);
+    l += 0.49331 * Math.sin(g);
     g = SwephData.STR*(SWELP - MP - NF + 4.68);
-    l += 0.4914 * SMath.sin(g);
+    l += 0.4914 * Math.sin(g);
     g = SwephData.STR*(SWELP+NF+2.52);
-    l += 0.36061 * SMath.sin(g);
+    l += 0.36061 * Math.sin(g);
     g = SwephData.STR*(2.*Ve - 2.*Ea + 736.2);
-    l += 0.30154 * SMath.sin(g);
+    l += 0.30154 * Math.sin(g);
     g = SwephData.STR*(2.*Ea - 3.*Ju + 2.*D - 2.*MP + 36138.2);
-    l += 0.28282 * SMath.sin(g);
+    l += 0.28282 * Math.sin(g);
     g = SwephData.STR*(2.*Ea - 2.*Ju + 2.*D - 2.*MP + 311.0);
-    l += 0.24516 * SMath.sin(g);
+    l += 0.24516 * Math.sin(g);
     g = SwephData.STR*(Ea - Ju - 2.*D + MP + 6275.88);
-    l += 0.21117 * SMath.sin(g);
+    l += 0.21117 * Math.sin(g);
     g = SwephData.STR*(2.*(Ea - Ma) - 846.36);
-    l += 0.19444 * SMath.sin(g);
+    l += 0.19444 * Math.sin(g);
     g = SwephData.STR*(2.*(Ea - Ju) + 1569.96);
-    l -= 0.18457 * SMath.sin(g);
+    l -= 0.18457 * Math.sin(g);
     g = SwephData.STR*(2.*(Ea - Ju) - MP - 55.8);
-    l += 0.18256 * SMath.sin(g);
+    l += 0.18256 * Math.sin(g);
     g = SwephData.STR*(Ea - Ju - 2.*D + 6490.08);
-    l += 0.16499 * SMath.sin(g);
+    l += 0.16499 * Math.sin(g);
     g = SwephData.STR*(Ea - 2.*Ju - 212378.4);
-    l += 0.16427 * SMath.sin(g);
+    l += 0.16427 * Math.sin(g);
     g = SwephData.STR*(2.*(Ve - Ea - D) + MP + 1122.48);
-    l += 0.16088 * SMath.sin(g);
+    l += 0.16088 * Math.sin(g);
     g = SwephData.STR*(Ve - Ea - MP + 32.04);
-    l -= 0.15350 * SMath.sin(g);
+    l -= 0.15350 * Math.sin(g);
     g = SwephData.STR*(Ea - Ju - MP + 4488.88);
-    l += 0.14346 * SMath.sin(g);
+    l += 0.14346 * Math.sin(g);
     g = SwephData.STR*(2.*(Ve - Ea + D) - MP - 8.64);
-    l += 0.13594 * SMath.sin(g);
+    l += 0.13594 * Math.sin(g);
     g = SwephData.STR*(2.*(Ve - Ea - D) + 1319.76);
-    l += 0.13432 * SMath.sin(g);
+    l += 0.13432 * Math.sin(g);
     g = SwephData.STR*(Ve - Ea - 2.*D + MP - 56.16);
-    l -= 0.13122 * SMath.sin(g);
+    l -= 0.13122 * Math.sin(g);
     g = SwephData.STR*(Ve - Ea + MP + 54.36);
-    l -= 0.12722 * SMath.sin(g);
+    l -= 0.12722 * Math.sin(g);
     g = SwephData.STR*(3.*(Ve - Ea) - MP + 433.8);
-    l += 0.12539 * SMath.sin(g);
+    l += 0.12539 * Math.sin(g);
     g = SwephData.STR*(Ea - Ju + MP + 4002.12);
-    l += 0.10994 * SMath.sin(g);
+    l += 0.10994 * Math.sin(g);
     g = SwephData.STR*(20.*Ve - 21.*Ea - 2.*D + MP - 317511.72);
-    l += 0.10652 * SMath.sin(g);
+    l += 0.10652 * Math.sin(g);
     g = SwephData.STR*(26.*Ve - 29.*Ea - MP + 270002.52);
-    l += 0.10490 * SMath.sin(g);
+    l += 0.10490 * Math.sin(g);
     g = SwephData.STR*(3.*Ve - 4.*Ea + D - MP - 322765.56);
-    l += 0.10386 * SMath.sin(g);
+    l += 0.10386 * Math.sin(g);
     g = SwephData.STR*(SWELP+648002.556);
-    B =  8.04508 * SMath.sin(g);
+    B =  8.04508 * Math.sin(g);
     g = SwephData.STR*(Ea+D+996048.252);
-    B += 1.51021 * SMath.sin(g);
+    B += 1.51021 * Math.sin(g);
     g = SwephData.STR*(f - MP + NF + 95554.332);
-    B += 0.63037 * SMath.sin(g);
+    B += 0.63037 * Math.sin(g);
     g = SwephData.STR*(f - MP - NF + 95553.792);
-    B += 0.63014 * SMath.sin(g);
+    B += 0.63014 * Math.sin(g);
     g = SwephData.STR*(SWELP - MP + 2.9);
-    B +=  0.45587 * SMath.sin(g);
+    B +=  0.45587 * Math.sin(g);
     g = SwephData.STR*(SWELP + MP + 2.5);
-    B +=  -0.41573 * SMath.sin(g);
+    B +=  -0.41573 * Math.sin(g);
     g = SwephData.STR*(SWELP - 2.0*NF + 3.2);
-    B +=  0.32623 * SMath.sin(g);
+    B +=  0.32623 * Math.sin(g);
     g = SwephData.STR*(SWELP - 2.0*D + 2.5);
-    B +=  0.29855 * SMath.sin(g);
+    B +=  0.29855 * Math.sin(g);
   }
 
   void moon3() {
@@ -1089,7 +1089,7 @@ class Swemmoon
     if (J > SwephData.JPL_DE431_END) return 0;
   /*if (J > CORR_MNODE_JD_T1GREG && J < CORR_MNODE_JD_T2GREG) return 0;*/
     dJ = J - J0;
-    i = (int)SMath.floor(dJ / dayscty); /* centuries = index of lower correction value */
+    i = (int)Math.floor(dJ / dayscty); /* centuries = index of lower correction value */
     dfrac = (dJ - i * dayscty) / dayscty;
     dcor0 = mean_node_corr[i];
     dcor1 = mean_node_corr[i + 1];
@@ -1147,7 +1147,7 @@ class Swemmoon
     if (J > SwephData.JPL_DE431_END) return 0;
     /*if (J > CORR_MAPOG_JD_T1GREG && J < CORR_MAPOG_JD_T2GREG) return 0;*/
     dJ = J - J0;
-    i = (int)SMath.floor(dJ / dayscty); /* centuries = index of lower correction value */
+    i = (int)Math.floor(dJ / dayscty); /* centuries = index of lower correction value */
     dfrac = (dJ - i * dayscty) / dayscty;
     dcor0 = mean_apsis_corr[i];
     dcor1 = mean_apsis_corr[i + 1];
@@ -1184,7 +1184,7 @@ class Swemmoon
       return SweConst.ERR;
     }
     mean_elements();
-    pol[offs] = sl.swi_mod2PI((SWELP - MP) * SwephData.STR + SMath.PI);
+    pol[offs] = sl.swi_mod2PI((SWELP - MP) * SwephData.STR + Math.PI);
     pol[offs+1] = 0;
     pol[offs+2] = SwephData.MOON_MEAN_DIST * (1 + SwephData.MOON_MEAN_ECC) /
                                                  SweConst.AUNIT; /* apogee */
@@ -1302,8 +1302,8 @@ class Swemmoon
   void sscc(int k, double arg, int n ) {
     double cu, su, cv, sv, s;
     int i;
-    su = SMath.sin(arg);
-    cu = SMath.cos(arg);
+    su = Math.sin(arg);
+    cu = Math.cos(arg);
     ss[k][0] = su;                        /* sin(L) */
     cc[k][0] = cu;                        /* cos(L) */
     sv = 2.0*su*cu;
@@ -1339,7 +1339,7 @@ class Swemmoon
   double mods3600(double x) {
     double lx;
     lx = x;
-    lx = lx - 1296000.0 * SMath.floor( lx/1296000.0 );
+    lx = lx - 1296000.0 * Math.floor( lx/1296000.0 );
     return( lx );
   }
 

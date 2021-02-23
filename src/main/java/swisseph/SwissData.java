@@ -66,6 +66,7 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
 import java.io.Serializable;
@@ -168,7 +169,7 @@ public class SwissData implements Serializable {
 //				        // the returned star name.
 //
 
-  static final int pnoext2int[] = {SwephData.SEI_SUN, SwephData.SEI_MOON,
+  static final int[] pnoext2int = {SwephData.SEI_SUN, SwephData.SEI_MOON,
       SwephData.SEI_MERCURY, SwephData.SEI_VENUS, SwephData.SEI_MARS,
       SwephData.SEI_JUPITER, SwephData.SEI_SATURN, SwephData.SEI_URANUS,
       SwephData.SEI_NEPTUNE, SwephData.SEI_PLUTO, 0, 0, 0, 0, SwephData.SEI_EARTH,
@@ -191,11 +192,11 @@ public class SwissData implements Serializable {
   boolean ayana_is_set = false;    /* ayana_is_set, ayanamsa is set */
   boolean is_old_starfile = false;  /* is_old_starfile, fixstars.cat is used (default is sefstars.txt) */
 
-  FileData fidat[] = new FileData[SwephData.SEI_NEPHFILES];
+  FileData[] fidat = new FileData[SwephData.SEI_NEPHFILES];
   GenConst gcdat;
-  PlanData pldat[] = new PlanData[SwephData.SEI_NPLANETS];
-  PlanData nddat[] = new PlanData[SwephData.SEI_NNODE_ETC];
-  SavePositions savedat[] = new SavePositions[SweConst.SE_NPLANETS + 1];
+  PlanData[] pldat = new PlanData[SwephData.SEI_NPLANETS];
+  PlanData[] nddat = new PlanData[SwephData.SEI_NNODE_ETC];
+  SavePositions[] savedat = new SavePositions[SweConst.SE_NPLANETS + 1];
   Epsilon oec;
   Epsilon oec2000;
   Nut nut;
@@ -213,7 +214,7 @@ public class SwissData implements Serializable {
   //double deps[36525];
   double[] dpsi;
   double[] deps;
-  int astro_models[] = new int[SwephData.SEI_NMODELS];
+  int[] astro_models = new int[SwephData.SEI_NMODELS];
   int timeout;
 
   /**

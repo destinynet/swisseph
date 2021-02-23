@@ -66,30 +66,32 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
+import java.io.Serializable;
+
 /**
-* A class to contain all the data for sidereal calculations.<P>
-* t0(?) / ayan_t0(?) is the epoch at which ayanamsha = 0.
-* This should be for internal use only - no necessity to have it outside
-* this package. You will set these data via swe_set_sid_mode normally.
-* <P><I><B>You will find the complete documentation for the original
-* SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
-* http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information 
-* there is directly valid for this port to Java as well.</B></I>
-* @see SwissEph#swe_set_sid_mode
-* @version 1.0.0a
-*/
-class SidData
-		implements java.io.Serializable
-		{
-  int sid_mode=0;
-  double ayan_t0=0.;
-  double t0=0.;
+ * A class to contain all the data for sidereal calculations.<P>
+ * t0(?) / ayan_t0(?) is the epoch at which ayanamsha = 0.
+ * This should be for internal use only - no necessity to have it outside
+ * this package. You will set these data via swe_set_sid_mode normally.
+ * <P><I><B>You will find the complete documentation for the original
+ * SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
+ * http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information
+ * there is directly valid for this port to Java as well.</B></I>
+ *
+ * @version 1.0.0a
+ * @see SwissEph#swe_set_sid_mode
+ */
+class SidData implements Serializable {
+  int sid_mode = 0;
+  double ayan_t0 = 0.;
+  double t0 = 0.;
 
 
   void clearData() {
-    sid_mode=0;
+    sid_mode = 0;
     ayan_t0 = t0 = 0.;
   }
 }

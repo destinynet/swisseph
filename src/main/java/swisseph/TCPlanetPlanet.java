@@ -376,8 +376,8 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
         minSpeed = (maxSpeed1>maxSpeed2)?minSpeed1-maxSpeed2:minSpeed2-maxSpeed1;
         maxSpeed = (maxSpeed1>maxSpeed2)?maxSpeed1-minSpeed2:maxSpeed2-minSpeed1;
       } else {
-        minSpeed = SMath.min(minSpeed1-maxSpeed2, minSpeed2-maxSpeed1);
-        maxSpeed = SMath.max(maxSpeed1-minSpeed2, maxSpeed2-minSpeed1);
+        minSpeed = Math.min(minSpeed1-maxSpeed2, minSpeed2-maxSpeed1);
+        maxSpeed = Math.max(maxSpeed1-minSpeed2, maxSpeed2-minSpeed1);
       }
     }
   }
@@ -440,7 +440,7 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
       double max1 = getSpeed(true, pl1, true);
       double min2 = getSpeed(true, pl2, false);
       double max2 = getSpeed(true, pl2, true);
-      return SMath.min(min1-max2, min2-max1);
+      return Math.min(min1-max2, min2-max1);
     }
     return 0.;
   }
@@ -453,7 +453,7 @@ double minVal = 0., maxVal = 0.;  // Thinking about it...
       double max1 = getSpeed(true, pl1, true);
       double min2 = getSpeed(true, pl2, false);
       double max2 = getSpeed(true, pl2, true);
-      return SMath.max(max1-min2, max2-min1);
+      return Math.max(max1-min2, max2-min1);
     }
     return 360.;
   }
@@ -574,27 +574,27 @@ System.err.println("SERR: " + serr);
       double target3 = ((int)(lon2) + offset + rolloverVal) % rolloverVal;
       double target4 = ((int)(lon2) - offset + rolloverVal) % rolloverVal;
       if (lon2 > target1) {
-        delta1 = SMath.abs(lon2 - target1 - 1 + 1E-9);	// Might be better to use a different comparison operator instead of  '+ 1E-9'...?
+        delta1 = Math.abs(lon2 - target1 - 1 + 1E-9);	// Might be better to use a different comparison operator instead of  '+ 1E-9'...?
       } else {
         delta1 = target1 - lon2;
       }
       if (lon2 > target2) {
-        delta2 = SMath.abs(lon2 - target2 - 1 + 1E-9);
+        delta2 = Math.abs(lon2 - target2 - 1 + 1E-9);
       } else {
         delta2 = target2 - lon2;
       }
       if (lon1 > target3) {
-        delta3 = SMath.abs(lon1 - target3 - 1 + 1E-9);
+        delta3 = Math.abs(lon1 - target3 - 1 + 1E-9);
       } else {
         delta3 = target3 - lon1;
       }
       if (lon1 > target4) {
-        delta4 = SMath.abs(lon1 - target4 - 1 + 1E-9);
+        delta4 = Math.abs(lon1 - target4 - 1 + 1E-9);
       } else {
         delta4 = target4 - lon1;
       }
 
-      double diff = SMath.min(SMath.min(SMath.min(delta1, delta2), delta3), delta4) % 1;	// Using '%1', as I don't get the next degree value, where these planets will be partile (on calcPartile?).
+      double diff = Math.min(Math.min(Math.min(delta1, delta2), delta3), delta4) % 1;	// Using '%1', as I don't get the next degree value, where these planets will be partile (on calcPartile?).
       if ((!isPartile && calcPartile && diff == 0) || (isPartile && calcNonPartile && diff != 0)) {
         return offset;
       }
@@ -614,10 +614,10 @@ System.err.println("SERR: " + serr);
   protected double getTimePrecision(double degPrec) {
     // Recalculate degPrec to mean the minimum  time, in which the planet can
     // possibly move that degree:
-    double amin = SMath.min(SMath.abs(minSpeed1),SMath.abs(minSpeed2));
-    double amax = SMath.min(SMath.abs(maxSpeed1),SMath.abs(maxSpeed2));
+    double amin = Math.min(Math.abs(minSpeed1),Math.abs(minSpeed2));
+    double amax = Math.min(Math.abs(maxSpeed1),Math.abs(maxSpeed2));
 
-    double maxVal = SMath.max(SMath.abs(amin),SMath.abs(amax));
+    double maxVal = Math.max(Math.abs(amin),Math.abs(amax));
     if (maxVal != 0.) {
       return degPrec / maxVal;
     }
@@ -660,13 +660,13 @@ System.err.println("SERR: " + serr);
       }
       if (pl2>=SweConst.SE_SUN && pl2<=SweConst.SE_JUPITER) {
         if (jd<1980 || jd>2099) {
-          degPrec = SMath.max(0.08,degPrec);
+          degPrec = Math.max(0.08,degPrec);
         }
       } else {
         if (jd>=1900 && jd<1980) {
-          degPrec = SMath.max(0.08,degPrec);
+          degPrec = Math.max(0.08,degPrec);
         } else if (jd<1900 || jd>2099) { // Unclear about true nodes...
-          degPrec = SMath.max(1,degPrec);
+          degPrec = Math.max(1,degPrec);
         }
       }
     }
@@ -697,7 +697,7 @@ System.err.println("SERR: " + serr);
         } else {
           dp2 = sw.ext.maxBaryDist[pl2];
         }
-        degPrec *= SMath.max(dp1, dp2);
+        degPrec *= Math.max(dp1, dp2);
     }
 
     return degPrec;
@@ -932,22 +932,22 @@ System.err.println("SERR: " + serr);
         double target4 = ((int)(lon2) - offset + rolloverVal) % rolloverVal;
 
         if (lon2 > target1) {
-          delta1 = SMath.abs(lon2 - target1 - 1 + 1E-9);
+          delta1 = Math.abs(lon2 - target1 - 1 + 1E-9);
         } else {
           delta1 = target1 - lon2;
         }
         if (lon2 > target2) {
-          delta2 = SMath.abs(lon2 - target2 - 1 + 1E-9);
+          delta2 = Math.abs(lon2 - target2 - 1 + 1E-9);
         } else {
           delta2 = target2 - lon2;
         }
         if (lon1 > target3) {
-          delta3 = SMath.abs(lon1 - target3 - 1 + 1E-9);
+          delta3 = Math.abs(lon1 - target3 - 1 + 1E-9);
         } else {
           delta3 = target3 - lon1;
         }
         if (lon1 > target4) {
-          delta4 = SMath.abs(lon1 - target4 - 1 + 1E-9);
+          delta4 = Math.abs(lon1 - target4 - 1 + 1E-9);
         } else {
           delta4 = target4 - lon1;
         }
@@ -964,10 +964,10 @@ System.err.println("SERR: " + serr);
         delta4 += 1E-9;
       }
 
-      double maxSpeed = SMath.abs(maxSpeed2 - minSpeed1);
-      maxSpeed = SMath.max(maxSpeed, SMath.abs(maxSpeed1 - minSpeed2));
-      double minDx = SMath.min(SMath.min(SMath.min(delta1, delta2), delta3), delta4)%1;
-      deltaET = SMath.abs(minDx / maxSpeed);
+      double maxSpeed = Math.abs(maxSpeed2 - minSpeed1);
+      maxSpeed = Math.max(maxSpeed, Math.abs(maxSpeed1 - minSpeed2));
+      double minDx = Math.min(Math.min(Math.min(delta1, delta2), delta3), delta4)%1;
+      deltaET = Math.abs(minDx / maxSpeed);
 
       return jdET + (back ? - deltaET : deltaET);
     }

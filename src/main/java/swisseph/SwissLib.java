@@ -224,7 +224,7 @@ public class SwissLib
   public double swe_degnorm(double x) {
     double y;
     y = x%360.0;
-    if (SMath.abs(y) < 1e-13) {
+    if (Math.abs(y) < 1e-13) {
       y = 0;   /* Alois fix 11-dec-1999 */
     }
     if( y < 0.0 ) {
@@ -244,7 +244,7 @@ public class SwissLib
   public double swe_radnorm(double x) {
     double y;
     y = x % SwephData.TWOPI;
-    if (SMath.abs(y) < 1e-13) {
+    if (Math.abs(y) < 1e-13) {
       y = 0;   /* Alois fix 11-dec-1999 */
     }
     if( y < 0.0 ) {
@@ -419,8 +419,8 @@ public class SwissLib
                           int nOffs, double eps) {
     double sineps, coseps;
     double x[]=new double[3];
-    sineps = SMath.sin(eps);
-    coseps = SMath.cos(eps);
+    sineps = Math.sin(eps);
+    coseps = Math.cos(eps);
     x[0] = xpo[oOffs];
     x[1] = xpo[1+oOffs] * coseps + xpo[2+oOffs] * sineps;
     x[2] = -xpo[1+oOffs] * sineps + xpo[2+oOffs] * coseps;
@@ -466,13 +466,13 @@ public class SwissLib
       return;
     }
     rxy = x[0+xOffs]*x[0+xOffs] + x[1+xOffs]*x[1+xOffs];
-    ll[2] = SMath.sqrt(rxy + x[2+xOffs]*x[2+xOffs]);
-    rxy = SMath.sqrt(rxy);
-    ll[0] = SMath.atan2(x[1+xOffs], x[0+xOffs]);
+    ll[2] = Math.sqrt(rxy + x[2+xOffs]*x[2+xOffs]);
+    rxy = Math.sqrt(rxy);
+    ll[0] = Math.atan2(x[1+xOffs], x[0+xOffs]);
     if (ll[0] < 0.0) {
       ll[0] += SwephData.TWOPI;
     }
-    ll[1] = SMath.atan(x[2+xOffs] / rxy);
+    ll[1] = Math.atan(x[2+xOffs] / rxy);
     l[0+lOffs] = ll[0];
     l[1+lOffs] = ll[1];
     l[2+lOffs] = ll[2];
@@ -487,10 +487,10 @@ public class SwissLib
   public void swi_polcart(double l[], int lOffs, double x[], int xOffs) {
     double xx[]=new double[3];
     double cosl1;
-    cosl1 = SMath.cos(l[lOffs+1]);
-    xx[0] = l[lOffs+2] * cosl1 * SMath.cos(l[lOffs]);
-    xx[1] = l[lOffs+2] * cosl1 * SMath.sin(l[lOffs]);
-    xx[2] = l[lOffs+2] * SMath.sin(l[lOffs+1]);
+    cosl1 = Math.cos(l[lOffs+1]);
+    xx[0] = l[lOffs+2] * cosl1 * Math.cos(l[lOffs]);
+    xx[1] = l[lOffs+2] * cosl1 * Math.sin(l[lOffs]);
+    xx[2] = l[lOffs+2] * Math.sin(l[lOffs+1]);
     x[xOffs] = xx[0];
     x[xOffs+1] = xx[1];
     x[xOffs+2] = xx[2];
@@ -511,7 +511,7 @@ public class SwissLib
     /* zero position */
     if (x[0+xOffs] == 0 && x[1+xOffs] == 0 && x[2+xOffs] == 0) {
       l[0+lOffs] = l[1+lOffs] = l[3+lOffs] = l[4+lOffs] = 0;
-      l[5+lOffs] = SMath.sqrt(square_sum(x, 3+xOffs));
+      l[5+lOffs] = Math.sqrt(square_sum(x, 3+xOffs));
       swi_cartpol(x, 3+xOffs, l, 0+lOffs);
       l[2+lOffs] = 0;
       return;
@@ -524,13 +524,13 @@ public class SwissLib
     }
     /* position */
     rxy = x[0+xOffs]*x[0+xOffs] + x[1+xOffs]*x[1+xOffs];
-    ll[2] = SMath.sqrt(rxy + x[2+xOffs]*x[2+xOffs]);
-    rxy = SMath.sqrt(rxy);
-    ll[0] = SMath.atan2(x[1+xOffs], x[0+xOffs]);
+    ll[2] = Math.sqrt(rxy + x[2+xOffs]*x[2+xOffs]);
+    rxy = Math.sqrt(rxy);
+    ll[0] = Math.atan2(x[1+xOffs], x[0+xOffs]);
     if (ll[0] < 0.0) {
       ll[0] += SwephData.TWOPI;
     }
-    ll[1] = SMath.atan(x[2+xOffs] / rxy);
+    ll[1] = Math.atan(x[2+xOffs] / rxy);
     /* speed:
      * 1. rotate coordinate system by longitude of position about z-axis,
      *    so that new x-axis = position radius projected onto x-y-plane.
@@ -574,16 +574,16 @@ public class SwissLib
       return;
     }
     /* position */
-    coslon = SMath.cos(l[0+lOffs]);
-    sinlon = SMath.sin(l[0+lOffs]);
-    coslat = SMath.cos(l[1+lOffs]);
-    sinlat = SMath.sin(l[1+lOffs]);
+    coslon = Math.cos(l[0+lOffs]);
+    sinlon = Math.sin(l[0+lOffs]);
+    coslat = Math.cos(l[1+lOffs]);
+    sinlat = Math.sin(l[1+lOffs]);
     xx[0] = l[2+lOffs] * coslat * coslon;
     xx[1] = l[2+lOffs] * coslat * sinlon;
     xx[2] = l[2+lOffs] * sinlat;
     /* speed; explanation s. swi_cartpol_sp(), same method the other way round*/
     rxyz = l[2+lOffs];
-    rxy = SMath.sqrt(xx[0] * xx[0] + xx[1] * xx[1]);
+    rxy = Math.sqrt(xx[0] * xx[0] + xx[1] * xx[1]);
     xx[5] = l[5+lOffs];
     xx[4] = l[4+lOffs] * rxyz;
     x[5+xOffs] = sinlat * xx[5] + coslat * xx[4];       /* speed z */
@@ -598,8 +598,8 @@ public class SwissLib
 
   public double swi_dot_prod_unit(double[] x, double[] y) {
     double dop = x[0]*y[0]+x[1]*y[1]+x[2]*y[2];
-    double e1 = SMath.sqrt(x[0]*x[0]+x[1]*x[1]+x[2]*x[2]);
-    double e2 = SMath.sqrt(y[0]*y[0]+y[1]*y[1]+y[2]*y[2]);
+    double e1 = Math.sqrt(x[0]*x[0]+x[1]*x[1]+x[2]*x[2]);
+    double e2 = Math.sqrt(y[0]*y[0]+y[1]*y[1]+y[2]*y[2]);
     dop /= e1;
     dop /= e2;
     if (dop > 1) {
@@ -688,8 +688,8 @@ public class SwissLib
     for (i = 0; i < nper; i++) {
       w = D2PI * t;
       a = w / peper[0][i];
-      s = SMath.sin(a);
-      c = SMath.cos(a);
+      s = Math.sin(a);
+      c = Math.cos(a);
       p += c * peper[1][i] + s * peper[3][i];
       q += c * peper[2][i] + s * peper[4][i];
     }
@@ -728,8 +728,8 @@ public class SwissLib
     for (i = 0; i < nper; i++) {
       w = D2PI * t;
       a = w / pqper[0][i];
-      s = SMath.sin(a);
-      c = SMath.cos(a);
+      s = Math.sin(a);
+      c = Math.cos(a);
       p += c * pqper[1][i] + s * pqper[3][i];
       q += c * pqper[2][i] + s * pqper[4][i];
     }
@@ -748,9 +748,9 @@ public class SwissLib
     if (z < 0)
       z = 0;
     else
-      z = SMath.sqrt(z);
-    s = SMath.sin(EPS0);
-    c = SMath.cos(EPS0);
+      z = Math.sqrt(z);
+    s = Math.sin(EPS0);
+    c = Math.cos(EPS0);
     vec[0] = p;
     vec[1] = - q * c - z * s;
     vec[2] = - q * s + z * c;
@@ -768,8 +768,8 @@ public class SwissLib
     for (i = 0; i < nper; i++) {
       w = D2PI * t;
       a = w / xyper[0][i];
-      s = SMath.sin(a);
-      c = SMath.cos(a);
+      s = Math.sin(a);
+      c = Math.cos(a);
       x += c * xyper[1][i] + s * xyper[3][i];
       y += c * xyper[2][i] + s * xyper[4][i];
     }
@@ -787,7 +787,7 @@ public class SwissLib
     veq[1] = y;
     w = x * x + y * y;
     if (w < 1)
-      veq[2] = SMath.sqrt(1 - w);
+      veq[2] = Math.sqrt(1 - w);
     else
       veq[2] = 0;
   }
@@ -802,7 +802,7 @@ public class SwissLib
     pre_pecl(tjd, pecl);
     /* equinox */
     swi_cross_prod(peqr, 0, pecl, 0, v, 0);
-    w = SMath.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    w = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     eqx[0] = v[0] / w;
     eqx[1] = v[1] / w;
     eqx[2] = v[2] / w;
@@ -867,15 +867,15 @@ public class SwissLib
     /*} else if ((iflag & SEFLG_JPLHOR_APPROX) && !APPROXIMATE_HORIZONS_ASTRODIENST) {*/
     } else if ((iflag & SweConst.SEFLG_JPLHOR_APPROX) != 0 && jplhora_model != SweConst.SEMOD_JPLHORA_1) {
       eps = (((1.813e-3*T-5.9e-4)*T-46.8150)*T+84381.448)*SwissData.DEGTORAD/3600;
-    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_1976 && SMath.abs(T) <= PREC_IAU_1976_CTIES ) {
+    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_1976 && Math.abs(T) <= PREC_IAU_1976_CTIES ) {
       eps = (((1.813e-3*T-5.9e-4)*T-46.8150)*T+84381.448)*SwissData.DEGTORAD/3600;
     } else if (prec_model == SweConst.SEMOD_PREC_IAU_1976) {
       eps = (((1.813e-3*T-5.9e-4)*T-46.8150)*T+84381.448)*SwissData.DEGTORAD/3600;
-    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_2000 && SMath.abs(T) <= PREC_IAU_2000_CTIES ) {
+    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_2000 && Math.abs(T) <= PREC_IAU_2000_CTIES ) {
       eps = (((1.813e-3*T-5.9e-4)*T-46.84024)*T+84381.406)*SwissData.DEGTORAD/3600;
     } else if (prec_model == SweConst.SEMOD_PREC_IAU_2000) {
       eps = (((1.813e-3*T-5.9e-4)*T-46.84024)*T+84381.406)*SwissData.DEGTORAD/3600;
-    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_2006 && SMath.abs(T) <= PREC_IAU_2006_CTIES) {
+    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_2006 && Math.abs(T) <= PREC_IAU_2006_CTIES) {
       eps =  (((((-4.34e-8 * T -5.76e-7) * T +2.0034e-3) * T -1.831e-4) * T -46.836769) * T + 84381.406) * SwissData.DEGTORAD / 3600.0; 
     } else if (prec_model == SweConst.SEMOD_PREC_IAU_2006) {
       eps =  (((((-4.34e-8 * T -5.76e-7) * T +2.0034e-3) * T -1.831e-4) * T -46.836769) * T + 84381.406) * SwissData.DEGTORAD / 3600.0; 
@@ -1004,12 +1004,12 @@ public class SwissLib
     } else {
       return 0;
     }
-    sinth = SMath.sin(TH);
-    costh = SMath.cos(TH);
-    sinZ = SMath.sin(Z);
-    cosZ = SMath.cos(Z);
-    sinz = SMath.sin(z);
-    cosz = SMath.cos(z);
+    sinth = Math.sin(TH);
+    costh = Math.cos(TH);
+    sinZ = Math.sin(Z);
+    cosZ = Math.cos(Z);
+    sinz = Math.sin(z);
+    cosz = Math.cos(z);
     A = cosZ*costh;
     B = sinZ*costh;
     if( direction < 0 ) { /* From J2000.0 to J */
@@ -1128,8 +1128,8 @@ int pn = 0;
     } else {
       eps = swi_epsiln(SwephData.J2000, iflag); /* From J2000 */
     }
-    sineps = SMath.sin(eps);
-    coseps = SMath.cos(eps);
+    sineps = Math.sin(eps);
+    coseps = Math.cos(eps);
     x[0] = R[0+rOffs];
     z = coseps*R[1+rOffs] + sineps*R[2+rOffs];
     x[2] = -sineps*R[1+rOffs] + coseps*R[2+rOffs];
@@ -1156,8 +1156,8 @@ int pn = 0;
     } else {
       z = W;
     }
-    B = SMath.cos(z);
-    A = SMath.sin(z);
+    B = Math.cos(z);
+    A = Math.sin(z);
     z = B * x[0] + A * x[1];
     x[1] = -A * x[0] + B * x[1];
     x[0] = z;
@@ -1172,8 +1172,8 @@ int pn = 0;
     if( direction == 1 ) {
       z = -z;
     }
-    B = SMath.cos(z);
-    A = SMath.sin(z);
+    B = Math.cos(z);
+    A = Math.sin(z);
     z = B * x[1] + A * x[2];
     x[2] = -A * x[1] + B * x[2];
     x[1] = z;
@@ -1184,8 +1184,8 @@ int pn = 0;
     } else {
       z = -W - pA;
     }
-    B = SMath.cos(z);
-    A = SMath.sin(z);
+    B = Math.cos(z);
+    A = Math.sin(z);
     z = B * x[0] + A * x[1];
     x[1] = -A * x[0] + B * x[1];
     x[0] = z;
@@ -1196,8 +1196,8 @@ int pn = 0;
     } else {
       eps = swi_epsiln(J, iflag);
     }
-    sineps = SMath.sin(eps);
-    coseps = SMath.cos(eps);
+    sineps = Math.sin(eps);
+    coseps = Math.cos(eps);
     z = coseps * x[1] - sineps * x[2];
     x[2] = sineps * x[1] + coseps * x[2];
     x[1] = z;
@@ -1267,17 +1267,17 @@ int pn = 0;
     if ((iflag & SweConst.SEFLG_JPLHOR) != 0 /*&& INCLUDE_CODE_FOR_DPSI_DEPS_IAU1980*/) {
       return precess_1(R, rOffs, J, direction, SweConst.SEMOD_PREC_IAU_1976);
     /* Use IAU 1976 formula for a few centuries.  */
-    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_1976 && SMath.abs(T) <= PREC_IAU_1976_CTIES) {
+    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_1976 && Math.abs(T) <= PREC_IAU_1976_CTIES) {
       return precess_1(R, rOffs, J, direction, SweConst.SEMOD_PREC_IAU_1976);
     } else if (prec_model == SweConst.SEMOD_PREC_IAU_1976) {
       return precess_1(R, rOffs, J, direction, SweConst.SEMOD_PREC_IAU_1976);
     /* Use IAU 2000 formula for a few centuries.  */
-    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_2000 && SMath.abs(T) <= PREC_IAU_2000_CTIES) {
+    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_2000 && Math.abs(T) <= PREC_IAU_2000_CTIES) {
       return precess_1(R, rOffs, J, direction, SweConst.SEMOD_PREC_IAU_2000);
     } else if (prec_model == SweConst.SEMOD_PREC_IAU_2000) {
       return precess_1(R, rOffs, J, direction, SweConst.SEMOD_PREC_IAU_2000);
     /* Use IAU 2006 formula for a few centuries.  */
-    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_2006 && SMath.abs(T) <= PREC_IAU_2006_CTIES) {
+    } else if (prec_model_short == SweConst.SEMOD_PREC_IAU_2006 && Math.abs(T) <= PREC_IAU_2006_CTIES) {
       return precess_1(R, rOffs, J, direction, SweConst.SEMOD_PREC_IAU_2006);
     } else if (prec_model == SweConst.SEMOD_PREC_IAU_2006) {
       return precess_1(R, rOffs, J, direction, SweConst.SEMOD_PREC_IAU_2006);
@@ -1537,8 +1537,8 @@ int pn = 0;
     for (k = 0; k <= 4; k++) {
       arg = args[k];
       n = ns[k];
-      su = SMath.sin(arg);
-      cu = SMath.cos(arg);
+      su = Math.sin(arg);
+      cu = Math.cos(arg);
       ss[k][0] = su;                      /* sin(L) */
       cc[k][0] = cu;                      /* cos(L) */
       sv = 2.0*su*cu;
@@ -1723,8 +1723,8 @@ int pn = 0;
                          (double) Swenut2000aNls.nls[j + 2] * F   +
                          (double) Swenut2000aNls.nls[j + 3] * D   +
                          (double) Swenut2000aNls.nls[j + 4] * OM);
-      sinarg = SMath.sin(darg);
-      cosarg = SMath.cos(darg);
+      sinarg = Math.sin(darg);
+      cosarg = Math.cos(darg);
       k = i * 6;
       dpsi += (Swenut2000a_cls.cls[k+0] + Swenut2000a_cls.cls[k+1] * T) * sinarg + Swenut2000a_cls.cls[k+2] * cosarg;
       deps += (Swenut2000a_cls.cls[k+3] + Swenut2000a_cls.cls[k+4] * T) * cosarg + Swenut2000a_cls.cls[k+5] * sinarg;
@@ -1779,8 +1779,8 @@ int pn = 0;
             (double) Swenut2000a_npl.npl[j +12] * ALNE +
             (double) Swenut2000a_npl.npl[j +13] * APA);
         k = i * 4;
-        sinarg = SMath.sin(darg);
-        cosarg = SMath.cos(darg);
+        sinarg = Math.sin(darg);
+        cosarg = Math.cos(darg);
         dpsi += (double) Swenut2000a.icpl[k+0] * sinarg + (double) Swenut2000a.icpl[k+1] * cosarg;
         deps += (double) Swenut2000a.icpl[k+2] * sinarg + (double) Swenut2000a.icpl[k+3] * cosarg;
       }
@@ -1788,9 +1788,9 @@ int pn = 0;
       nutlo[1] += deps * Swenut2000a.O1MAS2DEG;
       /* changes required by adoption of P03 precession
        * according to Capitaine et al. A & A 412, 366 (2005) = IAU 2006 */
-      dpsi = -8.1 * SMath.sin(OM) - 0.6 * SMath.sin(2 * F - 2 * D + 2 * OM);
-      dpsi += T * (47.8 * SMath.sin(OM) + 3.7 * SMath.sin(2 * F - 2 * D + 2 * OM) + 0.6 * SMath.sin(2 * F + 2 * OM) - 0.6 * SMath.sin(2 * OM));
-      deps = T * (-25.6 * SMath.cos(OM) - 1.6 * SMath.cos(2 * F - 2 * D + 2 * OM));
+      dpsi = -8.1 * Math.sin(OM) - 0.6 * Math.sin(2 * F - 2 * D + 2 * OM);
+      dpsi += T * (47.8 * Math.sin(OM) + 3.7 * Math.sin(2 * F - 2 * D + 2 * OM) + 0.6 * Math.sin(2 * F + 2 * OM) - 0.6 * Math.sin(2 * OM));
+      deps = T * (-25.6 * Math.cos(OM) - 1.6 * Math.cos(2 * F - 2 * D + 2 * OM));
       nutlo[0] += dpsi / (3600.0 * 1000000.0);
       nutlo[1] += deps / (3600.0 * 1000000.0);
     } /* NUT_IAU_2000A */ // Well, the C #define is a constant here
@@ -1812,7 +1812,7 @@ int pn = 0;
 //      goto done;
       return ans;
     }
-    p = SMath.floor(t);
+    p = Math.floor(t);
     iy = (int) t;
     /* Zeroth order estimate is value at start of year */
     ans = v[iy];
@@ -2092,9 +2092,9 @@ int pn = 0;
     dhour = ((tjd_ut - 0.5) % 1) * 360;
     /* mean to true (if nut != 0) */ 
     if (eps == 0)
-      xs[0] += xobl[2] * SMath.cos(xobl[0] * SwissData.DEGTORAD);
+      xs[0] += xobl[2] * Math.cos(xobl[0] * SwissData.DEGTORAD);
     else
-      xs[0] += nut * SMath.cos(eps * SwissData.DEGTORAD);
+      xs[0] += nut * Math.cos(eps * SwissData.DEGTORAD);
     /* add hour */
     xs[0] = swe_degnorm(xs[0] + dhour);
     tsid = xs[0] / 15;
@@ -2282,13 +2282,13 @@ int pn = 0;
     delm[12] = swe_radnorm(5.321159000 +    3.8127774000 * tt);
     /* PA General accumulated precession in longitude. */
     delm[13] = (0.02438175 + 0.00000538691 * tt) * tt;
-    dadd = -0.87 * SMath.sin(delm[4]) * tt;
+    dadd = -0.87 * Math.sin(delm[4]) * tt;
     for (i = 0; i < SIDTNTERM; i++) {
       darg = 0;
       for (j = 0; j < SIDTNARG; j++) {
         darg += stfarg[i * SIDTNARG + j] * delm[j];
       }
-      dadd += stcf[i * 2] * SMath.sin(darg) + stcf[i * 2 + 1] * SMath.cos(darg);
+      dadd += stcf[i * 2] * Math.sin(darg) + stcf[i * 2 + 1] * Math.cos(darg);
     }
     dadd /= (3600.0 * 1000000.0);
     return dadd;
@@ -2337,7 +2337,7 @@ int pn = 0;
     }
     /* Julian day at given UT */
     jd = tjd;
-    jd0 = SMath.floor(jd);
+    jd0 = Math.floor(jd);
     secs = tjd - jd0;
     if( secs < 0.5 ) {
       jd0 -= 0.5;
@@ -2375,10 +2375,10 @@ int pn = 0;
       gmst += msday * secs;
     }
     /* Local apparent sidereal time at given UT at Greenwich */
-    eqeq = 240.0 * nut * SMath.cos(eps * SwissData.DEGTORAD);
+    eqeq = 240.0 * nut * Math.cos(eps * SwissData.DEGTORAD);
     gmst = gmst + eqeq  /* + 240.0*tlong */;
     /* Sidereal seconds modulo 1 sidereal day */
-    gmst = gmst - 86400.0 * SMath.floor( gmst/86400.0 );
+    gmst = gmst - 86400.0 * Math.floor( gmst/86400.0 );
     /* return in hours */
     gmst /= 3600;
     return gmst;
@@ -2512,7 +2512,7 @@ SweDate sd = new SweDate(jd);
     } else {
       fname+="_";
     }
-    icty = SMath.abs(icty);
+    icty = Math.abs(icty);
 //  sprintf(fname + strlen(fname), "%02d.%s", icty, SE_FILE_SUFFIX);
     fname+=(icty<10?"0":"")+icty+"."+SwephData.SE_FILE_SUFFIX;
 ////#ifdef TRACE0
@@ -2600,8 +2600,8 @@ SweDate sd = new SweDate(jd);
     if (ecce < 0.4) {
       while(dE > 1e-12) {
         E0 = E;
-        E = M + ecce * SMath.sin(E0);
-        dE = SMath.abs(E - E0);
+        E = M + ecce * Math.sin(E0);
+        dE = Math.abs(E - E0);
       }
     /* complicated formula for high eccentricities */
     } else {
@@ -2612,13 +2612,13 @@ SweDate sd = new SweDate(jd);
          * swi_mod2PI sees very small negative argument e-322 and returns +2PI;
          * we avoid swi_mod2PI for small x.
          */
-        x = (M + ecce * SMath.sin(E0) - E0) / (1 - ecce * SMath.cos(E0));
-        dE = SMath.abs(x);
+        x = (M + ecce * Math.sin(E0) - E0) / (1 - ecce * Math.cos(E0));
+        dE = Math.abs(x);
         if (dE < 1e-2) {
           E = E0 + x;
         } else {
           E = swi_mod2PI(E0 + x);
-          dE = SMath.abs(E - E0);
+          dE = Math.abs(E - E0);
         }
       }
     }

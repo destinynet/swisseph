@@ -191,7 +191,7 @@ public class SweHel implements java.io.Serializable {
 
   /*###################################################################*/
   private double Tanh(double x) {
-    return (SMath.exp(x) - SMath.exp(-x)) / (SMath.exp(x) + SMath.exp(-x));
+    return (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));
   }
 
   /*
@@ -202,9 +202,9 @@ public class SweHel implements java.io.Serializable {
   private double CVA(double B, double SN) {
     /*Schaefer, Astronomy and the limits of vision, Archaeoastronomy, 1993*/
     if (B > BNIGHT)
-      return (40.0 / SN) * SMath.pow(10, (8.28 * SMath.pow(B, (-0.29)))) / 60.0 / 60.0;
+      return (40.0 / SN) * Math.pow(10, (8.28 * Math.pow(B, (-0.29)))) / 60.0 / 60.0;
     else
-      return SMath.min(900, 380 / SN * SMath.pow(10, (0.3 * SMath.pow(B, (-0.29))))) / 60.0 / 60.0;
+      return Math.min(900, 380 / SN * Math.pow(10, (0.3 * Math.pow(B, (-0.29))))) / 60.0 / 60.0;
   }
 
   /*
@@ -214,7 +214,7 @@ public class SweHel implements java.io.Serializable {
   */
   private double PupilDia(double Age, double B) {
     /* age dependancy from Garstang [2000]*/
-    return (0.534 - 0.00211 * Age - (0.236 - 0.00127 * Age) * Tanh(0.4 * SMath.log(B) / SMath.log(10) - 2.2)) * 10;
+    return (0.534 - 0.00211 * Age - (0.236 - 0.00127 * Age) * Tanh(0.4 * Math.log(B) / Math.log(10) - 2.2)) * 10;
   }
 
   /*
@@ -266,21 +266,21 @@ public class SweHel implements java.io.Serializable {
     Fb = 1;
     if (Binocular == 0) Fb = 1.41;
     if (Bback <= BNIGHT && (helflag & SweConst.SE_HELFLAG_VISLIM_PHOTOPIC) == 0) {
-      Fe = SMath.pow(10, (0.48 * kX));
-      Fsc = SMath.min(1, (1 - SMath.pow(Pst / 124.4, 4)) / (1 - SMath.pow((OpticDia / OpticMag / 124.4), 4)));
-      Fci = SMath.pow(10, (-0.4 * (1 - CIi / 2.0)));
-      Fcb = SMath.pow(10, (-0.4 * (1 - CIb / 2.0)));
+      Fe = Math.pow(10, (0.48 * kX));
+      Fsc = Math.min(1, (1 - Math.pow(Pst / 124.4, 4)) / (1 - Math.pow((OpticDia / OpticMag / 124.4), 4)));
+      Fci = Math.pow(10, (-0.4 * (1 - CIi / 2.0)));
+      Fcb = Math.pow(10, (-0.4 * (1 - CIb / 2.0)));
     } else {
-       Fe = SMath.pow(10, (0.4 * kX));
-       Fsc = SMath.min(1, SMath.pow((OpticDia / OpticMag / Pst), 2) * (1 - SMath.exp(-SMath.pow((Pst / 6.2), 2))) / (1 - SMath.exp(-SMath.pow((OpticDia / OpticMag / 6.2), 2))));
+       Fe = Math.pow(10, (0.4 * kX));
+       Fsc = Math.min(1, Math.pow((OpticDia / OpticMag / Pst), 2) * (1 - Math.exp(-Math.pow((Pst / 6.2), 2))) / (1 - Math.exp(-Math.pow((OpticDia / OpticMag / 6.2), 2))));
        Fci = 1;
        Fcb = 1;
     }
     Ft = 1 / OpticTrans;
-    Fp = SMath.max(1, SMath.pow((Pst / (OpticMag * PupilDia(Age, Bback))), 2));
-    Fa = SMath.pow((Pst / OpticDia), 2);
-    Fr = (1 + 0.03 * SMath.pow((OpticMag * ObjectSize / CVA(Bback, SNi)), 2)) / SMath.pow(SNi, 2);
-    Fm = SMath.pow(OpticMag, 2);
+    Fp = Math.max(1, Math.pow((Pst / (OpticMag * PupilDia(Age, Bback))), 2));
+    Fa = Math.pow((Pst / OpticDia), 2);
+    Fr = (1 + 0.03 * Math.pow((OpticMag * ObjectSize / CVA(Bback, SNi)), 2)) / Math.pow(SNi, 2);
+    Fm = Math.pow(OpticMag, 2);
     if (TypeFactor == 0) 
       return Fb * Fe * Ft * Fp * Fa * Fr * Fsc * Fci;
     else
@@ -462,7 +462,7 @@ StringBuffer call_swe_fixstar_mag__star_save = new StringBuffer();
       return SweConst.ERR;
     }
     /* apparent radius of solar disk (ignoring refraction) */
-    rdi = SMath.asin(696000000.0 / 1.49597870691e+11 / xx[2]) / SwissData.DEGTORAD;
+    rdi = Math.asin(696000000.0 / 1.49597870691e+11 / xx[2]) / SwissData.DEGTORAD;
     if ((eventflag & SweConst.SE_BIT_DISC_CENTER) != 0)
       rdi = 0;
     /* true altitude of sun, when it appears at the horizon */
@@ -470,7 +470,7 @@ StringBuffer call_swe_fixstar_mag__star_save = new StringBuffer();
      * atmospheric temperature 10 deg C, atmospheric pressure 1013.25 is 34.5 arcmin*/
     rh = -(34.5 / 60.0 + rdi);
     /* semidiurnal arc of sun */
-    sda = SMath.acos(-SMath.tan(dgeo[1] * SwissData.DEGTORAD) * SMath.tan(xx[1] * SwissData.DEGTORAD)) * SwissData.RADTODEG;
+    sda = Math.acos(-Math.tan(dgeo[1] * SwissData.DEGTORAD) * Math.tan(xx[1] * SwissData.DEGTORAD)) * SwissData.RADTODEG;
     /* rough rising and setting times */
     if ((eventflag & SweConst.SE_CALC_RISE) != 0)
       tjdrise = tjdnoon - sda / 360.0;
@@ -506,8 +506,8 @@ StringBuffer call_swe_fixstar_mag__star_save = new StringBuffer();
     if (starname != null && !"".equals(starname))
       ipl = DeterObject(starname);
     /* for non-circumpolar planets we can use a faster algorithm */
-    /*if (!(helflag & SweConst.SE_HELFLAG_HIGH_PRECISION) && ipl != -1 && SMath.abs(dgeo[1]) < 58) {*/
-    if (ipl != -1 && SMath.abs(dgeo[1]) < 63) {
+    /*if (!(helflag & SweConst.SE_HELFLAG_HIGH_PRECISION) && ipl != -1 && Math.abs(dgeo[1]) < 58) {*/
+    if (ipl != -1 && Math.abs(dgeo[1]) < 63) {
       retc = calc_rise_and_set(tjd, ipl, dgeo, datm, eventtype, helflag, tret, serr);
     /* for stars and circumpolar planets we use a rigorous algorithm */
     } else {
@@ -582,7 +582,7 @@ private double sunRA_ralast;
     double retalt = 0;
     if (AppAlt >= LowestAppAlt) {
       if (AppAlt > 17.904104638432)
-        R = 0.97 / SMath.tan(AppAlt * SwissData.DEGTORAD);
+        R = 0.97 / Math.tan(AppAlt * SwissData.DEGTORAD);
       else
         R = (34.46 + 4.23 * AppAlt + 0.004 * AppAlt * AppAlt) / (1 + 0.505 * AppAlt + 0.0845 * AppAlt * AppAlt);
       R = (PresE - 80) / 930 / (1 + 0.00008 * (R + 39) * (TempE - 10)) * R;
@@ -640,11 +640,11 @@ private double sunRA_ralast;
     double Alti = TopoAlt * SwissData.DEGTORAD;
     double decli = TopoDecl * SwissData.DEGTORAD;
     double Lati = Lat * SwissData.DEGTORAD;
-    double ha = (SMath.sin(Alti) - SMath.sin(Lati) * SMath.sin(decli)) / SMath.cos(Lati) / SMath.cos(decli);
+    double ha = (Math.sin(Alti) - Math.sin(Lati) * Math.sin(decli)) / Math.cos(Lati) / Math.cos(decli);
     if (ha < -1) ha = -1; 
     if (ha > 1) ha = 1;
     /* from http://star-www.st-and.ac.uk/~fv/webnotes/chapt12.htm*/
-    return SMath.acos(ha) / SwissData.DEGTORAD / 15.0;
+    return Math.acos(ha) / SwissData.DEGTORAD / 15.0;
   }
 
   /*###################################################################
@@ -680,7 +680,7 @@ private double sunRA_ralast;
       gregflag = SweDate.SE_JUL_CAL;
     OffSetYear = (SweDate.getJulDay(StartYear, 1, 1, 0, gregflag) - JDNDays) / 365.25;
     if (COD == 0) {
-      DeltaTVR = (OffSetYear * OffSetYear / 100.0 / 2.0 * Average + Periodicy / 2.0 / SMath.PI * Amplitude * (SMath.cos((2 * SMath.PI * OffSetYear / Periodicy)) - 1)) * Y2D;
+      DeltaTVR = (OffSetYear * OffSetYear / 100.0 / 2.0 * Average + Periodicy / 2.0 / Math.PI * Amplitude * (Math.cos((2 * Math.PI * OffSetYear / Periodicy)) - 1)) * Y2D;
     } else {
       DeltaTVR = OffSetYear * OffSetYear / 100.0 / 2.0 * COD * Y2D;
     }
@@ -816,11 +816,11 @@ private double sunRA_ralast;
      * http://www.movable-type.co.uk/scripts/GIS-FAQ-5.1.html
      * R.W. Sinnott, Virtues of the Haversine, Sky and Telescope, vol. 68, no. 2, 1984, p. 159
      */
-    double sindlat2 = SMath.sin(dlat / 2);
-    double sindlon2 = SMath.sin(dlon / 2);
-    double corde = sindlat2 * sindlat2 + SMath.cos(LatA) * SMath.cos(LatB) * sindlon2 *sindlon2;
+    double sindlat2 = Math.sin(dlat / 2);
+    double sindlon2 = Math.sin(dlon / 2);
+    double corde = sindlat2 * sindlat2 + Math.cos(LatA) * Math.cos(LatB) * sindlon2 *sindlon2;
     if (corde > 1) corde = 1;
-    return 2 * SMath.asin(SMath.sqrt(corde));
+    return 2 * Math.asin(Math.sqrt(corde));
   }
 
   /*###################################################################
@@ -832,7 +832,7 @@ private double sunRA_ralast;
   private double kW(double HeightEye, double TempS, double RH) {
     /* From Schaefer , Archaeoastronomy, XV, 2000, page 128*/
     double WT = 0.031;
-    WT *= 0.94 * (RH / 100.0) * SMath.exp(TempS / 15) * SMath.exp(-1 * HeightEye / scaleHwater);
+    WT *= 0.94 * (RH / 100.0) * Math.exp(TempS / 15) * Math.exp(-1 * HeightEye / scaleHwater);
     return WT;
   }
 
@@ -852,10 +852,10 @@ private double sunRA_ralast;
     OZ = 0.031;
     LT = Lat * SwissData.DEGTORAD;
     /* From Schaefer , Archaeoastronomy, XV, 2000, page 128*/
-    kOZret = OZ * (3.0 + 0.4 * (LT * SMath.cos(sunra * SwissData.DEGTORAD) - SMath.cos(3 * LT))) / 3.0;
+    kOZret = OZ * (3.0 + 0.4 * (LT * Math.cos(sunra * SwissData.DEGTORAD) - Math.cos(3 * LT))) / 3.0;
     /* depending on day/night vision (altitude of sun < start astronomical twilight), KO changes from 100% to 30%
      * see extinction section of Vistas in Astronomy page 343*/
-    CHANGEKO = (100 - 11.6 * SMath.min(6, SMath.max(-AltS - 12, 0))) / 100;
+    CHANGEKO = (100 - 11.6 * Math.min(6, Math.max(-AltS - 12, 0))) / 100;
     koz__koz_last = kOZret * CHANGEKO;
     return koz__koz_last;
   }
@@ -877,7 +877,7 @@ private double sunRA_ralast;
     CHANGEK = (1 - 0.166667 * val );
     LAMBDA = 0.55 + (CHANGEK - 1) * 0.04;
     /* From Schaefer , Archaeoastronomy, XV, 2000, page 128 */
-    return 0.1066 * SMath.exp(-1 * HeightEye / scaleHrayleigh) * SMath.pow(LAMBDA / 0.55 , -4);
+    return 0.1066 * Math.exp(-1 * HeightEye / scaleHrayleigh) * Math.pow(LAMBDA / 0.55 , -4);
   }
 
   private int Sgn(double x) {
@@ -907,7 +907,7 @@ private double sunRA_ralast;
     if (AltS == ka__alts_last && sunra == ka__sunra_last)
       return ka__ka_last;
     ka__alts_last = AltS; ka__sunra_last = sunra;
-    CHANGEKA = (1 - 0.166667 * SMath.min(6, SMath.max(-AltS - 12, 0)));
+    CHANGEKA = (1 - 0.166667 * Math.min(6, Math.max(-AltS - 12, 0)));
     LAMBDA = 0.55 + (CHANGEKA - 1) * 0.04;
     if (VR != 0) {
       if (VR >= 1) {
@@ -939,8 +939,8 @@ private double sunRA_ralast;
       /* From Schaefer , Archaeoastronomy, XV, 2000, page 128 */
       if (RH <= 0.00000001) RH = 0.00000001;
       if (RH >= 99.99999999) RH = 99.99999999;
-      kaact = 0.1 * SMath.exp(-1 * HeightEye / scaleHaerosol) * SMath.pow(1 - 0.32 / SMath.log(RH / 100.0), 1.33) * (1 + 0.33 * SL * SMath.sin(sunra * SwissData.DEGTORAD));
-      kaact = kaact * SMath.pow(LAMBDA / 0.55, -1.3);
+      kaact = 0.1 * Math.exp(-1 * HeightEye / scaleHaerosol) * Math.pow(1 - 0.32 / Math.log(RH / 100.0), 1.33) * (1 + 0.33 * SL * Math.sin(sunra * SwissData.DEGTORAD));
+      kaact = kaact * Math.pow(LAMBDA / 0.55, -1.3);
     }
     ka__ka_last = kaact;
     return kaact;
@@ -983,9 +983,9 @@ private double sunRA_ralast;
   private double Airmass(double AppAltO, double Press) {
     double airm, zend;
     zend = (90 - AppAltO) * SwissData.DEGTORAD;
-    if (zend > SMath.PI / 2)
-      zend = SMath.PI / 2;
-    airm = 1 / (SMath.cos(zend) + 0.025 * SMath.exp(-11 * SMath.cos(zend)));
+    if (zend > Math.PI / 2)
+      zend = Math.PI / 2;
+    airm = 1 / (Math.cos(zend) + 0.025 * Math.exp(-11 * Math.cos(zend)));
     return Press / 1013 * airm;
   }
 
@@ -996,7 +996,7 @@ private double sunRA_ralast;
   ' Xext [-]
   */
   private double Xext(double scaleH, double zend, double Press) {
-    return Press / 1013.0 / (SMath.cos(zend) + 0.01 * SMath.sqrt(scaleH / 1000.0) * SMath.exp(-30.0 / SMath.sqrt(scaleH / 1000.0) * SMath.cos(zend)));
+    return Press / 1013.0 / (Math.cos(zend) + 0.01 * Math.sqrt(scaleH / 1000.0) * Math.exp(-30.0 / Math.sqrt(scaleH / 1000.0) * Math.cos(zend)));
   }
 
   /*###################################################################
@@ -1006,9 +1006,9 @@ private double sunRA_ralast;
   ' Xlay [-]
   */
   private double Xlay(double scaleH, double zend, double Press) {
-    /*return Press / 1013.0 / SMath.sqrt(1.0 - SMath.pow(SMath.sin(zend) / (1.0 + (scaleH / Ra)), 2));*/
-    double a = SMath.sin(zend) / (1.0 + (scaleH / Ra));
-    return Press / 1013.0 / SMath.sqrt(1.0 - a * a);
+    /*return Press / 1013.0 / Math.sqrt(1.0 - Math.pow(Math.sin(zend) / (1.0 + (scaleH / Ra)), 2));*/
+    double a = Math.sin(zend) / (1.0 + (scaleH / Ra));
+    return Press / 1013.0 / Math.sqrt(1.0 - a * a);
   }
 
   /*###################################################################
@@ -1029,7 +1029,7 @@ private double sunRA_ralast;
   ' PresEfromPresS [mbar]
   */
   private double PresEfromPresS(double TempS, double Press, double HeightEye) {
-    return Press * SMath.exp(-9.80665 * 0.0289644 / (Kelvin(TempS) + 3.25 * HeightEye / 1000) / 8.31441 * HeightEye);
+    return Press * Math.exp(-9.80665 * 0.0289644 / (Kelvin(TempS) + 3.25 * HeightEye / 1000) / 8.31441 * HeightEye);
   }
 
   // (C-)static variables for this method:
@@ -1058,8 +1058,8 @@ private double sunRA_ralast;
     Deltam__alts_last = AltS; Deltam__alto_last = AltO; Deltam__sunra_last = sunra;
     if (staticAirmass == 0) {
       zend = (90 - AppAltO) * SwissData.DEGTORAD;
-      if (zend > SMath.PI / 2)
-        zend = SMath.PI / 2;
+      if (zend > Math.PI / 2)
+        zend = Math.PI / 2;
       /* From Schaefer , Archaeoastronomy, XV, 2000, page 128*/
       xR = Xext(scaleHrayleigh, zend, datm[0]);
       XW = Xext(scaleHwater, zend, datm[0]);
@@ -1103,11 +1103,11 @@ private double sunRA_ralast;
     // swe_revjul(JDNDayUT, SE_GREG_CAL, &iyar, &imon, &iday, &dut); 
     SweDate sd = new SweDate(JDNDayUT, SweDate.SE_GREG_CAL);
     YearB = sd.getYear(); MonthB = sd.getMonth(); DayB = sd.getDay();
-    Bna = B0 * (1 + 0.3 * SMath.cos(6.283 * (YearB + ((DayB - 1) / 30.4 + MonthB - 1) / 12 - 1990.33) / 11.1));
+    Bna = B0 * (1 + 0.3 * Math.cos(6.283 * (YearB + ((DayB - 1) / 30.4 + MonthB - 1) / 12 - 1990.33) / 11.1));
     kX = Deltam(AltO, AltS, sunra, Lat, HeightEye, datm, helflag, serr);
     /* From Schaefer , Archaeoastronomy, XV, 2000, page 129 */
-    Bnb = Bna * (0.4 + 0.6 / SMath.sqrt(1 - 0.96 * SMath.pow(SMath.sin(zend), 2))) * SMath.pow(10, -0.4 * kX);
-    return SMath.max(Bnb, 0) * erg2nL;
+    Bnb = Bna * (0.4 + 0.6 / Math.sqrt(1 - 0.96 * Math.pow(Math.sin(zend), 2))) * Math.pow(10, -0.4 * kX);
+    return Math.max(Bnb, 0) * erg2nL;
   }
 
   /*###################################################################
@@ -1149,7 +1149,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
   private double MoonsBrightness(double dist, double phasemoon) {
     double log10 = 2.302585092994;
     /*Moon's brightness changes with distance: http://hem.passagen.se/pausch/comp/ppcomp.html#15 */
-    return -21.62 + 5 * SMath.log(dist / (Ra / 1000)) / log10 + 0.026 * SMath.abs(phasemoon) + 0.000000004 * SMath.pow(phasemoon, 4);
+    return -21.62 + 5 * Math.log(dist / (Ra / 1000)) / log10 + 0.026 * Math.abs(phasemoon) + 0.000000004 * Math.pow(phasemoon, 4);
   }
 
   /*###################################################################
@@ -1162,7 +1162,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
     double AltMi = AltM * SwissData.DEGTORAD;
     double AziMi = AziM * SwissData.DEGTORAD;
     double AziSi = AziS * SwissData.DEGTORAD;
-    return 180 - SMath.acos(SMath.cos(AziSi - AziMi) * SMath.cos(AltMi + 0.95 * SwissData.DEGTORAD)) / SwissData.DEGTORAD;
+    return 180 - Math.acos(Math.cos(AziSi - AziMi) * Math.cos(AltMi + 0.95 * SwissData.DEGTORAD)) / SwissData.DEGTORAD;
   }
 
   /*###################################################################
@@ -1178,15 +1178,15 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
       RM = DistanceAngle(AltO * SwissData.DEGTORAD, AziO * SwissData.DEGTORAD, AltM * SwissData.DEGTORAD, AziM * SwissData.DEGTORAD) / SwissData.DEGTORAD;
       kXM = Deltam(AltM, AltS, sunra, Lat, HeightEye, datm, helflag, serr);
       kX = Deltam(AltO, AltS, sunra, Lat, HeightEye, datm, helflag, serr);
-      C3 = SMath.pow(10, -0.4 * kXM);
-      FM = (62000000.0) / RM / RM + SMath.pow(10, 6.15 - RM / 40) + SMath.pow(10, 5.36) * (1.06 + SMath.pow(SMath.cos(RM * SwissData.DEGTORAD), 2));
+      C3 = Math.pow(10, -0.4 * kXM);
+      FM = (62000000.0) / RM / RM + Math.pow(10, 6.15 - RM / 40) + Math.pow(10, 5.36) * (1.06 + Math.pow(Math.cos(RM * SwissData.DEGTORAD), 2));
       Bm = FM * C3 + 440000 * (1 - C3);
       phasemoon = MoonPhase(AltM, AziM, AziS);
       MM = MoonsBrightness(MoonDistance, phasemoon);
-      Bm = Bm * SMath.pow(10, -0.4 * (MM - M0 + 43.27));
-      Bm = Bm * (1 - SMath.pow(10, -0.4 * kX));
+      Bm = Bm * Math.pow(10, -0.4 * (MM - M0 + 43.27));
+      Bm = Bm * (1 - Math.pow(10, -0.4 * kX));
     }
-    Bm = SMath.max(Bm, 0) * erg2nL;
+    Bm = Math.max(Bm, 0) * erg2nL;
     return Bm;
   }
 
@@ -1204,9 +1204,9 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
     double kX = Deltam(AltO, AltS, sunra, Lat, HeightEye, datm, helflag, serr);
     double k = kt(AltS, sunra, Lat, HeightEye, datm[1], datm[2], datm[3], 4, serr);
     /* From Schaefer , Archaeoastronomy, XV, 2000, page 129*/
-    double Btwi = SMath.pow(10, -0.4 * (MS - M0 + 32.5 - AltS - (ZendO / (360 * k))));
-    Btwi = Btwi * (100 / RS) * (1 - SMath.pow(10, -0.4 * kX));
-    Btwi = SMath.max(Btwi, 0) * erg2nL;
+    double Btwi = Math.pow(10, -0.4 * (MS - M0 + 32.5 - AltS - (ZendO / (360 * k))));
+    Btwi = Btwi * (100 / RS) * (1 - Math.pow(10, -0.4 * kX));
+    Btwi = Math.max(Btwi, 0) * erg2nL;
     return Btwi;
   }
 
@@ -1220,12 +1220,12 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
     double kXS = Deltam(AltS, AltS, sunra, Lat, HeightEye, datm, helflag, serr);
     double kX = Deltam(AltO, AltS, sunra, Lat, HeightEye, datm, helflag, serr);
     /* From Schaefer , Archaeoastronomy, XV, 2000, page 129*/
-    double C4 = SMath.pow(10, -0.4 * kXS);
-    double FS = (62000000.0) / RS / RS + SMath.pow(10, (6.15 - RS / 40)) + SMath.pow(10, 5.36) * (1.06 + SMath.pow(SMath.cos(RS * SwissData.DEGTORAD), 2));
+    double C4 = Math.pow(10, -0.4 * kXS);
+    double FS = (62000000.0) / RS / RS + Math.pow(10, (6.15 - RS / 40)) + Math.pow(10, 5.36) * (1.06 + Math.pow(Math.cos(RS * SwissData.DEGTORAD), 2));
     double Bday = FS * C4 + 440000.0 * (1 - C4);
-    Bday = Bday * SMath.pow(10, (-0.4 * (MS - M0 + 43.27)));
-    Bday = Bday * (1 - SMath.pow(10, -0.4 * kX));
-    Bday = SMath.max(Bday, 0) * erg2nL;
+    Bday = Bday * Math.pow(10, (-0.4 * (MS - M0 + 43.27)));
+    Bday = Bday * (1 - Math.pow(10, -0.4 * kX));
+    Bday = Math.max(Bday, 0) * erg2nL;
     return Bday;
   }
 
@@ -1236,7 +1236,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
   */
   private double Bcity(double Value, double Press) {
     double Bcity = Value;
-    Bcity = SMath.max(Bcity, 0);
+    Bcity = Math.max(Bcity, 0);
     return Bcity;
   }
 
@@ -1251,7 +1251,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
       if (AltS > 4) {
         Bsky += Bday(AltO, AziO, AltS, AziS, sunra, Lat, HeightEye, datm, helflag, serr);
       } else {
-        Bsky += SMath.min(Bday(AltO, AziO, AltS, AziS, sunra, Lat, HeightEye, datm, helflag, serr), Btwi(AltO, AziO, AltS, AziS, sunra, Lat, HeightEye, datm, helflag, serr));
+        Bsky += Math.min(Bday(AltO, AziO, AltS, AziS, sunra, Lat, HeightEye, datm, helflag, serr), Btwi(AltO, AziO, AltS, AziS, sunra, Lat, HeightEye, datm, helflag, serr));
       }
     }
     /* if max. Bm [1E7] <5% of Bsky don't add Bm*/
@@ -1286,7 +1286,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
     if (datm[0] <= 0) {
       /* estimate atmospheric pressure, according to the
        * International Standard Atmosphere (ISA) */
-      datm[0] = 1013.25 * SMath.pow(1 - 0.0065 * dgeo[2] / 288, 5.255);
+      datm[0] = 1013.25 * Math.pow(1 - 0.0065 * dgeo[2] / 288, 5.255);
       /* temperature */
       if (datm[1] == 0)
         datm[1] = 15 - 0.0065 * dgeo[2];
@@ -1343,18 +1343,18 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
     /* Schaefer, Astronomy and the limits of vision, Archaeoastronomy, 1993 Verder:*/
     kX = Deltam(AltO, AltS, sunra, Lat, HeightEye, datm, helflag, serr);
     /* influence of age*/
-    /*Fa = SMath.max(1, SMath.pow(p(23, Bsk) / p(Age, Bsk), 2)); */
+    /*Fa = Math.max(1, Math.pow(p(23, Bsk) / p(Age, Bsk), 2)); */
     CorrFactor1 = OpticFactor(Bsk, kX, dobs, JDNDaysUT, "", 1, helflag);
     CorrFactor2 = OpticFactor(Bsk, kX, dobs, JDNDaysUT, "", 0, helflag);
     /* From Schaefer , Archaeoastronomy, XV, 2000, page 129*/
     if (Bsk < BNIGHT && (helflag & SweConst.SE_HELFLAG_VISLIM_PHOTOPIC) == 0) {
-      C1 = 1.5848931924611e-10; /*SMath.pow(10, -9.8);*/ /* C1 = 10 ^ (-9.8);*/
-      C2 = 0.012589254117942; /*SMath.pow(10, -1.9);*/ /* C2 = 10 ^ (-1.9);*/
+      C1 = 1.5848931924611e-10; /*Math.pow(10, -9.8);*/ /* C1 = 10 ^ (-9.8);*/
+      C2 = 0.012589254117942; /*Math.pow(10, -1.9);*/ /* C2 = 10 ^ (-1.9);*/
       if (scotopic_flag != null) 
         scotopic_flag[0] = 1;
     } else {
-      C1 = 4.4668359215096e-9; /*SMath.pow(10, -8.35);*/ /* C1 = 10 ^ (-8.35);*/
-      C2 = 1.2589254117942e-6; /*SMath.pow(10, -5.9);*/ /* C2 = 10 ^ (-5.9);*/
+      C1 = 4.4668359215096e-9; /*Math.pow(10, -8.35);*/ /* C1 = 10 ^ (-8.35);*/
+      C2 = 1.2589254117942e-6; /*Math.pow(10, -5.9);*/ /* C2 = 10 ^ (-5.9);*/
       if (scotopic_flag != null) 
         scotopic_flag[0] = 0;
     }
@@ -1362,11 +1362,11 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
       if (BNIGHT * BNIGHT_FACTOR > Bsk && BNIGHT / BNIGHT_FACTOR < Bsk)
         scotopic_flag[0] |= 2;
     }
-    /*Th = C1 * SMath.pow(1 + SMath.sqrt(C2 * Bsk), 2) * Fa;*/
+    /*Th = C1 * Math.pow(1 + Math.sqrt(C2 * Bsk), 2) * Fa;*/
     Bsk = Bsk / CorrFactor1;
-    Th = C1 * SMath.pow(1 + SMath.sqrt(C2 * Bsk), 2) * CorrFactor2;
+    Th = C1 * Math.pow(1 + Math.sqrt(C2 * Bsk), 2) * CorrFactor2;
     /* Visual limiting magnitude of point source*/
-    return -16.57 - 2.5 * (SMath.log(Th) / log10);
+    return -16.57 - 2.5 * (Math.log(Th) / log10);
   }
 
   /** Limiting magnitude in dark skies<br>
@@ -1512,7 +1512,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
     /* if (*serr != '\0') return SweConst.ERR; * serr is only a warning */
     /* http://en.wikipedia.org/wiki/Bisection_method*/
     if ((Yl * Yr) <= 0) {
-      while(SMath.abs(xR - Xl) > epsilon) {
+      while(Math.abs(xR - Xl) > epsilon) {
         /*Calculate midpoint of domain*/
         Xm = (xR + Xl) / 2.0;
         AltSi = AltO - Xm;
@@ -1608,7 +1608,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
     if (TopoArcVisionis(Magn, dobs, Xl, AziO, AltM, AziM, JDNDaysUT, AziS, sunra, Lat, HeightEye, datm, helflag, Yl, serr) == SweConst.ERR)
       return SweConst.ERR;
     /* http://en.wikipedia.org/wiki/Bisection_method*/
-    while(SMath.abs(xR - Xl) > 0.1) {
+    while(Math.abs(xR - Xl) > 0.1) {
       /* Calculate midpoint of domain */
       Xm = (xR + Xl) / 2.0;
       DELTAx = 0.025;
@@ -1663,7 +1663,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
   private double WidthMoon(double AltO, double AziO, double AltS, double AziS, double parallax) {
     /* Yallop 1998, page 3*/
     double GeoAltO = AltO + parallax;
-    return 0.27245 * parallax * (1 + SMath.sin(GeoAltO * SwissData.DEGTORAD) * SMath.sin(parallax * SwissData.DEGTORAD)) * (1 - SMath.cos((AltS - GeoAltO) * SwissData.DEGTORAD) * SMath.cos((AziS - AziO) * SwissData.DEGTORAD));
+    return 0.27245 * parallax * (1 + Math.sin(GeoAltO * SwissData.DEGTORAD) * Math.sin(parallax * SwissData.DEGTORAD)) * (1 - Math.cos((AltS - GeoAltO) * SwissData.DEGTORAD) * Math.cos((AziS - AziO) * SwissData.DEGTORAD));
   }
 
   /*###################################################################
@@ -1949,7 +1949,7 @@ private int Magnitude(double JDNDaysUT, double[] dgeo, StringBuffer ObjectName, 
     if (Magnitude(JDNDaysUT, dgeo, ObjectName, helflag, MagnO, 0, serr) == SweConst.ERR)
       return SweConst.ERR;
     ARCVact = TAVact + ParO;
-    ARCLact = SMath.acos(SMath.cos(ARCVact * SwissData.DEGTORAD) * SMath.cos(DAZact * SwissData.DEGTORAD)) / SwissData.DEGTORAD;
+    ARCLact = Math.acos(Math.cos(ARCVact * SwissData.DEGTORAD) * Math.cos(DAZact * SwissData.DEGTORAD)) / SwissData.DEGTORAD;
     Planet = DeterObject(ObjectName);
     if (Planet == -1) {
       elong = ARCLact;
@@ -2039,9 +2039,9 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
         TimeCheck = TimePointer + Sgn(TimeStep) * LocalMinStep / 24.0 / 60.0;
         if (RiseSetO[0] != 0) {
           if (TimeStep > 0)
-            TimeCheck = SMath.min(TimeCheck, RiseSetO[0]);
+            TimeCheck = Math.min(TimeCheck, RiseSetO[0]);
           else
-            TimeCheck = SMath.max(TimeCheck, RiseSetO[0]);
+            TimeCheck = Math.max(TimeCheck, RiseSetO[0]);
         }
         if (DeterTAV(dobs, TimeCheck, dgeo, datm, ObjectName, helflag, LocalminCheck, serr) == SweConst.ERR)
           return SweConst.ERR;
@@ -2059,7 +2059,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
         crosspoint = crossing(DeltaAltoud, DeltaAlt, MinTAVoud, MinTAVact[0]);
         Ta = TimePointer - TimeStep * (1 - crosspoint);
       }
-    } while (SMath.abs(TimePointer - RiseSetS[0]) <= MaxTryHours / 24.0 && Ta == 0 && !((TbVR != 0 && (TypeEvent == 3 || TypeEvent == 4) && (!ObjectName.toString().startsWith("moon") && !ObjectName.toString().startsWith("venus") && !ObjectName.toString().startsWith("mercury")))));
+    } while (Math.abs(TimePointer - RiseSetS[0]) <= MaxTryHours / 24.0 && Ta == 0 && !((TbVR != 0 && (TypeEvent == 3 || TypeEvent == 4) && (!ObjectName.toString().startsWith("moon") && !ObjectName.toString().startsWith("venus") && !ObjectName.toString().startsWith("mercury")))));
     if (RS == 2) {
       TfirstVR = Tc;
       TlastVR = Ta;
@@ -2075,9 +2075,9 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
     }
     if (!noriseO) {
       if (RS == 1)
-        TfirstVR = SMath.max(TfirstVR, RiseSetO[0]);
+        TfirstVR = Math.max(TfirstVR, RiseSetO[0]);
       else
-        TlastVR = SMath.min(TlastVR, RiseSetO[0]);
+        TlastVR = Math.min(TlastVR, RiseSetO[0]);
     }
     TvisVR = SweConst.TJD_INVALID; /*"#NA!" */
     if (TlastVR != 0 && TfirstVR != 0)
@@ -2259,11 +2259,11 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
         if (DeterTAV(dobs, TimeCheck, dgeo, datm, ObjectName, helflag, LocalminCheck, serr) == SweConst.ERR)
           return SweConst.ERR;
 /*printf("%f, %f <= %f\n", tjd_moonevent, MinTAV, MinTAVoud);*/
-      /* while (MinTAV <= MinTAVoud && SMath.abs(tjd_moonevent - tjd_moonevent_start) < 120.0 / 60.0 / 24.0);*/
-      } while ((MinTAV[0] <= MinTAVoud || LocalminCheck[0] < MinTAV[0]) && SMath.abs(tjd_moonevent[0] - tjd_moonevent_start) < 120.0 / 60.0 / 24.0);
-    /* while (DeltaAlt < MinTAVoud && SMath.abs(JDNDaysUT - JDNDaysUTi) < 15);*/
-    } while (DeltaAltoud < MinTAVoud && SMath.abs(JDNDaysUT - JDNDaysUTi) < 15);
-    if (SMath.abs(JDNDaysUT - JDNDaysUTi) < 15) {
+      /* while (MinTAV <= MinTAVoud && Math.abs(tjd_moonevent - tjd_moonevent_start) < 120.0 / 60.0 / 24.0);*/
+      } while ((MinTAV[0] <= MinTAVoud || LocalminCheck[0] < MinTAV[0]) && Math.abs(tjd_moonevent[0] - tjd_moonevent_start) < 120.0 / 60.0 / 24.0);
+    /* while (DeltaAlt < MinTAVoud && Math.abs(JDNDaysUT - JDNDaysUTi) < 15);*/
+    } while (DeltaAltoud < MinTAVoud && Math.abs(JDNDaysUT - JDNDaysUTi) < 15);
+    if (Math.abs(JDNDaysUT - JDNDaysUTi) < 15) {
       tjd_moonevent[0] += (1 - x2min(MinTAV[0], MinTAVoud, OldestMinTAV)) * Sgn(Daystep) / 60.0 / 24.0;
     } else {
       serr.setLength(0);
@@ -2349,7 +2349,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
       ArcusVisDelta = 199;
       ArcusVisPto = -5.55;
       do { /* this is a do {} while() loop */
-        if (SMath.abs(DayStep) == 1) doneoneday = 1;
+        if (Math.abs(DayStep) == 1) doneoneday = 1;
         do { /* this is a do {} while() loop */
           /* init search for heliacal rise */
           JDNDaysUTstepoud = JDNDaysUTstep;
@@ -2422,7 +2422,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
         if (doneoneday == 0 && (JDNDaysUTfinal - JDNDaysUTstep) * Sgn(DayStep) > 0) {
           /* go back to date before heliacal altitude */
           ArcusVisDelta = ArcusVisDeltaoud;
-          DayStep = ((int) (SMath.abs(DayStep) / 2.0)) * Sgn(DayStep);
+          DayStep = ((int) (Math.abs(DayStep) / 2.0)) * Sgn(DayStep);
           JDNDaysUTstep = JDNDaysUTstepoud;
         }
       } while (doneoneday == 0 && (JDNDaysUTfinal - JDNDaysUTstep) * Sgn(DayStep) > 0);
@@ -2527,8 +2527,8 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
       if ((retval = sw.swe_calc(tjd, ipl, epheflag | SweConst.SEFLG_EQUATORIAL, x, serr)) == SweConst.ERR)
         return SweConst.ERR;
     }
-    adp = SMath.tan(dgeo[1] * SwissData.DEGTORAD) * SMath.tan(x[1] * SwissData.DEGTORAD);
-    if (SMath.abs(adp) > 1) {
+    adp = Math.tan(dgeo[1] * SwissData.DEGTORAD) * Math.tan(x[1] * SwissData.DEGTORAD);
+    if (Math.abs(adp) > 1) {
       if (star != null && star.length() > 0)
         s = star.toString();
       else
@@ -2537,7 +2537,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
       serr.append(s + " is circumpolar, cannot calculate heliacal event");
       return -2;
     }
-    adp = SMath.asin(adp) / SwissData.DEGTORAD;
+    adp = Math.asin(adp) / SwissData.DEGTORAD;
     if (desc_obl)
       daop[0] = x[0] + adp;
     else
@@ -2598,7 +2598,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
     dsynperiod = get_synodic_period(ipl);
     // type cast to "floor"???
     // tjdcon = tjd0 + ((floor) ((tjd_start - tjd0) / dsynperiod) + 1) * dsynperiod;
-    tjdcon = tjd0 + (SMath.floor(((tjd_start - tjd0) / dsynperiod)) + 1) * dsynperiod;
+    tjdcon = tjd0 + (Math.floor(((tjd_start - tjd0) / dsynperiod)) + 1) * dsynperiod;
     ds = 100;
     while (ds > 0.5) {
       if (sw.swe_calc(tjdcon, ipl, epheflag|SweConst.SEFLG_SPEED, x, serr) == SweConst.ERR)
@@ -2642,7 +2642,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
     i = 0;
     while (dsunpl_save == -999999999 ||
         /*fabs(dsunpl - dsunpl_save) > 180 ||*/
-        SMath.abs(dsunpl[0]) + SMath.abs(dsunpl_save) > 180 ||
+        Math.abs(dsunpl[0]) + Math.abs(dsunpl_save) > 180 ||
         (retro && !(dsunpl_save < 0 && dsunpl[0] >= 0)) ||
         (!retro && !(dsunpl_save >= 0 && dsunpl[0] < 0))) {
       i++;
@@ -2666,7 +2666,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
     if (retval != SweConst.OK)  /* retval may be ERR or -2 */
       return retval;
     i = 0;
-    while (SMath.abs(dsunpl[0]) > 0.00001) {
+    while (Math.abs(dsunpl[0]) > 0.00001) {
       i++;
       if (i > 5000) {
         serr.setLength(0);
@@ -2944,7 +2944,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
       direct = 1;
     }
     dtret = 999;
-    while (SMath.abs(dtret) > 0.5 / 1440.0) {
+    while (Math.abs(dtret) > 0.5 / 1440.0) {
       tjd_intern[0] += 0.7 * direct;
       if (direct < 0) tjd_intern[0] -= 1;
       retval = my_rise_trans(tjd_intern[0], ipl, ObjectName.toString(), is_rise_or_set, helflag, dgeo, datm, tjd_intern, serr);
@@ -2958,7 +2958,7 @@ darr[30] = darr[26] + darr[27] + darr[28] + darr[29];
       if (retval == SweConst.ERR) return SweConst.ERR;
       retval = time_limit_invisible(tjd_intern[0], dgeo, datm, dobs, ObjectName, helflag | SweConst.SE_HELFLAG_VISLIM_NOMOON, direct, tret, 0, serr);
       if (retval == SweConst.ERR) return SweConst.ERR;
-      dtret = SMath.abs(tret[0] - tret_dark[0]);
+      dtret = Math.abs(tret[0] - tret_dark[0]);
     }
     if (azalt_cart(tret[0], dgeo, datm, new StringBuffer("sun"), helflag, darr, serr) == SweConst.ERR)
       return SweConst.ERR;

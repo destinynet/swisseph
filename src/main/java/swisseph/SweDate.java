@@ -1073,17 +1073,17 @@ public class SweDate
     u0 = u + 4712.0;
     u1 = month + 1.0;
     if (u1 < 4) { u1 += 12.0; }
-    jd = SMath.floor(u0*365.25)
-       + SMath.floor(30.6*u1+0.000001)
+    jd = Math.floor(u0*365.25)
+       + Math.floor(30.6*u1+0.000001)
        + day + hour/24.0 - 63.5;
     if (calType == SE_GREG_CAL) {
-      u2 = SMath.floor(SMath.abs(u) / 100) - SMath.floor(SMath.abs(u) / 400);
+      u2 = Math.floor(Math.abs(u) / 100) - Math.floor(Math.abs(u) / 400);
       if (u < 0.0) {
         u2 = -u2;
       }
       jd = jd - u2 + 2;
-      if ((u < 0.0) && (u/100 == SMath.floor(u/100)) &&
-                          (u/400 != SMath.floor(u/400))) {
+      if ((u < 0.0) && (u/100 == Math.floor(u/100)) &&
+                          (u/400 != Math.floor(u/400))) {
         jd -=1;
       }
     }
@@ -1101,22 +1101,22 @@ public class SweDate
 
     u0 = jd + 32082.5;
     if (calType == SE_GREG_CAL) {
-      u1 = u0 + SMath.floor (u0/36525.0) - SMath.floor (u0/146100.0) - 38.0;
+      u1 = u0 + Math.floor (u0/36525.0) - Math.floor (u0/146100.0) - 38.0;
       if (jd >= 1830691.5) {
         u1 +=1;
       }
-      u0 = u0 + SMath.floor (u1/36525.0) - SMath.floor (u1/146100.0) - 38.0;
+      u0 = u0 + Math.floor (u1/36525.0) - Math.floor (u1/146100.0) - 38.0;
     }
-    u2 = SMath.floor (u0 + 123.0);
-    u3 = SMath.floor ( (u2 - 122.2) / 365.25);
-    u4 = SMath.floor ( (u2 - SMath.floor (365.25 * u3) ) / 30.6001);
+    u2 = Math.floor (u0 + 123.0);
+    u3 = Math.floor ( (u2 - 122.2) / 365.25);
+    u4 = Math.floor ( (u2 - Math.floor (365.25 * u3) ) / 30.6001);
     dt.month = (int) (u4 - 1.0);
     if (dt.month > 12) {
       dt.month -= 12;
     }
-    dt.day = (int) (u2 - SMath.floor (365.25 * u3) - SMath.floor (30.6001 * u4));
-    dt.year = (int) (u3 + SMath.floor ( (u4 - 2.0) / 12.0) - 4800);
-    dt.hour = (jd - SMath.floor (jd + 0.5) + 0.5) * 24.0;
+    dt.day = (int) (u2 - Math.floor (365.25 * u3) - Math.floor (30.6001 * u4));
+    dt.year = (int) (u3 + Math.floor ( (u4 - 2.0) / 12.0) - 4800);
+    dt.hour = (jd - Math.floor (jd + 0.5) + 0.5) * 24.0;
     return dt;
   }
 
@@ -1381,7 +1381,7 @@ public class SweDate
     if (Y <= tabend) {
       /* Index into the table.
        */
-      p = SMath.floor(Y);
+      p = Math.floor(Y);
       iy = (int) (p - TABSTART);
       /* Zeroth order estimate is value at start of year */
       ans = dt[iy];
@@ -1485,7 +1485,7 @@ public class SweDate
      * linear interpolation between values of table dt2 (Stephenson&Morrison 2004) */
     if (Y >= TAB2_START && Y < TAB2_END) { 
       double Yjul = 2000 + (tjd - 2451557.5) / 365.25;
-      p = SMath.floor(Yjul);
+      p = Math.floor(Yjul);
       iy = (int) ((p - TAB2_START) / TAB2_STEP);
       dd = (Yjul - (TAB2_START + TAB2_STEP * iy)) / TAB2_STEP;
       ans = dt2[iy] + (dt2[iy+1] - dt2[iy]) * dd;

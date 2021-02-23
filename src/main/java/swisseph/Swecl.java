@@ -106,8 +106,8 @@ class Swecl
   private static final double REARTH=(DEARTH / 2);
   /* private static final int SEI_OCC_FAST=(16 * 1024); */
 
-  private static final double lnlog=SMath.log(10);
-  private double log10(double x) { return SMath.log(x)/lnlog; }
+  private static final double lnlog=Math.log(10);
+  private double log10(double x) { return Math.log(x)/lnlog; }
 
 
   /**
@@ -694,7 +694,7 @@ class Swecl
     double rmoon = RMOON;
     double dmoon = 2 * rmoon;
     int iflag, iflag2;
-    /* double ecce = SMath.sqrt(2 * SwephData.EARTH_OBLATENESS - SwephData.EARTH_OBLATENESS * SwephData.EARTH_OBLATENESS); */
+    /* double ecce = Math.sqrt(2 * SwephData.EARTH_OBLATENESS - SwephData.EARTH_OBLATENESS * SwephData.EARTH_OBLATENESS); */
     boolean no_eclipse = false;
     Epsilon oe = swed.oec;
     for (i = 0; i < 10; i++)
@@ -758,7 +758,7 @@ class Swecl
       sl.swi_polcart(lx, rm);
       rm[2] /= earthobl;
       /* distance of moon from geocenter */
-      dm = SMath.sqrt(sl.square_sum(rm));
+      dm = Math.sqrt(sl.square_sum(rm));
       /* Account for oblateness of earth */
       for (i = 0; i <= 2; i++)
         lx[i] = ls[i];
@@ -770,21 +770,21 @@ class Swecl
         et[i] = (rmt[i] - rst[i]);
       }
       /* distance sun - moon */
-      dsm = SMath.sqrt(sl.square_sum(e));
-      dsmt = SMath.sqrt(sl.square_sum(et));
+      dsm = Math.sqrt(sl.square_sum(e));
+      dsmt = Math.sqrt(sl.square_sum(et));
       /* sun - moon unit vector */
       for (i = 0; i <= 2; i++) {
         e[i] /= dsm;
         et[i] /= dsmt;
       }
       sinf1 = ((drad - rmoon) / dsm);
-      cosf1 = SMath.sqrt(1 - sinf1 * sinf1);
+      cosf1 = Math.sqrt(1 - sinf1 * sinf1);
       sinf2 = ((drad + rmoon) / dsm);
-      cosf2 = SMath.sqrt(1 - sinf2 * sinf2);
+      cosf2 = Math.sqrt(1 - sinf2 * sinf2);
       /* distance of moon from fundamental plane */
       s0 = -sw.dot_prod(rm, e);
       /* distance of shadow axis from geocenter */
-      r0 = SMath.sqrt(dm * dm - s0 * s0);
+      r0 = Math.sqrt(dm * dm - s0 * s0);
       /* diameter of core shadow on fundamental plane */
       d0 = (s0 / dsm * (drad * 2 - dmoon) - dmoon) / cosf1;
       /* diameter of half-shadow on fundamental plane */
@@ -802,7 +802,7 @@ class Swecl
       retc = 0;
       if (de * cosf1 >= r0) {
         retc |= SweConst.SE_ECL_CENTRAL;
-      } else if (r0 <= de * cosf1 + SMath.abs(d0) / 2) {
+      } else if (r0 <= de * cosf1 + Math.abs(d0) / 2) {
         retc |= SweConst.SE_ECL_NONCENTRAL;
       } else if (r0 <= de * cosf2 + D0 / 2) {
         retc |= (SweConst.SE_ECL_PARTIAL | SweConst.SE_ECL_NONCENTRAL);
@@ -823,7 +823,7 @@ class Swecl
       /* distance of shadow point from fundamental plane */
       d = s0 * s0 + de * de - dm * dm;
       if (d > 0) {
-        d = SMath.sqrt(d);
+        d = Math.sqrt(d);
       } else {
         d = 0;
       }
@@ -842,10 +842,10 @@ class Swecl
       xst[2] *= earthobl;
       sl.swi_cartpol(xst, xst);
       if (niter <= 0) {
-        double cosfi = SMath.cos(xst[1]);
-        double sinfi = SMath.sin(xst[1]);
+        double cosfi = Math.cos(xst[1]);
+        double sinfi = Math.sin(xst[1]);
         double eobl = SwephData.EARTH_OBLATENESS;
-        double cc= 1 / SMath.sqrt(cosfi * cosfi + (1-eobl) * (1-eobl) * sinfi * sinfi);
+        double cc= 1 / Math.sqrt(cosfi * cosfi + (1-eobl) * (1-eobl) * sinfi * sinfi);
         double ss= (1-eobl) * (1-eobl) * cc;
         earthobl =  ss;
         niter++;
@@ -870,7 +870,7 @@ class Swecl
        * first, distance moon - place of eclipse on earth */
       for (i = 0; i <= 2; i++)
         x[i] = rmt[i] - xst[i];
-      s = SMath.sqrt(sl.square_sum(x));
+      s = Math.sqrt(sl.square_sum(x));
       /* diameter of core shadow at place of maximum eclipse */
       dcore[0] = (s / dsmt * ( drad * 2 - dmoon) - dmoon) * cosf1;
       dcore[0] *= SweConst.AUNIT / 1000.0;
@@ -1066,21 +1066,21 @@ class Swecl
      */
     swe_azalt(tjd_ut, SweConst.SE_EQU2HOR, geopos, 0, 10, ls, xh); /* azimuth from south, clockwise, via west */
     /* eclipse description */
-    rmoon = SMath.asin(RMOON / lm[2]) * SwissData.RADTODEG;
-    rsun = SMath.asin(drad / ls[2]) * SwissData.RADTODEG;
+    rmoon = Math.asin(RMOON / lm[2]) * SwissData.RADTODEG;
+    rsun = Math.asin(drad / ls[2]) * SwissData.RADTODEG;
     rsplusrm = rsun + rmoon;
     rsminusrm = rsun - rmoon;
     for (i = 0; i < 3; i++) {
       x1[i] = xs[i] / ls[2];
       x2[i] = xm[i] / lm[2];
     }
-    dctr = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+    dctr = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
     /*
      * phase
      */
     if (dctr < rsminusrm) {
       retc = SweConst.SE_ECL_ANNULAR;
-    } else if (dctr < SMath.abs(rsminusrm)) {
+    } else if (dctr < Math.abs(rsminusrm)) {
       retc = SweConst.SE_ECL_TOTAL;
     } else if (dctr < rsplusrm) {
       retc = SweConst.SE_ECL_PARTIAL;
@@ -1102,7 +1102,7 @@ class Swecl
      * eclipse magnitude:
      * fraction of solar diameter covered by moon
      */
-    lsun = SMath.asin(rsun / 2 * SwissData.DEGTORAD) * 2;
+    lsun = Math.asin(rsun / 2 * SwissData.DEGTORAD) * 2;
     lsunleft = (-dctr + rsun + rmoon);
     if (lsun > 0) {
       attr[0] = lsunleft / rsun / 2;
@@ -1134,23 +1134,23 @@ class Swecl
         b = (lctr * lctr + lsun * lsun - lmoon * lmoon) / b;
         if (b > 1) b = 1;
         if (b < -1) b = -1;
-        a = SMath.acos(a);
-        b = SMath.acos(b);
+        a = Math.acos(a);
+        b = Math.acos(b);
         sc1 = a * lmoon * lmoon / 2;
         sc2 = b * lsun * lsun / 2;
-        sc1 -= (SMath.cos(a) * SMath.sin(a)) * lmoon * lmoon / 2;
-        sc2 -= (SMath.cos(b) * SMath.sin(b)) * lsun * lsun / 2;
-        attr[2] = (sc1 + sc2) * 2 / SMath.PI / lsun / lsun;
+        sc1 -= (Math.cos(a) * Math.sin(a)) * lmoon * lmoon / 2;
+        sc2 -= (Math.cos(b) * Math.sin(b)) * lsun * lsun / 2;
+        attr[2] = (sc1 + sc2) * 2 / Math.PI / lsun / lsun;
       }
     }
     attr[7] = dctr;
     /* approximate minimum height for visibility, considering
      * refraction and dip
      * 34.4556': refraction at horizon, from Bennets formulae
-     * 1.75' / SMath.sqrt(geohgt): dip of horizon
-     * 0.37' / SMath.sqrt(geohgt): refraction between horizon and observer */
-    hmin_appr = -(34.4556 + (1.75 + 0.37) * SMath.sqrt(geohgt)) / 60;
-    if (xh[1] + rsun + SMath.abs(hmin_appr) >= 0 && retc!=0) {
+     * 1.75' / Math.sqrt(geohgt): dip of horizon
+     * 0.37' / Math.sqrt(geohgt): refraction between horizon and observer */
+    hmin_appr = -(34.4556 + (1.75 + 0.37) * Math.sqrt(geohgt)) / 60;
+    if (xh[1] + rsun + Math.abs(hmin_appr) >= 0 && retc!=0) {
       retc |= SweConst.SE_ECL_VISIBLE;        /* eclipse visible */
     }
     attr[4] = xh[0];	/* azimuth, from south, clockwise, via west */
@@ -1331,8 +1331,8 @@ class Swecl
       E = 1 - 0.002516 * T - 0.0000074 * T2;
       M *= SwissData.DEGTORAD;
       Mm *= SwissData.DEGTORAD;
-      tjd = tjd - 0.4075 * SMath.sin(Mm)
-                + 0.1721 * E * SMath.sin(M);
+      tjd = tjd - 0.4075 * Math.sin(Mm)
+                + 0.1721 * E * Math.sin(M);
       /*
        * time of maximum eclipse (if eclipse) =
        * minimum geocentric angle between sun and moon edges.
@@ -1365,9 +1365,9 @@ class Swecl
             xa[m] = xs[m] / ls[2];
             xb[m] = xm[m] / lm[2];
           }
-          dc[i] = SMath.acos(sl.swi_dot_prod_unit(xa, xb)) * SwissData.RADTODEG;
-          rmoon = SMath.asin(RMOON / lm[2]) * SwissData.RADTODEG;
-          rsun = SMath.asin(RSUN / ls[2]) * SwissData.RADTODEG;
+          dc[i] = Math.acos(sl.swi_dot_prod_unit(xa, xb)) * SwissData.RADTODEG;
+          rmoon = Math.asin(RMOON / lm[2]) * SwissData.RADTODEG;
+          rsun = Math.asin(RSUN / ls[2]) * SwissData.RADTODEG;
           dc[i] -= (rmoon + rsun);
         }
         find_maximum(dc[0], dc[1], dc[2], dt, dtint, dctr);
@@ -1484,7 +1484,7 @@ class Swecl
           if (n == 0) {
             dc[i] = dcore[4] / 2 + de / dcore[5] - dcore[2];
           } else if (n == 1) {
-            dc[i] = SMath.abs(dcore[3]) / 2 + de / dcore[6] - dcore[2];
+            dc[i] = Math.abs(dcore[3]) / 2 + de / dcore[6] - dcore[2];
           } else if (n == 2) {
             dc[i] = de / dcore[6] - dcore[2];
           }
@@ -1502,7 +1502,7 @@ class Swecl
               if (n == 0) {
                 dc[i] = dcore[4] / 2 + de / dcore[5] - dcore[2];
               } else if (n == 1) {
-                dc[i] = SMath.abs(dcore[3]) / 2 + de / dcore[6] - dcore[2];
+                dc[i] = Math.abs(dcore[3]) / 2 + de / dcore[6] - dcore[2];
               } else if (n == 2) {
                 dc[i] = de / dcore[6] - dcore[2];
               }
@@ -1750,7 +1750,7 @@ class Swecl
       /* fixed stars with an ecliptic latitude > 7  or < -7 cannot have 
        * an occultation. Even lunar parallax andd proper motion of star
        * will never allow it. */
-      if (SMath.abs(ls[1]) > 7 && starname != null && starname.length() > 0) {
+      if (Math.abs(ls[1]) > 7 && starname != null && starname.length() > 0) {
         if (serr != null) {
           serr.setLength(0);
           serr.append("occultation never occurs: star " + starname + " has ecl. lat. " + ls[1]);
@@ -1763,7 +1763,7 @@ class Swecl
       if (direction < 0)
         dl -= 360;
       /* get rough conjunction in ecliptic longitude */
-      while (SMath.abs(dl) > 0.1) {
+      while (Math.abs(dl) > 0.1) {
         t += dl / 13;
         if (calc_planet_star(t, ipl, starname, ifl, ls, serr) == SweConst.ERR)
 	  return SweConst.ERR;
@@ -1774,7 +1774,7 @@ class Swecl
       }
       tjd = t;
       /* difference in latitude too big for an occultation */
-      drad = SMath.abs(ls[1] - lm[1]);
+      drad = Math.abs(ls[1] - lm[1]);
       if (drad > 2) {
         if (one_try) {
           tret[0] = t + direction; /* return a date suitable for next try */
@@ -1817,9 +1817,9 @@ class Swecl
             return SweConst.ERR;
           if (sw.swe_calc(t, SweConst.SE_MOON, iflagcart, xm, serr) == SweConst.ERR)
             return SweConst.ERR;
-          dc[i] = SMath.acos(sl.swi_dot_prod_unit(xs, xm)) * SwissData.RADTODEG;
-          rmoon = SMath.asin(RMOON / lm[2]) * SwissData.RADTODEG;
-          rsun = SMath.asin(drad / ls[2]) * SwissData.RADTODEG;
+          dc[i] = Math.acos(sl.swi_dot_prod_unit(xs, xm)) * SwissData.RADTODEG;
+          rmoon = Math.asin(RMOON / lm[2]) * SwissData.RADTODEG;
+          rsun = Math.asin(drad / ls[2]) * SwissData.RADTODEG;
           dc[i] -= (rmoon + rsun);
         }
         find_maximum(dc[0], dc[1], dc[2], dt, dtint, dctr);
@@ -1969,7 +1969,7 @@ class Swecl
           if (n == 0)
             dc[i] = dcore[4] / 2 + de / dcore[5] - dcore[2];
           else if (n == 1)
-            dc[i] = SMath.abs(dcore[3]) / 2 + de / dcore[6] - dcore[2];
+            dc[i] = Math.abs(dcore[3]) / 2 + de / dcore[6] - dcore[2];
           else if (n == 2)
             dc[i] = de / dcore[6] - dcore[2];
         }
@@ -1984,7 +1984,7 @@ class Swecl
               if (n == 0)
                 dc[i] = dcore[4] / 2 + de / dcore[5] - dcore[2];
               else if (n == 1)
-                dc[i] = SMath.abs(dcore[3]) / 2 + de / dcore[6] - dcore[2];
+                dc[i] = Math.abs(dcore[3]) / 2 + de / dcore[6] - dcore[2];
               else if (n == 2)
                 dc[i] = de / dcore[6] - dcore[2];
             }
@@ -2358,8 +2358,8 @@ class Swecl
       F *= SwissData.DEGTORAD;
       Om *= SwissData.DEGTORAD;
       A1 *= SwissData.DEGTORAD;
-      tjd = tjd - 0.4075 * SMath.sin(Mm)
-                + 0.1721 * E * SMath.sin(M);
+      tjd = tjd - 0.4075 * Math.sin(Mm)
+                + 0.1721 * E * Math.sin(M);
       sw.swe_set_topo(geopos[0], geopos[1], geopos[2]);
       dtdiv = 2;
       dtstart = 0.5;
@@ -2389,13 +2389,13 @@ class Swecl
           if (sw.swe_calc(t, SweConst.SE_MOON, iflag, lm, serr) == SweConst.ERR) {
             return SweConst.ERR;
           }
-          dm = SMath.sqrt(sl.square_sum(xm));
-          ds = SMath.sqrt(sl.square_sum(xs));
+          dm = Math.sqrt(sl.square_sum(xm));
+          ds = Math.sqrt(sl.square_sum(xs));
           for (k = 0; k < 3; k++) {
             x1[k] = xs[k] / ds /*ls[2]*/;
             x2[k] = xm[k] / dm /*lm[2]*/;
           }
-          dc[i] = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+          dc[i] = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
         }
         find_maximum(dc[0], dc[1], dc[2], dt, dtint, dctr);
         tjd += dtint.val + dt;
@@ -2414,9 +2414,9 @@ class Swecl
       if (sw.swe_calc(tjd, SweConst.SE_MOON, iflag, lm, serr) == SweConst.ERR) {
         return SweConst.ERR;
       }
-      dctr.val = SMath.acos(sl.swi_dot_prod_unit(xs, xm)) * SwissData.RADTODEG;
-      rmoon = SMath.asin(RMOON / lm[2]) * SwissData.RADTODEG;
-      rsun = SMath.asin(RSUN / ls[2]) * SwissData.RADTODEG;
+      dctr.val = Math.acos(sl.swi_dot_prod_unit(xs, xm)) * SwissData.RADTODEG;
+      rmoon = Math.asin(RMOON / lm[2]) * SwissData.RADTODEG;
+      rsun = Math.asin(RSUN / ls[2]) * SwissData.RADTODEG;
       rsplusrm = rsun + rmoon;
       rsminusrm = rsun - rmoon;
       if (dctr.val > rsplusrm) {
@@ -2440,17 +2440,17 @@ class Swecl
       }
       if (dctr.val < rsminusrm) {
         retflag = SweConst.SE_ECL_ANNULAR;
-      } else if (dctr.val < SMath.abs(rsminusrm)) {
+      } else if (dctr.val < Math.abs(rsminusrm)) {
         retflag = SweConst.SE_ECL_TOTAL;
       } else if (dctr.val <= rsplusrm) {
         retflag = SweConst.SE_ECL_PARTIAL;
       }
       dctrmin = dctr.val;
       /* contacts 2 and 3 */
-      if (dctr.val > SMath.abs(rsminusrm)) {/* partial, no 2nd and 3rd contact */
+      if (dctr.val > Math.abs(rsminusrm)) {/* partial, no 2nd and 3rd contact */
         tret[2] = tret[3] = 0;
       } else {
-        dc[1] = SMath.abs(rsminusrm) - dctrmin;
+        dc[1] = Math.abs(rsminusrm) - dctrmin;
         for (i = 0, t = tjd - twomin; i <= 2; i += 2, t = tjd + twomin) {
           if (sw.swe_calc(t, SweConst.SE_SUN, iflagcart, xs, serr) ==
                                                                  SweConst.ERR) {
@@ -2460,18 +2460,18 @@ class Swecl
                                                                  SweConst.ERR) {
             return SweConst.ERR;
           }
-          dm = SMath.sqrt(sl.square_sum(xm));
-          ds = SMath.sqrt(sl.square_sum(xs));
-          rmoon = SMath.asin(RMOON / dm) * SwissData.RADTODEG;
+          dm = Math.sqrt(sl.square_sum(xm));
+          ds = Math.sqrt(sl.square_sum(xs));
+          rmoon = Math.asin(RMOON / dm) * SwissData.RADTODEG;
           rmoon *= 0.99916; /* gives better accuracy for 2nd/3rd contacts */
-          rsun = SMath.asin(RSUN / ds) * SwissData.RADTODEG;
+          rsun = Math.asin(RSUN / ds) * SwissData.RADTODEG;
           rsminusrm = rsun - rmoon;
           for (k = 0; k < 3; k++) {
             x1[k] = xs[k] / ds /*ls[2]*/;
             x2[k] = xm[k] / dm /*lm[2]*/;
           }
-          dctr.val = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
-          dc[i] = SMath.abs(rsminusrm) - dctr.val;
+          dctr.val = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+          dc[i] = Math.abs(rsminusrm) - dctr.val;
         }
         find_zero(dc[0], dc[1], dc[2], twomin, dt1, dt2);
         tret[2] = tjd + dt1.val + twomin;
@@ -2495,19 +2495,19 @@ class Swecl
                   xm[k] -= xm[k+3] * dt;
                 }
               }
-              dm = SMath.sqrt(sl.square_sum(xm));
-              ds = SMath.sqrt(sl.square_sum(xs));
-              rmoon = SMath.asin(RMOON / dm) * SwissData.RADTODEG;
+              dm = Math.sqrt(sl.square_sum(xm));
+              ds = Math.sqrt(sl.square_sum(xs));
+              rmoon = Math.asin(RMOON / dm) * SwissData.RADTODEG;
 	      rmoon *= 0.99916; /* gives better accuracy for 2nd/3rd contacts */
-              rsun = SMath.asin(RSUN / ds) * SwissData.RADTODEG;
+              rsun = Math.asin(RSUN / ds) * SwissData.RADTODEG;
               rsminusrm = rsun - rmoon;
               for (k = 0; k < 3; k++) {
                 x1[k] = xs[k] / ds /*ls[2]*/;
                 x2[k] = xm[k] / dm /*lm[2]*/;
               }
-              dctr.val = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) *
+              dctr.val = Math.acos(sl.swi_dot_prod_unit(x1, x2)) *
                                                              SwissData.RADTODEG;
-              dc[i] = SMath.abs(rsminusrm) - dctr.val;
+              dc[i] = Math.abs(rsminusrm) - dctr.val;
             }
             dt1.val = -dc[0] / ((dc[0] - dc[1]) / dt);
             tret[j] += dt1.val;
@@ -2527,16 +2527,16 @@ class Swecl
                                                                  SweConst.ERR) {
           return SweConst.ERR;
         }
-        dm = SMath.sqrt(sl.square_sum(xm));
-        ds = SMath.sqrt(sl.square_sum(xs));
-        rmoon = SMath.asin(RMOON / dm) * SwissData.RADTODEG;
-        rsun = SMath.asin(RSUN / ds) * SwissData.RADTODEG;
+        dm = Math.sqrt(sl.square_sum(xm));
+        ds = Math.sqrt(sl.square_sum(xs));
+        rmoon = Math.asin(RMOON / dm) * SwissData.RADTODEG;
+        rsun = Math.asin(RSUN / ds) * SwissData.RADTODEG;
         rsplusrm = rsun + rmoon;
         for (k = 0; k < 3; k++) {
           x1[k] = xs[k] / ds /*ls[2]*/;
           x2[k] = xm[k] / dm /*lm[2]*/;
         }
-        dctr.val = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+        dctr.val = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
         dc[i] = rsplusrm - dctr.val;
       }
       find_zero(dc[0], dc[1], dc[2], twohr, dt1, dt2);
@@ -2561,17 +2561,17 @@ class Swecl
                 xm[k] -= xm[k+3] * dt;
               }
             }
-            dm = SMath.sqrt(sl.square_sum(xm));
-            ds = SMath.sqrt(sl.square_sum(xs));
-            rmoon = SMath.asin(RMOON / dm) * SwissData.RADTODEG;
-            rsun = SMath.asin(RSUN / ds) * SwissData.RADTODEG;
+            dm = Math.sqrt(sl.square_sum(xm));
+            ds = Math.sqrt(sl.square_sum(xs));
+            rmoon = Math.asin(RMOON / dm) * SwissData.RADTODEG;
+            rsun = Math.asin(RSUN / ds) * SwissData.RADTODEG;
             rsplusrm = rsun + rmoon;
             for (k = 0; k < 3; k++) {
               x1[k] = xs[k] / ds /*ls[2]*/;
               x2[k] = xm[k] / dm /*lm[2]*/;
             }
-            dctr.val = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
-            dc[i] = SMath.abs(rsplusrm) - dctr.val;
+            dctr.val = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+            dc[i] = Math.abs(rsplusrm) - dctr.val;
           }
           dt1.val = -dc[0] / ((dc[0] - dc[1]) / dt);
           tret[j] += dt1.val;
@@ -2695,7 +2695,7 @@ class Swecl
       /* fixed stars with an ecliptic latitude > 7  or < -7 cannot have 
        * an occultation. Even lunar parallax andd proper motion of star
        * will never allow it. */
-      if (SMath.abs(ls[1]) > 7 && starname != null && starname.length() > 0) {
+      if (Math.abs(ls[1]) > 7 && starname != null && starname.length() > 0) {
         if (serr != null) {
           serr.setLength(0);
           serr.append("occultation never occurs: star " + starname + " has ecl. lat. " + ls[1]);
@@ -2708,7 +2708,7 @@ class Swecl
       if (direction < 0)
         dl -= 360;
       /* get rough conjunction in ecliptic longitude */
-      while (SMath.abs(dl) > 0.1) {
+      while (Math.abs(dl) > 0.1) {
         t += dl / 13;
         if (calc_planet_star(t, ipl, starname, iflaggeo, ls, serr) == SweConst.ERR)
 	    return SweConst.ERR;
@@ -2719,7 +2719,7 @@ class Swecl
       }
       tjd = t;
       /* difference in latitude too big for an occultation */
-      drad = SMath.abs(ls[1] - lm[1]);
+      drad = Math.abs(ls[1] - lm[1]);
       if (drad > 2) {
         if (one_try) {
           tret[0] = t + direction; /* return a date suitable for next try */
@@ -2760,7 +2760,7 @@ class Swecl
             return SweConst.ERR;
           if (sw.swe_calc(t, SweConst.SE_MOON, iflag, lm, serr) == SweConst.ERR)
             return SweConst.ERR;
-          if (dt < 0.1 && SMath.abs(ls[1] - lm[1]) > 2) {
+          if (dt < 0.1 && Math.abs(ls[1] - lm[1]) > 2) {
             if (one_try || stop_after_this) {
               stop_after_this = true;
             } else {
@@ -2772,9 +2772,9 @@ class Swecl
               break;
             }
           }
-          dc[i] = SMath.acos(sl.swi_dot_prod_unit(xs, xm)) * SwissData.RADTODEG;
-          rmoon = SMath.asin(RMOON / lm[2]) * SwissData.RADTODEG;
-          rsun = SMath.asin(drad / ls[2]) * SwissData.RADTODEG;
+          dc[i] = Math.acos(sl.swi_dot_prod_unit(xs, xm)) * SwissData.RADTODEG;
+          rmoon = Math.asin(RMOON / lm[2]) * SwissData.RADTODEG;
+          rsun = Math.asin(drad / ls[2]) * SwissData.RADTODEG;
           dc[i] -= (rmoon + rsun);
         }
         if (java_break_next_try) {
@@ -2798,9 +2798,9 @@ class Swecl
         return SweConst.ERR;
       if (sw.swe_calc(tjd, SweConst.SE_MOON, iflag, lm, serr) == SweConst.ERR)
         return SweConst.ERR;
-      dctr.val = SMath.acos(sl.swi_dot_prod_unit(xs, xm)) * SwissData.RADTODEG;
-      rmoon = SMath.asin(RMOON / lm[2]) * SwissData.RADTODEG;
-      rsun = SMath.asin(drad / ls[2]) * SwissData.RADTODEG;
+      dctr.val = Math.acos(sl.swi_dot_prod_unit(xs, xm)) * SwissData.RADTODEG;
+      rmoon = Math.asin(RMOON / lm[2]) * SwissData.RADTODEG;
+      rsun = Math.asin(drad / ls[2]) * SwissData.RADTODEG;
       rsplusrm = rsun + rmoon;
       rsminusrm = rsun - rmoon;
       if (dctr.val > rsplusrm) {
@@ -2830,33 +2830,33 @@ class Swecl
       }
       if (dctr.val < rsminusrm)
         retflag = SweConst.SE_ECL_ANNULAR;
-      else if (dctr.val < SMath.abs(rsminusrm))
+      else if (dctr.val < Math.abs(rsminusrm))
         retflag = SweConst.SE_ECL_TOTAL;
       else if (dctr.val <= rsplusrm)
         retflag = SweConst.SE_ECL_PARTIAL;
       dctrmin = dctr.val;
       /* contacts 2 and 3 */
-      if (dctr.val > SMath.abs(rsminusrm)) { /* partial, no 2nd and 3rd contact */
+      if (dctr.val > Math.abs(rsminusrm)) { /* partial, no 2nd and 3rd contact */
         tret[2] = tret[3] = 0;
       } else {
-        dc[1] = SMath.abs(rsminusrm) - dctrmin;
+        dc[1] = Math.abs(rsminusrm) - dctrmin;
         for (i = 0, t = tjd - twomin; i <= 2; i += 2, t = tjd + twomin) {
           if (calc_planet_star(t, ipl, starname, iflagcart, xs, serr) == SweConst.ERR)
             return SweConst.ERR;
           if (sw.swe_calc(t, SweConst.SE_MOON, iflagcart, xm, serr) == SweConst.ERR)
             return SweConst.ERR;
-          dm = SMath.sqrt(sl.square_sum(xm));
-          ds = SMath.sqrt(sl.square_sum(xs));
-          rmoon = SMath.asin(RMOON / dm) * SwissData.RADTODEG;
+          dm = Math.sqrt(sl.square_sum(xm));
+          ds = Math.sqrt(sl.square_sum(xs));
+          rmoon = Math.asin(RMOON / dm) * SwissData.RADTODEG;
           rmoon *= 0.99916; /* gives better accuracy for 2nd/3rd contacts */
-          rsun = SMath.asin(drad / ds) * SwissData.RADTODEG;
+          rsun = Math.asin(drad / ds) * SwissData.RADTODEG;
           rsminusrm = rsun - rmoon;
           for (k = 0; k < 3; k++) {
             x1[k] = xs[k] / ds /*ls[2]*/;
             x2[k] = xm[k] / dm /*lm[2]*/;
           }
-          dctr.val = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
-          dc[i] = SMath.abs(rsminusrm) - dctr.val;
+          dctr.val = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+          dc[i] = Math.abs(rsminusrm) - dctr.val;
         }
         find_zero(dc[0], dc[1], dc[2], twomin, dt1, dt2);
         tret[2] = tjd + dt1.val + twomin;
@@ -2874,18 +2874,18 @@ class Swecl
                   xm[k] -= xm[k+3] * dt;
                 }
               }
-              dm = SMath.sqrt(sl.square_sum(xm));
-              ds = SMath.sqrt(sl.square_sum(xs));
-              rmoon = SMath.asin(RMOON / dm) * SwissData.RADTODEG;
+              dm = Math.sqrt(sl.square_sum(xm));
+              ds = Math.sqrt(sl.square_sum(xs));
+              rmoon = Math.asin(RMOON / dm) * SwissData.RADTODEG;
 	      rmoon *= 0.99916; /* gives better accuracy for 2nd/3rd contacts */
-              rsun = SMath.asin(drad / ds) * SwissData.RADTODEG;
+              rsun = Math.asin(drad / ds) * SwissData.RADTODEG;
               rsminusrm = rsun - rmoon;
               for (k = 0; k < 3; k++) {
                 x1[k] = xs[k] / ds /*ls[2]*/;
                 x2[k] = xm[k] / dm /*lm[2]*/;
               }
-              dctr.val = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
-              dc[i] = SMath.abs(rsminusrm) - dctr.val;
+              dctr.val = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+              dc[i] = Math.abs(rsminusrm) - dctr.val;
             }
             dt1.val = -dc[0] / ((dc[0] - dc[1]) / dt);
             tret[j] += dt1.val;
@@ -2901,16 +2901,16 @@ class Swecl
           return SweConst.ERR;
         if (sw.swe_calc(t, SweConst.SE_MOON, iflagcart, xm, serr) == SweConst.ERR)
           return SweConst.ERR;
-        dm = SMath.sqrt(sl.square_sum(xm));
-        ds = SMath.sqrt(sl.square_sum(xs));
-        rmoon = SMath.asin(RMOON / dm) * SwissData.RADTODEG;
-        rsun = SMath.asin(drad / ds) * SwissData.RADTODEG;
+        dm = Math.sqrt(sl.square_sum(xm));
+        ds = Math.sqrt(sl.square_sum(xs));
+        rmoon = Math.asin(RMOON / dm) * SwissData.RADTODEG;
+        rsun = Math.asin(drad / ds) * SwissData.RADTODEG;
         rsplusrm = rsun + rmoon;
         for (k = 0; k < 3; k++) {
           x1[k] = xs[k] / ds /*ls[2]*/;
           x2[k] = xm[k] / dm /*lm[2]*/;
         }
-        dctr.val = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+        dctr.val = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
         dc[i] = rsplusrm - dctr.val;
       }
       find_zero(dc[0], dc[1], dc[2], twohr, dt1, dt2);
@@ -2929,17 +2929,17 @@ class Swecl
                 xm[k] -= xm[k+3] * dt;
               }
             }
-            dm = SMath.sqrt(sl.square_sum(xm));
-            ds = SMath.sqrt(sl.square_sum(xs));
-            rmoon = SMath.asin(RMOON / dm) * SwissData.RADTODEG;
-            rsun = SMath.asin(drad / ds) * SwissData.RADTODEG;
+            dm = Math.sqrt(sl.square_sum(xm));
+            ds = Math.sqrt(sl.square_sum(xs));
+            rmoon = Math.asin(RMOON / dm) * SwissData.RADTODEG;
+            rsun = Math.asin(drad / ds) * SwissData.RADTODEG;
             rsplusrm = rsun + rmoon;
             for (k = 0; k < 3; k++) {
               x1[k] = xs[k] / ds /*ls[2]*/;
               x2[k] = xm[k] / dm /*lm[2]*/;
             }
-            dctr.val = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
-            dc[i] = SMath.abs(rsplusrm) - dctr.val;
+            dctr.val = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+            dc[i] = Math.abs(rsplusrm) - dctr.val;
           }
           dt1.val = -dc[0] / ((dc[0] - dc[1]) / dt);
           tret[j] += dt1.val;
@@ -3084,7 +3084,7 @@ class Swecl
     xaz[1] = x[1];                /* true height */
     if (atpress == 0) {
       /* estimate atmospheric pressure */
-      atpress = 1013.25 * SMath.pow(1 - 0.0065 * geopos[2] / 288, 5.255);
+      atpress = 1013.25 * Math.pow(1 - 0.0065 * geopos[2] / 288, 5.255);
     }
     xaz[2] = swe_refrac_extended(x[1], geopos[2], atpress, attemp, const_lapse_rate, SweConst.SE_TRUE_TO_APP, null);
     /* xaz[2] = swe_refrac_extended(xaz[2], geopos[2], atpress, attemp, const_lapse_rate, SweConst.SE_APP_TO_TRUE, null);*/
@@ -3183,7 +3183,7 @@ class Swecl
     if (calc_flag == SweConst.SE_TRUE_TO_APP) {
       trualt = inalt;
       if (trualt > 15) {
-        a = SMath.tan((90 - trualt) * SwissData.DEGTORAD);
+        a = Math.tan((90 - trualt) * SwissData.DEGTORAD);
         refr = (58.276 * a - 0.0824 * a * a * a);
         refr *=  pt_factor / 3600.0;
       } else if (trualt > -5) {
@@ -3193,7 +3193,7 @@ class Swecl
         if (a + 1e-10 >= 90) {
           refr = 0;
         } else {
-          refr = 1.02 / SMath.tan(a * SwissData.DEGTORAD);
+          refr = 1.02 / Math.tan(a * SwissData.DEGTORAD);
         }
         refr *= pt_factor / 60.0;
       } else {
@@ -3213,8 +3213,8 @@ class Swecl
       if (a + 1e-10 >= 90)
         refr = 0;
       else {
-        refr = 1.00 / SMath.tan(a * SwissData.DEGTORAD);
-        refr -= 0.06 * SMath.sin(14.7 * refr + 13);
+        refr = 1.00 / Math.tan(a * SwissData.DEGTORAD);
+        refr -= 0.06 * Math.sin(14.7 * refr + 13);
       }
       refr *= pt_factor / 60.0;
       trualt = appalt;
@@ -3364,7 +3364,7 @@ class Swecl
      * apparent altitudes < 0;  */
     double r;
     if (inalt > 17.904104638432) { /* for continuous function, instead of '>15' */
-      r = 0.97 / SMath.tan(inalt * SwissData.DEGTORAD);
+      r = 0.97 / Math.tan(inalt * SwissData.DEGTORAD);
     } else {
       r = (34.46 + 4.23 * inalt + 0.004 * inalt * inalt) / (1 + 0.505 * inalt + 0.0845 * inalt * inalt);
     }
@@ -3389,7 +3389,7 @@ class Swecl
     double d = 1-1.8480*krefr*atpress/(273.16+attemp)/(273.16+attemp);
     /* return -0.03203*sqrt(geoalt)*sqrt(d); */
     /* double a = acos(1/(1+geoalt/EARTH_RADIUS));*/
-    return -180.0/SMath.PI * SMath.acos(1 / (1 + geoalt / SwephData.EARTH_RADIUS)) * SMath.sqrt(d);
+    return -180.0/Math.PI * Math.acos(1 / (1 + geoalt / SwephData.EARTH_RADIUS)) * Math.sqrt(d);
   }
 
   /* Computes attributes of a lunar eclipse for given tjd and geopos
@@ -3518,18 +3518,18 @@ class Swecl
       return SweConst.ERR;
     }
     /* distance of moon from geocenter */
-    dm = SMath.sqrt(sl.square_sum(rm));
+    dm = Math.sqrt(sl.square_sum(rm));
     /* sun in cartesian coordinates */
     if (sw.swe_calc(tjd, SweConst.SE_SUN, iflag, rs, serr) == SweConst.ERR) {
       return SweConst.ERR;
     }
     /* distance of sun from geocenter */
-    ds = SMath.sqrt(sl.square_sum(rs));
+    ds = Math.sqrt(sl.square_sum(rs));
     for (i = 0; i < 3; i++) {
       x1[i] = rs[i] / ds;
       x2[i] = rm[i] / dm;
     }
-    dctr = SMath.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
+    dctr = Math.acos(sl.swi_dot_prod_unit(x1, x2)) * SwissData.RADTODEG;
     /* selenocentric sun */
     for (i = 0; i <= 2; i++)
       rs[i] -= rm[i];
@@ -3540,21 +3540,21 @@ class Swecl
     for (i = 0; i <= 2; i++)
       e[i] = (rm[i] - rs[i]);
     /* distance sun - earth */
-    dsm = SMath.sqrt(sl.square_sum(e));
+    dsm = Math.sqrt(sl.square_sum(e));
     /* sun - earth unit vector */
     for (i = 0; i <= 2; i++)
       e[i] /= dsm;
     f1 = ((RSUN - REARTH) / dsm);
-    cosf1 = SMath.sqrt(1 - f1 * f1);
+    cosf1 = Math.sqrt(1 - f1 * f1);
     f2 = ((RSUN + REARTH) / dsm);
-    cosf2 = SMath.sqrt(1 - f2 * f2);
+    cosf2 = Math.sqrt(1 - f2 * f2);
     /* distance of earth from fundamental plane */
     s0 = -sw.dot_prod(rm, e);
     /* distance of shadow axis from selenocenter */
-    r0 = SMath.sqrt(dm * dm - s0 * s0);
+    r0 = Math.sqrt(dm * dm - s0 * s0);
     /* diameter of core shadow on fundamental plane */
            /* one 50th is added for effect of atmosphere, AA98, L4 */
-    d0 = SMath.abs(s0 / dsm * (DSUN - DEARTH) - DEARTH) * (1 + 1.0 / 50.0) / cosf1;
+    d0 = Math.abs(s0 / dsm * (DSUN - DEARTH) - DEARTH) * (1 + 1.0 / 50.0) / cosf1;
     /* diameter of half-shadow on fundamental plane */
     D0 = (s0 / dsm * (DSUN + DEARTH) + DEARTH) * (1 + 1.0 / 50.0) / cosf2;
     d0 /= cosf1;
@@ -3592,7 +3592,7 @@ class Swecl
      **************************/
     attr[1] = (D0 / 2 - r0 + rmoon) / dmoon;
     if (retc != 0) {
-      attr[7] = 180 - SMath.abs(dctr);
+      attr[7] = 180 - Math.abs(dctr);
     }
     /* saros series and member */
     for (i = 0; i < NSAROS_LUNAR; i++) {
@@ -3737,24 +3737,24 @@ class Swecl
       Mm *= SwissData.DEGTORAD;
       F *= SwissData.DEGTORAD;
       Om *= SwissData.DEGTORAD;
-      F1 = F - 0.02665 * SMath.sin(Om) * SwissData.DEGTORAD;
+      F1 = F - 0.02665 * Math.sin(Om) * SwissData.DEGTORAD;
       A1 *= SwissData.DEGTORAD;
-      tjd = tjd - 0.4075 * SMath.sin(Mm)
-                + 0.1721 * E * SMath.sin(M)
-                + 0.0161 * SMath.sin(2 * Mm)
-                - 0.0097 * SMath.sin(2 * F1)
-                + 0.0073 * E * SMath.sin(Mm - M)
-                - 0.0050 * E * SMath.sin(Mm + M)
-                - 0.0023 * SMath.sin(Mm - 2 * F1)
-                + 0.0021 * E * SMath.sin(2 * M)
-                + 0.0012 * SMath.sin(Mm + 2 * F1)
-                + 0.0006 * E * SMath.sin(2 * Mm + M)
-                - 0.0004 * SMath.sin(3 * Mm)
-                - 0.0003 * E * SMath.sin(M + 2 * F1)
-                + 0.0003 * SMath.sin(A1)
-                - 0.0002 * E * SMath.sin(M - 2 * F1)
-                - 0.0002 * E * SMath.sin(2 * Mm - M)
-                - 0.0002 * SMath.sin(Om);
+      tjd = tjd - 0.4075 * Math.sin(Mm)
+                + 0.1721 * E * Math.sin(M)
+                + 0.0161 * Math.sin(2 * Mm)
+                - 0.0097 * Math.sin(2 * F1)
+                + 0.0073 * E * Math.sin(Mm - M)
+                - 0.0050 * E * Math.sin(Mm + M)
+                - 0.0023 * Math.sin(Mm - 2 * F1)
+                + 0.0021 * E * Math.sin(2 * M)
+                + 0.0012 * Math.sin(Mm + 2 * F1)
+                + 0.0006 * E * Math.sin(2 * Mm + M)
+                - 0.0004 * Math.sin(3 * Mm)
+                - 0.0003 * E * Math.sin(M + 2 * F1)
+                + 0.0003 * Math.sin(A1)
+                - 0.0002 * E * Math.sin(M - 2 * F1)
+                - 0.0002 * E * Math.sin(2 * Mm - M)
+                - 0.0002 * Math.sin(Om);
       /*
        * precise computation:
        * time of maximum eclipse (if eclipse) =
@@ -3784,15 +3784,15 @@ class Swecl
             xs[m] -= xm[m];        /* selenocentric sun */
             xm[m] = -xm[m];        /* selenocentric earth */
           }
-          ds = SMath.sqrt(sl.square_sum(xs));
-          dm = SMath.sqrt(sl.square_sum(xm));
+          ds = Math.sqrt(sl.square_sum(xs));
+          dm = Math.sqrt(sl.square_sum(xm));
           for (m = 0; m < 3; m++) {
             xa[m] = xs[m] / ds;
             xb[m] = xm[m] / dm;
           }
-          dc[i] = SMath.acos(sl.swi_dot_prod_unit(xa, xb)) * SwissData.RADTODEG;
-          rearth = SMath.asin(REARTH / dm) * SwissData.RADTODEG;
-          rsun = SMath.asin(RSUN / ds) * SwissData.RADTODEG;
+          dc[i] = Math.acos(sl.swi_dot_prod_unit(xa, xb)) * SwissData.RADTODEG;
+          rearth = Math.asin(REARTH / dm) * SwissData.RADTODEG;
+          rsun = Math.asin(RSUN / ds) * SwissData.RADTODEG;
           dc[i] -= (rearth + rsun);
         }
         find_maximum(dc[0], dc[1], dc[2], dt, dtint, dctr);
@@ -4160,11 +4160,11 @@ class Swecl
       /*
        * phase angle
        */
-      attr[0] = SMath.acos(sl.swi_dot_prod_unit(xx, xx2)) * SwissData.RADTODEG;
+      attr[0] = Math.acos(sl.swi_dot_prod_unit(xx, xx2)) * SwissData.RADTODEG;
       /*
        * phase
        */
-      attr[1] = (1 + SMath.cos(attr[0] * SwissData.DEGTORAD)) / 2;
+      attr[1] = (1 + Math.cos(attr[0] * SwissData.DEGTORAD)) / 2;
     }
     /*
      * apparent diameter of disk
@@ -4179,7 +4179,7 @@ class Swecl
     if (lbr[2] < dd / 2 / SweConst.AUNIT) {
       attr[3] = 180;  /* assume position on surface of earth */
     } else {
-      attr[3] = SMath.asin(dd / 2 / SweConst.AUNIT / lbr[2]) * 2 * SwissData.RADTODEG;
+      attr[3] = Math.asin(dd / 2 / SweConst.AUNIT / lbr[2]) * 2 * SwissData.RADTODEG;
     }
     /*
      * apparent magnitude
@@ -4188,30 +4188,30 @@ class Swecl
         (ipl < NMAG_ELEM && mag_elem[ipl][0] < 99)) {
       if (ipl == SweConst.SE_SUN) {
         /* ratio apparent diameter : average diameter */
-        fac = attr[3] / (SMath.asin(SwephData.pla_diam[SweConst.SE_SUN] / 2.0 /
+        fac = attr[3] / (Math.asin(SwephData.pla_diam[SweConst.SE_SUN] / 2.0 /
                                             SweConst.AUNIT) * 2 * SwissData.RADTODEG);
         fac *= fac;
         attr[4] = mag_elem[ipl][0] - 2.5 * log10(fac);
       } else if (ipl == SweConst.SE_MOON) {
         /*attr[4] = -21.62 + 5 * log10(384410497.8 / EARTH_RADIUS) / log10(10) + 0.026 * fabs(attr[0]) + 0.000000004 * pow(attr[0], 4);*/
-        attr[4] = -21.62 + 5 * log10(lbr[2] * SwephData.AUNIT / SwephData.EARTH_RADIUS) / log10(10) + 0.026 * SMath.abs(attr[0]) + 0.000000004 * SMath.pow(attr[0], 4);
+        attr[4] = -21.62 + 5 * log10(lbr[2] * SwephData.AUNIT / SwephData.EARTH_RADIUS) / log10(10) + 0.026 * Math.abs(attr[0]) + 0.000000004 * Math.pow(attr[0], 4);
         /*printf("1 = %f, 2 = %f\n", mag, mag2);*/
       } else if (ipl == SweConst.SE_SATURN) {
         /* rings are considered according to Meeus, German, p. 329ff. */
         T = (tjd - dt - SwephData.J2000) / 36525.0;
         in = (28.075216 - 0.012998 * T + 0.000004 * T * T) * SwissData.DEGTORAD;
         om = (169.508470 + 1.394681 * T + 0.000412 * T * T) * SwissData.DEGTORAD;
-        sinB = SMath.abs(SMath.sin(in) * SMath.cos(lbr[1] * SwissData.DEGTORAD)
-                      * SMath.sin(lbr[0] * SwissData.DEGTORAD - om)
-                      - SMath.cos(in) * SMath.sin(lbr[1] * SwissData.DEGTORAD));
-        u1 = SMath.atan2(SMath.sin(in) * SMath.tan(lbr2[1] * SwissData.DEGTORAD)
-                               + SMath.cos(in) * SMath.sin(lbr2[0] *
+        sinB = Math.abs(Math.sin(in) * Math.cos(lbr[1] * SwissData.DEGTORAD)
+                      * Math.sin(lbr[0] * SwissData.DEGTORAD - om)
+                      - Math.cos(in) * Math.sin(lbr[1] * SwissData.DEGTORAD));
+        u1 = Math.atan2(Math.sin(in) * Math.tan(lbr2[1] * SwissData.DEGTORAD)
+                               + Math.cos(in) * Math.sin(lbr2[0] *
                                                           SwissData.DEGTORAD - om),
-                          SMath.cos(lbr2[0] * SwissData.DEGTORAD - om)) *
+                          Math.cos(lbr2[0] * SwissData.DEGTORAD - om)) *
                                                                  SwissData.RADTODEG;
-        u2 = SMath.atan2(SMath.sin(in) * SMath.tan(lbr[1] * SwissData.DEGTORAD)
-                        + SMath.cos(in) * SMath.sin(lbr[0] * SwissData.DEGTORAD - om),
-                          SMath.cos(lbr[0] * SwissData.DEGTORAD - om)) *
+        u2 = Math.atan2(Math.sin(in) * Math.tan(lbr[1] * SwissData.DEGTORAD)
+                        + Math.cos(in) * Math.sin(lbr[0] * SwissData.DEGTORAD - om),
+                          Math.cos(lbr[0] * SwissData.DEGTORAD - om)) *
                                                                  SwissData.RADTODEG;
         du = sl.swe_degnorm(u1 - u2);
         if (du > 10) {
@@ -4229,10 +4229,10 @@ class Swecl
                     + mag_elem[ipl][3] * attr[0] * attr[0] * attr[0] / 1000000.0
                     + mag_elem[ipl][0];
       } else if (ipl < NMAG_ELEM || ipl > SweConst.SE_AST_OFFSET) {/*asteroids*/
-        ph1 = SMath.pow(EULER, -3.33 *
-                        SMath.pow(SMath.tan(attr[0] * SwissData.DEGTORAD / 2), 0.63));
-        ph2 = SMath.pow(EULER, -1.87 *
-                        SMath.pow(SMath.tan(attr[0] * SwissData.DEGTORAD / 2), 1.22));
+        ph1 = Math.pow(EULER, -3.33 *
+                        Math.pow(Math.tan(attr[0] * SwissData.DEGTORAD / 2), 0.63));
+        ph2 = Math.pow(EULER, -1.87 *
+                        Math.pow(Math.tan(attr[0] * SwissData.DEGTORAD / 2), 1.22));
         if (ipl < NMAG_ELEM) {    /* main asteroids */
           me[0] = mag_elem[ipl][0];
           me[1] = mag_elem[ipl][1];
@@ -4262,7 +4262,7 @@ class Swecl
       if (sw.swe_calc(tjd, SweConst.SE_SUN, iflag, lbr2, serr) == SweConst.ERR) {
         return SweConst.ERR;
       }
-      attr[2] = SMath.acos(sl.swi_dot_prod_unit(xx, xx2)) * SwissData.RADTODEG;
+      attr[2] = Math.acos(sl.swi_dot_prod_unit(xx, xx2)) * SwissData.RADTODEG;
     }
     /* horizontal parallax */
     if (ipl == SweConst.SE_MOON) {
@@ -4273,14 +4273,14 @@ class Swecl
         /* int cast can be removed when swe_calc() gets int32 ipl definition */
         return SweConst.ERR;
       sinhp = SwephData.EARTH_RADIUS / xm[2] / SwephData.AUNIT;
-      attr[5] = SMath.asin(sinhp) / SwissData.DEGTORAD;
+      attr[5] = Math.asin(sinhp) / SwissData.DEGTORAD;
       /* topocentric horizontal parallax */
       if ((iflag & SweConst.SEFLG_TOPOCTR) != 0) {
       if (sw.swe_calc(tjd, (int) ipl, epheflag|SweConst.SEFLG_XYZ|SweConst.SEFLG_TOPOCTR, xm, serr) == SweConst.ERR)
         return SweConst.ERR;
       if (sw.swe_calc(tjd, (int) ipl, epheflag|SweConst.SEFLG_XYZ, xx, serr) == SweConst.ERR)
         return SweConst.ERR;
-      attr[5] = SMath.acos(sl.swi_dot_prod_unit(xm, xx)) / SwissData.DEGTORAD;
+      attr[5] = Math.acos(sl.swi_dot_prod_unit(xm, xx)) / SwissData.DEGTORAD;
       }
     }
     return SweConst.OK;
@@ -4346,8 +4346,8 @@ class Swecl
     if (b * b - 4 * a * c < 0) {
       return SweConst.ERR;
     }
-    x1 = (-b + SMath.sqrt(b * b - 4 * a * c)) / 2 / a;
-    x2 = (-b - SMath.sqrt(b * b - 4 * a * c)) / 2 / a;
+    x1 = (-b + Math.sqrt(b * b - 4 * a * c)) / 2 / a;
+    x2 = (-b - Math.sqrt(b * b - 4 * a * c)) / 2 / a;
       dxret.val = (x1 - 1) * dx;
       dxret2.val = (x2 - 1) * dx;
     return SweConst.OK;
@@ -4540,7 +4540,7 @@ class Swecl
         }
       }
       /* apparent radius of disc */
-      rdi = SMath.asin( dd / 2 / SweConst.AUNIT / curdist ) * SwissData.RADTODEG;
+      rdi = Math.asin( dd / 2 / SweConst.AUNIT / curdist ) * SwissData.RADTODEG;
       /* true height of center of body */
       swe_azalt(t, SweConst.SE_EQU2HOR, geopos, atpress, attemp, xc, xh[ii]);
       if ((rsmi & SweConst.SE_BIT_DISC_BOTTOM) != 0) {
@@ -4625,7 +4625,7 @@ class Swecl
             }
           }
           /* apparent radius of disc */
-          rdi = SMath.asin( dd / 2 / SweConst.AUNIT / curdist ) * SwissData.RADTODEG;
+          rdi = Math.asin( dd / 2 / SweConst.AUNIT / curdist ) * SwissData.RADTODEG;
           /* true height of center of body */
           swe_azalt(tc[j], SweConst.SE_EQU2HOR, geopos, atpress, attemp, xc, ah);
           if ((rsmi & SweConst.SE_BIT_DISC_BOTTOM) != 0) {
@@ -4685,7 +4685,7 @@ class Swecl
           }
         }
         /* apparent radius of disc */
-        rdi = SMath.asin( dd / 2 / SweConst.AUNIT / curdist ) * SwissData.RADTODEG;
+        rdi = Math.asin( dd / 2 / SweConst.AUNIT / curdist ) * SwissData.RADTODEG;
         /* true height of center of body */
         swe_azalt(t, SweConst.SE_EQU2HOR, geopos, atpress, attemp, xc, ah);
         if ((rsmi & SweConst.SE_BIT_DISC_BOTTOM) != 0) {
@@ -5296,21 +5296,21 @@ class Swecl
         xap[5+xapOffs] = (sema + vsema) * (1 + ecce + vecce) - xap[2+xapOffs];
       }
       /* heliocentric distance of nodes */
-      ea = SMath.atan(SMath.tan(-parg * SwissData.DEGTORAD / 2) *
-                                              SMath.sqrt((1-ecce)/(1+ecce))) * 2;
-      eax = SMath.atan(SMath.tan(-pargx * SwissData.DEGTORAD / 2) *
-                                  SMath.sqrt((1-ecce-vecce)/(1+ecce+vecce))) * 2;
-      xna[2] = sema * (SMath.cos(ea) - ecce) / SMath.cos(parg * SwissData.DEGTORAD);
-      xna[5] = (sema+vsema) * (SMath.cos(eax) - ecce - vecce) /
-                                                SMath.cos(pargx * SwissData.DEGTORAD);
+      ea = Math.atan(Math.tan(-parg * SwissData.DEGTORAD / 2) *
+                                              Math.sqrt((1-ecce)/(1+ecce))) * 2;
+      eax = Math.atan(Math.tan(-pargx * SwissData.DEGTORAD / 2) *
+                                  Math.sqrt((1-ecce-vecce)/(1+ecce+vecce))) * 2;
+      xna[2] = sema * (Math.cos(ea) - ecce) / Math.cos(parg * SwissData.DEGTORAD);
+      xna[5] = (sema+vsema) * (Math.cos(eax) - ecce - vecce) /
+                                                Math.cos(pargx * SwissData.DEGTORAD);
       xna[5] -= xna[2];
-      ea = SMath.atan(SMath.tan((180 - parg) * SwissData.DEGTORAD / 2) *
-                                              SMath.sqrt((1-ecce)/(1+ecce))) * 2;
-      eax = SMath.atan(SMath.tan((180 - pargx) * SwissData.DEGTORAD / 2) *
-                                  SMath.sqrt((1-ecce-vecce)/(1+ecce+vecce))) * 2;
-      xnd[2+xndOffs] = sema * (SMath.cos(ea) - ecce) / SMath.cos((180 - parg) * SwissData.DEGTORAD);
-      xnd[5+xndOffs] = (sema+vsema) * (SMath.cos(eax) - ecce - vecce) /
-                                             SMath.cos((180 - pargx) * SwissData.DEGTORAD);
+      ea = Math.atan(Math.tan((180 - parg) * SwissData.DEGTORAD / 2) *
+                                              Math.sqrt((1-ecce)/(1+ecce))) * 2;
+      eax = Math.atan(Math.tan((180 - pargx) * SwissData.DEGTORAD / 2) *
+                                  Math.sqrt((1-ecce-vecce)/(1+ecce+vecce))) * 2;
+      xnd[2+xndOffs] = sema * (Math.cos(ea) - ecce) / Math.cos((180 - parg) * SwissData.DEGTORAD);
+      xnd[5+xndOffs] = (sema+vsema) * (Math.cos(eax) - ecce - vecce) /
+                                             Math.cos((180 - pargx) * SwissData.DEGTORAD);
       xnd[5+xndOffs] -= xnd[2+xndOffs];
       /* no light-time correction because speed is extremely small */
       for (i = 0, xp = xx, xpOffs = 0; i < 4; i++, xpOffs += 6) {
@@ -5393,11 +5393,11 @@ class Swecl
         sw.swi_plan_for_osc_elem(iflg0, t, xpos[i]);
       }
       for (i = istart; i <= iend; i++) {
-        if (SMath.abs(xpos[i][5]) < dzmin) {
+        if (Math.abs(xpos[i][5]) < dzmin) {
           xpos[i][5] = dzmin;
         }
         fac = xpos[i][2] / xpos[i][5];
-        sgn = xpos[i][5] / SMath.abs(xpos[i][5]);
+        sgn = xpos[i][5] / Math.abs(xpos[i][5]);
         for (j = 0; j <= 2; j++) {
           xn[i][j] = (xpos[i][j] - fac * xpos[i][j+3]) * sgn;
           xs[i][j] = -xn[i][j];
@@ -5405,35 +5405,35 @@ class Swecl
       }
       for (i = istart; i <= iend; i++) {
         /* node */
-        rxy =  SMath.sqrt(xn[i][0] * xn[i][0] + xn[i][1] * xn[i][1]);
+        rxy =  Math.sqrt(xn[i][0] * xn[i][0] + xn[i][1] * xn[i][1]);
         cosnode = xn[i][0] / rxy;
         sinnode = xn[i][1] / rxy;
         /* inclination */
         sl.swi_cross_prod(xpos[i], 0, xpos[i], 3, xnorm, 0);
         rxy =  xnorm[0] * xnorm[0] + xnorm[1] * xnorm[1];
         c2 = (rxy + xnorm[2] * xnorm[2]);
-        rxyz = SMath.sqrt(c2);
-        rxy = SMath.sqrt(rxy);
+        rxyz = Math.sqrt(c2);
+        rxy = Math.sqrt(rxy);
         sinincl = rxy / rxyz;
-        cosincl = SMath.sqrt(1 - sinincl * sinincl);
+        cosincl = Math.sqrt(1 - sinincl * sinincl);
         if (xnorm[2] < 0) cosincl = -cosincl; /* retrograde asteroid, e.g. 20461 Dioretsa */
         /* argument of latitude */
         cosu = xpos[i][0] * cosnode + xpos[i][1] * sinnode;
         sinu = xpos[i][2] / sinincl;
-        uu = SMath.atan2(sinu, cosu);
+        uu = Math.atan2(sinu, cosu);
         /* semi-axis */
-        rxyz = SMath.sqrt(sl.square_sum(xpos[i]));
+        rxyz = Math.sqrt(sl.square_sum(xpos[i]));
         v2 = sl.square_sum(xpos[i], 3);
         sema = 1 / (2 / rxyz - v2 / Gmsm);
         /* eccentricity */
         pp = c2 / Gmsm;
-        ecce = SMath.sqrt(1 - pp / sema);
+        ecce = Math.sqrt(1 - pp / sema);
         /* eccentric anomaly */
         cosE = 1 / ecce * (1 - rxyz / sema);
-        sinE = 1 / ecce / SMath.sqrt(sema * Gmsm) *
+        sinE = 1 / ecce / Math.sqrt(sema * Gmsm) *
                                         sw.dot_prod(xpos[i], xpos[i], 3);
         /* true anomaly */
-        ny = 2 * SMath.atan(SMath.sqrt((1+ecce)/(1-ecce)) * sinE / (1 + cosE));
+        ny = 2 * Math.atan(Math.sqrt((1+ecce)/(1-ecce)) * sinE / (1 + cosE));
         /* distance of perihelion from ascending node */
         xq[i][0] = sl.swi_mod2PI(uu - ny);
         xq[i][1] = 0;                        /* latitude */
@@ -5443,8 +5443,8 @@ class Swecl
         sl.swi_coortrf2(xq[i], xq[i], -sinincl, cosincl);
         sl.swi_cartpol(xq[i], xq[i]);
         /* adding node, we get perihelion in ecl. coord. */
-        xq[i][0] += SMath.atan2(sinnode, cosnode);
-        xa[i][0] = sl.swi_mod2PI(xq[i][0] + SMath.PI);
+        xq[i][0] += Math.atan2(sinnode, cosnode);
+        xa[i][0] = sl.swi_mod2PI(xq[i][0] + Math.PI);
         xa[i][1] = -xq[i][1];
         if (do_focal_point) {
           xa[i][2] = sema * ecce * 2;        /* distance of aphelion */
@@ -5456,18 +5456,18 @@ class Swecl
         /* new distance of node from orbital ellipse:
          * true anomaly of node: */
         ny = sl.swi_mod2PI(ny - uu);
-        ny2 = sl.swi_mod2PI(ny + SMath.PI);
+        ny2 = sl.swi_mod2PI(ny + Math.PI);
         /* eccentric anomaly */
-        cosE = SMath.cos(2 * SMath.atan(SMath.tan(ny / 2) /
-                                             SMath.sqrt((1+ecce) / (1-ecce))));
-        cosE2 = SMath.cos(2 * SMath.atan(SMath.tan(ny2 / 2) /
-                                             SMath.sqrt((1+ecce) / (1-ecce))));
+        cosE = Math.cos(2 * Math.atan(Math.tan(ny / 2) /
+                                             Math.sqrt((1+ecce) / (1-ecce))));
+        cosE2 = Math.cos(2 * Math.atan(Math.tan(ny2 / 2) /
+                                             Math.sqrt((1+ecce) / (1-ecce))));
         /* new distance */
         rn = sema * (1 - ecce * cosE);
         rn2 = sema * (1 - ecce * cosE2);
         /* old node distance */
-        ro = SMath.sqrt(sl.square_sum(xn[i]));
-        ro2 = SMath.sqrt(sl.square_sum(xs[i]));
+        ro = Math.sqrt(sl.square_sum(xn[i]));
+        ro2 = Math.sqrt(sl.square_sum(xs[i]));
         /* correct length of position vector */
         for (j = 0; j <= 2; j++) {
           xn[i][j] *= rn / ro;
@@ -5609,7 +5609,7 @@ class Swecl
       /*********************
        * light deflection
        *********************/
-      dt = SMath.sqrt(sl.square_sum(xp, xpOffs)) * SweConst.AUNIT / SwephData.CLIGHT / 86400.0;
+      dt = Math.sqrt(sl.square_sum(xp, xpOffs)) * SweConst.AUNIT / SwephData.CLIGHT / 86400.0;
       if (do_defl) {
         sw.swi_deflect_light(xp, xpOffs, dt, iflag);
       }

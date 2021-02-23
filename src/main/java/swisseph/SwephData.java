@@ -220,7 +220,7 @@ class SwephData
  * earlier content
  */
 
-  static final double TWOPI = 2.0 * SMath.PI;
+  static final double TWOPI = 2.0 * Math.PI;
 
 //  static final int ENDMARK = -99;
 

@@ -1118,7 +1118,7 @@ String slast_starname;
 
 
     sstar=star.toString().substring(0,
-                                SMath.min(star.length(),SweConst.SE_MAX_STNAME));
+                                Math.min(star.length(),SweConst.SE_MAX_STNAME));
     if (sstar.length()>0) {
       if (sstar.charAt(0) == ',') {
         isnomclat = true;
@@ -3572,7 +3572,7 @@ String slast_starname;
       /* add warnings from earth/sun computation */
       if (serr != null && serr.length()==0 && serr2.length()!=0) {
         serr.setLength(0);
-        serr2=serr2.substring(0,SMath.min(serr2.length(),SwissData.AS_MAXCH-5));
+        serr2=serr2.substring(0,Math.min(serr2.length(),SwissData.AS_MAXCH-5));
         serr.append("sun: "+serr2);
       }
     /***********************************************
@@ -3708,8 +3708,8 @@ String slast_starname;
   void calc_epsilon(double tjd, int iflag, Epsilon e) {
     e.teps = tjd;
     e.eps = sl.swi_epsiln(tjd, iflag);
-    e.seps = SMath.sin(e.eps);
-    e.ceps = SMath.cos(e.eps);
+    e.seps = Math.sin(e.eps);
+    e.ceps = Math.cos(e.eps);
   }
 
   /* computes a main planet from any ephemeris, if it
@@ -4481,7 +4481,7 @@ System.err.println(e);
             s=s.substring(0,s.indexOf("s."))+s.substring(s.indexOf("s.")+1);
             if (subdirlen>0 &&
                 s.startsWith(subdirnam.substring(
-                                0,SMath.min(subdirnam.length(),subdirlen)))) {
+                                0,Math.min(subdirnam.length(),subdirlen)))) {
               s=s.substring(subdirlen+1);
               // goto again
               continue;
@@ -4898,7 +4898,7 @@ System.err.println(e);
             }
           }
           /* new dt */
-          dt = SMath.sqrt(sl.square_sum(dx)) * SweConst.AUNIT / SwephData.CLIGHT /
+          dt = Math.sqrt(sl.square_sum(dx)) * SweConst.AUNIT / SwephData.CLIGHT /
                                                                        86400.0;
           for (i = 0; i <= 2; i++) {      /* rough apparent position at t-1 */
             xxsp[i] = xxsv[i] - dt * pdp.x[i+3];
@@ -4918,7 +4918,7 @@ System.err.println(e);
             dx[i] -= xobs[i];
           }
         }
-        dt = SMath.sqrt(sl.square_sum(dx)) *SweConst.AUNIT / SwephData.CLIGHT / 86400.0;
+        dt = Math.sqrt(sl.square_sum(dx)) *SweConst.AUNIT / SwephData.CLIGHT / 86400.0;
         /* new t */
         t = pdp.teval - dt;
         dtsave_for_defl = dt;
@@ -5426,7 +5426,7 @@ System.err.println(e);
             }
           }
           /* new dt */
-          dt = SMath.sqrt(sl.square_sum(dx)) * SweConst.AUNIT / SwephData.CLIGHT /
+          dt = Math.sqrt(sl.square_sum(dx)) * SweConst.AUNIT / SwephData.CLIGHT /
                                                                       86400.0;
           for (i = 0; i <= 2; i++) {
             xxsp[i] = xxsv[i] - dt * pdp.x[i+3];/* rough apparent position */
@@ -5447,7 +5447,7 @@ System.err.println(e);
           }
         }
         /* new dt */
-        dt = SMath.sqrt(sl.square_sum(dx)) *SweConst.AUNIT / SwephData.CLIGHT / 86400.0;
+        dt = Math.sqrt(sl.square_sum(dx)) *SweConst.AUNIT / SwephData.CLIGHT / 86400.0;
         dtsave_for_defl = dt;
         /* new position: subtract t * speed
          */
@@ -5666,12 +5666,12 @@ System.err.println(e);
     for (i = 0; i <= 5; i++) {
       u[i] = xxs[i] = xx[i+xxOffs];
     }
-    ru = SMath.sqrt(sl.square_sum(u));
+    ru = Math.sqrt(sl.square_sum(u));
     for (i = 0; i <= 2; i++) {
       v[i] = xe[i+3] / 24.0 / 3600.0 / SwephData.CLIGHT * SweConst.AUNIT;
     }
     v2 = sl.square_sum(v);
-    b_1 = SMath.sqrt(1 - v2);
+    b_1 = Math.sqrt(1 - v2);
     f1 = dot_prod(u, v) / ru;
     f2 = 1.0 + f1 / (1.0 + b_1);
     for (i = 0; i <= 2; i++) {
@@ -5685,7 +5685,7 @@ System.err.println(e);
       for (i = 0; i <= 2; i++) {
         u[i] = xxs[i] - intv * xxs[i+3];
       }
-      ru = SMath.sqrt(sl.square_sum(u));
+      ru = Math.sqrt(sl.square_sum(u));
       f1 = dot_prod(u, v) / ru;
       f2 = 1.0 + f1 / (1.0 + b_1);
       for (i = 0; i <= 2; i++) {
@@ -5756,9 +5756,9 @@ System.err.println(e);
     for (i = 0; i <= 2; i++) {
       q[i] = xx[i+offs] + xearth[i] - xsun[i];
     }
-    ru = SMath.sqrt(sl.square_sum(u));
-    rq = SMath.sqrt(sl.square_sum(q));
-    re = SMath.sqrt(sl.square_sum(e));
+    ru = Math.sqrt(sl.square_sum(u));
+    rq = Math.sqrt(sl.square_sum(q));
+    re = Math.sqrt(sl.square_sum(e));
     for (i = 0; i <= 2; i++) {
       u[i] /= ru;
       q[i] /= rq;
@@ -5777,7 +5777,7 @@ System.err.println(e);
      * for a non-point-mass, taking into account the mass distribution
      * within the sun. For more info, s. meff().
      */
-    sina = SMath.sqrt(1 - ue * ue);      /* sin(angle) between sun and planet */
+    sina = Math.sqrt(1 - ue * ue);      /* sin(angle) between sun and planet */
     sin_sunr = SwephData.SUN_RADIUS / re;   /* sine of sun radius (= sun radius) */
     if (sina < sin_sunr) {
       meff_fact = meff(sina / sin_sunr);
@@ -5833,9 +5833,9 @@ System.err.println(e);
       for (i = 0; i <= 2; i++) {
         q[i] = u[i] + xearth[i] - xsun[i] - dtsp * (xearth[i+3] - xsun[i+3]);
       }
-      ru = SMath.sqrt(sl.square_sum(u));
-      rq = SMath.sqrt(sl.square_sum(q));
-      re = SMath.sqrt(sl.square_sum(e));
+      ru = Math.sqrt(sl.square_sum(u));
+      rq = Math.sqrt(sl.square_sum(q));
+      re = Math.sqrt(sl.square_sum(e));
       for (i = 0; i <= 2; i++) {
         u[i] /= ru;
         q[i] /= rq;
@@ -5844,7 +5844,7 @@ System.err.println(e);
       uq = dot_prod(u,q);
       ue = dot_prod(u,e);
       qe = dot_prod(q,e);
-      sina = SMath.sqrt(1 - ue * ue);    /* sin(angle) between sun and planet */
+      sina = Math.sqrt(1 - ue * ue);    /* sin(angle) between sun and planet */
       sin_sunr = SwephData.SUN_RADIUS / re; /* sine of sun radius (= sun radius) */
       if (sina < sin_sunr) {
         meff_fact = meff(sina / sin_sunr);
@@ -5974,7 +5974,7 @@ System.err.println(e);
             }
           }
           /* new t */
-          dt = SMath.sqrt(sl.square_sum(dx)) * SweConst.AUNIT / SwephData.CLIGHT /
+          dt = Math.sqrt(sl.square_sum(dx)) * SweConst.AUNIT / SwephData.CLIGHT /
                                                                       86400.0;
           t = pedp.teval - dt;
           /* new position */
@@ -6179,7 +6179,7 @@ System.err.println(e);
      * light-time                  *
      *******************************/
     if ((iflag & SweConst.SEFLG_TRUEPOS) == 0) {
-      dt = SMath.sqrt(sl.square_sum(xxm)) * SweConst.AUNIT /
+      dt = Math.sqrt(sl.square_sum(xxm)) * SweConst.AUNIT /
                                                    SwephData.CLIGHT / 86400.0;
       t = pdp.teval - dt;
       switch(pdp.iephe) {
@@ -6326,7 +6326,7 @@ System.err.println(e);
      * light-time *
      **************/
     if ((iflag & SweConst.SEFLG_TRUEPOS)==0) {
-      dt = SMath.sqrt(sl.square_sum(xx)) * SweConst.AUNIT / SwephData.CLIGHT / 86400.0;
+      dt = Math.sqrt(sl.square_sum(xx)) * SweConst.AUNIT / SwephData.CLIGHT / 86400.0;
       for (i = 0; i <= 2; i++) {
         xx[i] -= dt * xx[i+3];    /* apparent position */
       }
@@ -6463,8 +6463,8 @@ int refepyOffs;
       dn = pdp.prot + tdiff * pdp.dprot;
       i = (int) (dn / SwephData.TWOPI);
       dn -= i * SwephData.TWOPI;
-      qav = (pdp.qrot + tdiff * pdp.dqrot) * SMath.cos(dn);
-      pav = (pdp.qrot + tdiff * pdp.dqrot) * SMath.sin(dn);
+      qav = (pdp.qrot + tdiff * pdp.dqrot) * Math.cos(dn);
+      pav = (pdp.qrot + tdiff * pdp.dqrot) * Math.sin(dn);
     } else {
       qav = pdp.qrot + tdiff * pdp.dqrot;
       pav = pdp.prot + tdiff * pdp.dprot;
@@ -6481,8 +6481,8 @@ int refepyOffs;
       omtild = pdp.peri + tdiff * pdp.dperi;
       i = (int) (omtild / SwephData.TWOPI);
       omtild -= i * SwephData.TWOPI;
-      com = SMath.cos(omtild);
-      som = SMath.sin(omtild);
+      com = Math.cos(omtild);
+      som = Math.sin(omtild);
       /*add reference orbit.  */
       for (i = 0; i < nco; i++) {
         x[i][0] = chcfx[i] + com * refepx[i] - som * refepx[i+refepyOffs];
@@ -6512,7 +6512,7 @@ int refepyOffs;
       xrot = x[i][0] * uix[0] + x[i][1] * uiy[0] + x[i][2] * uiz[0];
       yrot = x[i][0] * uix[1] + x[i][1] * uiy[1] + x[i][2] * uiz[1];
       zrot = x[i][0] * uix[2] + x[i][1] * uiy[2] + x[i][2] * uiz[2];
-      if (SMath.abs(xrot) + SMath.abs(yrot) + SMath.abs(zrot) >= 1e-14) {
+      if (Math.abs(xrot) + Math.abs(yrot) + Math.abs(zrot) >= 1e-14) {
         pdp.neval = i;
       }
       x[i][0] = xrot;
@@ -6553,12 +6553,12 @@ int refepyOffs;
     double sinpsi, cospsi, sineps, coseps, sineps0, coseps0;
     psi = nu.nutlo[0];
     eps = oe.eps + nu.nutlo[1];
-    sinpsi = SMath.sin(psi);
-    cospsi = SMath.cos(psi);
+    sinpsi = Math.sin(psi);
+    cospsi = Math.cos(psi);
     sineps0 = oe.seps;
     coseps0 = oe.ceps;
-    sineps = SMath.sin(eps);
-    coseps = SMath.cos(eps);
+    sineps = Math.sin(eps);
+    coseps = Math.cos(eps);
     nu.matrix[0][0] = cospsi;
     nu.matrix[0][1] = sinpsi * coseps;
     nu.matrix[0][2] = sinpsi * sineps;
@@ -6745,7 +6745,7 @@ int refepyOffs;
              * used here. the error would be greater than the advantage
              * of computation speed. */
             if ((iflag & SweConst.SEFLG_TRUEPOS) == 0 && retc >= SweConst.OK) {
-              dt = SMath.sqrt(sl.square_sum(xpos[i])) * SweConst.AUNIT /
+              dt = Math.sqrt(sl.square_sum(xpos[i])) * SweConst.AUNIT /
                                                     SwephData.CLIGHT / 86400.0;
               try {
                 retc = jplplan(t-dt, ipli, iflag, SwephData.NO_SAVE, xpos[i],
@@ -6801,7 +6801,7 @@ int refepyOffs;
           }
           /* light-time-corrected moon for apparent node (~ 0.006") */
           if ((iflag & SweConst.SEFLG_TRUEPOS) == 0 && retc >= SweConst.OK) {
-            dt = SMath.sqrt(sl.square_sum(xpos[i])) * SweConst.AUNIT /
+            dt = Math.sqrt(sl.square_sum(xpos[i])) * SweConst.AUNIT /
                            SwephData.CLIGHT / 86400.0;
             retc = swemoon(t-dt, iflag | SweConst.SEFLG_SPEED,
                            SwephData.NO_SAVE, xpos[i], serr);/**/
@@ -6858,11 +6858,11 @@ int refepyOffs;
     ndnp = swed.nddat[SwephData.SEI_TRUE_NODE];
     /* three nodes */
     for (i = istart; i <= 2; i++) {
-      if (SMath.abs(xpos[i][5]) < 1e-15) {
+      if (Math.abs(xpos[i][5]) < 1e-15) {
         xpos[i][5] = 1e-15;
       }
       fac = xpos[i][2] / xpos[i][5];
-      sgn = xpos[i][5] / SMath.abs(xpos[i][5]);
+      sgn = xpos[i][5] / Math.abs(xpos[i][5]);
       for (j = 0; j <= 2; j++) {
         xx[i][j] = (xpos[i][j] - fac * xpos[i][j+3]) * sgn;
       }
@@ -6897,35 +6897,35 @@ int refepyOffs;
     /* three apogees */
     for (i = istart; i <= 2; i++) {
       /* node */
-      rxy =  SMath.sqrt(xx[i][0] * xx[i][0] + xx[i][1] * xx[i][1]);
+      rxy =  Math.sqrt(xx[i][0] * xx[i][0] + xx[i][1] * xx[i][1]);
       cosnode = xx[i][0] / rxy;
       sinnode = xx[i][1] / rxy;
       /* inclination */
       sl.swi_cross_prod(xpos[i], 0, xpos[i], 3, xnorm, 0);
       rxy =  xnorm[0] * xnorm[0] + xnorm[1] * xnorm[1];
       c2 = (rxy + xnorm[2] * xnorm[2]);
-      rxyz = SMath.sqrt(c2);
-      rxy = SMath.sqrt(rxy);
+      rxyz = Math.sqrt(c2);
+      rxy = Math.sqrt(rxy);
       sinincl = rxy / rxyz;
-      cosincl = SMath.sqrt(1 - sinincl * sinincl);
+      cosincl = Math.sqrt(1 - sinincl * sinincl);
       /* argument of latitude */
       cosu = xpos[i][0] * cosnode + xpos[i][1] * sinnode;
       sinu = xpos[i][2] / sinincl;
-      uu = SMath.atan2(sinu, cosu);
+      uu = Math.atan2(sinu, cosu);
       /* semi-axis */
-      rxyz = SMath.sqrt(sl.square_sum(xpos[i]));
+      rxyz = Math.sqrt(sl.square_sum(xpos[i]));
       v2 = sl.square_sum(xpos[i], 3);
       sema = 1 / (2 / rxyz - v2 / Gmsm);
       /* eccentricity */
       pp = c2 / Gmsm;
-      ecce = SMath.sqrt(1 - pp / sema);
+      ecce = Math.sqrt(1 - pp / sema);
       /* eccentric anomaly */
       cosE = 1 / ecce * (1 - rxyz / sema);
-      sinE = 1 / ecce / SMath.sqrt(sema * Gmsm) * dot_prod(xpos[i], xpos[i], 3);
+      sinE = 1 / ecce / Math.sqrt(sema * Gmsm) * dot_prod(xpos[i], xpos[i], 3);
       /* true anomaly */
-      ny = 2 * SMath.atan(SMath.sqrt((1+ecce)/(1-ecce)) * sinE / (1 + cosE));
+      ny = 2 * Math.atan(Math.sqrt((1+ecce)/(1-ecce)) * sinE / (1 + cosE));
       /* distance of apogee from ascending node */
-      xxa[i][0] = sl.swi_mod2PI(uu - ny + SMath.PI);
+      xxa[i][0] = sl.swi_mod2PI(uu - ny + Math.PI);
       xxa[i][1] = 0;                      /* latitude */
       xxa[i][2] = sema * (1 + ecce);      /* distance */
       /* transformation to ecliptic coordinates */
@@ -6933,17 +6933,17 @@ int refepyOffs;
       sl.swi_coortrf2(xxa[i], xxa[i], -sinincl, cosincl);
       sl.swi_cartpol(xxa[i], xxa[i]);
       /* adding node, we get apogee in ecl. coord. */
-      xxa[i][0] += SMath.atan2(sinnode, cosnode);
+      xxa[i][0] += Math.atan2(sinnode, cosnode);
       sl.swi_polcart(xxa[i], xxa[i]);
       /* new distance of node from orbital ellipse:
        * true anomaly of node: */
       ny = sl.swi_mod2PI(ny - uu);
       /* eccentric anomaly */
-      cosE = SMath.cos(2 * SMath.atan(SMath.tan(ny / 2) / SMath.sqrt((1+ecce) / (1-ecce))));
+      cosE = Math.cos(2 * Math.atan(Math.tan(ny / 2) / Math.sqrt((1+ecce) / (1-ecce))));
       /* new distance */
       r[0] = sema * (1 - ecce * cosE);
       /* old node distance */
-      r[1] = SMath.sqrt(sl.square_sum(xx[i]));
+      r[1] = Math.sqrt(sl.square_sum(xx[i]));
       /* correct length of position vector */
       for (j = 0; j <= 2; j++) {
         xx[i][j] *= r[0] / r[1];
@@ -7152,7 +7152,7 @@ int refepyOffs;
     sl.swi_polcart_sp(xx, xx);
     /* light-time */
     if ((iflag & SweConst.SEFLG_TRUEPOS) == 0) {
-      dt = SMath.sqrt(sl.square_sum(xx)) * SweConst.AUNIT / SwephData.CLIGHT / 86400.0;     
+      dt = Math.sqrt(sl.square_sum(xx)) * SweConst.AUNIT / SwephData.CLIGHT / 86400.0;     
       for (i = 1; i < 3; i++)
         xx[i] -= dt * xx[i+3];
     }
@@ -7298,8 +7298,8 @@ int refepyOffs;
         nutp = nuttmp;
         sl.swi_nutation(tjd, iflag, nutp.nutlo);
         nutp.tnut = tjd;
-        nutp.snut = SMath.sin(nutp.nutlo[1]);
-        nutp.cnut = SMath.cos(nutp.nutlo[1]);
+        nutp.snut = Math.sin(nutp.nutlo[1]);
+        nutp.cnut = Math.cos(nutp.nutlo[1]);
         nut_matrix(nutp, oe);
       }
       for (i = 0; i <= 2; i++) {
@@ -7519,8 +7519,8 @@ int refepyOffs;
           || ((speedf1==0) && (speedf2!=0)))) {
       sl.swi_nutation(tjd, iflag, swed.nut.nutlo);
       swed.nut.tnut = tjd;
-      swed.nut.snut = SMath.sin(swed.nut.nutlo[1]);
-      swed.nut.cnut = SMath.cos(swed.nut.nutlo[1]);
+      swed.nut.snut = Math.sin(swed.nut.nutlo[1]);
+      swed.nut.cnut = Math.cos(swed.nut.nutlo[1]);
       chck_nut_nutflag = iflag;
       nut_matrix(swed.nut, swed.oec);
       if ((iflag & SweConst.SEFLG_SPEED)!=0) {
@@ -7529,8 +7529,8 @@ int refepyOffs;
         t = tjd - SwephData.NUT_SPEED_INTV;
         sl.swi_nutation(t, iflag, swed.nutv.nutlo);
         swed.nutv.tnut = t;
-        swed.nutv.snut = SMath.sin(swed.nutv.nutlo[1]);
-        swed.nutv.cnut = SMath.cos(swed.nutv.nutlo[1]);
+        swed.nutv.snut = Math.sin(swed.nutv.nutlo[1]);
+        swed.nutv.cnut = Math.cos(swed.nutv.nutlo[1]);
         nut_matrix(swed.nutv, swed.oec);
       }
     }
@@ -7745,7 +7745,7 @@ int refepyOffs;
     de *= SwissData.DEGTORAD;
     ra_pm *= SwissData.DEGTORAD;
     de_pm *= SwissData.DEGTORAD;
-    ra_pm /= SMath.cos(de); /* catalogues give proper motion in RA as great circle */
+    ra_pm /= Math.cos(de); /* catalogues give proper motion in RA as great circle */
     parall *= SwissData.DEGTORAD;
     x[0] = ra;
     x[1] = de;
@@ -7753,10 +7753,10 @@ int refepyOffs;
     /* cartesian */
     sl.swi_polcart(x, x);
     /*space motion vector */
-    cosra = SMath.cos(ra);
-    cosde = SMath.cos(de);
-    sinra = SMath.sin(ra);
-    sinde = SMath.sin(de);
+    cosra = Math.cos(ra);
+    cosde = Math.cos(de);
+    sinra = Math.sin(ra);
+    sinde = Math.sin(de);
     x[3] = -ra_pm * cosde * sinra - de_pm * sinde * cosra
                           + radv * parall * cosde * cosra;
     x[4] = ra_pm * cosde * cosra - de_pm * sinde * sinra
@@ -7903,17 +7903,17 @@ int refepyOffs;
       swi_nutate(x, 0, 0, false);
     }
 if (false) {
-  double r = SMath.sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);
+  double r = Math.sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);
   System.out.println((x[0]/r) + " " + (x[1]/r) + " " + (x[2]/r) + "\n");
 }
     /************************************************
      * unit vector (distance = 1)                   *
      ************************************************/
-    u = SMath.sqrt(sl.square_sum(x));
+    u = Math.sqrt(sl.square_sum(x));
     for (i = 0; i <= 5; i++) {
       x[i] /= u;
     }
-    u = SMath.sqrt(sl.square_sum(xxsv));
+    u = Math.sqrt(sl.square_sum(xxsv));
     for (i = 0; i <= 5; i++) {
       xxsv[i] /= u;
     }
@@ -8126,7 +8126,7 @@ if (false) {
     }
     swed.fixfp.seek(0);
     sstar=star.toString().substring(0,
-                                SMath.min(star.length(),SweConst.SE_MAX_STNAME));
+                                Math.min(star.length(),SweConst.SE_MAX_STNAME));
     if (sstar.length()>0) {
       if (sstar.charAt(0) == ',') {
         isnomclat = true;
@@ -8167,17 +8167,17 @@ if (false) {
         }
         sp = s.substring(s.indexOf(','));
         if (isnomclat) {
-          if (sp.substring(0, SMath.min(sp.length(), cmplen)).equals(sstar.substring(0, SMath.min(sstar.length(), cmplen))))
+          if (sp.substring(0, Math.min(sp.length(), cmplen)).equals(sstar.substring(0, Math.min(sstar.length(), cmplen))))
             break;
           else
             continue;
         }
-        fstar = s.substring(0, SMath.min(s.length(), SweConst.SE_MAX_STNAME)).trim();	// Left trimming only in original sources
+        fstar = s.substring(0, Math.min(s.length(), SweConst.SE_MAX_STNAME)).trim();	// Left trimming only in original sources
         i = fstar.length();
         if (i < cmplen)
           continue;
         fstar = fstar.toLowerCase();
-        if (fstar.substring(0, SMath.min(fstar.length(), cmplen)).equals(sstar.substring(0, SMath.min(sstar.length(), cmplen))))
+        if (fstar.substring(0, Math.min(fstar.length(), cmplen)).equals(sstar.substring(0, Math.min(sstar.length(), cmplen))))
           break;
       }
     } catch (java.io.IOException ioe) {
@@ -8288,16 +8288,16 @@ if (false) {
      * the surface of the ellipsoid. the resulting error
      * is below 500 m, i.e. 0.2 - 0.3 arc seconds with the moon.
      */
-    cosfi = SMath.cos(swed.topd.geolat * SwissData.DEGTORAD);
-    sinfi = SMath.sin(swed.topd.geolat * SwissData.DEGTORAD);
-    cc= 1 / SMath.sqrt(cosfi * cosfi + (1-f) * (1-f) * sinfi * sinfi);
+    cosfi = Math.cos(swed.topd.geolat * SwissData.DEGTORAD);
+    sinfi = Math.sin(swed.topd.geolat * SwissData.DEGTORAD);
+    cc= 1 / Math.sqrt(cosfi * cosfi + (1-f) * (1-f) * sinfi * sinfi);
     ss= (1-f) * (1-f) * cc;
     /* neglect polar motion (displacement of a few meters), as long as 
      * we use the earth ellipsoid */
     /* ... */
     /* add sidereal time */
-    cosl = SMath.cos((swed.topd.geolon + sidt) * SwissData.DEGTORAD);
-    sinl = SMath.sin((swed.topd.geolon + sidt) * SwissData.DEGTORAD);
+    cosl = Math.cos((swed.topd.geolon + sidt) * SwissData.DEGTORAD);
+    sinl = Math.sin((swed.topd.geolon + sidt) * SwissData.DEGTORAD);
     h = swed.topd.geoalt;
     xobs[0] = (re * cc + h) * cosfi * cosl;
     xobs[1] = (re * cc + h) * cosfi * sinl;
@@ -8364,7 +8364,7 @@ if (false) {
     if (swed.jpl_file_is_open)
       iflag |= SweConst.SEFLG_JPLEPH;
     t = tjd_ut + 0.5;
-    dt = t - SMath.floor(t);
+    dt = t - Math.floor(t);
     sidt -= dt * 24;
     sidt *= 15;
     if ((retval = swe_calc_ut(tjd_ut, SweConst.SE_SUN, iflag, x, serr)) == SweConst.ERR)

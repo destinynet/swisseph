@@ -66,12 +66,11 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class Plantbl
-		implements java.io.Serializable
-		{
-  short max_harmonic[]=new short[9];
+class Plantbl implements java.io.Serializable {
+  short[] max_harmonic;
   short max_power_of_t;
   byte[] arg_tbl;
   double[] lon_tbl;
@@ -82,12 +81,12 @@ class Plantbl
   Plantbl(short[] max_harmonic, short max_power_of_t, byte[] arg_tbl,
           double[] lon_tbl, double[] lat_tbl, double[] rad_tbl,
           double distance) {
-    this.max_harmonic=max_harmonic;
-    this.max_power_of_t=max_power_of_t;
-    this.arg_tbl=arg_tbl;
-    this.lon_tbl=lon_tbl;
-    this.lat_tbl=lat_tbl;
-    this.rad_tbl=rad_tbl;
-    this.distance=distance;
+    this.max_harmonic = max_harmonic;
+    this.max_power_of_t = max_power_of_t;
+    this.arg_tbl = arg_tbl;
+    this.lon_tbl = lon_tbl;
+    this.lat_tbl = lat_tbl;
+    this.rad_tbl = rad_tbl;
+    this.distance = distance;
   }
 }

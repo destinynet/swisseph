@@ -1,11 +1,13 @@
 package swisseph;
 
+import java.io.Serializable;
+
 /**
  * This class implements some constants and methods used by
  * different TransitCalculators.<p>
  * You normally don't use this class in your own programs.
  */
-class TransitBase implements java.io.Serializable {
+class TransitBase implements Serializable {
   static final double B0_ARMC_MAX = 360.986667;
   static final double B0_ARMC_MIN = 360.984167;
   static final double B0_ASC_MAX = 393.494420;
