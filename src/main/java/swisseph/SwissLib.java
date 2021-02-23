@@ -2731,7 +2731,7 @@ String swi_strncpy(String to, String from, int n) {
     if (sout.length()==0 || sout.replace('.',' ').trim().length()==0) {
       return 0.;
     }
-    return Double.valueOf(sout).doubleValue();
+    return Double.parseDouble(sout);
   }
 
   /**
@@ -2743,16 +2743,16 @@ String swi_strncpy(String to, String from, int n) {
   public static synchronized int atoi(String src) {
     // atoi() (in C) allows extra strings after the number, and even no number
     // at all, so we have to work around this...
-    int idx=0;
-    src=src.trim();
-    while(idx<src.length() && Character.isDigit(src.charAt(idx))) {
+    int idx = 0;
+    src = src.trim();
+    while (idx < src.length() && Character.isDigit(src.charAt(idx))) {
       idx++;
     }
-    String sout=src.substring(0,idx).trim();
-    if (sout.length()==0 || sout.replace('.',' ').trim().length()==0) {
+    String sout = src.substring(0, idx).trim();
+    if (sout.length() == 0 || sout.replace('.', ' ').trim().length() == 0) {
       return 0;
     }
-    return Integer.valueOf(sout).intValue();
+    return Integer.parseInt(sout);
   }
 
 static final double PREC_IAU_CTIES=2.0; // J2000 +/- two centuries

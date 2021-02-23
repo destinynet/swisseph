@@ -80,6 +80,7 @@ package swisseph;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
@@ -97,9 +98,7 @@ import java.util.StringTokenizer;
 * http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information 
 * there is directly valid for this port to Java as well.</B></I>
 */
-public class SwissEph
-		implements java.io.Serializable
-		{
+public class SwissEph implements Serializable {
 
   SwissData swed;
   SwephMosh smosh;
@@ -360,9 +359,10 @@ public class SwissEph
     int iflgsave = iflag;
     int epheflag;
     SavePositions sd;
-    double x[]=new double[6], xs[];
-    double x0[]=new double[24],
-           x2[]=new double[24];
+    double[] x =new double[6];
+    double[] xs;
+    double[] x0 =new double[24];
+    double[] x2 =new double[24];
     double dt;
 
     /* function calls for Pluto with asteroid number 134340
@@ -555,7 +555,7 @@ public class SwissEph
         swed.fixfp.close();
         swed.fixfp=null;
       }
-    } catch (java.io.IOException e) {
+    } catch (IOException e) {
 // NBT
     }
   }
@@ -566,11 +566,11 @@ public class SwissEph
   public void swe_close() {
     int i;
     /* close SWISSEPH files */
-    for (i = 0; i < SwephData.SEI_NEPHFILES; i ++) {
+    for (i = 0; i < SwephData.SEI_NEPHFILES; i++) {
       if (swed.fidat[i].fptr != null) {
         try {
           swed.fidat[i].fptr.close();
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
         }
       }
       swed.fidat[i].clearData();
@@ -591,7 +591,7 @@ public class SwissEph
     if (swed.fixfp != null) {
       try {
         swed.fixfp.close();
-      } catch (java.io.IOException e) {
+      } catch (IOException e) {
 // NBT
       }
       swed.fixfp = null;
@@ -1225,7 +1225,7 @@ String slast_starname;
           }
         }
       }
-    } catch (java.io.IOException ioe) {
+    } catch (IOException ioe) {
     }
     if (serr != null && star.length() < SwissData.AS_MAXCH - 20) {
       serr.setLength(0);
@@ -1448,7 +1448,7 @@ String slast_starname;
                   }
                     s=tk.nextToken("#\r\n").trim();
                   fp.close();
-                } catch (java.io.IOException ioe) {
+                } catch (IOException ioe) {
 // NBT
                 } catch (NoSuchElementException nse) {
                   continue; /* there is no name */
@@ -4421,7 +4421,7 @@ String slast_starname;
         || (ipl == SwephData.SEI_ANYBODY && ipli != pdp.ibdy)) {
         try {
           fdp.fptr.close();
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
 // NBT
         }
         fdp.fptr = null;
@@ -4663,7 +4663,7 @@ System.err.println(e);
 //        Trace.level--;
 ////#endif /* TRACE0 */
         return sfp;
-      } catch (java.io.IOException ex) {
+      } catch (IOException ex) {
         // Maybe it is an URL...
         FilePtr f=tryFileAsURL(s+"/"+fname, ifno);
         if (f!=null) {
@@ -8176,7 +8176,7 @@ if (false) {
         if (fstar.substring(0, Math.min(fstar.length(), cmplen)).equals(sstar.substring(0, Math.min(sstar.length(), cmplen))))
           break;
       }
-    } catch (java.io.IOException ioe) {
+    } catch (IOException ioe) {
       s = null;
     }
     if (s == null) {

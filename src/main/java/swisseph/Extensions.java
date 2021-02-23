@@ -18,34 +18,37 @@ class Extensions implements Serializable {
     this.sw = sw;
   }
 
-
-  // getTransit() will return the current date and time, when the
-  // transit ist occuring on that date. If you really want the next
-  // transit AFTER that date, add at least calcTimePrecision(...) to
-  // your jdET, as this is the minimum time difference, for which the
-  // available precision allows.
-  // You can NOT rely on the assumption that you will get realistically
-  // differentiable transit values with a time difference of
-  // calcTimePrecision(...), but at least it does not make ANY sense
-  // to recalculate a transit with a time difference SMALLER than the
-  // value returned by calcTimePrecision().
-  //
-  // A problem:
-  // When a transit takes a long time, this means, when the planet
-  // stays a long time very near to the transit point, the program
-  // may appear to be abitrary in its results. The reason is, that
-  // it does not look for the EXACT transit point, but for an area
-  // around the exact transit point that is defined by the maximum
-  // available precision for the position calculation.
-
-  // You may get many transits for just one planetary transit, as we
-  // cannot differentiate transits, when they are in an area of values
-  // which is beyond the maximum available precision. E.g., when the
-  // sun is in the latitudinal area of 0.0019 to 0.0021 for maybe two
-  // days, there is no chance to differentiate between any dates in
-  // this area of time: You will get the input date returned as the
-  // transit date always, when the input date is in the range of these
-  // two days.
+  /**
+   * getTransit() will return the current date and time, when the
+   * transit ist occuring on that date. If you really want the next
+   * transit AFTER that date, add at least calcTimePrecision(...) to
+   * your jdET, as this is the minimum time difference, for which the
+   * available precision allows.
+   * You can NOT rely on the assumption that you will get realistically
+   * differentiable transit values with a time difference of
+   * calcTimePrecision(...), but at least it does not make ANY sense
+   * to recalculate a transit with a time difference SMALLER than the
+   * value returned by calcTimePrecision().
+   *
+   * <p>
+   * A problem:
+   * When a transit takes a long time, this means, when the planet
+   * stays a long time very near to the transit point, the program
+   * may appear to be abitrary in its results. The reason is, that
+   * it does not look for the EXACT transit point, but for an area
+   * around the exact transit point that is defined by the maximum
+   * available precision for the position calculation.
+   * <p>
+   *
+   * You may get many transits for just one planetary transit, as we
+   * cannot differentiate transits, when they are in an area of values
+   * which is beyond the maximum available precision. E.g., when the
+   * sun is in the latitudinal area of 0.0019 to 0.0021 for maybe two
+   * days, there is no chance to differentiate between any dates in
+   * this area of time: You will get the input date returned as the
+   * transit date always, when the input date is in the range of these
+   * two days.
+   */
   double getTransit(TransitCalculator tc, double jdET, boolean back, double jdMax) throws IllegalArgumentException, SwissephException {
     jdET = tc.preprocessDate(jdET, back);
 
@@ -202,9 +205,11 @@ class Extensions implements Serializable {
   }
 
 
-  // The precision of a distance calculation is related to the barycentric
-  // distance
-  // E.g.: java Swetest -b1.1.0 -p0 -n100000 -fR -bary | sort -n
+  /**
+   * The precision of a distance calculation is related to the barycentric
+   * distance
+   * E.g.: java Swetest -b1.1.0 -p0 -n100000 -fR -bary | sort -n
+   */
   protected double[] maxBaryDist = new double[]{
       0.009570999,    // 0 Sun        ==  0                   1.017545559
       1.028809521,    // 1 Moon       ==  1

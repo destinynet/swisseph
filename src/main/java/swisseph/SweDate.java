@@ -66,8 +66,10 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -89,47 +91,44 @@ import java.util.TimeZone;
 * @author Thomas Mack / mack@ifis.cs.tu-bs.de
 * @version 1.0.0c
 */
-public class SweDate
-		implements Serializable
-		{
+public class SweDate implements Serializable {
 
   private static SwissEph sw = new SwissEph();	// Just a default
+  /**
+   * Constant for weekdays. SUNDAY is equal to 0.
+   */
+  public static final int SUNDAY = 0;
+  /**
+   * Constant for weekdays. MONDAY is equal to 1.
+   */
+  public static final int MONDAY = 1;
+  /**
+   * Constant for weekdays. TUESDAY is equal to 2.
+   */
+  public static final int TUESDAY = 2;
+  /**
+   * Constant for weekdays. WEDNESDAY is equal to 3.
+   */
+  public static final int WEDNESDAY = 3;
+  /**
+   * Constant for weekdays. THURSDAY is equal to 4.
+   */
+  public static final int THURSDAY = 4;
+  /**
+   * Constant for weekdays. FRIDAY is equal to 5.
+   */
+  public static final int FRIDAY = 5;
+  /**
+   * Constant for weekdays. SATURDAY is equal to 6.
+   */
+  public static final int SATURDAY = 6;
 
-  /**
-  * Constant for weekdays. SUNDAY is equal to 0.
-  */
-  public static final int SUNDAY=0;
-  /**
-  * Constant for weekdays. MONDAY is equal to 1.
-  */
-  public static final int MONDAY=1;
-  /**
-  * Constant for weekdays. TUESDAY is equal to 2.
-  */
-  public static final int TUESDAY=2;
-  /**
-  * Constant for weekdays. WEDNESDAY is equal to 3.
-  */
-  public static final int WEDNESDAY=3;
-  /**
-  * Constant for weekdays. THURSDAY is equal to 4.
-  */
-  public static final int THURSDAY=4;
-  /**
-  * Constant for weekdays. FRIDAY is equal to 5.
-  */
-  public static final int FRIDAY=5;
-  /**
-  * Constant for weekdays. SATURDAY is equal to 6.
-  */
-  public static final int SATURDAY=6;
+  public static final boolean SE_JUL_CAL = false;
+  public static final boolean SE_GREG_CAL = true;
+  public static final boolean SE_KEEP_DATE = true;
+  public static final boolean SE_KEEP_JD = false;
 
-  public static final boolean SE_JUL_CAL=false;
-  public static final boolean SE_GREG_CAL=true;
-  public static final boolean SE_KEEP_DATE=true;
-  public static final boolean SE_KEEP_JD=false;
-
-  private boolean init_leapseconds_done=false;
+  private boolean init_leapseconds_done = false;
 
 
 
@@ -1594,9 +1593,9 @@ public class SweDate
           /*dt[tab_index] = (short) (atof(sp) * 100 + 0.5);*/
           dt[tab_index] = (short)SwissLib.atof(s);
         }
-      } catch (java.io.IOException e) {
+      } catch (IOException e) {
       }
-      try { fp.close(); } catch (java.io.IOException e) {}
+      try { fp.close(); } catch (IOException e) {}
     }
     /* find table size */
     tabsiz = 2001 - TABSTART + 1;
@@ -1777,7 +1776,7 @@ public class SweDate
   /* Leap seconds were inserted at the end of the following days:*/
   private static final int NLEAP_SECONDS = 26;
   private static final int NLEAP_SECONDS_SPACE = 100;
-  private static final int leap_seconds[] = new int[]{
+  private static final int[] leap_seconds = new int[]{
   19720630,
   19721231,
   19731231,
@@ -1845,11 +1844,11 @@ public class SweDate
         }
         if (tabsiz > NLEAP_SECONDS) leap_seconds[tabsiz] = 0; /* end mark */
         fp.close();
-      } catch (java.io.IOException e) {
+      } catch (IOException e) {
       } catch (SwissephException e) {
         return tabsiz;
       }
-      try { fp.close(); } catch (java.io.IOException e) {}
+      try { fp.close(); } catch (IOException e) {}
       return tabsiz;
     }
     /* find table size */
