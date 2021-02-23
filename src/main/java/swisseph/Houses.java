@@ -68,50 +68,51 @@
 */
 package swisseph;
 
+import java.io.Serializable;
+
 /**
-* A class to contain all the data that are relevant to houses in astrology.
-* Does not seem to be relevant outside this package...
-* <P><I><B>You will find the complete documentation for the original
-* SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
-* http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information 
-* there is directly valid for this port to Java as well.</B></I>
-* @version 1.0.0a
-*/
-class Houses
-		implements java.io.Serializable
-		{
+ * A class to contain all the data that are relevant to houses in astrology.
+ * Does not seem to be relevant outside this package...
+ * <P><I><B>You will find the complete documentation for the original
+ * SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
+ * http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information
+ * there is directly valid for this port to Java as well.</B></I>
+ *
+ * @version 1.0.0a
+ */
+class Houses implements Serializable {
   /**
-  * The twelve house cusps from cusp[1] to cusp[12] plus many additional
-  * points.
-  */
-  double cusp[]=new double[37];
+   * The twelve house cusps from cusp[1] to cusp[12] plus many additional
+   * points.
+   */
+  double[] cusp = new double[37];
   /**
-  * The double value of the ascendant.
-  */
+   * The double value of the ascendant.
+   */
   double ac;
   /**
-  * The double value of the MC (=Medium Coeli = the midpoint of the heaven).
-  */
+   * The double value of the MC (=Medium Coeli = the midpoint of the heaven).
+   */
   double mc;
   /**
-  * The double value of the vertex.
-  */
+   * The double value of the vertex.
+   */
   double vertex;
   /**
-  * The double value of the "equatorial ascendant".
-  */
+   * The double value of the "equatorial ascendant".
+   */
   double equasc;
   /**
-  * The double value of the "co-ascendant" (Walter Koch).
-  */
+   * The double value of the "co-ascendant" (Walter Koch).
+   */
   double coasc1;
   /**
-  * The double value of the "co-ascendant" (Michael Munkasey).
-  */
+   * The double value of the "co-ascendant" (Michael Munkasey).
+   */
   double coasc2;
   /**
-  * The double value of the "polar ascendant" (Michael Munkasey).
-  */
+   * The double value of the "polar ascendant" (Michael Munkasey).
+   */
   double polasc;
 
 }

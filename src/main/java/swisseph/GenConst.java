@@ -66,15 +66,16 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class GenConst
-		implements java.io.Serializable
-		{
- double clight,
-        aunit,
-        helgravconst,
-        ratme,
-        sunradius;
+import java.io.Serializable;
+
+class GenConst implements Serializable {
+  double clight;
+  double aunit;
+  double helgravconst;
+  double ratme;
+  double sunradius;
 
 }

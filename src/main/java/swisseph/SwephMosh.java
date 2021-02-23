@@ -66,11 +66,10 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class SwephMosh
-		implements java.io.Serializable
-		{
+class SwephMosh implements java.io.Serializable	{
 
   SwissLib sl=null;
   SwissEph sw=null;
@@ -81,10 +80,10 @@ class SwephMosh
 
   private static final double TIMESCALE=3652500.0;
   private static final int FICT_GEO=1;
-  private static final int pnoint2msh[] = {2, 2, 0, 1, 3, 4, 5, 6, 7, 8};
+  private static final int[] pnoint2msh = {2, 2, 0, 1, 3, 4, 5, 6, 7, 8};
 
   /* From Simon et al (1994)  */
-  private static final double freqs[] = {
+  private static final double[] freqs = {
   /* Arc sec per 10000 Julian years.  */
     53810162868.8982,
     21066413643.3548,
@@ -97,7 +96,7 @@ class SwephMosh
     52272245.1795
   };
 
-  private static final double phases[] = {
+  private static final double[] phases = {
   /* Arc sec.  */
     252.25090552 * 3600.,
     181.97980085 * 3600.,
@@ -110,8 +109,8 @@ class SwephMosh
     860492.1546,
   };
 
-  double ss[][]=new double[9][24];
-  double cc[][]=new double[9][24];
+  double[][] ss = new double[9][24];
+  double[][] cc = new double[9][24];
 
 
 
@@ -128,11 +127,31 @@ class SwephMosh
 
 
   private int swi_moshplan2 (double J, int iplm, double[] pobj) {
-    int i, j, k, m, k1, ip, np, nt;
-    byte p[]; int pOff=0;
-    double pl[], pb[], pr[]; int plOff=0, pbOff=0, prOff=0;
-    double su, cu, sv, cv, T;
-    double t, sl, sb, sr;
+    int i;
+    int j;
+    int k;
+    int m;
+    int k1;
+    int ip;
+    int np;
+    int nt;
+    byte[] p;
+    int pOff=0;
+    double[] pl;
+    double[] pb;
+    double[] pr;
+    int plOff=0;
+    int pbOff=0;
+    int prOff=0;
+    double su;
+    double cu;
+    double sv;
+    double cv;
+    double T;
+    double t;
+    double sl;
+    double sb;
+    double sr;
     Plantbl plan = planets[iplm];
 
     T = (J - SwephData.J2000) / TIMESCALE;
@@ -270,9 +289,12 @@ class SwephMosh
                    double[] xeret, StringBuffer serr) {
     int i;
     boolean do_earth = false;
-    double dx[]=new double[3], x2[]=new double[3],
-           xxe[]=new double[6], xxp[]=new double[6];
-    double xp[], xe[];
+    double[] dx = new double[3];
+    double[] x2 = new double[3];
+    double[] xxe = new double[6];
+    double[] xxp = new double[6];
+    double[] xp;
+    double[] xe;
     double dt;
     String s;
     int iplm = pnoint2msh[ipli];
@@ -385,8 +407,8 @@ class SwephMosh
     double cu, su, cv, sv, s;
     int i;
 
-    su = Math.sin (arg);
-    cu = Math.cos (arg);
+    su = Math.sin(arg);
+    cu = Math.cos(arg);
     ss[k][0] = su;                /* sin(L) */
     cc[k][0] = cu;                /* cos(L) */
     sv = 2.0 * su * cu;
@@ -410,9 +432,24 @@ class SwephMosh
    * xemb = rectangular equatorial coordinates of Earth
    */
   private void embofs_mosh(double tjd, double xemb[]) {
-    double T, M, a, L, B, p;
-    double smp, cmp, s2mp, c2mp, s2d, c2d, sf, cf;
-    double s2f, sx, cx, xyz[]=new double[6];
+    double T;
+    double M;
+    double a;
+    double L;
+    double B;
+    double p;
+    double smp;
+    double cmp;
+    double s2mp;
+    double c2mp;
+    double s2d;
+    double c2d;
+    double sf;
+    double cf;
+    double s2f;
+    double sx;
+    double cx;
+    double[] xyz =new double[6];
     double seps = swed.oec.seps;
     double ceps = swed.oec.ceps;
     int i;
@@ -516,7 +553,7 @@ class SwephMosh
     return sbnam.toString();
   }
 
-  private static final double plan_oscu_elem[][]=new double[][] {
+  private static final double[][] plan_oscu_elem =new double[][] {
     {SwephData.J1900, SwephData.J1900, 163.7409, 40.99837, 0.00460, 171.4333, 129.8325, 1.0833},/* Cupido Neely */
     {SwephData.J1900, SwephData.J1900,  27.6496, 50.66744, 0.00245, 148.1796, 161.3339, 1.0500},/* Hades Neely */
     {SwephData.J1900, SwephData.J1900, 165.1232, 59.21436, 0.00120, 299.0440,   0.0000, 0.0000},/* Zeus Neely */
@@ -554,23 +591,42 @@ class SwephMosh
    */
   int swi_osc_el_plan(double tjd, double xp[], int ipl, int ipli,
                       double[] xearth, double[] xsun, StringBuffer serr) {
-    double pqr[]=new double[9], x[]=new double[6];
-    double eps, K, fac, rho, cose, sine;
-    double alpha, beta, zeta, sigma, M2, Msgn, M_180_or_0;
-    DblObj tjd0=new DblObj(0);
-    DblObj tequ=new DblObj(0);
-    DblObj mano=new DblObj(0);
-    DblObj sema=new DblObj(0);
-    DblObj ecce=new DblObj(0);
-    DblObj parg=new DblObj(0);
-    DblObj node=new DblObj(0);
-    DblObj incl=new DblObj(0);
+    double[] pqr = new double[9];
+    double[] x = new double[6];
+    double eps;
+    double K;
+    double fac;
+    double rho;
+    double cose;
+    double sine;
+    double alpha;
+    double beta;
+    double zeta;
+    double sigma;
+    double M2;
+    double Msgn;
+    double M_180_or_0;
+    DblObj tjd0 = new DblObj(0.0);
+    DblObj tequ = new DblObj(0.0);
+    DblObj mano = new DblObj(0.0);
+    DblObj sema = new DblObj(0.0);
+    DblObj ecce = new DblObj(0.0);
+    DblObj parg = new DblObj(0.0);
+    DblObj node = new DblObj(0.0);
+    DblObj incl = new DblObj(0.0);
     double dmot;
-    double cosnode, sinnode, cosincl, sinincl, cosparg, sinparg;
-    double M, E;
+    double cosnode;
+    double sinnode;
+    double cosincl;
+    double sinincl;
+    double cosparg;
+    double sinparg;
+    double M;
+    double E;
     PlanData pedp = swed.pldat[SwephData.SEI_EARTH];
     PlanData pdp = swed.pldat[ipli];
-    IntObj fict_ifl = new IntObj(); fict_ifl.val = 0;
+    IntObj fict_ifl = new IntObj();
+    fict_ifl.val = 0;
     int i;
     /* orbital elements, either from file or, if file not found,
      * from above built-in set
@@ -691,7 +747,8 @@ class SwephMosh
     FilePtr fp = null;
     String s, sp;
     int spIdx=0;
-    String cpos[]=new String[20], serri="";
+    String[] cpos = new String[20];
+    String serri="";
     boolean elem_found = false;
     double tt = 0;
     /* -1, because file information is not saved, file is always closed */
@@ -1027,7 +1084,7 @@ class SwephMosh
     }
   }
 
-  private Plantbl planets[] = {
+  private final Plantbl[] planets = {
     SwemptabMer.mer404,
     SwemptabVen.ven404,
     SwemptabEar.ear404,

@@ -66,56 +66,58 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
+import java.io.Serializable;
+
 /**
-* A class to contain all the data for different ayanamsas.<P>
-* t0 is the epoch at which ayanamsha = 0.
-* For internal use only - the data is packed into an array[21] of AyaInit.
-* The available Ayanamshas are:<BR>
-* <UL>
-* <LI>  0: Fagan/Bradley (Default)
-* <LI>  1: Lahiri (Robert Hand)
-* <LI>  2: De Luce (Robert Hand)
-* <LI>  3: Raman (Robert Hand)
-* <LI>  4: Ushashashi (Robert Hand)
-* <LI>  5: Krishnamurti (Robert Hand)
-* <LI>  6: Djwhal Khool; (Graham Dawson)
-* <LI>  7: Yukteshwar; (David Cochrane)
-* <LI>  8: JN Bhasin; (David Cochrane)
-* <LI>  9: Babylonian, Kugler 1
-* <LI> 10: Babylonian, Kugler 2
-* <LI> 11: Babylonian, Kugler 3
-* <LI> 12: Babylonian, Huber
-* <LI> 13: Babylonian, Mercier
-* <LI> 14: t0 is defined by Aldebaran at 15 Taurus
-* <LI> 15: Hipparchos
-* <LI> 16: Sassanian
-* <LI> 17: Galactic Center at 0 Sagittarius
-* <LI> 18: J2000
-* <LI> 19: J1900
-* <LI> 20: B1950
-* <LI> 21: Suryasiddhanta, assuming ingress of mean Sun into Aries at point of mean equinox of date on 21.3.499, noon, Ujjain (75.7684565 E) = 7:30:31.57 UT
-* <LI> 22: Suryasiddhanta, assuming ingress of mean Sun into Aries at true position of mean Sun at same epoch
-* <LI> 23: Aryabhata, same date, but UT 6:56:55.57 analogous 21
-* <LI> 24: Aryabhata, analogous 22
-* <LI> 25: SS, Revati/zePsc at polar long. 359°50'
-* <LI> 26: SS, Citra/Spica at polar long. 180°
-* </UL>
-* <P><I><B>You will find the complete documentation for the original
-* SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
-* http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information 
-* there is directly valid for this port to Java as well.</B></I>
-* @version 1.0.0a
-*/
-class AyaInit
-		implements java.io.Serializable
-		{
-  double t0;
-  double ayan_t0;
+ * A class to contain all the data for different ayanamsas.<P>
+ * t0 is the epoch at which ayanamsha = 0.
+ * For internal use only - the data is packed into an array[21] of AyaInit.
+ * The available Ayanamshas are:<BR>
+ * <UL>
+ * <LI>  0: Fagan/Bradley (Default)
+ * <LI>  1: Lahiri (Robert Hand)
+ * <LI>  2: De Luce (Robert Hand)
+ * <LI>  3: Raman (Robert Hand)
+ * <LI>  4: Ushashashi (Robert Hand)
+ * <LI>  5: Krishnamurti (Robert Hand)
+ * <LI>  6: Djwhal Khool; (Graham Dawson)
+ * <LI>  7: Yukteshwar; (David Cochrane)
+ * <LI>  8: JN Bhasin; (David Cochrane)
+ * <LI>  9: Babylonian, Kugler 1
+ * <LI> 10: Babylonian, Kugler 2
+ * <LI> 11: Babylonian, Kugler 3
+ * <LI> 12: Babylonian, Huber
+ * <LI> 13: Babylonian, Mercier
+ * <LI> 14: t0 is defined by Aldebaran at 15 Taurus
+ * <LI> 15: Hipparchos
+ * <LI> 16: Sassanian
+ * <LI> 17: Galactic Center at 0 Sagittarius
+ * <LI> 18: J2000
+ * <LI> 19: J1900
+ * <LI> 20: B1950
+ * <LI> 21: Suryasiddhanta, assuming ingress of mean Sun into Aries at point of mean equinox of date on 21.3.499, noon, Ujjain (75.7684565 E) = 7:30:31.57 UT
+ * <LI> 22: Suryasiddhanta, assuming ingress of mean Sun into Aries at true position of mean Sun at same epoch
+ * <LI> 23: Aryabhata, same date, but UT 6:56:55.57 analogous 21
+ * <LI> 24: Aryabhata, analogous 22
+ * <LI> 25: SS, Revati/zePsc at polar long. 359°50'
+ * <LI> 26: SS, Citra/Spica at polar long. 180°
+ * </UL>
+ * <P><I><B>You will find the complete documentation for the original
+ * SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
+ * http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information
+ * there is directly valid for this port to Java as well.</B></I>
+ *
+ * @version 1.0.0a
+ */
+class AyaInit implements Serializable {
+  final double t0;
+  final double ayan_t0;
 
   AyaInit(double t0, double ayan_t0) {
-    this.t0=t0;
-    this.ayan_t0=ayan_t0;
+    this.t0 = t0;
+    this.ayan_t0 = ayan_t0;
   }
 }

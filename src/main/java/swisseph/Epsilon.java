@@ -66,19 +66,24 @@
   The trademarks 'Swiss Ephemeris' and 'Swiss Ephemeris inside' may be used
   for promoting such software, products or services.
 */
+
 package swisseph;
 
-class Epsilon
-		implements java.io.Serializable
-		{
+import java.io.Serializable;
+
+class Epsilon implements Serializable {
   /* obliquity of ecliptic */
-  double teps, eps, seps, ceps;         /* jd, eps, sin(eps), cos(eps) */
+  double teps;
+  double eps;
+  double seps;
+  double ceps;
+  /* jd, eps, sin(eps), cos(eps) */
 
   void clearData() {
-    teps=0.0;
-    eps=0.0;
-    seps=0.0;
-    ceps=0.0;
+    teps = 0.0;
+    eps = 0.0;
+    seps = 0.0;
+    ceps = 0.0;
   }
 
 

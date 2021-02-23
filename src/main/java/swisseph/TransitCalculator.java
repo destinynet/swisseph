@@ -7,7 +7,7 @@ import java.io.Serializable;
  * transit calculations.
  */
 public abstract class TransitCalculator implements Serializable {
-  SwissEph sw;
+  protected SwissEph sw;
 
   // This method changes the offset value for the transit
 

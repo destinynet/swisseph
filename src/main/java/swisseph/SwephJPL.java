@@ -80,6 +80,7 @@
 
 package swisseph;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 class SwephJPL implements Serializable {
@@ -248,7 +249,7 @@ class SwephJPL implements Serializable {
       if (ksize == 1546) {
         ksize = 1652;
       }
-    } catch (java.io.IOException ioe) {
+    } catch (IOException ioe) {
       throw new SwissephException(1./0., SwissephException.FILE_READ_ERROR,
           SweConst.ERR, ioe.getMessage());
     } catch (SwissephException se) {
@@ -300,7 +301,7 @@ class SwephJPL implements Serializable {
   int swi_pleph(double et, int ntarg, int ncent, double[] rrd,
                 StringBuffer serr) throws SwissephException {
     int i, retc;
-    int list[]=new int[12];
+    int[] list =new int[12];
     double[] pv = js.pv;
     double[] pvsun = js.pvsun;
     for (i = 0; i < 6; ++i)
@@ -424,7 +425,8 @@ class SwephJPL implements Serializable {
    *           assumed dimension is pv(ncm,fl).
    */
   /* Initialized data */
-  int np_interp, nv_interp;
+  int np_interp;
+  int nv_interp;
   int nac_interp;
   int njk_interp;
   double twot = 0.;
@@ -609,18 +611,29 @@ class SwephJPL implements Serializable {
    |            for nutations and librations.  angle unit is always radians.)
    */
   int irecsz_state;
-  int nrl_state, lpt_state[]=new int[3], ncoeffs_state;
+  int nrl_state;
+  int[] lpt_state =new int[3];
+  int ncoeffs_state;
   private int state(double et, int[] list, boolean do_bary, double[] pv,
                     double[] pvsun, double[] nut, StringBuffer serr)
       throws SwissephException {
-    int i, j, k;
+    int i;
+    int j;
+    int k;
     int nseg;
-    long flen, nb;
+    long flen;
+    long nb;
     double[] buf = js.buf;
-    double aufac=0., s, t=0., intv=0., ts[] = new double[4];
-    int nrecl, ksize;
+    double aufac=0.;
+    double s;
+    double t=0.;
+    double intv=0.;
+    double[] ts = new double[4];
+    int nrecl;
+    int ksize;
     int nr;
-    double et_mn, et_fr;
+    double et_mn;
+    double et_fr;
     int[] ipt = js.eh_ipt;
     String ch_ttl="";
     boolean ferr=false;
@@ -817,7 +830,7 @@ class SwephJPL implements Serializable {
       /*   interpolate ssbary sun */
     } catch (java.io.EOFException ie) {
       ferr=true;
-    } catch (java.io.IOException ie) {
+    } catch (IOException ie) {
       ferr=true;
     } catch (SwissephException se) {
       throw se;
@@ -895,7 +908,7 @@ class SwephJPL implements Serializable {
         if (js.jplfptr != null) {
           js.jplfptr.close();
         }
-      } catch (java.io.IOException e) {
+      } catch (IOException e) {
       }
       if (js.jplfname != null) {
         js.jplfname = null;
@@ -949,7 +962,8 @@ class SwephJPL implements Serializable {
   }
 
   double[] getJPLRange(String fname) throws SwissephException {
-    double start=0./0., end=0./0.;
+    double start = 0. / 0.;
+    double end = 0. / 0.;
     FilePtr fp = null;
     try {
       fp = sw.swi_fopen(SwephData.SEI_FILE_PLANET, fname, swed.ephepath, null);
