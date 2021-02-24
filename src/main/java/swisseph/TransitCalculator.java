@@ -135,8 +135,8 @@ public abstract class TransitCalculator implements Serializable {
 
   // Find next reasonable point to probe.
   protected double getNextJD(double jdET, double val, double offset, double min, double max, boolean back) {
-    double jdPlus = 0;
-    double jdMinus = 0;
+    double jdPlus;
+    double jdMinus;
     if (rollover) {
       // In most cases here we cannot find out for sure if the distance
       // is decreasing or increasing. We take the smaller one of these:
