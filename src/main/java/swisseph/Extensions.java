@@ -34,12 +34,13 @@ class Extensions implements Serializable {
    * A problem:
    * When a transit takes a long time, this means, when the planet
    * stays a long time very near to the transit point, the program
-   * may appear to be abitrary in its results. The reason is, that
+   * may appear to be arbitrary in its results. The reason is, that
    * it does not look for the EXACT transit point, but for an area
    * around the exact transit point that is defined by the maximum
    * available precision for the position calculation.
-   * <p>
+   * </p>
    *
+   * <p>
    * You may get many transits for just one planetary transit, as we
    * cannot differentiate transits, when they are in an area of values
    * which is beyond the maximum available precision. E.g., when the
@@ -48,6 +49,7 @@ class Extensions implements Serializable {
    * this area of time: You will get the input date returned as the
    * transit date always, when the input date is in the range of these
    * two days.
+   * <p>
    */
   double getTransit(TransitCalculator tc, double jdET, boolean back, double jdMax) throws IllegalArgumentException, SwissephException {
     jdET = tc.preprocessDate(jdET, back);

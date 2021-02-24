@@ -78,12 +78,12 @@ package swisseph;
  */
 
 public class SDate {
-  public int year;
-  public int month;
-  public int day;
-  public int hour;
-  public int minute;
-  public double second;
+  public final int year;
+  public final int month;
+  public final int day;
+  public final int hour;
+  public final int minute;
+  public final double second;
 
   public SDate(int year, int month, int day, double hour) {
     this.year = year;
