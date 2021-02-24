@@ -69,64 +69,71 @@
 
 package swisseph;
 
-class SwephMosh implements java.io.Serializable	{
+import java.io.IOException;
+import java.io.Serializable;
 
-  SwissLib sl=null;
-  SwissEph sw=null;
-  SwissData swed=null;
-  Swemmoon sm=null;
-  SweDate sd=null;
+class SwephMosh implements Serializable {
+
+  SwissLib sl = null;
+  SwissEph sw = null;
+  SwissData swed = null;
+  Swemmoon sm = null;
+  SweDate sd = null;
 
 
-  private static final double TIMESCALE=3652500.0;
-  private static final int FICT_GEO=1;
+  private static final double TIMESCALE = 3652500.0;
+  private static final int FICT_GEO = 1;
   private static final int[] pnoint2msh = {2, 2, 0, 1, 3, 4, 5, 6, 7, 8};
 
   /* From Simon et al (1994)  */
   private static final double[] freqs = {
-  /* Arc sec per 10000 Julian years.  */
-    53810162868.8982,
-    21066413643.3548,
-    12959774228.3429,
-    6890507749.3988,
-    1092566037.7991,
-    439960985.5372,
-    154248119.3933,
-    78655032.0744,
-    52272245.1795
+      /* Arc sec per 10000 Julian years.  */
+      53810162868.8982,
+      21066413643.3548,
+      12959774228.3429,
+      6890507749.3988,
+      1092566037.7991,
+      439960985.5372,
+      154248119.3933,
+      78655032.0744,
+      52272245.1795
   };
 
   private static final double[] phases = {
-  /* Arc sec.  */
-    252.25090552 * 3600.,
-    181.97980085 * 3600.,
-    100.46645683 * 3600.,
-    355.43299958 * 3600.,
-    34.35151874 * 3600.,
-    50.07744430 * 3600.,
-    314.05500511 * 3600.,
-    304.34866548 * 3600.,
-    860492.1546,
+      /* Arc sec.  */
+      252.25090552 * 3600.,
+      181.97980085 * 3600.,
+      100.46645683 * 3600.,
+      355.43299958 * 3600.,
+      34.35151874 * 3600.,
+      50.07744430 * 3600.,
+      314.05500511 * 3600.,
+      304.34866548 * 3600.,
+      860492.1546,
   };
 
   double[][] ss = new double[9][24];
   double[][] cc = new double[9][24];
 
 
-
   SwephMosh(SwissLib sl, SwissEph sw, SwissData swed) {
-    this.sl    = sl;
-    this.sw    = sw;
-    this.swed  = swed;
-    if (this.sl   ==null) { this.sl   =new SwissLib(); }
-    if (this.sw   ==null) { this.sw   =new SwissEph(); }
-    if (this.swed ==null) { this.swed =new SwissData(); }
-    this.sm    = new Swemmoon(swed, sl);
+    this.sl = sl;
+    this.sw = sw;
+    this.swed = swed;
+    if (this.sl == null) {
+      this.sl = new SwissLib();
+    }
+    if (this.sw == null) {
+      this.sw = new SwissEph();
+    }
+    if (this.swed == null) {
+      this.swed = new SwissData();
+    }
+    this.sm = new Swemmoon(swed, sl);
   }
 
 
-
-  private int swi_moshplan2 (double J, int iplm, double[] pobj) {
+  private int swi_moshplan2(double J, int iplm, double[] pobj) {
     int i;
     int j;
     int k;
@@ -136,13 +143,13 @@ class SwephMosh implements java.io.Serializable	{
     int np;
     int nt;
     byte[] p;
-    int pOff=0;
+    int pOff = 0;
     double[] pl;
     double[] pb;
     double[] pr;
-    int plOff=0;
-    int pbOff=0;
-    int prOff=0;
+    int plOff = 0;
+    int pbOff = 0;
+    int prOff = 0;
     double su;
     double cu;
     double sv;
@@ -158,8 +165,8 @@ class SwephMosh implements java.io.Serializable	{
     /* Calculate sin( i*MM ), etc. for needed multiple angles.  */
     for (i = 0; i < 9; i++) {
       if ((j = plan.max_harmonic[i]) > 0) {
-        sr = (sm.mods3600 (freqs[i] * T) + phases[i]) * SwephData.STR;
-        sscc (i, sr, j);
+        sr = (sm.mods3600(freqs[i] * T) + phases[i]) * SwephData.STR;
+        sscc(i, sr, j);
       }
     }
 
@@ -173,109 +180,100 @@ class SwephMosh implements java.io.Serializable	{
     sb = 0.0;
     sr = 0.0;
 
-    for (;;)
-      {
-        /* argument of sine and cosine */
-        /* Number of periodic arguments. */
-        np = p[pOff++];
-        if (np < 0) {
-          break;
-        }
-        if (np == 0) {                       /* It is a polynomial term.  */
-            nt = p[pOff++];
-            /* Longitude polynomial. */
-            cu = pl[plOff++];
-            for (ip = 0; ip < nt; ip++)
-              {
-                cu = cu * T + pl[plOff++];
-              }
-            sl +=  sm.mods3600 (cu);
-            /* Latitude polynomial. */
-            cu = pb[pbOff++];
-            for (ip = 0; ip < nt; ip++)
-              {
-                cu = cu * T + pb[pbOff++];
-              }
-            sb += cu;
-            /* Radius polynomial. */
-            cu = pr[prOff++];
-            for (ip = 0; ip < nt; ip++)
-              {
-                cu = cu * T + pr[prOff++];
-              }
-            sr += cu;
-            continue;
-          }
-        k1 = 0;
-        cv = 0.0;
-        sv = 0.0;
-        for (ip = 0; ip < np; ip++)
-          {
-            /* What harmonic.  */
-            j = p[pOff++];
-            /* Which planet.  */
-            m = p[pOff++] - 1;
-            if (j!=0) {
-                k = j;
-                if (j < 0) {
-                  k = -k;
-                }
-                k -= 1;
-                su = ss[m][k];    /* sin(k*angle) */
-                if (j < 0) {
-                  su = -su;
-                }
-                cu = cc[m][k];
-                if (k1 == 0) {               /* set first angle */
-                    sv = su;
-                    cv = cu;
-                    k1 = 1;
-                  }
-                else
-                  {               /* combine angles */
-                    t = su * cv + cu * sv;
-                    cv = cu * cv - su * sv;
-                    sv = t;
-                  }
-              }
-          }
-        /* Highest power of T.  */
-        nt = p[pOff++];
-        /* Longitude. */
-        cu = pl[plOff++];
-        su = pl[plOff++];
-        for (ip = 0; ip < nt; ip++)
-          {
-            cu = cu * T + pl[plOff++];
-            su = su * T + pl[plOff++];
-          }
-        sl += cu * cv + su * sv;
-        /* Latitiude. */
-        cu = pb[pbOff++];
-        su = pb[pbOff++];
-        for (ip = 0; ip < nt; ip++)
-          {
-            cu = cu * T + pb[pbOff++];
-            su = su * T + pb[pbOff++];
-          }
-        sb += cu * cv + su * sv;
-        /* Radius. */
-        cu = pr[prOff++];
-        su = pr[prOff++];
-        for (ip = 0; ip < nt; ip++)
-          {
-            cu = cu * T + pr[prOff++];
-            su = su * T + pr[prOff++];
-          }
-        sr += cu * cv + su * sv;
+    for (; ; ) {
+      /* argument of sine and cosine */
+      /* Number of periodic arguments. */
+      np = p[pOff++];
+      if (np < 0) {
+        break;
       }
+      if (np == 0) {                       /* It is a polynomial term.  */
+        nt = p[pOff++];
+        /* Longitude polynomial. */
+        cu = pl[plOff++];
+        for (ip = 0; ip < nt; ip++) {
+          cu = cu * T + pl[plOff++];
+        }
+        sl += sm.mods3600(cu);
+        /* Latitude polynomial. */
+        cu = pb[pbOff++];
+        for (ip = 0; ip < nt; ip++) {
+          cu = cu * T + pb[pbOff++];
+        }
+        sb += cu;
+        /* Radius polynomial. */
+        cu = pr[prOff++];
+        for (ip = 0; ip < nt; ip++) {
+          cu = cu * T + pr[prOff++];
+        }
+        sr += cu;
+        continue;
+      }
+      k1 = 0;
+      cv = 0.0;
+      sv = 0.0;
+      for (ip = 0; ip < np; ip++) {
+        /* What harmonic.  */
+        j = p[pOff++];
+        /* Which planet.  */
+        m = p[pOff++] - 1;
+        if (j != 0) {
+          k = j;
+          if (j < 0) {
+            k = -k;
+          }
+          k -= 1;
+          su = ss[m][k];    /* sin(k*angle) */
+          if (j < 0) {
+            su = -su;
+          }
+          cu = cc[m][k];
+          if (k1 == 0) {               /* set first angle */
+            sv = su;
+            cv = cu;
+            k1 = 1;
+          } else {               /* combine angles */
+            t = su * cv + cu * sv;
+            cv = cu * cv - su * sv;
+            sv = t;
+          }
+        }
+      }
+      /* Highest power of T.  */
+      nt = p[pOff++];
+      /* Longitude. */
+      cu = pl[plOff++];
+      su = pl[plOff++];
+      for (ip = 0; ip < nt; ip++) {
+        cu = cu * T + pl[plOff++];
+        su = su * T + pl[plOff++];
+      }
+      sl += cu * cv + su * sv;
+      /* Latitiude. */
+      cu = pb[pbOff++];
+      su = pb[pbOff++];
+      for (ip = 0; ip < nt; ip++) {
+        cu = cu * T + pb[pbOff++];
+        su = su * T + pb[pbOff++];
+      }
+      sb += cu * cv + su * sv;
+      /* Radius. */
+      cu = pr[prOff++];
+      su = pr[prOff++];
+      for (ip = 0; ip < nt; ip++) {
+        cu = cu * T + pr[prOff++];
+        su = su * T + pr[prOff++];
+      }
+      sr += cu * cv + su * sv;
+    }
     pobj[0] = SwephData.STR * sl;
     pobj[1] = SwephData.STR * sb;
     pobj[2] = SwephData.STR * plan.distance * sr + plan.distance;
     return SweConst.OK;
   }
 
-  /* Moshier ephemeris.
+  /**
+   * Moshier ephemeris.
    * computes heliocentric cartesian equatorial coordinates of
    * equinox 2000
    * for earth and a planet
@@ -317,14 +315,14 @@ class SwephMosh implements java.io.Serializable	{
         tjd > SwephData.MOSHPLEPH_END + 0.3) {
       if (serr != null) {
         serr.setLength(0);
-        s="jd "+tjd+" outside Moshier planet range "+
-          SwephData.MOSHPLEPH_START+" .. "+
-          SwephData.MOSHPLEPH_END+" ";
+        s = "jd " + tjd + " outside Moshier planet range " +
+            SwephData.MOSHPLEPH_START + " .. " +
+            SwephData.MOSHPLEPH_END + " ";
         if (serr.length() + s.length() < SwissData.AS_MAXCH) {
           serr.append(s);
         }
       }
-      return(SweConst.ERR);
+      return (SweConst.ERR);
     }
     /* earth, for geocentric position */
     if (do_earth) {
@@ -350,7 +348,7 @@ class SwephMosh implements java.io.Serializable	{
           dx[i] = (xe[i] - x2[i]) / SwephData.PLAN_SPEED_INTV;
         /* store speed */
         for (i = 0; i <= 2; i++) {
-          xe[i+3] = dx[i];
+          xe[i + 3] = dx[i];
         }
       }
       if (xeret != null) {
@@ -387,7 +385,7 @@ class SwephMosh implements java.io.Serializable	{
           dx[i] = (xp[i] - x2[i]) / dt;
         /* store speed */
         for (i = 0; i <= 2; i++) {
-          xp[i+3] = dx[i];
+          xp[i + 3] = dx[i];
         }
       }
       if (xpret != null) {
@@ -396,15 +394,19 @@ class SwephMosh implements java.io.Serializable	{
         }
       }
     }
-    return(SweConst.OK);
+    return (SweConst.OK);
   }
 
 
   /* Prepare lookup table of sin and cos ( i*Lj )
    * for required multiple angles
    */
-  private void sscc (int k, double arg, int n) {
-    double cu, su, cv, sv, s;
+  private void sscc(int k, double arg, int n) {
+    double cu;
+    double su;
+    double cv;
+    double sv;
+    double s;
     int i;
 
     su = Math.sin(arg);
@@ -415,14 +417,13 @@ class SwephMosh implements java.io.Serializable	{
     cv = cu * cu - su * su;
     ss[k][1] = sv;                /* sin(2L) */
     cc[k][1] = cv;
-    for (i = 2; i < n; i++)
-      {
-        s = su * cv + cu * sv;
-        cv = cu * cv - su * sv;
-        sv = s;
-        ss[k][i] = sv;            /* sin( i+1 L ) */
-        cc[k][i] = cv;
-      }
+    for (i = 2; i < n; i++) {
+      s = su * cv + cu * sv;
+      cv = cu * cv - su * sv;
+      sv = s;
+      ss[k][i] = sv;            /* sin( i+1 L ) */
+      cc[k][i] = cv;
+    }
   }
 
 
@@ -431,7 +432,7 @@ class SwephMosh implements java.io.Serializable	{
    * J = Julian day number
    * xemb = rectangular equatorial coordinates of Earth
    */
-  private void embofs_mosh(double tjd, double xemb[]) {
+  private void embofs_mosh(double tjd, double[] xemb) {
     double T;
     double M;
     double a;
@@ -449,66 +450,66 @@ class SwephMosh implements java.io.Serializable	{
     double s2f;
     double sx;
     double cx;
-    double[] xyz =new double[6];
+    double[] xyz = new double[6];
     double seps = swed.oec.seps;
     double ceps = swed.oec.ceps;
     int i;
     /* Short series for position of the Moon
      */
-    T = (tjd-SwephData.J1900)/36525.0;
+    T = (tjd - SwephData.J1900) / 36525.0;
     /* Mean anomaly of moon (MP) */
-    a = sl.swe_degnorm(((1.44e-5*T + 0.009192)*T + 477198.8491)*T + 296.104608);
+    a = sl.swe_degnorm(((1.44e-5 * T + 0.009192) * T + 477198.8491) * T + 296.104608);
     a *= SwissData.DEGTORAD;
     smp = Math.sin(a);
     cmp = Math.cos(a);
-    s2mp = 2.0*smp*cmp;           /* sin(2MP) */
-    c2mp = cmp*cmp - smp*smp;     /* cos(2MP) */
+    s2mp = 2.0 * smp * cmp;           /* sin(2MP) */
+    c2mp = cmp * cmp - smp * smp;     /* cos(2MP) */
     /* Mean elongation of moon (D) */
-    a = sl.swe_degnorm(((1.9e-6*T - 0.001436)*T + 445267.1142)*T + 350.737486);
-    a  = 2.0 * SwissData.DEGTORAD * a;
+    a = sl.swe_degnorm(((1.9e-6 * T - 0.001436) * T + 445267.1142) * T + 350.737486);
+    a = 2.0 * SwissData.DEGTORAD * a;
     s2d = Math.sin(a);
     c2d = Math.cos(a);
     /* Mean distance of moon from its ascending node (F) */
-    a = sl.swe_degnorm((( -3.e-7*T - 0.003211)*T + 483202.0251)*T + 11.250889);
-    a  *= SwissData.DEGTORAD;
+    a = sl.swe_degnorm(((-3.e-7 * T - 0.003211) * T + 483202.0251) * T + 11.250889);
+    a *= SwissData.DEGTORAD;
     sf = Math.sin(a);
     cf = Math.cos(a);
-    s2f = 2.0*sf*cf;      /* sin(2F) */
-    sx = s2d*cmp - c2d*smp;       /* sin(2D - MP) */
-    cx = c2d*cmp + s2d*smp;       /* cos(2D - MP) */
+    s2f = 2.0 * sf * cf;      /* sin(2F) */
+    sx = s2d * cmp - c2d * smp;       /* sin(2D - MP) */
+    cx = c2d * cmp + s2d * smp;       /* cos(2D - MP) */
     /* Mean longitude of moon (LP) */
-    L = ((1.9e-6*T - 0.001133)*T + 481267.8831)*T + 270.434164;
+    L = ((1.9e-6 * T - 0.001133) * T + 481267.8831) * T + 270.434164;
     /* Mean anomaly of sun (M) */
-    M = sl.swe_degnorm((( -3.3e-6*T - 1.50e-4)*T + 35999.0498)*T + 358.475833);
+    M = sl.swe_degnorm(((-3.3e-6 * T - 1.50e-4) * T + 35999.0498) * T + 358.475833);
     /* Ecliptic longitude of the moon */
-    L =   L
-          + 6.288750*smp
-          + 1.274018*sx
-          + 0.658309*s2d
-          + 0.213616*s2mp
-          - 0.185596*Math.sin( SwissData.DEGTORAD * M )
-          - 0.114336*s2f;
+    L = L
+        + 6.288750 * smp
+        + 1.274018 * sx
+        + 0.658309 * s2d
+        + 0.213616 * s2mp
+        - 0.185596 * Math.sin(SwissData.DEGTORAD * M)
+        - 0.114336 * s2f;
     /* Ecliptic latitude of the moon */
-    a = smp*cf;
-    sx = cmp*sf;
-    B =     5.128189*sf
-          + 0.280606*(a+sx)               /* sin(MP+F) */
-          + 0.277693*(a-sx)               /* sin(MP-F) */
-          + 0.173238*(s2d*cf - c2d*sf);   /* sin(2D-F) */
+    a = smp * cf;
+    sx = cmp * sf;
+    B = 5.128189 * sf
+        + 0.280606 * (a + sx)               /* sin(MP+F) */
+        + 0.277693 * (a - sx)               /* sin(MP-F) */
+        + 0.173238 * (s2d * cf - c2d * sf);   /* sin(2D-F) */
     B *= SwissData.DEGTORAD;
     /* Parallax of the moon */
-    p =    0.950724
-          +0.051818*cmp
-          +0.009531*cx
-          +0.007843*c2d
-          +0.002824*c2mp;
+    p = 0.950724
+        + 0.051818 * cmp
+        + 0.009531 * cx
+        + 0.007843 * c2d
+        + 0.002824 * c2mp;
     p *= SwissData.DEGTORAD;
     /* Elongation of Moon from Sun
      */
     L = sl.swe_degnorm(L);
     L *= SwissData.DEGTORAD;
     /* Distance in au */
-    a = 4.263523e-5/Math.sin(p);
+    a = 4.263523e-5 / Math.sin(p);
     /* Convert to rectangular ecliptic coordinates */
     xyz[0] = L;
     xyz[1] = B;
@@ -533,54 +534,56 @@ class SwephMosh implements java.io.Serializable	{
    *   ascending node
    *   inclination
    */
-                                  /* use James Neely's revised elements
-                                   *      of Uranian planets*/
+  /* use James Neely's revised elements
+   *      of Uranian planets*/
   static final String plan_fict_nam[] =
-    {"Cupido", "Hades", "Zeus", "Kronos",
-     "Apollon", "Admetos", "Vulkanus", "Poseidon",
-     "Isis-Transpluto", "Nibiru", "Harrington",
-     "Leverrier", "Adams",
-     "Lowell", "Pickering",};
+      {"Cupido", "Hades", "Zeus", "Kronos",
+          "Apollon", "Admetos", "Vulkanus", "Poseidon",
+          "Isis-Transpluto", "Nibiru", "Harrington",
+          "Leverrier", "Adams",
+          "Lowell", "Pickering",};
 
   String swi_get_fict_name(int ipl, String snam) {
-    if (snam==null) { snam=""; }
-    StringBuffer sbnam=new StringBuffer(snam);
+    if (snam == null) {
+      snam = "";
+    }
+    StringBuffer sbnam = new StringBuffer(snam);
     if (read_elements_file(ipl, 0, null, null,
-         null, null, null, null, null, null,
-         sbnam, null, null) == SweConst.ERR) {
+        null, null, null, null, null, null,
+        sbnam, null, null) == SweConst.ERR) {
       return "name not found";
     }
     return sbnam.toString();
   }
 
-  private static final double[][] plan_oscu_elem =new double[][] {
-    {SwephData.J1900, SwephData.J1900, 163.7409, 40.99837, 0.00460, 171.4333, 129.8325, 1.0833},/* Cupido Neely */
-    {SwephData.J1900, SwephData.J1900,  27.6496, 50.66744, 0.00245, 148.1796, 161.3339, 1.0500},/* Hades Neely */
-    {SwephData.J1900, SwephData.J1900, 165.1232, 59.21436, 0.00120, 299.0440,   0.0000, 0.0000},/* Zeus Neely */
-    {SwephData.J1900, SwephData.J1900, 169.0193, 64.81960, 0.00305, 208.8801,   0.0000, 0.0000},/* Kronos Neely */
-    {SwephData.J1900, SwephData.J1900, 138.0533, 70.29949, 0.00000,   0.0000,   0.0000, 0.0000},/* Apollon Neely */
-    {SwephData.J1900, SwephData.J1900, 351.3350, 73.62765, 0.00000,   0.0000,   0.0000, 0.0000},/* Admetos Neely */
-    {SwephData.J1900, SwephData.J1900,  55.8983, 77.25568, 0.00000,   0.0000,   0.0000, 0.0000},/* Vulcanus Neely */
-    {SwephData.J1900, SwephData.J1900, 165.5163, 83.66907, 0.00000,   0.0000,   0.0000, 0.0000},/* Poseidon Neely */
-    /* Isis-Transpluto; elements from "Die Sterne" 3/1952, p. 70ff.
-     * Strubell does not give an equinox. 1945 is taken to best reproduce
-     * ASTRON ephemeris. (This is a strange choice, though.)
-     * The epoch is 1772.76. The year is understood to have 366 days.
-     * The fraction is counted from 1 Jan. 1772 */
-    {2368547.66, 2431456.5, 0.0, 77.775, 0.3, 0.7, 0, 0},
-    /* Nibiru, elements from Christian Woeltge, Hannover */
-    {1856113.380954, 1856113.380954, 0.0, 234.8921, 0.981092, 103.966, -44.567, 158.708},
-    /* Harrington, elements from Astronomical Journal 96(4), Oct. 1988 */
-    {2374696.5, SwephData.J2000, 0.0, 101.2, 0.411, 208.5, 275.4, 32.4},
-    /* Leverrier's Neptune,
-          according to W.G. Hoyt, "Planets X and Pluto", Tucson 1980, p. 63 */
-    {2395662.5, 2395662.5, 34.05, 36.15, 0.10761, 284.75, 0, 0},
-    /* Adam's Neptune */
-    {2395662.5, 2395662.5, 24.28, 37.25, 0.12062, 299.11, 0, 0},
-    /* Lowell's Pluto */
-    {2425977.5, 2425977.5, 281, 43.0, 0.202, 204.9, 0, 0},
-    /* Pickering's Pluto */
-    {2425977.5, 2425977.5, 48.95, 55.1, 0.31, 280.1, 100, 15}, /**/
+  private static final double[][] plan_oscu_elem = new double[][]{
+      {SwephData.J1900, SwephData.J1900, 163.7409, 40.99837, 0.00460, 171.4333, 129.8325, 1.0833},/* Cupido Neely */
+      {SwephData.J1900, SwephData.J1900, 27.6496, 50.66744, 0.00245, 148.1796, 161.3339, 1.0500},/* Hades Neely */
+      {SwephData.J1900, SwephData.J1900, 165.1232, 59.21436, 0.00120, 299.0440, 0.0000, 0.0000},/* Zeus Neely */
+      {SwephData.J1900, SwephData.J1900, 169.0193, 64.81960, 0.00305, 208.8801, 0.0000, 0.0000},/* Kronos Neely */
+      {SwephData.J1900, SwephData.J1900, 138.0533, 70.29949, 0.00000, 0.0000, 0.0000, 0.0000},/* Apollon Neely */
+      {SwephData.J1900, SwephData.J1900, 351.3350, 73.62765, 0.00000, 0.0000, 0.0000, 0.0000},/* Admetos Neely */
+      {SwephData.J1900, SwephData.J1900, 55.8983, 77.25568, 0.00000, 0.0000, 0.0000, 0.0000},/* Vulcanus Neely */
+      {SwephData.J1900, SwephData.J1900, 165.5163, 83.66907, 0.00000, 0.0000, 0.0000, 0.0000},/* Poseidon Neely */
+      /* Isis-Transpluto; elements from "Die Sterne" 3/1952, p. 70ff.
+       * Strubell does not give an equinox. 1945 is taken to best reproduce
+       * ASTRON ephemeris. (This is a strange choice, though.)
+       * The epoch is 1772.76. The year is understood to have 366 days.
+       * The fraction is counted from 1 Jan. 1772 */
+      {2368547.66, 2431456.5, 0.0, 77.775, 0.3, 0.7, 0, 0},
+      /* Nibiru, elements from Christian Woeltge, Hannover */
+      {1856113.380954, 1856113.380954, 0.0, 234.8921, 0.981092, 103.966, -44.567, 158.708},
+      /* Harrington, elements from Astronomical Journal 96(4), Oct. 1988 */
+      {2374696.5, SwephData.J2000, 0.0, 101.2, 0.411, 208.5, 275.4, 32.4},
+      /* Leverrier's Neptune,
+            according to W.G. Hoyt, "Planets X and Pluto", Tucson 1980, p. 63 */
+      {2395662.5, 2395662.5, 34.05, 36.15, 0.10761, 284.75, 0, 0},
+      /* Adam's Neptune */
+      {2395662.5, 2395662.5, 24.28, 37.25, 0.12062, 299.11, 0, 0},
+      /* Lowell's Pluto */
+      {2425977.5, 2425977.5, 281, 43.0, 0.202, 204.9, 0, 0},
+      /* Pickering's Pluto */
+      {2425977.5, 2425977.5, 48.95, 55.1, 0.31, 280.1, 100, 15}, /**/
   };
 
   /* computes a planet from osculating elements *
@@ -589,7 +592,7 @@ class SwephMosh implements java.io.Serializable	{
    * ipli         body number in planetary data structure
    * iflag        flags
    */
-  int swi_osc_el_plan(double tjd, double xp[], int ipl, int ipli,
+  int swi_osc_el_plan(double tjd, double[] xp, int ipl, int ipli,
                       double[] xearth, double[] xsun, StringBuffer serr) {
     double[] pqr = new double[9];
     double[] x = new double[6];
@@ -632,12 +635,12 @@ class SwephMosh implements java.io.Serializable	{
      * from above built-in set
      */
     if (read_elements_file(ipl, tjd, tjd0, tequ,
-         mano, sema, ecce, parg, node, incl,
-         null, fict_ifl, serr) == SweConst.ERR) {
+        mano, sema, ecce, parg, node, incl,
+        null, fict_ifl, serr) == SweConst.ERR) {
       return SweConst.ERR;
     }
     dmot = 0.9856076686 * SwissData.DEGTORAD / sema.val / Math.sqrt(sema.val);
-                                                            /* daily motion */
+    /* daily motion */
     if ((fict_ifl.val & FICT_GEO) != 0) {
       dmot /= Math.sqrt(SwephData.SUN_EARTH_MRAT);
     }
@@ -680,18 +683,18 @@ class SwephMosh implements java.io.Serializable	{
         M2 *= SwissData.DEGTORAD;
         alpha = (1 - ecce.val) / (4 * ecce.val + 0.5);
         beta = M2 / (8 * ecce.val + 1);
-        zeta = Math.pow(beta + Math.sqrt(beta * beta + alpha * alpha), 1/3);
+        zeta = Math.pow(beta + Math.sqrt(beta * beta + alpha * alpha), 1 / 3.0);
         sigma = zeta - alpha / 2;
         sigma = sigma - 0.078 * sigma * sigma * sigma * sigma * sigma / (1 + ecce.val)
-  ;
+        ;
         E = Msgn * (M2 + ecce.val * (3 * sigma - 4 * sigma * sigma * sigma))
-                          + M_180_or_0;
+            + M_180_or_0;
       }
     }
     E = sl.swi_kepler(E, M, ecce.val);
     /* position and speed, referred to orbital plane */
     if ((fict_ifl.val & FICT_GEO) != 0) {
-      K = SwephData.KGAUSS_GEO / Math.sqrt(sema.val); 
+      K = SwephData.KGAUSS_GEO / Math.sqrt(sema.val);
     } else {
       K = SwephData.KGAUSS / Math.sqrt(sema.val);
     }
@@ -725,7 +728,7 @@ class SwephMosh implements java.io.Serializable	{
         xp[i] += xearth[i];
       }
     } else {
-      for (i = 0; i <= 5; i++) {    
+      for (i = 0; i <= 5; i++) {
         xp[i] += xsun[i];
       }
     }
@@ -736,19 +739,26 @@ class SwephMosh implements java.io.Serializable	{
     return SweConst.OK;
   }
 
-  /* note: input parameter tjd is required for T terms in elements */
+  /**
+   * note: input parameter tjd is required for T terms in elements
+   */
   private int read_elements_file(int ipl, double tjd,
                                  DblObj tjd0, DblObj tequ,
                                  DblObj mano, DblObj sema, DblObj ecce,
                                  DblObj parg, DblObj node, DblObj incl,
                                  StringBuffer pname, IntObj fict_ifl,
                                  StringBuffer serr) {
-    int i, iline, iplan, retc, ncpos;
+    int i;
+    int iline;
+    int iplan;
+    int retc;
+    int ncpos;
     FilePtr fp = null;
-    String s, sp;
-    int spIdx=0;
+    String s;
+    String sp;
+    int spIdx = 0;
     String[] cpos = new String[20];
-    String serri="";
+    String serri = "";
     boolean elem_found = false;
     double tt = 0;
     /* -1, because file information is not saved, file is always closed */
@@ -800,29 +810,29 @@ class SwephMosh implements java.io.Serializable	{
     iplan = -1;
     try {
 //    while (fgets(s, AS_MAXCH, fp) != null)
-      while ((s=fp.readLine()) != null) {
-        s=s.trim();
+      while ((s = fp.readLine()) != null) {
+        s = s.trim();
 //        iline++;
 //        spIdx = 0;
 //        while(s.charAt(spIdx) == ' ' || s.charAt(spIdx) == '\t')
 //          spIdx++;
 //        s=s.substring(spIdx);
         sp = s;
-        spIdx=0;
-        char ch=s.charAt(spIdx);
-        if (ch == '#' || ch=='\r' || ch=='\n' || ch=='\0') {
+        spIdx = 0;
+        char ch = s.charAt(spIdx);
+        if (ch == '#' || ch == '\r' || ch == '\n' || ch == '\0') {
           continue;
         }
 //    if ((sp = strchr(s, '#')) != NULL)
 //      *sp = '\0';
         sp = null;
         if ((spIdx = s.indexOf('#')) >= 0) {
-          s = s.substring(0,s.indexOf('#'));
+          s = s.substring(0, s.indexOf('#'));
           sp = "";
         }
         ncpos = sl.swi_cutstr(s, ",", cpos, 20);
-        serri="error in file "+SweConst.SE_FICTFILE+", line "+
-              iline+":";
+        serri = "error in file " + SweConst.SE_FICTFILE + ", line " +
+            iline + ":";
         if (ncpos < 9) {
           if (serr != null) {
             serr.setLength(0);
@@ -840,8 +850,8 @@ class SwephMosh implements java.io.Serializable	{
           sp = cpos[0];
 //          for (i = 0; i < 5; i++)
 //       sp[i] = tolower(sp[i]);
-          sp=sp.length()<=5?sp.toLowerCase():
-                               sp.substring(0,5).toLowerCase()+sp.substring(5);
+          sp = sp.length() <= 5 ? sp.toLowerCase() :
+              sp.substring(0, 5).toLowerCase() + sp.substring(5);
           if (sp.startsWith("j2000")) {
             tjd0.val = SwephData.J2000;
           } else if (sp.startsWith("b1950")) {
@@ -854,7 +864,8 @@ class SwephMosh implements java.io.Serializable	{
               serr.append(serri).append(" invalid epoch");
             }
 //          goto return_err;
-            fp.close(); return SweConst.ERR;
+            fp.close();
+            return SweConst.ERR;
           } else
             tjd0.val = SwissLib.atof(sp);
           tt = tjd - tjd0.val;
@@ -862,14 +873,14 @@ class SwephMosh implements java.io.Serializable	{
         /* equinox */
         if (tequ != null) {
           sp = cpos[1];
-          spIdx=0;
-          while(sp.charAt(spIdx) == ' ' || sp.charAt(spIdx) == '\t')
+          spIdx = 0;
+          while (sp.charAt(spIdx) == ' ' || sp.charAt(spIdx) == '\t')
             spIdx++;
 //          for (i = 0; i < 5; i++)
 //       sp[i] = tolower(sp[i]);
-          sp=sp.substring(spIdx);
-          sp=sp.length()<5?sp.toLowerCase():
-                               sp.substring(0,5).toLowerCase()+sp.substring(5);
+          sp = sp.substring(spIdx);
+          sp = sp.length() < 5 ? sp.toLowerCase() :
+              sp.substring(0, 5).toLowerCase() + sp.substring(5);
           if (sp.startsWith("j2000")) {
             tequ.val = SwephData.J2000;
           } else if (sp.startsWith("b1950")) {
@@ -884,7 +895,8 @@ class SwephMosh implements java.io.Serializable	{
               serr.append(serri).append(" invalid equinox");
             }
 //          goto return_err;
-            fp.close(); return SweConst.ERR;
+            fp.close();
+            return SweConst.ERR;
           } else {
 //        *tequ = atof(sp);
             tequ.val = SwissLib.atof(sp);
@@ -899,7 +911,8 @@ class SwephMosh implements java.io.Serializable	{
               serr.append(serri).append(" mean anomaly value invalid");
             }
 //          goto return_err;
-            fp.close(); return SweConst.ERR;
+            fp.close();
+            return SweConst.ERR;
           }
           /* if mean anomaly has t terms (which happens with fictitious
            * planet Vulcan), we set
@@ -918,7 +931,8 @@ class SwephMosh implements java.io.Serializable	{
               serr.append(serri).append(" semi-axis value invalid");
             }
 //          goto return_err;
-            fp.close(); return SweConst.ERR;
+            fp.close();
+            return SweConst.ERR;
           }
         }
         /* eccentricity */
@@ -930,7 +944,8 @@ class SwephMosh implements java.io.Serializable	{
               serr.append(serri).append(" eccentricity invalid (no parabolic or hyperbolic or bits allowed)");
             }
 //          goto return_err;
-            fp.close(); return SweConst.ERR;
+            fp.close();
+            return SweConst.ERR;
           }
         }
         /* perihelion argument */
@@ -943,7 +958,8 @@ class SwephMosh implements java.io.Serializable	{
               serr.append(serri).append(" perihelion argument value invalid");
             }
 //          goto return_err;
-            fp.close(); return SweConst.ERR;
+            fp.close();
+            return SweConst.ERR;
           }
           parg.val *= SwissData.DEGTORAD;
         }
@@ -957,7 +973,8 @@ class SwephMosh implements java.io.Serializable	{
               serr.append(serri).append(" node value invalid");
             }
 //          goto return_err;
-            fp.close(); return SweConst.ERR;
+            fp.close();
+            return SweConst.ERR;
           }
           node.val *= SwissData.DEGTORAD;
         }
@@ -971,27 +988,29 @@ class SwephMosh implements java.io.Serializable	{
               serr.append(serri).append(" inclination value invalid");
             }
 //          goto return_err;
-            fp.close(); return SweConst.ERR;
+            fp.close();
+            return SweConst.ERR;
           }
           incl.val *= SwissData.DEGTORAD;
         }
         /* planet name */
         if (pname != null) {
           sp = cpos[8];
-          spIdx=0;
-          while(sp.charAt(spIdx) == ' ' || sp.charAt(spIdx) == '\t')
+          spIdx = 0;
+          while (sp.charAt(spIdx) == ' ' || sp.charAt(spIdx) == '\t')
             spIdx++;
-          sp=sp.substring(spIdx);
+          sp = sp.substring(spIdx);
 //      swi_right_trim(sp);
-          sp=sp.trim();
-          pname.setLength(0); pname.append(sp);
+          sp = sp.trim();
+          pname.setLength(0);
+          pname.append(sp);
         }
         /* geocentric */
         if (fict_ifl != null && ncpos > 9) {
 //          for (sp = cpos[9]; *sp != '\0'; sp++)
 //            *sp = tolower(*sp);
-          sp = sp.substring(0,Math.min(sp.length(),spIdx+9)) +
-               sp.substring(Math.min(sp.length(),spIdx+9)).toLowerCase();
+          sp = sp.substring(0, Math.min(sp.length(), spIdx + 9)) +
+              sp.substring(Math.min(sp.length(), spIdx + 9)).toLowerCase();
 //          if (strstr(cpos[9], "geo") != NULL)
 //            fict_ifl.val |= FICT_GEO;
           if (cpos[9].indexOf("geo") >= 0) {
@@ -1005,21 +1024,30 @@ class SwephMosh implements java.io.Serializable	{
           serr.append(serri).append(" elements for planet ").append(ipl).append(" not found");
         }
 //      goto return_err;
-        fp.close(); return SweConst.ERR;
+        fp.close();
+        return SweConst.ERR;
       }
       fp.close();
       return SweConst.OK;
-    } catch (java.io.IOException e) {
-      if (fp!=null) { try { fp.close(); } catch (java.io.IOException ie) { } }
+    } catch (IOException e) {
+      if (fp != null) {
+        try {
+          fp.close();
+        } catch (IOException ie) {
+        }
+      }
     }
     return SweConst.ERR;
   }
 
   private int check_t_terms(double t, String sinp, DblObj doutp) {
-    int i, isgn = 1, z;
+    int i;
+    int isgn = 1;
+    int z;
     int retc = 0;
     int spidx;
-    double tt[]=new double[5], fac;
+    double[] tt = new double[5];
+    double fac;
     tt[0] = t / 36525;
     tt[1] = tt[0];
     tt[2] = tt[1] * tt[1];
@@ -1029,55 +1057,55 @@ class SwephMosh implements java.io.Serializable	{
     if (sinp.indexOf('+') + sinp.indexOf('-') > -2) {
       retc = 1; /* with additional terms */
     }
-    spidx=0;
+    spidx = 0;
     doutp.val = 0;
     fac = 1;
     z = 0;
     while (true) {
-      while(spidx<sinp.length() &&
-            (sinp.charAt(spidx)==' ' || sinp.charAt(spidx)=='\t')) {
+      while (spidx < sinp.length() &&
+          (sinp.charAt(spidx) == ' ' || sinp.charAt(spidx) == '\t')) {
         spidx++;
       }
-      if (spidx==sinp.length() ||
-          sinp.charAt(spidx)=='+' || sinp.charAt(spidx)=='-') {
+      if (spidx == sinp.length() ||
+          sinp.charAt(spidx) == '+' || sinp.charAt(spidx) == '-') {
         if (z > 0) {
           doutp.val += fac;
         }
         isgn = 1;
-        if (spidx!=sinp.length() && sinp.charAt(spidx) == '-') {
+        if (spidx != sinp.length() && sinp.charAt(spidx) == '-') {
           isgn = -1;
         }
         fac = 1 * isgn;
-        if (spidx==sinp.length()) {
+        if (spidx == sinp.length()) {
           return retc;
         }
         spidx++;
       } else {
-        while(spidx<sinp.length() &&
-              (sinp.charAt(spidx)=='*' || sinp.charAt(spidx)==' '
-              || sinp.charAt(spidx)=='\t')) {
+        while (spidx < sinp.length() &&
+            (sinp.charAt(spidx) == '*' || sinp.charAt(spidx) == ' '
+                || sinp.charAt(spidx) == '\t')) {
           spidx++;
         }
-        if (spidx<sinp.length() &&
-            (sinp.charAt(spidx)=='t' || sinp.charAt(spidx)=='T')) {
-                /* a T */
+        if (spidx < sinp.length() &&
+            (sinp.charAt(spidx) == 't' || sinp.charAt(spidx) == 'T')) {
+          /* a T */
           spidx++;
-          if (spidx<sinp.length() &&
-              (sinp.charAt(spidx)=='+' || sinp.charAt(spidx)=='-')) {
+          if (spidx < sinp.length() &&
+              (sinp.charAt(spidx) == '+' || sinp.charAt(spidx) == '-')) {
             fac *= tt[0];
-          } else if ((i = SwissLib.atoi(sinp.substring(Math.min(sinp.length(),spidx)))) <= 4 && i >= 0) {
+          } else if ((i = SwissLib.atoi(sinp.substring(Math.min(sinp.length(), spidx)))) <= 4 && i >= 0) {
             fac *= tt[i];
           }
         } else {
           /* a number */
-          double db=SwissLib.atof(sinp.substring(spidx));
-          if (db!=0 || sinp.charAt(spidx)=='0') {
+          double db = SwissLib.atof(sinp.substring(spidx));
+          if (db != 0 || sinp.charAt(spidx) == '0') {
             fac *= db;
           }
         }
-        while (spidx<sinp.length() &&
-               (Character.isDigit(sinp.charAt(spidx)) ||
-                sinp.charAt(spidx)=='.'))
+        while (spidx < sinp.length() &&
+            (Character.isDigit(sinp.charAt(spidx)) ||
+                sinp.charAt(spidx) == '.'))
           spidx++;
       }
       z++;
@@ -1085,14 +1113,14 @@ class SwephMosh implements java.io.Serializable	{
   }
 
   private final Plantbl[] planets = {
-    SwemptabMer.mer404,
-    SwemptabVen.ven404,
-    SwemptabEar.ear404,
-    SwemptabMar.mar404,
-    SwemptabJup.jup404,
-    SwemptabSat.sat404,
-    SwemptabUra.ura404,
-    SwemptabNep.nep404,
-    SwemptabPlu.plu404,
+      SwemptabMer.mer404,
+      SwemptabVen.ven404,
+      SwemptabEar.ear404,
+      SwemptabMar.mar404,
+      SwemptabJup.jup404,
+      SwemptabSat.sat404,
+      SwemptabUra.ura404,
+      SwemptabNep.nep404,
+      SwemptabPlu.plu404,
   };
 }

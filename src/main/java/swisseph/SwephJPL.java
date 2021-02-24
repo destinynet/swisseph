@@ -84,28 +84,28 @@ import java.io.IOException;
 import java.io.Serializable;
 
 class SwephJPL implements Serializable {
-  static final int J_MERCURY =  0;
-  static final int J_VENUS   =  1;
-  static final int J_EARTH   =  2;
-  static final int J_MARS    =  3;
-  static final int J_JUPITER =  4;
-  static final int J_SATURN  =  5;
-  static final int J_URANUS  =  6;
-  static final int J_NEPTUNE =  7;
-  static final int J_PLUTO   =  8;
-  static final int J_MOON    =  9;
-  static final int J_SUN     = 10;
-  static final int J_SBARY   = 11;
-  static final int J_EMB     = 12;
-  static final int J_NUT     = 13;
-  static final int J_LIB     = 14;
+  static final int J_MERCURY = 0;
+  static final int J_VENUS = 1;
+  static final int J_EARTH = 2;
+  static final int J_MARS = 3;
+  static final int J_JUPITER = 4;
+  static final int J_SATURN = 5;
+  static final int J_URANUS = 6;
+  static final int J_NEPTUNE = 7;
+  static final int J_PLUTO = 8;
+  static final int J_MOON = 9;
+  static final int J_SUN = 10;
+  static final int J_SBARY = 11;
+  static final int J_EMB = 12;
+  static final int J_NUT = 13;
+  static final int J_LIB = 14;
 
   JplSave js = new JplSave();
 
 
-  SwissEph  sw;
+  SwissEph sw;
   SwissData swed;
-  SwissLib  sl;
+  SwissLib sl;
 
 
   SwephJPL(SwissEph sw, SwissData swed, SwissLib sl) {
@@ -124,7 +124,7 @@ class SwephJPL implements Serializable {
   }
 
 
-  /*
+  /**
    * This subroutine opens the file jplfname, with a phony record length,
    * reads the first record, and uses the info to compute ksize,
    * the number of single precision words in a record.
@@ -139,10 +139,10 @@ class SwephJPL implements Serializable {
     int ncon;
     double emrat;
     int numde;
-    double au, ss[]=new double[3];
+    double au, ss[] = new double[3];
     int i, kmx, khi, nd;
     int ksize, lpt[] = new int[3];
-    String ttl="";  // JAVA: Not used???
+    String ttl = "";  // JAVA: Not used???
     try {
       // throws SwissephException, if null or maybe for other reasons:
       js.jplfptr = sw.swi_fopen(SwephData.SEI_FILE_PLANET, js.jplfname, js.jplfpath, serr);
@@ -151,27 +151,27 @@ class SwephJPL implements Serializable {
        *  Start Epoch: JED=   625296.5-3001 DEC 21 00:00:00
        *  Final Epoch: JED=  2817168.5 3001 JAN 17 00:00:00c */
 //    fread((void *) &ttl[0], 1, 252, js->jplfptr);
-      for(int m=0; m<252; m++) {
-        ttl+=(char)js.jplfptr.readByte();
+      for (int m = 0; m < 252; m++) {
+        ttl += (char) js.jplfptr.readByte();
       }
-    /* cnam = names of constants */
+      /* cnam = names of constants */
 //    fread((void *) js->ch_cnam, 1, 6*400, js->jplfptr);
-      for(int m=0; m<6*400; m++) {
-        ttl+=(char)js.jplfptr.readByte();
+      for (int m = 0; m < 6 * 400; m++) {
+        ttl += (char) js.jplfptr.readByte();
       }
       /* ss[0] = start epoch of ephemeris
        * ss[1] = end epoch
        * ss[2] = segment size in days */
 //    fread((void *) &ss[0], sizeof(double), 3, js->jplfptr);
-      for(int m=0; m<3; m++) {
-        ss[m]=js.jplfptr.readDouble();
+      for (int m = 0; m < 3; m++) {
+        ss[m] = js.jplfptr.readDouble();
       }
       /* reorder ? */
       if (ss[2] < 1 || ss[2] > 200) {
         js.jplfptr.setBigendian(false);
-        js.jplfptr.seek(js.jplfptr.getFilePointer()-3*8);
-        for(int m=0; m<3; m++) {
-          ss[m]=js.jplfptr.readDouble();
+        js.jplfptr.seek(js.jplfptr.getFilePointer() - 3 * 8);
+        for (int m = 0; m < 3; m++) {
+          ss[m] = js.jplfptr.readDouble();
         }
       } else {
         js.jplfptr.setBigendian(true);
@@ -180,40 +180,40 @@ class SwephJPL implements Serializable {
         js.eh_ss[i] = ss[i];
 //    if (js.do_reorder)
 //      reorder((char *) &js->eh_ss[0], sizeof(double), 3);
-  /* plausibility test of these constants. Start and end date must be
-   * between -20000 and +20000, segment size >= 1 and <= 200 */
+      /* plausibility test of these constants. Start and end date must be
+       * between -20000 and +20000, segment size >= 1 and <= 200 */
       if (js.eh_ss[0] < -5583942 || js.eh_ss[1] > 9025909 || js.eh_ss[2] < 1 || js.eh_ss[2] > 200) {
-        throw new SwissephException(1./0., SwissephException.OUT_OF_TIME_RANGE,
+        throw new SwissephException(1. / 0., SwissephException.OUT_OF_TIME_RANGE,
             SwephData.NOT_AVAILABLE,
             "alleged ephemeris file (" + js.jplfname + ") has invalid format.");
       }
       /* ncon = number of constants */
 //    fread((void *) &ncon, sizeof(long), 1, js->jplfptr);
-      ncon=js.jplfptr.readInt();
+      ncon = js.jplfptr.readInt();
 //    if (js->do_reorder)
 //      reorder((char *) &ncon, sizeof(long), 1);
       /* au = astronomical unit */
 //    fread((void *) &au, sizeof(double), 1, js->jplfptr);
-      au=js.jplfptr.readDouble();
+      au = js.jplfptr.readDouble();
 //    if (js->do_reorder)
 //      reorder((char *) &au, sizeof(double), 1);
       /* emrat = earth moon mass ratio */
 //    fread((void *) &emrat, sizeof(double), 1, js->jplfptr);
-      emrat=js.jplfptr.readDouble();
+      emrat = js.jplfptr.readDouble();
 //    if (js->do_reorder)
 //      reorder((char *) &emrat, sizeof(double), 1);
       /* ipt[i+0]: coefficients of planet i start at buf[ipt[i+0]-1]
        * ipt[i+1]: number of coefficients (interpolation order - 1)
        * ipt[i+2]: number of intervals in segment */
 //    fread((void *) &js->eh_ipt[0], sizeof(long), 36, js->jplfptr);
-      for(int m=0; m<36; m++) {
-        js.eh_ipt[m]=js.jplfptr.readInt();
+      for (int m = 0; m < 36; m++) {
+        js.eh_ipt[m] = js.jplfptr.readInt();
       }
 //    if (js->do_reorder)
 //      reorder((char *) &js->eh_ipt[0], sizeof(long), 36);
       /* numde = number of jpl ephemeris "404" with de404 */
 //    fread((void *) &numde, sizeof(long), 1, js->jplfptr);
-        numde=js.jplfptr.readInt();
+      numde = js.jplfptr.readInt();
 //    if (js->do_reorder)
 //      reorder((char *) &numde, sizeof(long), 1);
       /* read librations */
@@ -241,7 +241,7 @@ class SwephJPL implements Serializable {
       } else {
         nd = 3;
       }
-      ksize = (int)((js.eh_ipt[khi * 3 - 3] + nd * js.eh_ipt[khi * 3 - 2] * js.eh_ipt[khi * 3 - 1] - 1L) * 2L);
+      ksize = (int) ((js.eh_ipt[khi * 3 - 3] + nd * js.eh_ipt[khi * 3 - 2] * js.eh_ipt[khi * 3 - 1] - 1L) * 2L);
       /*
        * de102 files give wrong ksize, because they contain 424 empty bytes
        * per record. Fixed by hand!
@@ -250,7 +250,7 @@ class SwephJPL implements Serializable {
         ksize = 1652;
       }
     } catch (IOException ioe) {
-      throw new SwissephException(1./0., SwissephException.FILE_READ_ERROR,
+      throw new SwissephException(1. / 0., SwissephException.FILE_READ_ERROR,
           SweConst.ERR, ioe.getMessage());
     } catch (SwissephException se) {
       throw se;
@@ -260,48 +260,48 @@ class SwephJPL implements Serializable {
         serr.setLength(0);
         serr.append("JPL ephemeris file does not provide valid ksize (").append(ksize).append(")");/**/
       }
-      throw new SwissephException(1./0., SwissephException.DAMAGED_FILE_ERROR,
+      throw new SwissephException(1. / 0., SwissephException.DAMAGED_FILE_ERROR,
           SwephData.NOT_AVAILABLE, serr);
     }
     return ksize;
   }
 
-  /*
-   *     This subroutine reads the jpl planetary ephemeris
-   *     and gives the position and velocity of the point 'ntarg'
-   *     with respect to 'ncent'.
-   *     calling sequence parameters:
-   *       et = d.p. julian ephemeris date at which interpolation
-   *            is wanted.
-   *       ** note the entry dpleph for a doubly-dimensioned time **
-   *          the reason for this option is discussed in the
-   *          subroutine state
-   *     ntarg = integer number of 'target' point.
-   *     ncent = integer number of center point.
-   *            the numbering convention for 'ntarg' and 'ncent' is:
-   *                0 = mercury           7 = neptune
-   *                1 = venus             8 = pluto
-   *                2 = earth             9 = moon
-   *                3 = mars             10 = sun
-   *                4 = jupiter          11 = solar-system barycenter
-   *                5 = saturn           12 = earth-moon barycenter
-   *                6 = uranus           13 = nutations (longitude and obliq)
-   *                                     14 = librations, if on eph file
-   *             (if nutations are wanted, set ntarg = 13. for librations,
-   *              set ntarg = 14. set ncent=0.)
-   *      rrd = output 6-word d.p. array containing position and velocity
-   *            of point 'ntarg' relative to 'ncent'. the units are au and
-   *            au/day. for librations the units are radians and radians
-   *            per day. in the case of nutations the first four words of
-   *            rrd will be set to nutations and rates, having units of
-   *            radians and radians/day.
-   *            The option is available to have the units in km and km/sec.
-   *            For this, set do_km=TRUE (default FALSE).
+  /**
+   * This subroutine reads the jpl planetary ephemeris
+   * and gives the position and velocity of the point 'ntarg'
+   * with respect to 'ncent'.
+   * calling sequence parameters:
+   * et = d.p. julian ephemeris date at which interpolation
+   * is wanted.
+   * ** note the entry dpleph for a doubly-dimensioned time **
+   * the reason for this option is discussed in the
+   * subroutine state
+   * ntarg = integer number of 'target' point.
+   * ncent = integer number of center point.
+   * the numbering convention for 'ntarg' and 'ncent' is:
+   * 0 = mercury           7 = neptune
+   * 1 = venus             8 = pluto
+   * 2 = earth             9 = moon
+   * 3 = mars             10 = sun
+   * 4 = jupiter          11 = solar-system barycenter
+   * 5 = saturn           12 = earth-moon barycenter
+   * 6 = uranus           13 = nutations (longitude and obliq)
+   * 14 = librations, if on eph file
+   * (if nutations are wanted, set ntarg = 13. for librations,
+   * set ntarg = 14. set ncent=0.)
+   * rrd = output 6-word d.p. array containing position and velocity
+   * of point 'ntarg' relative to 'ncent'. the units are au and
+   * au/day. for librations the units are radians and radians
+   * per day. in the case of nutations the first four words of
+   * rrd will be set to nutations and rates, having units of
+   * radians and radians/day.
+   * The option is available to have the units in km and km/sec.
+   * For this, set do_km=TRUE (default FALSE).
    */
   int swi_pleph(double et, int ntarg, int ncent, double[] rrd,
                 StringBuffer serr) throws SwissephException {
     int i, retc;
-    int[] list =new int[12];
+    int[] list = new int[12];
     double[] pv = js.pv;
     double[] pvsun = js.pvsun;
     for (i = 0; i < 6; ++i)
@@ -315,7 +315,7 @@ class SwephJPL implements Serializable {
     if (ntarg == J_NUT) {
       if (js.eh_ipt[34] > 0) {
         list[10] = 2;
-        return(state(et, list, false, pv, pvsun, rrd, serr));
+        return (state(et, list, false, pv, pvsun, rrd, serr));
       } else {
         if (serr != null) {
           serr.setLength(0);
@@ -372,29 +372,29 @@ class SwephJPL implements Serializable {
     retc = state(et, list, true, pv, pvsun, rrd, serr);
     if (ntarg == J_SUN || ncent == J_SUN) {
       for (i = 0; i < 6; ++i)
-        pv[i + 6*J_SUN] = pvsun[i];
+        pv[i + 6 * J_SUN] = pvsun[i];
     }
     if (ntarg == J_SBARY || ncent == J_SBARY) {
       for (i = 0; i < 6; ++i) {
-        pv[i + 6*J_SBARY] = 0.;
+        pv[i + 6 * J_SBARY] = 0.;
       }
     }
     if (ntarg == J_EMB || ncent == J_EMB) {
       for (i = 0; i < 6; ++i)
-        pv[i + 6*J_EMB] = pv[i + 6*J_EARTH];
+        pv[i + 6 * J_EMB] = pv[i + 6 * J_EARTH];
     }
-    if ((ntarg==J_EARTH && ncent==J_MOON) || (ntarg == J_MOON && ncent==J_EARTH)){
+    if ((ntarg == J_EARTH && ncent == J_MOON) || (ntarg == J_MOON && ncent == J_EARTH)) {
       for (i = 0; i < 6; ++i)
-        pv[i + 6*J_EARTH] = 0.;
+        pv[i + 6 * J_EARTH] = 0.;
 
     } else {
       if (list[J_EARTH] == 2) {
         for (i = 0; i < 6; ++i)
-          pv[i + 6*J_EARTH] -= pv[i + 6*J_MOON] / (js.eh_emrat + 1.);
+          pv[i + 6 * J_EARTH] -= pv[i + 6 * J_MOON] / (js.eh_emrat + 1.);
       }
       if (list[J_MOON] == 2) {
         for (i = 0; i < 6; ++i) {
-          pv[i + 6*J_MOON] += pv[i + 6*J_EARTH];
+          pv[i + 6 * J_MOON] += pv[i + 6 * J_EARTH];
         }
       }
     }
@@ -403,7 +403,7 @@ class SwephJPL implements Serializable {
     return SweConst.OK;
   }
 
-  /*
+  /**
    *  This subroutine differentiates and interpolates a
    *  set of chebyshev coefficients to give pos, vel, acc, and jerk
    *  calling sequence parameters:
@@ -424,12 +424,15 @@ class SwephJPL implements Serializable {
    *      pv   d.p. interpolated quantities requested.
    *           assumed dimension is pv(ncm,fl).
    */
-  /* Initialized data */
+  /**
+   * Initialized data
+   */
   int np_interp;
   int nv_interp;
   int nac_interp;
   int njk_interp;
   double twot = 0.;
+
   private int interp(double[] buf, int bufOffs, double t, double intv,
                      int ncfin, int ncmin, int nain, int ifl, double[] pv,
                      int pvOffs) {
@@ -438,15 +441,19 @@ class SwephJPL implements Serializable {
     double[] vc = js.vc;
     double[] ac = js.ac;
     double[] jc = js.jc;
-    int ncf = (int) ncfin;
-    int ncm = (int) ncmin;
-    int na = (int) nain;
+    int ncf = ncfin;
+    int ncm = ncmin;
+    int na = nain;
     /* Local variables */
     double temp;
-    int i, j, ni;
+    int i;
+    int j;
+    int ni;
     double tc;
-    double dt1, bma;
-    double bma2, bma3;
+    double dt1;
+    double bma;
+    double bma2;
+    double bma3;
     /*
      | get correct sub-interval number for this set of coefficients and then
      | get normalized chebyshev time within that subinterval.
@@ -486,7 +493,7 @@ class SwephJPL implements Serializable {
     /*  interpolate to get position for each component */
     for (i = 0; i < ncm; ++i) {
       pv[pvOffs + i] = 0.;
-      for (j = ncf-1; j >= 0; --j)
+      for (j = ncf - 1; j >= 0; --j)
         pv[pvOffs + i] += pc[j] * buf[bufOffs + j + (i + ni * ncm) * ncf];
     }
     if (ifl <= 1) {
@@ -506,7 +513,7 @@ class SwephJPL implements Serializable {
     /*       interpolate to get velocity for each component */
     for (i = 0; i < ncm; ++i) {
       pv[pvOffs + i + ncm] = 0.;
-      for (j = ncf-1; j >= 1; --j)
+      for (j = ncf - 1; j >= 1; --j)
         pv[pvOffs + i + ncm] += vc[j] * buf[bufOffs + j + (i + ni * ncm) * ncf];
       pv[pvOffs + i + ncm] *= bma;
     }
@@ -525,7 +532,7 @@ class SwephJPL implements Serializable {
     /*       get acceleration for each component */
     for (i = 0; i < ncm; ++i) {
       pv[pvOffs + i + ncm * 2] = 0.;
-      for (j = ncf-1; j >= 2; --j)
+      for (j = ncf - 1; j >= 2; --j)
         pv[pvOffs + i + ncm * 2] += ac[j] * buf[bufOffs + j + (i + ni * ncm) * ncf];
       pv[pvOffs + i + ncm * 2] *= bma2;
     }
@@ -544,7 +551,7 @@ class SwephJPL implements Serializable {
     /*       get jerk for each component */
     for (i = 0; i < ncm; ++i) {
       pv[pvOffs + i + ncm * 3] = 0.;
-      for (j = ncf-1; j >= 3; --j)
+      for (j = ncf - 1; j >= 3; --j)
         pv[pvOffs + i + ncm * 3] += jc[j] * buf[bufOffs + j + (i + ni * ncm) * ncf];
       pv[pvOffs + i + ncm * 3] *= bma3;
     }
@@ -612,11 +619,11 @@ class SwephJPL implements Serializable {
    */
   int irecsz_state;
   int nrl_state;
-  int[] lpt_state =new int[3];
+  int[] lpt_state = new int[3];
   int ncoeffs_state;
+
   private int state(double et, int[] list, boolean do_bary, double[] pv,
-                    double[] pvsun, double[] nut, StringBuffer serr)
-      throws SwissephException {
+                    double[] pvsun, double[] nut, StringBuffer serr) throws SwissephException {
     int i;
     int j;
     int k;
@@ -624,10 +631,10 @@ class SwephJPL implements Serializable {
     long flen;
     long nb;
     double[] buf = js.buf;
-    double aufac=0.;
+    double aufac = 0.;
     double s;
-    double t=0.;
-    double intv=0.;
+    double t = 0.;
+    double intv = 0.;
     double[] ts = new double[4];
     int nrecl;
     int ksize;
@@ -635,8 +642,8 @@ class SwephJPL implements Serializable {
     double et_mn;
     double et_fr;
     int[] ipt = js.eh_ipt;
-    String ch_ttl="";
-    boolean ferr=false;
+    String ch_ttl = "";
+    boolean ferr = false;
     try {
       if (js.jplfptr == null ||
           (js.jplfptr.fp == null && js.jplfptr.sk == null)) {
@@ -653,55 +660,55 @@ class SwephJPL implements Serializable {
          *  Start Epoch: JED=   625296.5-3001 DEC 21 00:00:00
          *  Final Epoch: JED=  2817168.5 3001 JAN 17 00:00:00c */
 //      fread((void *) ch_ttl, 1, 252, js->jplfptr);
-        for(int m=0;m<252;m++) {
-          ch_ttl+=(char)js.jplfptr.readByte();
+        for (int m = 0; m < 252; m++) {
+          ch_ttl += (char) js.jplfptr.readByte();
         }
         /* cnam = names of constants */
 //      fread((void *) js.ch_cnam, 1, 2400, js.jplfptr);
-        for(int m=0;m<2400;m++) {
-          js.ch_cnam+=(char)js.jplfptr.readByte();
+        for (int m = 0; m < 2400; m++) {
+          js.ch_cnam += (char) js.jplfptr.readByte();
         }
         /* ss[0] = start epoch of ephemeris
          * ss[1] = end epoch
          * ss[2] = segment size in days */
 //      fread((void *) &js.eh_ss[0], sizeof(double), 3, js.jplfptr);
-        for(int m=0;m<3;m++) {
-          js.eh_ss[m]=js.jplfptr.readDouble();
+        for (int m = 0; m < 3; m++) {
+          js.eh_ss[m] = js.jplfptr.readDouble();
         }
 //      if (js.do_reorder)
 //        reorder((char *) &js.eh_ss[0], sizeof(double), 3);
         /* ncon = number of constants */
 //      fread((void *) &js.eh_ncon, sizeof(long), 1, js.jplfptr);
-        js.eh_ncon=js.jplfptr.readInt();
+        js.eh_ncon = js.jplfptr.readInt();
 //      if (js.do_reorder)
 //        reorder((char *) &js.eh_ncon, sizeof(long), 1);
         /* au = astronomical unit */
 //      fread((void *) &js.eh_au, sizeof(double), 1, js.jplfptr);
-        js.eh_au=js.jplfptr.readDouble();
+        js.eh_au = js.jplfptr.readDouble();
 //      if (js.do_reorder)
 //        reorder((char *) &js.eh_au, sizeof(double), 1);
         /* emrat = earth moon mass ratio */
 //      fread((void *) &js.eh_emrat, sizeof(double), 1, js.jplfptr);
-        js.eh_emrat=js.jplfptr.readDouble();
+        js.eh_emrat = js.jplfptr.readDouble();
 //      if (js.do_reorder)
 //        reorder((char *) &js.eh_emrat, sizeof(double), 1);
         /* ipt[i+0]: coefficients of planet i start at buf[ipt[i+0]-1]
          * ipt[i+1]: number of coefficients (interpolation order - 1)
          * ipt[i+2]: number of intervals in segment */
 //      fread((void *) &ipt[0], sizeof(long), 36, js.jplfptr);
-        for(int m=0;m<36;m++) {
-          ipt[m]=js.jplfptr.readInt();
+        for (int m = 0; m < 36; m++) {
+          ipt[m] = js.jplfptr.readInt();
         }
 //      if (js.do_reorder)
 //        reorder((char *) &ipt[0], sizeof(long), 36);
         /* numde = number of jpl ephemeris "404" with de404 */
 //      fread((void *) &js.eh_denum, sizeof(long), 1, js.jplfptr);
-        js.eh_denum=js.jplfptr.readInt();
+        js.eh_denum = js.jplfptr.readInt();
 //      if (js.do_reorder)
 //        reorder((char *) &js.eh_denum, sizeof(long), 1);
 //      fread((void *) &lpt[0], sizeof(long), 3, js.jplfptr);
-        for(int m=0;m<3;m++) {
-          lpt_state[m]=js.jplfptr.readInt();
+        for (int m = 0; m < 3; m++) {
+          lpt_state[m] = js.jplfptr.readInt();
         }
 //      if (js.do_reorder)
 //        reorder((char *) &lpt[0], sizeof(long), 3);
@@ -709,8 +716,8 @@ class SwephJPL implements Serializable {
 //      FSEEK(js.jplfptr, (off_t) (1L * irecsz), 0);
         js.jplfptr.seek(1L * irecsz_state);
 //      fread((void *) &js.eh_cval[0], sizeof(double), 400, js.jplfptr);
-        for(int m=0;m<400;m++) {
-          js.eh_cval[m]=js.jplfptr.readDouble();
+        for (int m = 0; m < 400; m++) {
+          js.eh_cval[m] = js.jplfptr.readDouble();
         }
 //      if (js.do_reorder)
 //        reorder((char *) &js.eh_cval[0], sizeof(double), 400);
@@ -723,16 +730,16 @@ class SwephJPL implements Serializable {
 //      FSEEK(js->jplfptr, (off_t) 0L, SEEK_END);
         js.jplfptr.seek(js.jplfptr.length());
 //      flen = FTELL(js->jplfptr);
-        flen=js.jplfptr.length();
+        flen = js.jplfptr.length();
         /* # of segments in file */
         nseg = (int) ((js.eh_ss[1] - js.eh_ss[0]) / js.eh_ss[2]);
         /* sum of all cheby coeffs of all planets and segments */
-        for(i = 0, nb = 0; i < 13; i++) {
+        for (i = 0, nb = 0; i < 13; i++) {
           k = 3;
           if (i == 11) {
             k = 2;
           }
-          nb += (ipt[i*3+1] * ipt[i*3+2]) * k * nseg;
+          nb += (ipt[i * 3 + 1] * ipt[i * 3 + 2]) * k * nseg;
         }
         /* add start and end epochs of segments */
         nb += 2 * nseg;
@@ -741,15 +748,15 @@ class SwephJPL implements Serializable {
         /* add size of header and constants section */
         nb += 2 * ksize * nrecl;
         if (flen != nb
-          /* some of our files are one record too long */
-          && flen - nb != ksize * nrecl
-          ) {
+            /* some of our files are one record too long */
+            && flen - nb != ksize * nrecl
+        ) {
           if (serr != null) {
             serr.setLength(0);
-            serr.append("JPL ephemeris file is mutilated; length = "+flen+" instead of "+nb+".");
+            serr.append("JPL ephemeris file is mutilated; length = " + flen + " instead of " + nb + ".");
             if (serr.length() + js.jplfname.length() < SwissData.AS_MAXCH - 1) {
               serr.setLength(0);
-              serr.append("JPL ephemeris file "+js.jplfname+" is mutilated; length = "+flen+" instead of "+nb+".");
+              serr.append("JPL ephemeris file " + js.jplfname + " is mutilated; length = " + flen + " instead of " + nb + ".");
             }
           }
           throw new SwissephException(et, SwissephException.FILE_READ_ERROR,
@@ -760,15 +767,15 @@ class SwephJPL implements Serializable {
 //      FSEEK(js->jplfptr, (off_t) (2L * irecsz), 0);
         js.jplfptr.seek(2L * irecsz_state);
 //      fread((void *) &ts[0], sizeof(double), 2, js->jplfptr);
-        ts[0]=js.jplfptr.readDouble();
-        ts[1]=js.jplfptr.readDouble();
+        ts[0] = js.jplfptr.readDouble();
+        ts[1] = js.jplfptr.readDouble();
 //      if (js->do_reorder)
 //        reorder((char *) &ts[0], sizeof(double), 2);
 //      FSEEK(js->jplfptr, (off_t) ((nseg + 2 - 1) * ((off_t) irecsz)), 0);
-        js.jplfptr.seek((long)(nseg + 2 - 1) * (long)irecsz_state);
+        js.jplfptr.seek((long) (nseg + 2 - 1) * (long) irecsz_state);
 //      fread((void *) &ts[2], sizeof(double), 2, js->jplfptr);
-        ts[2]=js.jplfptr.readDouble();
-        ts[3]=js.jplfptr.readDouble();
+        ts[2] = js.jplfptr.readDouble();
+        ts[3] = js.jplfptr.readDouble();
 //      if (js->do_reorder)
 //        reorder((char *) &ts[2], sizeof(double), 2);
         if (ts[0] != js.eh_ss[0] || ts[3] != js.eh_ss[1]) {
@@ -791,7 +798,7 @@ class SwephJPL implements Serializable {
       if (et < js.eh_ss[0] || et > js.eh_ss[1]) {
         if (serr != null) {
           serr.setLength(0);
-          serr.append("jd "+et+" outside JPL eph. range "+js.eh_ss[0]+" .. "+js.eh_ss[1]+";");
+          serr.append("jd " + et + " outside JPL eph. range " + js.eh_ss[0] + " .. " + js.eh_ss[1] + ";");
         }
         throw new SwissephException(et, SwissephException.OUT_OF_TIME_RANGE,
             SwephData.BEYOND_EPH_LIMITS, serr);
@@ -810,11 +817,11 @@ class SwephJPL implements Serializable {
 //          sprintf(serr, "Read error in JPL eph. at %f\n", et);
 //        return NOT_AVAILABLE;
 //      }
-        js.jplfptr.seek((long)nr * (long)irecsz_state);
+        js.jplfptr.seek((long) nr * (long) irecsz_state);
         for (k = 1; k <= ncoeffs_state; ++k) {
 //        if ( fread((void *) &buf[k - 1], sizeof(double), 1, js.jplfptr) != 1) {
 
-          buf[k - 1]=js.jplfptr.readDouble();
+          buf[k - 1] = js.jplfptr.readDouble();
 //        }
 //        if (js.do_reorder)
 //          reorder((char *) &buf[k-1], sizeof(double), 1);
@@ -829,31 +836,31 @@ class SwephJPL implements Serializable {
       }
       /*   interpolate ssbary sun */
     } catch (java.io.EOFException ie) {
-      ferr=true;
+      ferr = true;
     } catch (IOException ie) {
-      ferr=true;
+      ferr = true;
     } catch (SwissephException se) {
       throw se;
     }
     if (ferr) {
       if (serr != null) {
         serr.setLength(0);
-        serr.append("Read error in JPL eph. at "+et+"\n");
+        serr.append("Read error in JPL eph. at " + et + "\n");
       }
       throw new SwissephException(et, SwissephException.FILE_READ_ERROR,
           SwephData.NOT_AVAILABLE, serr);
     }
-    interp(buf, (int) ipt[30] - 1, t, intv, ipt[31], 3, ipt[32], 2, pvsun, 0);
+    interp(buf, ipt[30] - 1, t, intv, ipt[31], 3, ipt[32], 2, pvsun, 0);
     for (i = 0; i < 6; ++i) {
       pvsun[i] *= aufac;
     }
     /*   check and interpolate whichever bodies are requested */
     for (i = 0; i < 10; ++i) {
       if (list[i] > 0) {
-        interp(buf, (int) ipt[i * 3] - 1, t, intv, ipt[i * 3 + 1], 3,
-               ipt[i * 3 + 2], list[i], pv, i * 6);
+        interp(buf, ipt[i * 3] - 1, t, intv, ipt[i * 3 + 1], 3,
+            ipt[i * 3 + 2], list[i], pv, i * 6);
         for (j = 0; j < 6; ++j) {
-          if (i < 9 && ! do_bary) {
+          if (i < 9 && !do_bary) {
             pv[j + i * 6] = pv[j + i * 6] * aufac - pvsun[j];
           } else {
             pv[j + i * 6] *= aufac;
@@ -863,13 +870,13 @@ class SwephJPL implements Serializable {
     }
     /*       do nutations if requested (and if on file) */
     if (list[10] > 0 && ipt[34] > 0) {
-      interp(buf, (int) ipt[33] - 1, t, intv, ipt[34], 2, ipt[35],
-               list[10], nut, 0);
+      interp(buf, ipt[33] - 1, t, intv, ipt[34], 2, ipt[35],
+          list[10], nut, 0);
     }
     /*       get librations if requested (and if on file) */
     if (list[11] > 0 && ipt[37] > 0) {
-      interp(buf, (int) ipt[36] - 1, t, intv, ipt[37], 3, ipt[38], list[1],
-              pv, 60);
+      interp(buf, ipt[36] - 1, t, intv, ipt[37], 3, ipt[38], list[1],
+          pv, 60);
     }
     return SweConst.OK;
   }
@@ -878,7 +885,7 @@ class SwephJPL implements Serializable {
    *  this entry obtains the constants from the ephemeris file
    *  call state to initialize the ephemeris and read in the constants
    */
-  private int read_const_jpl(double[] ss,  StringBuffer serr) throws SwissephException {
+  private int read_const_jpl(double[] ss, StringBuffer serr) throws SwissephException {
     int i;
     // throws SwissephException if !SweConst.OK:
     state(0.0, null, false, null, null, null, serr);
@@ -908,7 +915,7 @@ class SwephJPL implements Serializable {
         if (js.jplfptr != null) {
           js.jplfptr.close();
         }
-      } catch (IOException e) {
+      } catch (IOException ignored) {
       }
       if (js.jplfname != null) {
         js.jplfname = null;
@@ -921,13 +928,13 @@ class SwephJPL implements Serializable {
   }
 
   int swi_open_jpl_file(double[] ss, String fname, String fpath,
-                                StringBuffer serr) throws SwissephException {
+                        StringBuffer serr) throws SwissephException {
     int retc = SweConst.OK;
     /* if open, return */
     if (js != null && js.jplfptr != null) {
       return SweConst.OK;
     }
-    js=new JplSave();
+    js = new JplSave();
 /*
     if ((js = (struct jpl_save *) CALLOC(1, sizeof(struct jpl_save))) == null
       || (js.jplfname = MALLOC(strlen(fname)+1)) == null
@@ -938,8 +945,8 @@ class SwephJPL implements Serializable {
       return SweConst.ERR;
     }
 */
-    js.jplfname=fname;
-    js.jplfpath=fpath;
+    js.jplfname = fname;
+    js.jplfpath = fpath;
     try {
       retc = read_const_jpl(ss, serr);
     } catch (SwissephException se) {
@@ -967,38 +974,41 @@ class SwephJPL implements Serializable {
     FilePtr fp = null;
     try {
       fp = sw.swi_fopen(SwephData.SEI_FILE_PLANET, fname, swed.ephepath, null);
-      fp.seek(252+6*400);
+      fp.seek(252 + 6 * 400);
       start = fp.readDouble();
       end = fp.readDouble();
       double reorder = fp.readDouble();
       /* reorder ? */
       if (reorder < 1 || reorder > 200) {
-        long val=Double.doubleToLongBits(start);
-        val = (( val & 0x00000000000000ffL ) << 56) +
-              (( val & 0x000000000000ff00L ) << 40) +
-              (( val & 0x0000000000ff0000L ) << 24) +
-              (( val & 0x00000000ff000000L ) <<  8) +
-              (( val & 0x000000ff00000000L ) >>  8) +
-              (( val & 0x0000ff0000000000L ) >> 24) +
-              (( val & 0x00ff000000000000L ) >> 40) +
-              (( val & 0xff00000000000000L ) >> 56);
+        long val = Double.doubleToLongBits(start);
+        val = ((val & 0x00000000000000ffL) << 56) +
+            ((val & 0x000000000000ff00L) << 40) +
+            ((val & 0x0000000000ff0000L) << 24) +
+            ((val & 0x00000000ff000000L) << 8) +
+            ((val & 0x000000ff00000000L) >> 8) +
+            ((val & 0x0000ff0000000000L) >> 24) +
+            ((val & 0x00ff000000000000L) >> 40) +
+            ((val & 0xff00000000000000L) >> 56);
         start = Double.longBitsToDouble(val);
-        val=Double.doubleToLongBits(end);
-        val = (( val & 0x00000000000000ffL ) << 56) +
-              (( val & 0x000000000000ff00L ) << 40) +
-              (( val & 0x0000000000ff0000L ) << 24) +
-              (( val & 0x00000000ff000000L ) <<  8) +
-              (( val & 0x000000ff00000000L ) >>  8) +
-              (( val & 0x0000ff0000000000L ) >> 24) +
-              (( val & 0x00ff000000000000L ) >> 40) +
-              (( val & 0xff00000000000000L ) >> 56);
+        val = Double.doubleToLongBits(end);
+        val = ((val & 0x00000000000000ffL) << 56) +
+            ((val & 0x000000000000ff00L) << 40) +
+            ((val & 0x0000000000ff0000L) << 24) +
+            ((val & 0x00000000ff000000L) << 8) +
+            ((val & 0x000000ff00000000L) >> 8) +
+            ((val & 0x0000ff0000000000L) >> 24) +
+            ((val & 0x00ff000000000000L) >> 40) +
+            ((val & 0xff00000000000000L) >> 56);
         end = Double.longBitsToDouble(val);
       }
     } catch (SwissephException e) {
       throw e;
-    } catch (Exception e) {
+    } catch (Exception ignored) {
     }
-    try { fp.close(); } catch (Exception e) { }
+    try {
+      fp.close();
+    } catch (Exception ignored) {
+    }
     return new double[]{start, end};
   }
 }

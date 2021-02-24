@@ -69,13 +69,13 @@
 
 package swisseph;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
 
-
 class FileData implements Serializable {
-  final byte SEI_FILE_NMAXPLAN=50;
+  final byte SEI_FILE_NMAXPLAN = 50;
 
   // The error handling and error strings are different from the original C version.
   // If required, one would have to rewrite some code
@@ -85,104 +85,112 @@ class FileData implements Serializable {
   int fversion;         /* version number of file */
   String astnam;        /* asteroid name, if asteroid file */
   int sweph_denum;     /* DE number of JPL ephemeris, which this file
-                         * is derived from. */
+   * is derived from. */
   FilePtr fptr = null;/* ephemeris file pointer */
   double tfstart = 1;       /* file may be used from this date */
   double tfend = 0;         /*      through this date          */
   int iflg;             /* byte reorder flag and little/bigendian flag */
   short npl;            /* how many planets in file */
-  int ipl[] = new int[SEI_FILE_NMAXPLAN]; /* planet numbers */
+  int[] ipl = new int[SEI_FILE_NMAXPLAN]; /* planet numbers */
 
   void clearData() {
     int j;
-    fnam="";
-    fversion=0;
-    astnam="";
-    sweph_denum=0;
+    fnam = "";
+    fversion = 0;
+    astnam = "";
+    sweph_denum = 0;
     try {
-      if (fptr!=null) { fptr.close(); }
-    } catch (java.io.IOException e) {
+      if (fptr != null) {
+        fptr.close();
+      }
+    } catch (IOException ignored) {
 // NBT
     }
-    fptr=null;
-    tfstart=1.0;
-    tfend=0.0;
-    iflg=0;
-    npl=0;
-    for(j=0; j<SEI_FILE_NMAXPLAN; j++) { ipl[j]=0; }
+    fptr = null;
+    tfstart = 1.0;
+    tfend = 0.0;
+    iflg = 0;
+    npl = 0;
+    for (j = 0; j < SEI_FILE_NMAXPLAN; j++) {
+      ipl[j] = 0;
+    }
   }
 
-// Attention: read_const() has to be called from "swed.fidat[ifno]", where
-// "ifno" has to be the first parameter in read_const:
-//  struct FileData *fdp = &swed.fidat[ifno];
-//
-  /* SWISSEPH
+  /**
+   * Attention: read_const() has to be called from "swed.fidat[ifno]", where
+   * "ifno" has to be the first parameter in read_const:
+   * struct FileData *fdp = &swed.fidat[ifno];
+   * <p>
+   * SWISSEPH
    * reads constants on ephemeris file
    * ifno         file #
    * serr         error string
    */
   int read_const(int ifno, StringBuffer serr, SwissData swed) {
-    String s="";
-    String s2="";
-    String sastnam="";
-    int i, ipli, kpl;
-    int fendian, freord;
+    String s = "";
+    String s2 = "";
+    String sastnam = "";
+    int i;
+    int ipli;
+    int kpl;
+    int fendian;
+    int freord;
     int lastnam = 19;
 //Renamed in JAVA to fptr:// FilePtr fp;
     long lng;
     long ulng; // hat 'unsigned' long hier eine wesentliche Bedeutung?
-    long flen, fpos;
+    long flen;
+    long fpos;
     short nplan;
     PlanData pdp;
 //Skipped in JAVA:// FileData fdp = swed.fidat[ifno];
     int nbytes_ipl = 2;
 
     try {
-      /*************************************
-       * version number of file            *
-       *************************************/
-      byte b=0;
+      //* version number of file
+      byte b = 0;
       char cLast;
       do {
-        cLast=(char)b;
-        b=fptr.readByte();
-        s+=(char)b;
-      } while (cLast!='\r' && (char)(b)!='\n' && s.length()<SwissData.AS_MAXCH);
+        cLast = (char) b;
+        b = fptr.readByte();
+        s = s + (char) b;
+      } while (cLast != '\r' && (char) (b) != '\n' && s.length() < SwissData.AS_MAXCH);
 
-      s=s.trim();
-      int offs=0;
-      int ver=-1;
-      while (!Character.isDigit(s.charAt(offs))) { offs++; }
+      s = s.trim();
+      int offs = 0;
+      int ver = -1;
+      while (!Character.isDigit(s.charAt(offs))) {
+        offs++;
+      }
       try {
-        ver=Integer.parseInt(s.substring(offs));
+        ver = Integer.parseInt(s.substring(offs));
       } catch (NumberFormatException n) {
         label_file_damage(serr, " (1)");
         throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
             SweConst.ERR, serr);
       }
 // Use SwissLib.atoi(...) ?
-      fversion=ver;
+      fversion = ver;
 
-      /*************************************
-       * correct file name?                *
-       *************************************/
-      b=0; s="";
+      // correct file name?
+      b = 0;
+      s = "";
       do {
-        cLast=(char)b;
-        b=fptr.readByte();
-        s+=(char)b;
-      } while (cLast!='\r' && (char)(b)!='\n' && s.length()<SwissData.AS_MAXCH);
+        cLast = (char) b;
+        b = fptr.readByte();
+        s += (char) b;
+      } while (cLast != '\r' && (char) (b) != '\n' && s.length() < SwissData.AS_MAXCH);
 
-      s2=fnam.substring(fnam.lastIndexOf(SwissData.DIR_GLUE)+1).toLowerCase();
-      s=s.trim().toLowerCase();
+      s2 = fnam.substring(fnam.lastIndexOf(SwissData.DIR_GLUE) + 1).toLowerCase();
+      s = s.trim().toLowerCase();
       if (!s.equals(s2)) {
         // Http addresses will end with '/' independent of DIR_GLUE...
-        s2=fnam.substring(fnam.lastIndexOf("/")+1).toLowerCase();
+        s2 = fnam.substring(fnam.lastIndexOf("/") + 1).toLowerCase();
         if (!s.equals(s2)) {
-          s2=fnam.substring(fnam.lastIndexOf(SwissData.DIR_GLUE)+1).toLowerCase();
+          s2 = fnam.substring(fnam.lastIndexOf(SwissData.DIR_GLUE) + 1).toLowerCase();
           if (serr != null) {
             serr.setLength(0);
-            serr.append("Ephemeris file name '"+s2+"' is wrong; rename to '"+s+"'");
+            serr.append("Ephemeris file name '" + s2 + "' is wrong; rename to '" + s + "'");
           }
           clearData();
           throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
@@ -192,39 +200,39 @@ class FileData implements Serializable {
       /*************************************
        * copyright                         *
        *************************************/
-      b=0; s="";
+      b = 0;
+      s = "";
       do {
-        cLast=(char)b;
-        b=fptr.readByte();
-        s+=(char)b;
-      } while (cLast!='\r' && (char)(b)!='\n' && s.length()<SwissData.AS_MAXCH);
+        cLast = (char) b;
+        b = fptr.readByte();
+        s += (char) b;
+      } while (cLast != '\r' && (char) (b) != '\n' && s.length() < SwissData.AS_MAXCH);
 
-      /****************************************
-       * orbital elements, if single asteroid *
-       ****************************************/
+      /** orbital elements, if single asteroid */
       // Read up to end of line or AS_MAXCH*2 into var. 's':
       if (ifno == SwephData.SEI_FILE_ANY_AST) {
-        b=0; s="";
+        b = 0;
+        s = "";
         do {
-          cLast=(char)b;
-          b=fptr.readByte();
-          s+=(char)b;
-        } while (cLast!='\r' && (char)(b)!='\n' && s.length()<SwissData.AS_MAXCH*2);
+          cLast = (char) b;
+          b = fptr.readByte();
+          s = s + (char) b;
+        } while (cLast != '\r' && (char) (b) != '\n' && s.length() < SwissData.AS_MAXCH * 2);
         /* MPC number and name; will be analyzed below:
          * search "asteroid name" */
         String sp = s;
         // Strip leading white space from 'sp':
-        while(Character.isWhitespace(sp.charAt(0))) {
+        while (Character.isWhitespace(sp.charAt(0))) {
           sp = sp.substring(1);
         }
         // Remove leading numbers from 'sp':
-        while(Character.isDigit(sp.charAt(0))) {
+        while (Character.isDigit(sp.charAt(0))) {
           sp = sp.substring(1);
         }
         // Skip next character as well:
         sp = sp.substring(1);
         i = s.length() - sp.length();
-        sastnam = sp.substring(0,lastnam+i);
+        sastnam = sp.substring(0, lastnam + i);
         /* save elements, they are required for swe_plan_pheno() */
         swed.astelem = s;
         /* required for magnitude */
@@ -236,23 +244,21 @@ class FileData implements Serializable {
         swed.ast_diam = SwissLib.atof(s2);
         if (swed.ast_diam == 0) {
           /* estimate the diameter from magnitude; assume albedo = 0.15 */
-          swed.ast_diam = 1329/Math.sqrt(0.15) * Math.pow(10, -0.2 * swed.ast_H);
+          swed.ast_diam = 1329 / Math.sqrt(0.15) * Math.pow(10, -0.2 * swed.ast_H);
         }
       }
-      /*************************************
-       * one int32 for test of byte order   *
-       *************************************/
+      /** one int32 for test of byte order   */
       int testendian = fptr.readInt();
       /* is byte order correct?            */
-lng = 0;
+      lng = 0;
       if (testendian == SwephData.SEI_FILE_TEST_ENDIAN) {
         freord = SwephData.SEI_FILE_NOREORD;
       } else {
         freord = SwephData.SEI_FILE_REORD;
         lng = ((testendian & 0x000000ff) << 24) +
-              ((testendian & 0x0000ff00) << 8 ) +
-              ((testendian & 0x00ff0000) >> 8 ) +
-              ((testendian & 0xff000000) >> 24);
+            ((testendian & 0x0000ff00) << 8) +
+            ((testendian & 0x00ff0000) >> 8) +
+            ((testendian & 0xff000000) >> 24);
         if (lng != SwephData.SEI_FILE_TEST_ENDIAN) {
           throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
               SweConst.ERR, "File is damaged: byte ordering info not correct.");
@@ -267,20 +273,20 @@ lng = 0;
         fendian = SwephData.SEI_FILE_LITENDIAN;
       }
       iflg = freord | fendian;
-      /*************************************
-       * length of file correct?           *
-       *************************************/
-      lng=(long)read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
-      if (lng < 0) { lng &= 0xffffffff; }
-      fpos=fptr.getFilePointer();
-      flen=fptr.length();
-      if (lng!=flen) {
+      /** length of file correct?           */
+      lng = (long) read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
+      if (lng < 0) {
+        lng &= 0xffffffff;
+      }
+      fpos = fptr.getFilePointer();
+      flen = fptr.length();
+      if (lng != flen) {
         label_file_damage(serr, " (2)");
         throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
             SweConst.ERR, serr);
       }
 //      fptr.seek(flen-1);
-      fptr.seek(fpos);	// Not really necessary...
+      fptr.seek(fpos);  // Not really necessary...
       /**********************************************************
        * DE number of JPL ephemeris which this file is based on *
        **********************************************************/
@@ -289,12 +295,12 @@ lng = 0;
       /*************************************
        * start and end epoch of file       *
        *************************************/
-      tfstart=read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-      tfend=read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      tfstart = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      tfend = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
       /*************************************
        * how many planets are in file?     *
        *************************************/
-      nplan=read2(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      nplan = read2(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
       if (nplan > 256) {
         nbytes_ipl = 4;
         nplan %= 256;
@@ -311,12 +317,12 @@ lng = 0;
 //                                   bytes to read           bytes to write
 // nbytes_ipl can be 2 and 4 only...
       if (nbytes_ipl == 2) {
-        for(i=0; i<nplan; i++) {
-          ipl[i]=(int)(read2(fptr, SwephData.SEI_CURR_FPOS, freord, fendian) & 0xffff);
+        for (i = 0; i < nplan; i++) {
+          ipl[i] = (int) (read2(fptr, SwephData.SEI_CURR_FPOS, freord, fendian) & 0xffff);
         }
       } else if (nbytes_ipl == 4) {
-        for(i=0; i<nplan; i++) {
-          ipl[i]=read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
+        for (i = 0; i < nplan; i++) {
+          ipl[i] = read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
         }
       } else { // Can't be???
         label_file_damage(serr, " (3b)");
@@ -333,7 +339,7 @@ lng = 0;
         while (sastnam.charAt(j) != ' ' && j < 10) {  /* new astorb.dat has 5 */
           j++;
         }
-        sastno=sastnam.substring(0,Math.min(sastnam.length(),j)).trim();
+        sastno = sastnam.substring(0, Math.min(sastnam.length(), j)).trim();
         try {
           i = Integer.parseInt(sastno);
         } catch (NumberFormatException nf) {
@@ -341,29 +347,29 @@ lng = 0;
         }
         if (i == ipl[0] - SweConst.SE_AST_OFFSET) {
           /* element record is from bowell database */
-          astnam=sastnam.substring(Math.min(sastnam.length(),j+1),
-                                   Math.min(sastnam.length(),j+1+lastnam));
+          astnam = sastnam.substring(Math.min(sastnam.length(), j + 1),
+              Math.min(sastnam.length(), j + 1 + lastnam));
           /* overread old ast. name field */
-          s="";
-          for(i=0; i<30; i++) {
-            s+=(char)fptr.readByte();
+          s = "";
+          for (i = 0; i < 30; i++) {
+            s += (char) fptr.readByte();
           }
         } else {
           /* older elements record structure: the name
            * is taken from old name field */
-          astnam="";
-          for(i=0; i<30; i++) {
-            astnam+=(char)fptr.readByte();
+          astnam = "";
+          for (i = 0; i < 30; i++) {
+            astnam += (char) fptr.readByte();
           }
         }
-        astnam=astnam.trim();
+        astnam = astnam.trim();
       }
       /*************************************
        * check CRC                         *
        *************************************/
       fpos = fptr.getFilePointer();
       /* read CRC from file */
-      ulng=(long)(read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian));
+      ulng = read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
       /* read check area from file */
       fptr.seek(0L);
       /* must check that defined length of s is less than fpos */
@@ -372,30 +378,31 @@ lng = 0;
         throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
             SweConst.ERR, serr);
       }
-      b=0; s="";
-byte[] ba=new byte[2*SwissData.AS_MAXCH];
-      for(i=0;i<fpos;i++) {
-        cLast=(char)b;
-        b=fptr.readByte();
-        ba[i]=b;
-        s+=(char)b;
+      b = 0;
+      s = "";
+      byte[] ba = new byte[2 * SwissData.AS_MAXCH];
+      for (i = 0; i < fpos; i++) {
+        cLast = (char) b;
+        b = fptr.readByte();
+        ba[i] = b;
+        s += (char) b;
       }
-  if ((int)swi_crc32(/*(unsigned char *)*/ ba, (int) fpos) != (int)ulng) {
-    label_file_damage(serr, " (5)");
-    throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
-        SweConst.ERR, serr);
-  }
-      fptr.seek(fpos+4L);
+      if ((int) swi_crc32(/*(unsigned char *)*/ ba, (int) fpos) != (int) ulng) {
+        label_file_damage(serr, " (5)");
+        throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
+            SweConst.ERR, serr);
+      }
+      fptr.seek(fpos + 4L);
       /*************************************
        * read general constants            *
        *************************************/
       /* clight, aunit, helgravconst, ratme, sunradius
        * these constants are currently not in use */
-      swed.gcdat.clight       = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-      swed.gcdat.aunit        = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      swed.gcdat.clight = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      swed.gcdat.aunit = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
       swed.gcdat.helgravconst = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-      swed.gcdat.ratme        = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-      swed.gcdat.sunradius    = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      swed.gcdat.ratme = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      swed.gcdat.sunradius = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
       /*************************************
        * read constants of planets         *
        *************************************/
@@ -409,44 +416,44 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
         }
         pdp.ibdy = ipli;
         /* file position of planet's index */
-        pdp.lndx0=(long)(read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian))&0xffffffffL;
+        pdp.lndx0 = (long) (read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian)) & 0xffffffffL;
         /* flags: helio/geocentric, rotation, reference ellipse */
-        pdp.iflg=fptr.readUnsignedByte();
+        pdp.iflg = fptr.readUnsignedByte();
         /* number of chebyshew coefficients / segment  */
         /* = interpolation order +1                    */
-        pdp.ncoe=fptr.readUnsignedByte();
+        pdp.ncoe = fptr.readUnsignedByte();
         /* rmax = normalisation factor */
-        lng=read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
-        pdp.rmax = (double)lng / 1000.0;
+        lng = read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
+        pdp.rmax = (double) lng / 1000.0;
         /* start and end epoch of planetary ephemeris,   */
         /* segment length, and orbital elements          */
-        pdp.tfstart  = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.tfend    = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.dseg     = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.nndx     = (int) ((pdp.tfend - pdp.tfstart + 0.1) /pdp.dseg);
-        pdp.telem    = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.prot     = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.dprot    = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.qrot     = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.dqrot    = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.peri     = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-        pdp.dperi    = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.tfstart = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.tfend = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.dseg = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.nndx = (int) ((pdp.tfend - pdp.tfstart + 0.1) / pdp.dseg);
+        pdp.telem = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.prot = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.dprot = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.qrot = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.dqrot = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.peri = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+        pdp.dperi = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
         /* alloc space for chebyshew coefficients */
         /* if reference ellipse is used, read its coefficients */
-        if ((pdp.iflg & SwephData.SEI_FLG_ELLIPSE)!=0) {
+        if ((pdp.iflg & SwephData.SEI_FLG_ELLIPSE) != 0) {
           if (pdp.refep != null) { /* if switch to other eph. file */
             pdp.refep = null;
             if (pdp.segp != null) {
               pdp.segp = null; /* array of coefficients of ephemeris segment */
             }
           }
-          pdp.refep = new double[2*pdp.ncoe];
-          for(i=0;i<2*pdp.ncoe;i++) {
-            pdp.refep[i]=read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+          pdp.refep = new double[2 * pdp.ncoe];
+          for (i = 0; i < 2 * pdp.ncoe; i++) {
+            pdp.refep[i] = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
           }
         }/**/
       }
-    } catch (java.io.IOException e) {
+    } catch (IOException e) {
       label_file_damage(serr, " (6a)");
       System.out.println(e.getMessage());
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
@@ -486,20 +493,21 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
    * of several of the popular FDDI "MAC" chips.
    */
   /* unsigned long [...] */
-  long crc32_table[]=null;
+  long crc32_table[] = null;
   /* Initialized first time "crc32()" is called. If you prefer, you can
    * statically initialize it at compile time. [Another exercise.]
    */
 
   long swi_crc32(/*unsigned???*/ byte[] buf, int len) {
     int pn;
-    /*unsigned*/ long crc;
-    if (crc32_table==null) {  /* if not already done, */
+    /*unsigned*/
+    long crc;
+    if (crc32_table == null) {  /* if not already done, */
       init_crc32();   /* build table */
     }
     crc = 0xffffffffL;       /* preload shift register, per CRC-32 spec */
     for (pn = 0; len > 0; ++pn, --len) {
-      crc = ((crc << 8)&0xffffffffL) ^ crc32_table[(int)((crc >> 24) ^ ((long)buf[pn]&0xff))];
+      crc = ((crc << 8) & 0xffffffffL) ^ crc32_table[(int) ((crc >> 24) ^ ((long) buf[pn] & 0xff))];
     }
     return ~crc;            /* transmit complement, per CRC-32 spec */
   }
@@ -507,18 +515,19 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
   /*
    * Build auxiliary table for parallel byte-at-a-time CRC-32.
    */
-  static final int CRC32_POLY=0x04c11db7;    /* AUTODIN II, Ethernet, & FDDI */
+  static final int CRC32_POLY = 0x04c11db7;    /* AUTODIN II, Ethernet, & FDDI */
 
   void init_crc32() {
-    long i, j;
+    long i;
+    long j;
     long c;
     crc32_table = new long[256];
     for (i = 0; i < 256; ++i) {
       for (c = i << 24, j = 8; j > 0; --j) {
-        c = (c & 0x80000000L)!=0 ? (c << 1) ^ CRC32_POLY : (c << 1);
+        c = (c & 0x80000000L) != 0 ? (c << 1) ^ CRC32_POLY : (c << 1);
       }
-      c=c & 0xffffffffL;
-      crc32_table[(int)i] = c;
+      c = c & 0xffffffffL;
+      crc32_table[(int) i] = c;
     }
   }
 
@@ -528,14 +537,10 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
     if (fpos >= 0) {
       fp.seek(fpos);
     }
-    short val=(short)fp.readShort();
+    short val = (short) fp.readShort();
 
     if (freord != 0) {
-      val = (short)(
-                 (
-                  ( val << 8 ) |
-                  (( val >>> 8 ) & 0xff)
-                 ) & 0xffff);
+      val = (short) (((val << 8) | ((val >>> 8) & 0xff)) & 0xffff);
     }
     return val;
   }
@@ -545,20 +550,23 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
     if (fpos >= 0) {
       fp.seek(fpos);
     }
-    int val=(int)fp.readUnsignedByte();
-    int i2=(int)fp.readShort(); if(i2<0){i2&=0xffff;}
-    val=(val<<16)+i2;
+    int val = (int) fp.readUnsignedByte();
+    int i2 = (int) fp.readShort();
+    if (i2 < 0) {
+      i2 &= 0xffff;
+    }
+    val = (val << 16) + i2;
 
     if (freord != 0) {
-      val = (( val & 0x000000ff ) << 24) +
-            (( val & 0x0000ff00 ) <<  8) +
-            (( val & 0x00ff0000 ) >>  8) +
-            (( val & 0xff000000 ) >>> 24);
+      val = ((val & 0x000000ff) << 24) +
+          ((val & 0x0000ff00) << 8) +
+          ((val & 0x00ff0000) >> 8) +
+          ((val & 0xff000000) >>> 24);
 
       boolean do_shift = ((fendian == SwephData.SEI_FILE_BIGENDIAN && freord != 0) ||
-                          (fendian == SwephData.SEI_FILE_LITENDIAN && freord == 0));
+          (fendian == SwephData.SEI_FILE_LITENDIAN && freord == 0));
 
-      return (do_shift?val>>8:val);
+      return (do_shift ? val >> 8 : val);
     }
     return val;
   }
@@ -568,22 +576,22 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
     if (fpos >= 0) {
       fp.seek(fpos);
     }
-    int val=(int)fp.readInt();
+    int val = (int) fp.readInt();
 
     if (freord != 0) {
       if (unsigned) {
-        val = (( val & 0x000000ff ) << 24) +
-              (( val & 0x0000ff00 ) <<  8) +
-              (( val & 0x00ff0000 ) >>  8) +
-              (( val & 0xff000000 ) >> 24);
+        val = ((val & 0x000000ff) << 24) +
+            ((val & 0x0000ff00) << 8) +
+            ((val & 0x00ff0000) >> 8) +
+            ((val & 0xff000000) >> 24);
       } else {
-        val = (( val & 0x000000ff ) << 24) +
-              (( val & 0x0000ff00 ) <<  8) +
-              (( val & 0x00ff0000 ) >>  8) +
-              (( val & 0xff000000 ) >>> 24);
+        val = ((val & 0x000000ff) << 24) +
+            ((val & 0x0000ff00) << 8) +
+            ((val & 0x00ff0000) >> 8) +
+            ((val & 0xff000000) >>> 24);
       }
-    } else if (unsigned && val<0) {
-      val&=0x7fffffff;
+    } else if (unsigned && val < 0) {
+      val &= 0x7fffffff;
     }
 
     return val;
@@ -595,17 +603,17 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
       fp.seek(fpos);
     }
 
-    long val=Double.doubleToLongBits(fp.readDouble());
+    long val = Double.doubleToLongBits(fp.readDouble());
 
     if (freord != 0) {
-      val = (( val & 0x00000000000000ffL ) << 56) +
-            (( val & 0x000000000000ff00L ) << 40) +
-            (( val & 0x0000000000ff0000L ) << 24) +
-            (( val & 0x00000000ff000000L ) <<  8) +
-            (( val & 0x000000ff00000000L ) >>  8) +
-            (( val & 0x0000ff0000000000L ) >> 24) +
-            (( val & 0x00ff000000000000L ) >> 40) +
-            (( val & 0xff00000000000000L ) >> 56);
+      val = ((val & 0x00000000000000ffL) << 56) +
+          ((val & 0x000000000000ff00L) << 40) +
+          ((val & 0x0000000000ff0000L) << 24) +
+          ((val & 0x00000000ff000000L) << 8) +
+          ((val & 0x000000ff00000000L) >> 8) +
+          ((val & 0x0000ff0000000000L) >> 24) +
+          ((val & 0x00ff000000000000L) >> 40) +
+          ((val & 0xff00000000000000L) >> 56);
     }
 
     return Double.longBitsToDouble(val);
@@ -619,19 +627,28 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
    */
   int get_new_segment(SwissData swed, double tjd, int ipli, int ifno,
                       StringBuffer serr) {
-    int i, j, k, m, n, o, icoord;
+    int i;
+    int j;
+    int k;
+    int m;
+    int n;
+    int o;
+    int icoord;
     int iseg;
     int fpos;
-    int nsizes, nsize[]=new int[6];
+    int nsizes;
+    int[] nsize = new int[6];
     int nco;
     int idbl;
-    /* unsigned */ short c[]=new short[4]; // unsigned (byte) ist wichtig?
+    /* unsigned */
+    short[] c = new short[4]; // unsigned (byte) ist wichtig?
 // The coefficients will be written to pdp
     PlanData pdp = swed.pldat[ipli];
     FileData fdp = swed.fidat[ifno];
-    int freord  = (int) (fdp.iflg & SwephData.SEI_FILE_REORD);
-    int fendian = (int) (fdp.iflg & SwephData.SEI_FILE_LITENDIAN);
-    /* unsigned long */ long longs[]=new long[SwephData.MAXORD+1]; // unsigned ist wichtig?
+    int freord = fdp.iflg & SwephData.SEI_FILE_REORD;
+    int fendian = fdp.iflg & SwephData.SEI_FILE_LITENDIAN;
+    /* unsigned long */
+    long[] longs = new long[SwephData.MAXORD + 1]; // unsigned ist wichtig?
     /* compute segment number */
 
 
@@ -641,26 +658,28 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
     pdp.tseg0 = pdp.tfstart + iseg * pdp.dseg;
     pdp.tseg1 = pdp.tseg0 + pdp.dseg;
     /* get file position of coefficients from file */
-    fpos = (int)pdp.lndx0 + iseg * 3;
+    fpos = (int) pdp.lndx0 + iseg * 3;
     try {
       fpos = read3(fptr, fpos, freord, fendian);
       fptr.seek(fpos);
       /* clear space of chebyshew coefficients */
       if (pdp.segp == null) {
-        pdp.segp = new double[pdp.ncoe*3];
+        pdp.segp = new double[pdp.ncoe * 3];
       }
-      for(i=0;i<pdp.segp.length;i++) { pdp.segp[i]=0.; }
+      for (i = 0; i < pdp.segp.length; i++) {
+        pdp.segp[i] = 0.;
+      }
       /* read coefficients for 3 coordinates */
       for (icoord = 0; icoord < 3; icoord++) {
         idbl = icoord * pdp.ncoe;
         /* first read header */
         /* first bit indicates number of sizes of packed coefficients */
-        c[0]=(short)fptr.readUnsignedByte();
-        c[1]=(short)fptr.readUnsignedByte();
-        if ((c[0] & 128)!=0) {
+        c[0] = (short) fptr.readUnsignedByte();
+        c[1] = (short) fptr.readUnsignedByte();
+        if ((c[0] & 128) != 0) {
           nsizes = 6;
-          c[2]=(short)fptr.readUnsignedByte();
-          c[3]=(short)fptr.readUnsignedByte();
+          c[2] = (short) fptr.readUnsignedByte();
+          c[3] = (short) fptr.readUnsignedByte();
           nsize[0] = (int) c[1] / 16;
           nsize[1] = (int) c[1] % 16;
           nsize[2] = (int) c[2] / 16;
@@ -681,18 +700,18 @@ byte[] ba=new byte[2*SwissData.AS_MAXCH];
         if (nco > pdp.ncoe) {
           if (serr != null) {
             serr.setLength(0);
-	    serr.append("error in ephemeris file: " + nco + " coefficients instead of " + pdp.ncoe + ". ");
+            serr.append("error in ephemeris file: " + nco + " coefficients instead of " + pdp.ncoe + ". ");
             if (serr.length() + fdp.fnam.length() < SwissData.AS_MAXCH - 1) {
               serr.setLength(0);
-	      serr.append("error in ephemeris file " + fdp.fnam + ": " + nco + " coefficients instead of " + pdp.ncoe + ". ");
-	    }
+              serr.append("error in ephemeris file " + fdp.fnam + ": " + nco + " coefficients instead of " + pdp.ncoe + ". ");
+            }
           }
           pdp.segp = null;
           throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
               SweConst.ERR, serr);
         }
         /* now unpack */
-int kCnt;
+        int kCnt;
         for (i = 0; i < nsizes; i++) {
           if (nsize[i] == 0) {
             continue;
@@ -700,33 +719,43 @@ int kCnt;
           if (i < 4) {
             j = (4 - i);
             k = nsize[i];
-            for(kCnt=0; kCnt<k; kCnt++) {
-              switch(j) {
-                case 1: longs[kCnt]=(int)fptr.readUnsignedByte();
-                        break;
-                case 2: longs[kCnt]=(int)read2(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-                        if(longs[kCnt]<0){longs[kCnt]&=0xffff;}
-                        break;
-                case 3: longs[kCnt]=read3(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-                        if(longs[kCnt]<0){longs[kCnt]&=0xffffff;}
-                        break;
-                case 4: longs[kCnt]=read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
-                        if(longs[kCnt]<0){longs[kCnt]&=0xffffffff;}
-                        break;
+            for (kCnt = 0; kCnt < k; kCnt++) {
+              switch (j) {
+                case 1:
+                  longs[kCnt] = fptr.readUnsignedByte();
+                  break;
+                case 2:
+                  longs[kCnt] = (int) read2(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+                  if (longs[kCnt] < 0) {
+                    longs[kCnt] &= 0xffff;
+                  }
+                  break;
+                case 3:
+                  longs[kCnt] = read3(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+                  if (longs[kCnt] < 0) {
+                    longs[kCnt] &= 0xffffff;
+                  }
+                  break;
+                case 4:
+                  longs[kCnt] = read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
+                  if (longs[kCnt] < 0) {
+                    longs[kCnt] &= 0xffffffff;
+                  }
+                  break;
               }
             }
             for (m = 0; m < k; m++, idbl++) {
-              if ((longs[m] & 1)!=0) {   /* will be negative */
-                pdp.segp[idbl] = -((((longs[m]+1) / 2)&0x7fffffffL) / 1e+9 * pdp.rmax / 2);
+              if ((longs[m] & 1) != 0) {   /* will be negative */
+                pdp.segp[idbl] = -((((longs[m] + 1) / 2) & 0x7fffffffL) / 1e+9 * pdp.rmax / 2);
               } else {
-                pdp.segp[idbl] = ((longs[m] / 2)&0x7fffffffL) / 1e+9 * pdp.rmax / 2;
+                pdp.segp[idbl] = ((longs[m] / 2) & 0x7fffffffL) / 1e+9 * pdp.rmax / 2;
               }
             }
           } else if (i == 4) {              /* half byte packing */
             j = 1;
             k = (nsize[i] + 1) / 2;
-            for(kCnt=0; kCnt<k; kCnt++) {
-              longs[kCnt]=(int)fptr.readUnsignedByte();
+            for (kCnt = 0; kCnt < k; kCnt++) {
+              longs[kCnt] = fptr.readUnsignedByte();
             }
             for (m = 0, j = 0;
                  m < k && j < nsize[i];
@@ -734,9 +763,9 @@ int kCnt;
               for (n = 0, o = 16;
                    n < 2 && j < nsize[i];
                    n++, j++, idbl++, longs[m] %= o, o /= 16) {
-                if ((longs[m] & o)!=0) {
-                  pdp.segp[idbl] = -(((longs[m]+o) / o / 2) * pdp.rmax /
-                                                                    2 / 1e+9);
+                if ((longs[m] & o) != 0) {
+                  pdp.segp[idbl] = -(((longs[m] + o) / o / 2) * pdp.rmax /
+                      2 / 1e+9);
                 } else {
                   pdp.segp[idbl] = (longs[m] / o / 2) * pdp.rmax / 2 / 1e+9;
                 }
@@ -745,8 +774,8 @@ int kCnt;
           } else if (i == 5) {              /* quarter byte packing */
             j = 1;
             k = (nsize[i] + 3) / 4;
-            for(kCnt=0; kCnt<k; kCnt++) {
-              longs[kCnt]=(int)fptr.readUnsignedByte();
+            for (kCnt = 0; kCnt < k; kCnt++) {
+              longs[kCnt] = fptr.readUnsignedByte();
             }
             for (m = 0, j = 0;
                  m < k && j < nsize[i];
@@ -754,9 +783,9 @@ int kCnt;
               for (n = 0, o = 64;
                    n < 4 && j < nsize[i];
                    n++, j++, idbl++, longs[m] %= o, o /= 4) {
-                if ((longs[m] & o)!=0) {
-                  pdp.segp[idbl] = -(((longs[m]+o) / o / 2) * pdp.rmax /
-                                                                    2 / 1e+9);
+                if ((longs[m] & o) != 0) {
+                  pdp.segp[idbl] = -(((longs[m] + o) / o / 2) * pdp.rmax /
+                      2 / 1e+9);
                 } else {
                   pdp.segp[idbl] = (longs[m] / o / 2) * pdp.rmax / 2 / 1e+9;
                 }
@@ -766,16 +795,16 @@ int kCnt;
         }
       }
       return SweConst.OK;
-    } catch (java.io.IOException e) {
+    } catch (IOException e) {
       PrintWriter prErr = new PrintWriter(new StringWriter());
       e.printStackTrace(prErr);
-      serr.append("file error in swisseph.FileData: "+prErr.toString());
+      serr.append("file error in swisseph.FileData: ").append(prErr.toString());
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
     } catch (Exception e) {
       PrintWriter prErr = new PrintWriter(new StringWriter());
       e.printStackTrace(prErr);
-      serr.append("file error in swisseph.FileData: "+prErr.toString());
+      serr.append("file error in swisseph.FileData: ").append(prErr.toString());
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
     }
@@ -785,44 +814,45 @@ int kCnt;
   double[] getDatafileTimerange(SwissEph sw, String fname, String ephepath) throws SwissephException {
     return getDatafileTimerange(sw, fname, ephepath, false);
   }
+
   double[] getDatafileTimerange(SwissEph sw, String fname, String ephepath, boolean isAsteroidfile) throws SwissephException {
     int fendian, freord;
     FilePtr fptr = null;
 // asteroid files =~ m/s(e|[0-9])[0-9][0-9][0-9][0-9][0-9](s|).se1/
     try {
       fptr = sw.swi_fopen(-1, fname, ephepath, null);
-        byte b=0;
-        int cnt = 0;
-        char cLast;
-      for(int n = 0; n < 3; n++) {
+      byte b = 0;
+      int cnt = 0;
+      char cLast;
+      for (int n = 0; n < 3; n++) {
         do {
-          cLast=(char)b;
-          b=fptr.readByte();
+          cLast = (char) b;
+          b = fptr.readByte();
           cnt++;
-        } while (cLast!='\r' && (char)(b)!='\n' && cnt<SwissData.AS_MAXCH);
+        } while (cLast != '\r' && (char) (b) != '\n' && cnt < SwissData.AS_MAXCH);
       }
 
       // Read up to end of line or AS_MAXCH*2 into var. 's':
 //      if (ifno == SwephData.SEI_FILE_ANY_AST) { // }
       if (isAsteroidfile) {
-        b=0;
+        b = 0;
         do {
-          cLast=(char)b;
-          b=fptr.readByte();
+          cLast = (char) b;
+          b = fptr.readByte();
           cnt++;
-        } while (cLast!='\r' && (char)(b)!='\n' && cnt<SwissData.AS_MAXCH*2);
+        } while (cLast != '\r' && (char) (b) != '\n' && cnt < SwissData.AS_MAXCH * 2);
       }
 
       int testendian = fptr.readInt();
-long lng = 0;
+      long lng = 0;
       if (testendian == SwephData.SEI_FILE_TEST_ENDIAN) {
         freord = SwephData.SEI_FILE_NOREORD;
       } else {
         freord = SwephData.SEI_FILE_REORD;
         lng = ((testendian & 0x000000ff) << 24) +
-              ((testendian & 0x0000ff00) << 8 ) +
-              ((testendian & 0x00ff0000) >> 8 ) +
-              ((testendian & 0xff000000) >> 24);
+            ((testendian & 0x0000ff00) << 8) +
+            ((testendian & 0x00ff0000) >> 8) +
+            ((testendian & 0xff000000) >> 24);
         if (lng != SwephData.SEI_FILE_TEST_ENDIAN) {
           throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
               SweConst.ERR, "File is damaged: byte ordering info not correct.");
@@ -836,14 +866,20 @@ long lng = 0;
       }
       read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
       read4(fptr, SwephData.SEI_CURR_FPOS, false, freord, fendian);
-      double tfstart=read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-      double tfend=read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
-      try { fptr.close(); } catch (Exception ie) { }
+      double tfstart = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      double tfend = read8(fptr, SwephData.SEI_CURR_FPOS, freord, fendian);
+      try {
+        fptr.close();
+      } catch (Exception ie) {
+      }
 
-      return new double[] { tfstart, tfend };
+      return new double[]{tfstart, tfend};
     } catch (Exception ie) {
-      try { fptr.close(); } catch (Exception e) { }
-      throw new SwissephException(0./0., SwissephException.UNSPECIFIED_FILE_ERROR, SweConst.ERR, ie.toString());
+      try {
+        fptr.close();
+      } catch (Exception e) {
+      }
+      throw new SwissephException(0. / 0., SwissephException.UNSPECIFIED_FILE_ERROR, SweConst.ERR, ie.toString());
     }
   }
 
