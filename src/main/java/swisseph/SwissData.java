@@ -85,7 +85,7 @@ public class SwissData implements Serializable {
   public String ODEGREE_STRING = "°";  /* degree as string, utf8 encoding */
 
 
-  public static final String ayanamsa_name[] = {
+  public static final String[] ayanamsa_name = {
       "Fagan/Bradley",
       "Lahiri",
       "De Luce",

@@ -14,11 +14,10 @@
 
 */
 /*******************************************************
-$Header: /home/dieter/sweph/RCS/swehouse.c,v 1.74 2008/06/16 10:07:20 dieter Exp $
-module swehouse.c
-house and (simple) aspect calculation
-
-************************************************************/
+ $Header: /home/dieter/sweph/RCS/swehouse.c,v 1.74 2008/06/16 10:07:20 dieter Exp $
+ module swehouse.c
+ house and (simple) aspect calculation
+ ************************************************************/
 /* Copyright (C) 1997 - 2008 Astrodienst AG, Switzerland.  All rights reserved.
 
   License conditions
@@ -74,52 +73,60 @@ house and (simple) aspect calculation
 */
 package swisseph;
 
+import java.io.Serializable;
+
 /**
-* This class does all the calculations that are related to astrological
-* houses.
-* <P><I><B>You will find the complete documentation for the original
-* SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
-* http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information 
-* there is directly valid for this port to Java as well.</B></I>
-* @version 1.0.0a
-*/
-class SweHouse
-		implements java.io.Serializable
-		{
+ * This class does all the calculations that are related to astrological
+ * houses.
+ * <P><I><B>You will find the complete documentation for the original
+ * SwissEphemeris package at <A HREF="http://www.astro.ch/swisseph/sweph_g.htm">
+ * http://www.astro.ch/swisseph/sweph_g.htm</A>. By far most of the information
+ * there is directly valid for this port to Java as well.</B></I>
+ *
+ * @version 1.0.0a
+ */
+class SweHouse implements Serializable {
 
-  static final double MILLIARCSEC=1.0 / 3600000.0;
+  static final double MILLIARCSEC = 1.0 / 3600000.0;
 
-  SwissLib sl=null;
-  SwissEph sw=null;
-  SwissData swed=null;
+  SwissLib sl = null;
+  SwissEph sw = null;
+  SwissData swed = null;
 
   /**
-  * Constructs a new SweHouse object.
-  */
+   * Constructs a new SweHouse object.
+   */
   SweHouse() {
-    sl   = new SwissLib();
-    sw   = new SwissEph();
+    sl = new SwissLib();
+    sw = new SwissEph();
     swed = new SwissData();
   }
 
   /**
-  * Constructs a new SweHouse object by using the given objects. If some or
-  * all objects are null, they will be automatically instantiated here.
-  * @param sl A SwissLib object that might be already available.
-  * @param sw A SwissEph object that might be already available.
-  * @param swed A SwissData object that might be already available.
-  */
+   * Constructs a new SweHouse object by using the given objects. If some or
+   * all objects are null, they will be automatically instantiated here.
+   *
+   * @param sl   A SwissLib object that might be already available.
+   * @param sw   A SwissEph object that might be already available.
+   * @param swed A SwissData object that might be already available.
+   */
   SweHouse(SwissLib sl, SwissEph sw, SwissData swed) {
-    this.sl   = sl;
-    this.sw   = sw;
+    this.sl = sl;
+    this.sw = sw;
     this.swed = swed;
-    if (this.sl   ==null) { this.sl   =new SwissLib(); }
-    if (this.sw   ==null) { this.sw   =new SwissEph(); }
-    if (this.swed ==null) { this.swed =new SwissData(); }
+    if (this.sl == null) {
+      this.sl = new SwissLib();
+    }
+    if (this.sw == null) {
+      this.sw = new SwissEph();
+    }
+    if (this.swed == null) {
+      this.swed = new SwissData();
+    }
   }
 
 
-  static final double VERY_SMALL=1E-10;
+  static final double VERY_SMALL = 1E-10;
 
 // Hmmm? Never used anywhere...
 //  public double degtocs(double x) {
@@ -134,16 +141,20 @@ class SweHouse
   private double sind(double x) {
     return Math.sin(x * SwissData.DEGTORAD);
   }
+
   private double cosd(double x) {
     return Math.cos(x * SwissData.DEGTORAD);
   }
+
   private double tand(double x) {
     return Math.tan(x * SwissData.DEGTORAD);
   }
+
   private double asind(double x) {
     return (Math.asin(x) * SwissData.RADTODEG);
   }
-//Never used anywhere//  private double acosd(double x) {
+
+  //Never used anywhere//  private double acosd(double x) {
 //Never used anywhere//    return (Math.acos(x) * SwissData.RADTODEG);
 //Never used anywhere//  }
   private double atand(double x) {
@@ -169,65 +180,67 @@ class SweHouse
    * ascmc[6] = coasc2            * "co-ascendant" (M. Munkasey) *
    * ascmc[7] = polasc            * "polar ascendant" (M. Munkasey) *
    */
+
   /**
-  /**
-  * Calculates the house positions and other vital points. The possible
-  * house systems (parameter &quot;hsys&quot;) are:<P><CODE><BLOCKQUOTE>
-  * (int)'A'&nbsp;&nbsp;equal (cusp 1 is ascendant)<BR>
-  * (int)'E'&nbsp;&nbsp;equal (cusp 1 is ascendant)<BR>
-  * (int)'B'&nbsp;&nbsp;Alcabitius
-  * (int)'C'&nbsp;&nbsp;Campanus<BR>
-  * (int)'G'&nbsp;&nbsp;36 Gauquelin sectors
-  * (int)'H'&nbsp;&nbsp;azimuthal or horizontal system<BR>
-  * (int)'K'&nbsp;&nbsp;Koch<BR>
-  * (int)'M'&nbsp;&nbsp;Morinus
-  * (int)'O'&nbsp;&nbsp;Porphyrius<BR>
-  * (int)'P'&nbsp;&nbsp;Placidus<BR>
-  * (int)'R'&nbsp;&nbsp;Regiomontanus<BR>
-  * (int)'T'&nbsp;&nbsp;Polich/Page ('topocentric' system)<BR>
-  * (int)'U'&nbsp;&nbsp;Krusinski-Pisa-Goelzer
-  * (int)'V'&nbsp;&nbsp;Vehlow equal (asc. in middle of house 1)<BR>
-  * (int)'X'&nbsp;&nbsp;axial rotation system/ Meridian houses<BR>
-  * (int)'W'&nbsp;&nbsp;equal, whole sign
-  * (int)'X'&nbsp;&nbsp;axial rotation system/ Meridian houses
-  * (int)'Y'&nbsp;&nbsp;APC houses
-  * </BLOCKQUOTE></CODE><P>
-  * The parameter ascmc is defined as double[10] and will return the
-  * following points:<P><CODE><BLOCKQUOTE>
-  * ascmc[0] = ascendant<BR>
-  * ascmc[1] = mc<BR>
-  * ascmc[2] = armc (sidereal time)<BR>
-  * ascmc[3] = vertex<BR>
-  * ascmc[4] = equatorial ascendant<BR>
-  * ascmc[5] = co-ascendant (Walter Koch)<BR>
-  * ascmc[6] = co-ascendant (Michael Munkasey)<BR>
-  * ascmc[7] = polar ascendant (Michael Munkasey)<BR>
-  * ascmc[8] = reserved for future use<BR>
-  * ascmc[9] = reserved for future use
-  * </BLOCKQUOTE></CODE>
-  * 
-  * As Koch and Placidus don't work in the polar circle, the calculation is
-  * done in that case by swapping MC/IC so that MC is always before AC in
-  * the zodiac. Then the quadrants are divided into 3 equal parts.<P>
-  * Calculates the house positions and other vital points.<p>
-  * <b>Note:</b>This routine is identical to the routine swe_houses_ex() in
-  * the original C code, and <b>not</b> to swe_houses()!<p>
-  * @param tjd_ut The Julian Day number in UT
-  * @param iflag An additional flag for calculation, e.g. 0 or SEFLG_SIDEREAL
-  * and / or SEFLG_RADIANS.
-  * @param geolat The latitude on earth, for which the calculation has to be
-  * done.
-  * @param geolong The longitude on earth, for which the calculation has to be
-  * done.
-  * @param hsys The house system as a character given as an integer.
-  * @param cusp The house cusps are returned here in cusp[1...12] for
-  * the house 1 to 12. It has to be a double[13].
-  * @param ascmc The special points like ascendant etc. are returned here.
-  * It has to be a double[10].
-  * @see swisseph.SweConst#SEFLG_RADIANS
-  * @see swisseph.SweConst#SEFLG_SIDEREAL
-  * @see swisseph.SwissEph#swe_set_sid_mode(int, double, double)
-  */
+   * /**
+   * Calculates the house positions and other vital points. The possible
+   * house systems (parameter &quot;hsys&quot;) are:<P><CODE><BLOCKQUOTE>
+   * (int)'A'&nbsp;&nbsp;equal (cusp 1 is ascendant)<BR>
+   * (int)'E'&nbsp;&nbsp;equal (cusp 1 is ascendant)<BR>
+   * (int)'B'&nbsp;&nbsp;Alcabitius
+   * (int)'C'&nbsp;&nbsp;Campanus<BR>
+   * (int)'G'&nbsp;&nbsp;36 Gauquelin sectors
+   * (int)'H'&nbsp;&nbsp;azimuthal or horizontal system<BR>
+   * (int)'K'&nbsp;&nbsp;Koch<BR>
+   * (int)'M'&nbsp;&nbsp;Morinus
+   * (int)'O'&nbsp;&nbsp;Porphyrius<BR>
+   * (int)'P'&nbsp;&nbsp;Placidus<BR>
+   * (int)'R'&nbsp;&nbsp;Regiomontanus<BR>
+   * (int)'T'&nbsp;&nbsp;Polich/Page ('topocentric' system)<BR>
+   * (int)'U'&nbsp;&nbsp;Krusinski-Pisa-Goelzer
+   * (int)'V'&nbsp;&nbsp;Vehlow equal (asc. in middle of house 1)<BR>
+   * (int)'X'&nbsp;&nbsp;axial rotation system/ Meridian houses<BR>
+   * (int)'W'&nbsp;&nbsp;equal, whole sign
+   * (int)'X'&nbsp;&nbsp;axial rotation system/ Meridian houses
+   * (int)'Y'&nbsp;&nbsp;APC houses
+   * </BLOCKQUOTE></CODE><P>
+   * The parameter ascmc is defined as double[10] and will return the
+   * following points:<P><CODE><BLOCKQUOTE>
+   * ascmc[0] = ascendant<BR>
+   * ascmc[1] = mc<BR>
+   * ascmc[2] = armc (sidereal time)<BR>
+   * ascmc[3] = vertex<BR>
+   * ascmc[4] = equatorial ascendant<BR>
+   * ascmc[5] = co-ascendant (Walter Koch)<BR>
+   * ascmc[6] = co-ascendant (Michael Munkasey)<BR>
+   * ascmc[7] = polar ascendant (Michael Munkasey)<BR>
+   * ascmc[8] = reserved for future use<BR>
+   * ascmc[9] = reserved for future use
+   * </BLOCKQUOTE></CODE>
+   * <p>
+   * As Koch and Placidus don't work in the polar circle, the calculation is
+   * done in that case by swapping MC/IC so that MC is always before AC in
+   * the zodiac. Then the quadrants are divided into 3 equal parts.<P>
+   * Calculates the house positions and other vital points.<p>
+   * <b>Note:</b>This routine is identical to the routine swe_houses_ex() in
+   * the original C code, and <b>not</b> to swe_houses()!<p>
+   *
+   * @param tjd_ut  The Julian Day number in UT
+   * @param iflag   An additional flag for calculation, e.g. 0 or SEFLG_SIDEREAL
+   *                and / or SEFLG_RADIANS.
+   * @param geolat  The latitude on earth, for which the calculation has to be
+   *                done.
+   * @param geolong The longitude on earth, for which the calculation has to be
+   *                done.
+   * @param hsys    The house system as a character given as an integer.
+   * @param cusp    The house cusps are returned here in cusp[1...12] for
+   *                the house 1 to 12. It has to be a double[13].
+   * @param ascmc   The special points like ascendant etc. are returned here.
+   *                It has to be a double[10].
+   * @see swisseph.SweConst#SEFLG_RADIANS
+   * @see swisseph.SweConst#SEFLG_SIDEREAL
+   * @see swisseph.SwissEph#swe_set_sid_mode(int, double, double)
+   */
   int swe_houses(double tjd_ut,
                  int iflag,
                  double geolat,
@@ -237,6 +250,7 @@ class SweHouse
                  double[] ascmc) {
     return swe_houses(tjd_ut, iflag, geolat, geolon, hsys, cusp, ascmc, 0);
   }
+
   int swe_houses(double tjd_ut,
                  int iflag,
                  double geolat,
@@ -246,28 +260,28 @@ class SweHouse
                  double[] ascmc,
                  int aOffs) {
     int i, retc = 0;
-    double armc, eps_mean, nutlo[]=new double[2];
+    double armc, eps_mean, nutlo[] = new double[2];
     double tjde = tjd_ut + SweDate.getDeltaT(tjd_ut);
     SidData sip = swed.sidd;
     int ito;
-    if (Character.toUpperCase((char)hsys) == 'G') {
+    if (Character.toUpperCase((char) hsys) == 'G') {
       ito = 36;
     } else {
       ito = 12;
     }
-    if ((iflag & SweConst.SEFLG_SIDEREAL)!=0 && !swed.ayana_is_set) {
+    if ((iflag & SweConst.SEFLG_SIDEREAL) != 0 && !swed.ayana_is_set) {
       sw.swe_set_sid_mode(SweConst.SE_SIDM_FAGAN_BRADLEY, 0, 0);
     }
     eps_mean = sl.swi_epsiln(tjde, 0) * SwissData.RADTODEG;
     sl.swi_nutation(tjde, 0, nutlo);
     for (i = 0; i < 2; i++)
       nutlo[i] *= SwissData.RADTODEG;
-      /*houses_to_sidereal(tjde, geolat, hsys, eps, cusp, ascmc, iflag);*/
+    /*houses_to_sidereal(tjde, geolat, hsys, eps, cusp, ascmc, iflag);*/
     armc = sl.swe_degnorm(sl.swe_sidtime0(tjd_ut, eps_mean + nutlo[1], nutlo[0]) * 15 + geolon);
-    if ((iflag & SweConst.SEFLG_SIDEREAL)!=0) {
-      if ((sip.sid_mode & SweConst.SE_SIDBIT_ECL_T0)!=0) {
+    if ((iflag & SweConst.SEFLG_SIDEREAL) != 0) {
+      if ((sip.sid_mode & SweConst.SE_SIDBIT_ECL_T0) != 0) {
         retc = sidereal_houses_ecl_t0(tjde, armc, eps_mean + nutlo[1], nutlo, geolat, hsys, cusp, ascmc, aOffs);
-      } else if ((sip.sid_mode & SweConst.SE_SIDBIT_SSY_PLANE)!=0) {
+      } else if ((sip.sid_mode & SweConst.SE_SIDBIT_SSY_PLANE) != 0) {
         retc = sidereal_houses_ssypl(tjde, armc, eps_mean + nutlo[1], nutlo, geolat, hsys, cusp, ascmc, aOffs);
       } else {
         retc = sidereal_houses_trad(tjde, armc, eps_mean + nutlo[1], nutlo[0], geolat, hsys, cusp, ascmc, aOffs);
@@ -275,11 +289,11 @@ class SweHouse
     } else {
       retc = swe_houses_armc(armc, geolat, eps_mean + nutlo[1], hsys, cusp, ascmc, aOffs);
     }
-    if ((iflag & SweConst.SEFLG_RADIANS)!=0) {
+    if ((iflag & SweConst.SEFLG_RADIANS) != 0) {
       for (i = 1; i <= ito; i++)
         cusp[i] *= SwissData.DEGTORAD;
       for (i = 0; i < SweConst.SE_NASCMC; i++)
-        ascmc[i+aOffs] *= SwissData.DEGTORAD;
+        ascmc[i + aOffs] *= SwissData.DEGTORAD;
     }
     return retc;
   }
@@ -320,13 +334,13 @@ class SweHouse
                                      double[] ascmc,
                                      int aOffs) {
     int i, j, retc = SweConst.OK;
-    double x[]=new double[6], xvpx[]=new double[6], x2[]=new double[6], epst0,
-           xnorm[]=new double[6];
+    double x[] = new double[6], xvpx[] = new double[6], x2[] = new double[6], epst0,
+        xnorm[] = new double[6];
     double rxy, rxyz, c2, epsx, sgn, fac, dvpx, dvpxe;
     double armcx;
     SidData sip = swed.sidd;
     int ito;
-    if (Character.toUpperCase((char)hsys) == 'G') {
+    if (Character.toUpperCase((char) hsys) == 'G') {
       ito = 36;
     } else {
       ito = 12;
@@ -356,7 +370,7 @@ class SweHouse
     /* now, we have the moving point precessed to tjd_et.
      * next, we compute the auxiliary epsilon: */
     sl.swi_cross_prod(x, 0, x, 3, xnorm, 0);
-    rxy =  xnorm[0] * xnorm[0] + xnorm[1] * xnorm[1];
+    rxy = xnorm[0] * xnorm[0] + xnorm[1] * xnorm[1];
     c2 = (rxy + xnorm[2] * xnorm[2]);
     rxyz = Math.sqrt(c2);
     rxy = Math.sqrt(rxy);
@@ -368,7 +382,7 @@ class SweHouse
     fac = x[2] / x[5];
     sgn = x[5] / Math.abs(x[5]);
     for (j = 0; j <= 2; j++)
-      xvpx[j] = (x[j] - fac * x[j+3]) * sgn;      /* 1b */
+      xvpx[j] = (x[j] - fac * x[j + 3]) * sgn;      /* 1b */
     /* distance of the auxiliary vernal point from
      * the zero point at tjd_et (a section on the equator): */
     sl.swi_cartpol(xvpx, x2);
@@ -386,7 +400,7 @@ class SweHouse
     for (i = 1; i <= ito; i++)                     /* 6, 7 */
       cusp[i] = sl.swe_degnorm(cusp[i] - dvpxe - sip.ayan_t0);
     for (i = 0; i <= SweConst.SE_NASCMC; i++)
-      ascmc[aOffs+i] = sl.swe_degnorm(ascmc[aOffs+i] - dvpxe - sip.ayan_t0);
+      ascmc[aOffs + i] = sl.swe_degnorm(ascmc[aOffs + i] - dvpxe - sip.ayan_t0);
     return retc;
   }
 
@@ -420,13 +434,13 @@ class SweHouse
                                     double[] ascmc,
                                     int aOffs) {
     int i, j, retc = SweConst.OK;
-    double x[]=new double[6], x0[]=new double[6], xvpx[]=new double[6],
-           x2[]=new double[6], xnorm[]=new double[6];
+    double x[] = new double[6], x0[] = new double[6], xvpx[] = new double[6],
+        x2[] = new double[6], xnorm[] = new double[6];
     double rxy, rxyz, c2, epsx, eps2000, sgn, fac, dvpx, dvpxe, x00;
     double armcx;
     SidData sip = swed.sidd;
     int ito;
-    if (Character.toUpperCase((char)hsys) == 'G') {
+    if (Character.toUpperCase((char) hsys) == 'G') {
       ito = 36;
     } else {
       ito = 12;
@@ -459,7 +473,7 @@ class SweHouse
     /* now, we have the moving point precessed to tjd_et.
      * next, we compute the auxiliary epsilon: */
     sl.swi_cross_prod(x, 0, x, 3, xnorm, 0);
-    rxy =  xnorm[0] * xnorm[0] + xnorm[1] * xnorm[1];
+    rxy = xnorm[0] * xnorm[0] + xnorm[1] * xnorm[1];
     c2 = (rxy + xnorm[2] * xnorm[2]);
     rxyz = Math.sqrt(c2);
     rxy = Math.sqrt(rxy);
@@ -471,7 +485,7 @@ class SweHouse
     fac = x[2] / x[5];
     sgn = x[5] / Math.abs(x[5]);
     for (j = 0; j <= 2; j++)
-      xvpx[j] = (x[j] - fac * x[j+3]) * sgn;      /* 1b */
+      xvpx[j] = (x[j] - fac * x[j + 3]) * sgn;      /* 1b */
     /* distance of the auxiliary vernal point from
      * mean vernal point at tjd_et (a section on the equator): */
     sl.swi_cartpol(xvpx, x2);
@@ -485,7 +499,7 @@ class SweHouse
      * (a section on the sidereal plane).
      */
     dvpxe = Math.acos(sl.swi_dot_prod_unit(x, xvpx)) * SwissData.RADTODEG;  /* 5 */
-                  /* (always positive for dates after 5400 bc) */
+    /* (always positive for dates after 5400 bc) */
     dvpxe -= SwephData.SSY_PLANE_NODE * SwissData.RADTODEG;
     /* ayanamsa between t0 and J2000, measured on solar system plane: */
     /* position of zero point of t0 */
@@ -508,7 +522,7 @@ class SweHouse
     for (i = 1; i <= ito; i++)                     /* 6, 8, 9 */
       cusp[i] = sl.swe_degnorm(cusp[i] - dvpxe - sip.ayan_t0 - x00);
     for (i = 0; i <= SweConst.SE_NASCMC; i++)
-      ascmc[aOffs+i] = sl.swe_degnorm(ascmc[aOffs+i] - dvpxe - sip.ayan_t0 - x00);
+      ascmc[aOffs + i] = sl.swe_degnorm(ascmc[aOffs + i] - dvpxe - sip.ayan_t0 - x00);
     return retc;
   }
 
@@ -525,7 +539,7 @@ class SweHouse
     int i, retc = SweConst.OK;
     double ay;
     int ito;
-    char ihs = Character.toUpperCase((char)hsys);
+    char ihs = Character.toUpperCase((char) hsys);
     char ihs2 = ihs;
     ay = sw.swe_get_ayanamsa(tjde);
     if (ihs == 'G') {
@@ -538,13 +552,13 @@ class SweHouse
     retc = swe_houses_armc(armc, lat, eps, ihs2, cusp, ascmc, aOffs);
     for (i = 1; i <= ito; i++)
       cusp[i] = sl.swe_degnorm(cusp[i] - ay - nutl);
-      if (ihs == 'W') /* whole sign houses */
-        cusp[i] -= (cusp[i] % 30);
+    if (ihs == 'W') /* whole sign houses */
+      cusp[i] -= (cusp[i] % 30);
     for (i = 0; i < SweConst.SE_NASCMC; i++) {
       if (i == 2) /* armc */ {
         continue;
       }
-      ascmc[aOffs+i] = sl.swe_degnorm(ascmc[aOffs+i] - ay - nutl);
+      ascmc[aOffs + i] = sl.swe_degnorm(ascmc[aOffs + i] - ay - nutl);
     }
     return retc;
   }
@@ -566,22 +580,24 @@ class SweHouse
    * ascmc[6] = coasc2            * "co-ascendant" (Michael Munkasey) *
    * ascmc[7] = polasc            * "polar ascendant" (Michael Munkasey) *
    */
+
   /**
-  * Calculates the house positions and other vital points. You would use
-  * this method instead of swe_houses, if you do not have a date available,
-  * but just the ARMC (==sidereal time).
-  * @param armc The ARMC (==sidereal time)
-  * @param geolat The latitude on earth, for which the calculation has to be
-  * done.
-  * @param eps The ecliptic obliquity (e.g. xx[0] of swe_calc(...))
-  * @param hsys The house system as a character given as an integer.
-  * @param cusp The house cusps are returned here in cusp[1...12] for
-  * the house 1 to 12.
-  * @param ascmc The special points like ascendant etc. are returned here.
-  * @see #swe_houses(double, int, double, double, int, double[], double[])
-  * @see swisseph.SwissEph#swe_calc
-  * @return SweConst.OK (==0) or SweConst.ERR (==-1), if an error occured.
-  */
+   * Calculates the house positions and other vital points. You would use
+   * this method instead of swe_houses, if you do not have a date available,
+   * but just the ARMC (==sidereal time).
+   *
+   * @param armc   The ARMC (==sidereal time)
+   * @param geolat The latitude on earth, for which the calculation has to be
+   *               done.
+   * @param eps    The ecliptic obliquity (e.g. xx[0] of swe_calc(...))
+   * @param hsys   The house system as a character given as an integer.
+   * @param cusp   The house cusps are returned here in cusp[1...12] for
+   *               the house 1 to 12.
+   * @param ascmc  The special points like ascendant etc. are returned here.
+   * @return SweConst.OK (==0) or SweConst.ERR (==-1), if an error occured.
+   * @see #swe_houses(double, int, double, double, int, double[], double[])
+   * @see swisseph.SwissEph#swe_calc
+   */
   int swe_houses_armc(double armc,
                       double geolat,
                       double eps,
@@ -589,39 +605,39 @@ class SweHouse
                       double cusp[],
                       double ascmc[],
                       int aOffs) {
-    Houses h=new Houses();
+    Houses h = new Houses();
     int i, retc = 0;
     int ito;
-    if (Character.toUpperCase((char)hsys) == 'G') {
+    if (Character.toUpperCase((char) hsys) == 'G') {
       ito = 36;
     } else {
       ito = 12;
     }
     armc = sl.swe_degnorm(armc);
     retc = CalcH(armc,
-                 geolat,
-                 eps,
-                 (char)hsys, 2, h);
+        geolat,
+        eps,
+        (char) hsys, 2, h);
     cusp[0] = 0;
     for (i = 1; i <= ito; i++) {
       cusp[i] = h.cusp[i];
     }
-    ascmc[aOffs+0] = h.ac;        /* Asc */
-    ascmc[aOffs+1] = h.mc;        /* Mid */
-    ascmc[aOffs+2] = armc;
-    ascmc[aOffs+3] = h.vertex;
-    ascmc[aOffs+4] = h.equasc;
-    ascmc[aOffs+5] = h.coasc1;  /* "co-ascendant" (Walter Koch) */
-    ascmc[aOffs+6] = h.coasc2;  /* "co-ascendant" (Michael Munkasey) */
-    ascmc[aOffs+7] = h.polasc;  /* "polar ascendant" (Michael Munkasey) */
+    ascmc[aOffs + 0] = h.ac;        /* Asc */
+    ascmc[aOffs + 1] = h.mc;        /* Mid */
+    ascmc[aOffs + 2] = armc;
+    ascmc[aOffs + 3] = h.vertex;
+    ascmc[aOffs + 4] = h.equasc;
+    ascmc[aOffs + 5] = h.coasc1;  /* "co-ascendant" (Walter Koch) */
+    ascmc[aOffs + 6] = h.coasc2;  /* "co-ascendant" (Michael Munkasey) */
+    ascmc[aOffs + 7] = h.polasc;  /* "polar ascendant" (Michael Munkasey) */
     for (i = SweConst.SE_NASCMC; i < 10; i++)
-      ascmc[aOffs+i] = 0;
+      ascmc[aOffs + i] = 0;
     return retc;
   }
 
   /* for APC houses */
   /* n  number of house
-   * ph geographic latitude 
+   * ph geographic latitude
    * e  ecliptic obliquity
    * az armc
    */
@@ -629,7 +645,7 @@ class SweHouse
     int k, is_below_hor = 0;
     double dasc, kv, a, dret;
     /* ascensional difference of the ascendant */
-    kv   = Math.atan(Math.tan(ph) * Math.tan(e) * Math.cos(az)/(1 + Math.tan(ph) * Math.tan(e) * Math.sin(az)));
+    kv = Math.atan(Math.tan(ph) * Math.tan(e) * Math.cos(az) / (1 + Math.tan(ph) * Math.tan(e) * Math.sin(az)));
     /* declination of the ascendant */
     dasc = Math.atan(Math.sin(kv) / Math.tan(ph));
     /* note, at polar circles, when the mc sinks below the horizon,
@@ -643,87 +659,103 @@ class SweHouse
       k = n - 13;
     }
     /* az + PI/2 + kv = armc + 90 + asc. diff. = right ascension of ascendant
-     * PI/2 +- kv = semi-diurnal or seminocturnal arc of ascendant 
+     * PI/2 +- kv = semi-diurnal or seminocturnal arc of ascendant
      * a = right ascension of house cusp on apc circle (ascendant-parallel
      * circle), with declination dasc */
     if (is_below_hor != 0) {
-      a = kv + az + Math.PI/2 + k * (Math.PI/2 - kv) / 3;
+      a = kv + az + Math.PI / 2 + k * (Math.PI / 2 - kv) / 3;
     } else {
-      a = kv + az + Math.PI/2 + k * (Math.PI/2 + kv) / 3;
+      a = kv + az + Math.PI / 2 + k * (Math.PI / 2 + kv) / 3;
     }
     a = sl.swe_radnorm(a);
     dret = Math.atan2(Math.tan(dasc) * Math.tan(ph) * Math.sin(az) + Math.sin(a),
-      Math.cos(e) * (Math.tan(dasc) * Math.tan(ph) * Math.cos(az) + Math.cos(a)) + Math.sin(e) * Math.tan(ph) * Math.sin(az - a));
+        Math.cos(e) * (Math.tan(dasc) * Math.tan(ph) * Math.cos(az) + Math.cos(a)) + Math.sin(e) * Math.tan(ph) * Math.sin(az - a));
     dret = sl.swe_degnorm(dret * SwissData.RADTODEG);
     return dret;
   }
 
   String swe_house_name(int hsys) {
-    switch (Character.toUpperCase((char)hsys)) {
-      case 'A': return "equal";
-      case 'E': return "equal";
-      case 'B': return "Alcabitius";
-      case 'C': return "Campanus";
-      case 'G': return "Gauquelin sectors";
-      case 'H': return "horizon/azimut";
-      case 'K': return "Koch";
-      case 'M': return "Morinus";
-      case 'O': return "Porphyry";
-      case 'R': return "Regiomontanus";
-      case 'T': return "Polich/Page";
-      case 'U': return "Krusinski-Pisa-Goelzer";
-      case 'V': return "equal/Vehlow";
-      case 'W': return "equal/ whole sign";
-      case 'X': return "axial rotation system/Meridian houses";
-      case 'Y': return "APC houses";
-      default: return "Placidus";
+    switch (Character.toUpperCase((char) hsys)) {
+      case 'A':
+        return "equal";
+      case 'E':
+        return "equal";
+      case 'B':
+        return "Alcabitius";
+      case 'C':
+        return "Campanus";
+      case 'G':
+        return "Gauquelin sectors";
+      case 'H':
+        return "horizon/azimut";
+      case 'K':
+        return "Koch";
+      case 'M':
+        return "Morinus";
+      case 'O':
+        return "Porphyry";
+      case 'R':
+        return "Regiomontanus";
+      case 'T':
+        return "Polich/Page";
+      case 'U':
+        return "Krusinski-Pisa-Goelzer";
+      case 'V':
+        return "equal/Vehlow";
+      case 'W':
+        return "equal/ whole sign";
+      case 'X':
+        return "axial rotation system/Meridian houses";
+      case 'Y':
+        return "APC houses";
+      default:
+        return "Placidus";
     }
   }
 
   private int CalcH(double th, double fi, double ekl, char hsy,
-                    int iteration_count, Houses hsp )
-  /* *********************************************************
-   *  Arguments: th = sidereal time (angle 0..360 degrees
-   *             hsy = letter code for house system;
-   *                   A  equal
-   *                   E  equal
-   *                   B  Alcabitius
-   *                   C  Campanus
-   *                   G  36 Gauquelin sectors
-   *                   H  horizon / azimut
-   *                   K  Koch
-   *                   M  Morinus
-   *                   O  Porphyry
-   *                   P  Placidus
-   *                   R  Regiomontanus
-   *                   T  Polich/Page ("topocentric")
-   *                   U  Krusinski-Pisa-Goelzer
-   *                   V  equal Vehlow
-   *                   W  equal, whole sign
-   *                   X  axial rotation system/ Meridian houses
-   *                   Y  APC houses
-   *             fi = geographic latitude
-   *             ekl = obliquity of the ecliptic
-   *             iteration_count = number of iterations in
-   *             Placidus calculation; can be 1 or 2.
-   * *********************************************************
-   *  Koch and Placidus don't work in the polar circle.
-   *  We swap MC/IC so that MC is always before AC in the zodiac
-   *  We than divide the quadrants into 3 equal parts.
-   * *********************************************************
-   *  All angles are expressed in degrees.
-   *  Special trigonometric functions sind, cosd etc. are
-   *  implemented for arguments in degrees.
-   ***********************************************************/
-  {
+                    int iteration_count, Houses hsp)
+    /* *********************************************************
+     *  Arguments: th = sidereal time (angle 0..360 degrees
+     *             hsy = letter code for house system;
+     *                   A  equal
+     *                   E  equal
+     *                   B  Alcabitius
+     *                   C  Campanus
+     *                   G  36 Gauquelin sectors
+     *                   H  horizon / azimut
+     *                   K  Koch
+     *                   M  Morinus
+     *                   O  Porphyry
+     *                   P  Placidus
+     *                   R  Regiomontanus
+     *                   T  Polich/Page ("topocentric")
+     *                   U  Krusinski-Pisa-Goelzer
+     *                   V  equal Vehlow
+     *                   W  equal, whole sign
+     *                   X  axial rotation system/ Meridian houses
+     *                   Y  APC houses
+     *             fi = geographic latitude
+     *             ekl = obliquity of the ecliptic
+     *             iteration_count = number of iterations in
+     *             Placidus calculation; can be 1 or 2.
+     * *********************************************************
+     *  Koch and Placidus don't work in the polar circle.
+     *  We swap MC/IC so that MC is always before AC in the zodiac
+     *  We than divide the quadrants into 3 equal parts.
+     * *********************************************************
+     *  All angles are expressed in degrees.
+     *  Special trigonometric functions sind, cosd etc. are
+     *  implemented for arguments in degrees.
+     ***********************************************************/ {
     double tane, tanfi, cosfi, tant, sina, cosa, th2;
     double a, c, f, fh1, fh2, xh1, xh2, rectasc, ad3, acmc, vemc;
     int i, ih, ih2, retc = SweConst.OK;
     double sine, cose;
     double x[] = new double[3], krHorizonLon; /* BK 14.02.2006 */
-    cose  = cosd(ekl);
-    sine  = sind(ekl);
-    tane  = tand(ekl);
+    cose = cosd(ekl);
+    sine = sind(ekl);
+    tane = tand(ekl);
     /* north and south poles */
     if (Math.abs(Math.abs(fi) - 90) < VERY_SMALL) {
       if (fi < 0) {
@@ -735,7 +767,7 @@ class SweHouse
     tanfi = tand(fi);
     /* mc */
     if (Math.abs(th - 90) > VERY_SMALL
-      && Math.abs(th - 270) > VERY_SMALL) {
+        && Math.abs(th - 270) > VERY_SMALL) {
       tant = tand(th);
       hsp.mc = atand(tant / cose);
       if (th > 90 && th <= 270) {
@@ -750,10 +782,10 @@ class SweHouse
     } /*  if */
     hsp.mc = sl.swe_degnorm(hsp.mc);
     /* ascendant */
-    hsp.ac = Asc1 (th + 90, fi, sine, cose);
+    hsp.ac = Asc1(th + 90, fi, sine, cose);
     hsp.cusp[1] = hsp.ac;
     hsp.cusp[10] = hsp.mc;
-    hsy=Character.toUpperCase(hsy);
+    hsy = Character.toUpperCase(hsy);
     switch (hsy) {
       case 'A':   /* equal houses */
       case 'E':
@@ -765,8 +797,8 @@ class SweHouse
           hsp.ac = sl.swe_degnorm(hsp.ac + 180);
           hsp.cusp[1] = hsp.ac;
         }
-        for (i = 2; i <=12; i++)
-          hsp.cusp [i] = sl.swe_degnorm(hsp.cusp [1] + (i-1) * 30);
+        for (i = 2; i <= 12; i++)
+          hsp.cusp[i] = sl.swe_degnorm(hsp.cusp[1] + (i - 1) * 30);
         break;
       case 'C': /* Campanus houses and Horizon or Azimut system */
       case 'H':
@@ -786,8 +818,8 @@ class SweHouse
           }
           th = sl.swe_degnorm(th + 180);
         }
-        fh1 = asind(sind (fi) / 2);
-        fh2 = asind(Math.sqrt (3.0) / 2 * sind(fi));
+        fh1 = asind(sind(fi) / 2);
+        fh2 = asind(Math.sqrt(3.0) / 2 * sind(fi));
         cosfi = cosd(fi);
         if (Math.abs(cosfi) == 0) {        /* '==' should be save! */
           if (fi > 0) {
@@ -796,16 +828,16 @@ class SweHouse
             xh1 = xh2 = 270; /* cosfi = -VERY_SMALL; */
           }
         } else {
-          xh1 = atand(Math.sqrt (3.0) / cosfi);
-          xh2 = atand(1 / Math.sqrt (3.0) / cosfi);
+          xh1 = atand(Math.sqrt(3.0) / cosfi);
+          xh2 = atand(1 / Math.sqrt(3.0) / cosfi);
         }
-        hsp.cusp [11] = Asc1 (th + 90 - xh1, fh1, sine, cose);
-        hsp.cusp [12] = Asc1 (th + 90 - xh2, fh2, sine, cose);
+        hsp.cusp[11] = Asc1(th + 90 - xh1, fh1, sine, cose);
+        hsp.cusp[12] = Asc1(th + 90 - xh2, fh2, sine, cose);
         if (hsy == 'H') {
-          hsp.cusp [1] = Asc1 (th + 90, fi, sine, cose);
+          hsp.cusp[1] = Asc1(th + 90, fi, sine, cose);
         }
-        hsp.cusp [2] = Asc1 (th + 90 + xh2, fh2, sine, cose);
-        hsp.cusp [3] = Asc1 (th + 90 + xh1, fh1, sine, cose);
+        hsp.cusp[2] = Asc1(th + 90 + xh2, fh2, sine, cose);
+        hsp.cusp[3] = Asc1(th + 90 + xh1, fh1, sine, cose);
         /* within polar circle, when mc sinks below horizon and
          * ascendant changes to western hemisphere, all cusps
          * must be added 180 degrees.
@@ -850,22 +882,22 @@ class SweHouse
         cosa = Math.sqrt(1 - sina * sina);          /* always >> 0 */
         c = atand(tanfi / cosa);
         ad3 = asind(sind(c) * sina) / 3.0;
-        hsp.cusp [11] = Asc1 (th + 30 - 2 * ad3, fi, sine, cose);
-        hsp.cusp [12] = Asc1 (th + 60 - ad3, fi, sine, cose);
-        hsp.cusp [2] = Asc1 (th + 120 + ad3, fi, sine, cose);
-        hsp.cusp [3] = Asc1 (th + 150 + 2 * ad3, fi, sine, cose);
+        hsp.cusp[11] = Asc1(th + 30 - 2 * ad3, fi, sine, cose);
+        hsp.cusp[12] = Asc1(th + 60 - ad3, fi, sine, cose);
+        hsp.cusp[2] = Asc1(th + 120 + ad3, fi, sine, cose);
+        hsp.cusp[3] = Asc1(th + 150 + 2 * ad3, fi, sine, cose);
         break;
       case 'O':   /* Porphyry houses */
 //porphyry:
         makePorphyry(hsp);
         break;
       case 'R':   /* Regiomontanus houses */
-        fh1 = atand (tanfi * 0.5);
-        fh2 = atand (tanfi * cosd(30));
-        hsp.cusp [11] =  Asc1 (30 + th, fh1, sine, cose);
-        hsp.cusp [12] =  Asc1 (60 + th, fh2, sine, cose);
-        hsp.cusp [2] =  Asc1 (120 + th, fh2, sine, cose);
-        hsp.cusp [3] =  Asc1 (150 + th, fh1, sine, cose);
+        fh1 = atand(tanfi * 0.5);
+        fh2 = atand(tanfi * cosd(30));
+        hsp.cusp[11] = Asc1(30 + th, fh1, sine, cose);
+        hsp.cusp[12] = Asc1(60 + th, fh2, sine, cose);
+        hsp.cusp[2] = Asc1(120 + th, fh2, sine, cose);
+        hsp.cusp[3] = Asc1(150 + th, fh1, sine, cose);
         /* within polar circle, when mc sinks below horizon and
          * ascendant changes to western hemisphere, all cusps
          * must be added 180 degrees.
@@ -881,12 +913,12 @@ class SweHouse
         }
         break;
       case 'T':   /* 'topocentric' houses */
-        fh1 = atand (tanfi / 3.0);
-        fh2 = atand (tanfi * 2.0 / 3.0);
-        hsp.cusp [11] =  Asc1 (30 + th, fh1, sine, cose);
-        hsp.cusp [12] =  Asc1 (60 + th, fh2, sine, cose);
-        hsp.cusp [2] =  Asc1 (120 + th, fh2, sine, cose);
-        hsp.cusp [3] =  Asc1 (150 + th, fh1, sine, cose);
+        fh1 = atand(tanfi / 3.0);
+        fh2 = atand(tanfi * 2.0 / 3.0);
+        hsp.cusp[11] = Asc1(30 + th, fh1, sine, cose);
+        hsp.cusp[12] = Asc1(60 + th, fh2, sine, cose);
+        hsp.cusp[2] = Asc1(120 + th, fh2, sine, cose);
+        hsp.cusp[3] = Asc1(150 + th, fh1, sine, cose);
         /* within polar circle, when mc sinks below horizon and
          * ascendant changes to western hemisphere, all cusps
          * must be added 180 degrees.
@@ -910,22 +942,22 @@ class SweHouse
           hsp.ac = sl.swe_degnorm(hsp.ac + 180);
           hsp.cusp[1] = hsp.ac;
         }
-        hsp.cusp [1] = sl.swe_degnorm(hsp.ac - 15);
-        for (i = 2; i <=12; i++)
-          hsp.cusp [i] = sl.swe_degnorm(hsp.cusp [1] + (i-1) * 30);
+        hsp.cusp[1] = sl.swe_degnorm(hsp.ac - 15);
+        for (i = 2; i <= 12; i++)
+          hsp.cusp[i] = sl.swe_degnorm(hsp.cusp[1] + (i - 1) * 30);
         break;
       case 'W':     /* equal, whole-sign houses */
         /*
-        * within polar circle we swap AC/DC if AC is on wrong side
-        */
+         * within polar circle we swap AC/DC if AC is on wrong side
+         */
         acmc = sl.swe_difdeg2n(hsp.ac, hsp.mc);
         if (acmc < 0) {
           hsp.ac = sl.swe_degnorm(hsp.ac + 180);
           hsp.cusp[1] = hsp.ac;
         }
-        hsp.cusp [1] = hsp.ac - (hsp.ac % 30);
-        for (i = 2; i <=12; i++)
-          hsp.cusp [i] = sl.swe_degnorm(hsp.cusp [1] + (i-1) * 30);
+        hsp.cusp[1] = hsp.ac - (hsp.ac % 30);
+        for (i = 2; i <= 12; i++)
+          hsp.cusp[i] = sl.swe_degnorm(hsp.cusp[1] + (i - 1) * 30);
         break;
       case 'X': {
         /*
@@ -942,7 +974,7 @@ class SweHouse
           }
           a2 = sl.swe_degnorm(a2 + 30);
           if (Math.abs(a2 - 90) > VERY_SMALL
-            && Math.abs(a2 - 270) > VERY_SMALL) {
+              && Math.abs(a2 - 270) > VERY_SMALL) {
             tant = tand(a2);
             hsp.cusp[j] = atand(tant / cose);
             if (a2 > 90 && a2 <= 270) {
@@ -962,7 +994,7 @@ class SweHouse
           hsp.ac = sl.swe_degnorm(hsp.ac + 180);
         }
         break;
-        }
+      }
       case 'M': {
         /*
          * Morinus
@@ -986,7 +1018,7 @@ class SweHouse
           hsp.ac = sl.swe_degnorm(hsp.ac + 180);
         }
         break;
-        }
+      }
       case 'B': { /* Alcabitius */
         /* created by Alois 17-sep-2000, followed example in Matrix
            electrical library. The code reproduces the example!
@@ -1016,15 +1048,15 @@ class SweHouse
         rectasc = sl.swe_degnorm(th + sd3);            /* cusp 11 */
         /* project rectasc onto eclipitic with pole height 0, i.e. along the
         declination circle */
-        hsp.cusp [11] = Asc1 (rectasc, 0, sine, cose);
+        hsp.cusp[11] = Asc1(rectasc, 0, sine, cose);
         rectasc = sl.swe_degnorm(th + 2 * sd3);        /* cusp 12 */
-        hsp.cusp [12] = Asc1 (rectasc, 0, sine, cose);
+        hsp.cusp[12] = Asc1(rectasc, 0, sine, cose);
         rectasc = sl.swe_degnorm(th + 180 - 2 * sn3);  /* cusp 2 */
-        hsp.cusp [2] = Asc1 (rectasc, 0, sine, cose);
-        rectasc = sl.swe_degnorm(th + 180 -  sn3);     /* cusp 3 */
-        hsp.cusp [3] = Asc1 (rectasc, 0, sine, cose);
-        }
-        break;
+        hsp.cusp[2] = Asc1(rectasc, 0, sine, cose);
+        rectasc = sl.swe_degnorm(th + 180 - sn3);     /* cusp 3 */
+        hsp.cusp[3] = Asc1(rectasc, 0, sine, cose);
+      }
+      break;
       case 'G': {   /* 36 Gauquelin sectors */
         for (i = 1; i <= 36; i++) {
           hsp.cusp[i] = 0;
@@ -1041,88 +1073,88 @@ class SweHouse
           ih2 = 10 - ih;
           fh1 = atand(sind(a * ih2 / 9) / tane);
           rectasc = sl.swe_degnorm((90 / 9) * ih2 + th);
-          tant = tand(asind(sine * sind(Asc1 (rectasc, fh1, sine, cose))));
+          tant = tand(asind(sine * sind(Asc1(rectasc, fh1, sine, cose))));
           if (Math.abs(tant) < VERY_SMALL) {
             hsp.cusp[ih] = rectasc;
           } else {
             /* pole height */
-            f = atand(sind(asind(tanfi * tant) * ih2 / 9)  /tant);
-            hsp.cusp [ih] = Asc1 (rectasc, f, sine, cose);
-            for (i = 1; i <= iteration_count; i++) {
-            tant = tand(asind(sine * sind(hsp.cusp[ih])));
-            if (Math.abs(tant) < VERY_SMALL) {
-              hsp.cusp[ih] = rectasc;
-              break;
-            }
-            /* pole height */
             f = atand(sind(asind(tanfi * tant) * ih2 / 9) / tant);
-            hsp.cusp[ih] = Asc1 (rectasc, f, sine, cose);
+            hsp.cusp[ih] = Asc1(rectasc, f, sine, cose);
+            for (i = 1; i <= iteration_count; i++) {
+              tant = tand(asind(sine * sind(hsp.cusp[ih])));
+              if (Math.abs(tant) < VERY_SMALL) {
+                hsp.cusp[ih] = rectasc;
+                break;
+              }
+              /* pole height */
+              f = atand(sind(asind(tanfi * tant) * ih2 / 9) / tant);
+              hsp.cusp[ih] = Asc1(rectasc, f, sine, cose);
             }
           }
-          hsp.cusp[ih+18] = sl.swe_degnorm(hsp.cusp[ih] + 180);
+          hsp.cusp[ih + 18] = sl.swe_degnorm(hsp.cusp[ih] + 180);
         }
         /*************** first/third quarter ***************/
         for (ih = 29; ih <= 36; ih++) {
           ih2 = ih - 28;
           fh1 = atand(sind(a * ih2 / 9) / tane);
           rectasc = sl.swe_degnorm(180 - ih2 * 90 / 9 + th);
-          tant = tand(asind(sine * sind(Asc1 (rectasc, fh1, sine, cose))));
+          tant = tand(asind(sine * sind(Asc1(rectasc, fh1, sine, cose))));
           if (Math.abs(tant) < VERY_SMALL) {
             hsp.cusp[ih] = rectasc;
           } else {
             f = atand(sind(asind(tanfi * tant) * ih2 / 9) / tant);
             /*  pole height */
-            hsp.cusp[ih] = Asc1 (rectasc, f, sine, cose);
+            hsp.cusp[ih] = Asc1(rectasc, f, sine, cose);
             for (i = 1; i <= iteration_count; i++) {
-            tant = tand(asind(sine * sind(hsp.cusp[ih])));
-            if (Math.abs(tant) < VERY_SMALL) {
-              hsp.cusp[ih] = rectasc;
-              break;
-            }
-            f = atand(sind(asind(tanfi * tant) * ih2 / 9) / tant);
-            /*  pole height */
-            hsp.cusp[ih] = Asc1 (rectasc, f, sine, cose);
+              tant = tand(asind(sine * sind(hsp.cusp[ih])));
+              if (Math.abs(tant) < VERY_SMALL) {
+                hsp.cusp[ih] = rectasc;
+                break;
+              }
+              f = atand(sind(asind(tanfi * tant) * ih2 / 9) / tant);
+              /*  pole height */
+              hsp.cusp[ih] = Asc1(rectasc, f, sine, cose);
             }
           }
-          hsp.cusp[ih-18] = sl.swe_degnorm(hsp.cusp[ih] + 180);
+          hsp.cusp[ih - 18] = sl.swe_degnorm(hsp.cusp[ih] + 180);
         }
         hsp.cusp[1] = hsp.ac;
         hsp.cusp[10] = hsp.mc;
         hsp.cusp[19] = sl.swe_degnorm(hsp.ac + 180);
         hsp.cusp[28] = sl.swe_degnorm(hsp.mc + 180);
         break;
-        }
+      }
       case 'U': /* Krusinski-Pisa */
         /*
          * The following code was written by Bogdan Krusinski in 2006.
          * bogdan@astrologia.pl
          *
          * Definition:
-         * "Krusinski - house system based on the great circle passing through 
-         * ascendant and zenith. This circle is divided into 12 equal parts 
-         * (1st cusp is ascendant, 10th cusp is zenith), then the resulting 
+         * "Krusinski - house system based on the great circle passing through
+         * ascendant and zenith. This circle is divided into 12 equal parts
+         * (1st cusp is ascendant, 10th cusp is zenith), then the resulting
          * points are projected onto the ecliptic through meridian circles.
          * The house cusps in space are half-circles perpendicular to the equator
          * and running from the north to the south celestial pole through the
-         * resulting cusp points on the house circle. The points where they 
+         * resulting cusp points on the house circle. The points where they
          * cross the ecliptic mark the ecliptic house cusps."
          *
          * Description of the algorithm:
-         * Transform into great circle running through Asc and zenit (where arc 
-         * between Asc and zenith is always 90 deg), and then return with 
-         * house cusps into ecliptic. Eg. solve trigonometrical triangle 
-         * with three transformations and two rotations starting from ecliptic. 
-         * House cusps in space are meridian circles. 
+         * Transform into great circle running through Asc and zenit (where arc
+         * between Asc and zenith is always 90 deg), and then return with
+         * house cusps into ecliptic. Eg. solve trigonometrical triangle
+         * with three transformations and two rotations starting from ecliptic.
+         * House cusps in space are meridian circles.
          *
          * Notes:
          * 1. In this definition we assume MC on ecliptic as point where
          *    half-meridian (from north to south pole) cuts ecliptic,
          *    so MC may be below horizon in arctic regions.
-         * 2. Houses could be calculated in all latitudes except the poles 
-         *    themselves (-90,90) and points on arctic circle in cases where 
-         *    ecliptic is equal to horizon and then ascendant is undefined. 
-         *    But ascendant when 'horizon=ecliptic' could be deduced as limes 
-         *    from both sides of that point and houses with that provision can 
+         * 2. Houses could be calculated in all latitudes except the poles
+         *    themselves (-90,90) and points on arctic circle in cases where
+         *    ecliptic is equal to horizon and then ascendant is undefined.
+         *    But ascendant when 'horizon=ecliptic' could be deduced as limes
+         *    from both sides of that point and houses with that provision can
          *    be computed also there.
          *
          * Starting values for calculations:
@@ -1142,29 +1174,29 @@ class SweHouse
         x[1] = 0.0;     /* Asc declination */
         x[2] = 1.0;     /* Radius to test validity of subsequent transformations. */
         sl.swe_cotrans(x, x, -ekl);      /* A1. Transform into equatorial coords */
-        x[0] = x[0] - (th-90);        /* A2. Rotate                           */
-        sl.swe_cotrans(x, x, -(90-fi));  /* A3. Transform into horizontal coords */
+        x[0] = x[0] - (th - 90);        /* A2. Rotate                           */
+        sl.swe_cotrans(x, x, -(90 - fi));  /* A3. Transform into horizontal coords */
         krHorizonLon = x[0];          /* ...save asc lon on horizon to get back later with house cusp */
         x[0] = x[0] - x[0];           /* A4. Rotate                           */
         sl.swe_cotrans(x, x, -90);       /* A5. Transform into this house system great circle (asc-zenith) */
         /* As it is house circle now, simple add 30 deg increments... */
-        for(i = 0; i < 6; i++) {
-          /* B0. Set 'n-th' house cusp. 
-           *     Note that IC/MC are also calculated here to check 
+        for (i = 0; i < 6; i++) {
+          /* B0. Set 'n-th' house cusp.
+           *     Note that IC/MC are also calculated here to check
            *     if really this is the asc-zenith great circle. */
-          x[0] = 30.0*i;
+          x[0] = 30.0 * i;
           x[1] = 0.0;
           sl.swe_cotrans(x, x, 90);                 /* B1. Transform back into horizontal coords */
           x[0] = x[0] + krHorizonLon;            /* B2. Rotate back.                          */
-          sl.swe_cotrans(x, x, 90-fi);              /* B3. Transform back into equatorial coords */
-          x[0] = sl.swe_degnorm(x[0] + (th-90));    /* B4. Rotate back -> RA of house cusp as result. */
+          sl.swe_cotrans(x, x, 90 - fi);              /* B3. Transform back into equatorial coords */
+          x[0] = sl.swe_degnorm(x[0] + (th - 90));    /* B4. Rotate back -> RA of house cusp as result. */
           /* B5. Where's this house cusp on ecliptic? */
           /* ... so last but not least - get ecliptic longitude of house cusp: */
-          hsp.cusp[i+1] = atand(tand(x[0])/cosd(ekl));
+          hsp.cusp[i + 1] = atand(tand(x[0]) / cosd(ekl));
           if (x[0] > 90 && x[0] <= 270)
-            hsp.cusp[i+1] = sl.swe_degnorm(hsp.cusp[i+1] + 180);
-          hsp.cusp[i+1] = sl.swe_degnorm(hsp.cusp[i+1]);
-          hsp.cusp[i+7] = sl.swe_degnorm(hsp.cusp[i+1]+180);
+            hsp.cusp[i + 1] = sl.swe_degnorm(hsp.cusp[i + 1] + 180);
+          hsp.cusp[i + 1] = sl.swe_degnorm(hsp.cusp[i + 1]);
+          hsp.cusp[i + 7] = sl.swe_degnorm(hsp.cusp[i + 1] + 180);
         }
         break;
       case 'Y':     /* APC houses */
@@ -1173,23 +1205,23 @@ class SweHouse
         }
         hsp.ac = hsp.cusp[1];
         hsp.mc = hsp.cusp[10];
-        /* within polar circle, when mc sinks below horizon and 
+        /* within polar circle, when mc sinks below horizon and
          * ascendant changes to western hemisphere, all cusps
-         * must be added 180 degrees. 
+         * must be added 180 degrees.
          * houses will be in clockwise direction */
         if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           acmc = sl.swe_difdeg2n(hsp.ac, hsp.mc);
           if (acmc < 0) {
             hsp.ac = sl.swe_degnorm(hsp.ac + 180);
             hsp.mc = sl.swe_degnorm(hsp.mc + 180);
-	    for (i = 1; i <= 12; i++)
-	      hsp.cusp[i] = sl.swe_degnorm(hsp.cusp[i] + 180);
+            for (i = 1; i <= 12; i++)
+              hsp.cusp[i] = sl.swe_degnorm(hsp.cusp[i] + 180);
           }
         }
         break;
       default:    /* Placidus houses */
         if (hsy != 'P') {
-          System.err.println("swe_houses: make Placidus, unknown key "+hsy);
+          System.err.println("swe_houses: make Placidus, unknown key " + hsy);
         }
         if (Math.abs(fi) >= 90 - ekl) {  /* within polar circle */
           retc = SweConst.ERR;
@@ -1202,93 +1234,93 @@ class SweHouse
         fh2 = atand(sind(a * 2 / 3) / tane);
         /* ************  house 11 ******************** */
         rectasc = sl.swe_degnorm(30 + th);
-        tant = tand(asind(sine * sind(Asc1 (rectasc, fh1, sine, cose))));
+        tant = tand(asind(sine * sind(Asc1(rectasc, fh1, sine, cose))));
         if (Math.abs(tant) < VERY_SMALL) {
-          hsp.cusp [11] = rectasc;
+          hsp.cusp[11] = rectasc;
         } else {
           /* pole height */
-          f = atand(sind(asind(tanfi * tant) / 3)  /tant);
-          hsp.cusp [11] = Asc1 (rectasc, f, sine, cose);
+          f = atand(sind(asind(tanfi * tant) / 3) / tant);
+          hsp.cusp[11] = Asc1(rectasc, f, sine, cose);
           for (i = 1; i <= iteration_count; i++) {
-            tant = tand(asind(sine * sind(hsp.cusp [11])));
+            tant = tand(asind(sine * sind(hsp.cusp[11])));
             if (Math.abs(tant) < VERY_SMALL) {
-              hsp.cusp [11] = rectasc;
+              hsp.cusp[11] = rectasc;
               break;
             }
             /* pole height */
             f = atand(sind(asind(tanfi * tant) / 3) / tant);
-            hsp.cusp [11] = Asc1 (rectasc, f, sine, cose);
+            hsp.cusp[11] = Asc1(rectasc, f, sine, cose);
           }
         }
         /* ************  house 12 ******************** */
         rectasc = sl.swe_degnorm(60 + th);
-        tant = tand(asind(sine*sind(Asc1 (rectasc,  fh2, sine, cose))));
+        tant = tand(asind(sine * sind(Asc1(rectasc, fh2, sine, cose))));
         if (Math.abs(tant) < VERY_SMALL) {
-          hsp.cusp [12] = rectasc;
+          hsp.cusp[12] = rectasc;
         } else {
           f = atand(sind(asind(tanfi * tant) / 1.5) / tant);
           /*  pole height */
-          hsp.cusp [12] = Asc1 (rectasc, f, sine, cose);
+          hsp.cusp[12] = Asc1(rectasc, f, sine, cose);
           for (i = 1; i <= iteration_count; i++) {
-            tant = tand(asind(sine * sind(hsp.cusp [12])));
+            tant = tand(asind(sine * sind(hsp.cusp[12])));
             if (Math.abs(tant) < VERY_SMALL) {
-              hsp.cusp [12] = rectasc;
+              hsp.cusp[12] = rectasc;
               break;
             }
             f = atand(sind(asind(tanfi * tant) / 1.5) / tant);
             /*  pole height */
-            hsp.cusp [12] = Asc1 (rectasc, f, sine, cose);
+            hsp.cusp[12] = Asc1(rectasc, f, sine, cose);
           }
         }
         /* ************  house  2 ******************** */
         rectasc = sl.swe_degnorm(120 + th);
-        tant = tand(asind(sine * sind(Asc1 (rectasc, fh2, sine, cose))));
+        tant = tand(asind(sine * sind(Asc1(rectasc, fh2, sine, cose))));
         if (Math.abs(tant) < VERY_SMALL) {
-          hsp.cusp [2] = rectasc;
+          hsp.cusp[2] = rectasc;
         } else {
           f = atand(sind(asind(tanfi * tant) / 1.5) / tant);
           /*  pole height */
-          hsp.cusp [2] = Asc1 (rectasc, f, sine, cose);
+          hsp.cusp[2] = Asc1(rectasc, f, sine, cose);
           for (i = 1; i <= iteration_count; i++) {
-            tant = tand(asind(sine * sind(hsp.cusp [2])));
+            tant = tand(asind(sine * sind(hsp.cusp[2])));
             if (Math.abs(tant) < VERY_SMALL) {
-              hsp.cusp [2] = rectasc;
+              hsp.cusp[2] = rectasc;
               break;
             }
             f = atand(sind(asind(tanfi * tant) / 1.5) / tant);
             /*  pole height */
-            hsp.cusp [2] = Asc1 (rectasc, f, sine, cose);
+            hsp.cusp[2] = Asc1(rectasc, f, sine, cose);
           }
         }
         /* ************  house  3 ******************** */
         rectasc = sl.swe_degnorm(150 + th);
-        tant = tand(asind(sine * sind(Asc1 (rectasc, fh1, sine, cose))));
+        tant = tand(asind(sine * sind(Asc1(rectasc, fh1, sine, cose))));
         if (Math.abs(tant) < VERY_SMALL) {
-          hsp.cusp [3] = rectasc;
+          hsp.cusp[3] = rectasc;
         } else {
           f = atand(sind(asind(tanfi * tant) / 3) / tant);
           /*  pole height */
-          hsp.cusp [3] = Asc1(rectasc, f, sine, cose);
+          hsp.cusp[3] = Asc1(rectasc, f, sine, cose);
           for (i = 1; i <= iteration_count; i++) {
-            tant = tand(asind(sine * sind(hsp.cusp [3])));
+            tant = tand(asind(sine * sind(hsp.cusp[3])));
             if (Math.abs(tant) < VERY_SMALL) {
-              hsp.cusp [3] = rectasc;
+              hsp.cusp[3] = rectasc;
               break;
             }
             f = atand(sind(asind(tanfi * tant) / 3) / tant);
             /*  pole height */
-            hsp.cusp [3] = Asc1 (rectasc, f, sine, cose);
+            hsp.cusp[3] = Asc1(rectasc, f, sine, cose);
           }
         }
         break;
     } /* end switch */
     if (hsy != 'G' && hsy != 'Y') {
-      hsp.cusp [4] = sl.swe_degnorm(hsp.cusp [10] + 180);
-      hsp.cusp [5] = sl.swe_degnorm(hsp.cusp [11] + 180);
-      hsp.cusp [6] = sl.swe_degnorm(hsp.cusp [12] + 180);
-      hsp.cusp [7] = sl.swe_degnorm(hsp.cusp [1] + 180);
-      hsp.cusp [8] = sl.swe_degnorm(hsp.cusp [2] + 180);
-      hsp.cusp [9] = sl.swe_degnorm(hsp.cusp [3] + 180);
+      hsp.cusp[4] = sl.swe_degnorm(hsp.cusp[10] + 180);
+      hsp.cusp[5] = sl.swe_degnorm(hsp.cusp[11] + 180);
+      hsp.cusp[6] = sl.swe_degnorm(hsp.cusp[12] + 180);
+      hsp.cusp[7] = sl.swe_degnorm(hsp.cusp[1] + 180);
+      hsp.cusp[8] = sl.swe_degnorm(hsp.cusp[2] + 180);
+      hsp.cusp[9] = sl.swe_degnorm(hsp.cusp[3] + 180);
     }
     /* vertex */
     if (fi >= 0) {
@@ -1296,7 +1328,7 @@ class SweHouse
     } else {
       f = -90 - fi;
     }
-    hsp.vertex = Asc1 (th - 90, f, sine, cose);
+    hsp.vertex = Asc1(th - 90, f, sine, cose);
     /* with tropical latitudes, the vertex behaves strange,
      * in a similar way as the ascendant within the polar
      * circle. we keep it always on the western hemisphere.*/
@@ -1312,7 +1344,7 @@ class SweHouse
     /* equasc (equatorial ascendant) */
     th2 = sl.swe_degnorm(th + 90);
     if (Math.abs(th2 - 90) > VERY_SMALL
-      && Math.abs(th2 - 270) > VERY_SMALL) {
+        && Math.abs(th2 - 270) > VERY_SMALL) {
       tant = tand(th2);
       hsp.equasc = atand(tant / cose);
       if (th2 > 90 && th2 <= 270) {
@@ -1327,22 +1359,22 @@ class SweHouse
     } /*  if */
     hsp.equasc = sl.swe_degnorm(hsp.equasc);
     /* "co-ascendant" W. Koch */
-    hsp.coasc1 = sl.swe_degnorm(Asc1 (th - 90, fi, sine, cose) + 180);
+    hsp.coasc1 = sl.swe_degnorm(Asc1(th - 90, fi, sine, cose) + 180);
     /* "co-ascendant" M. Munkasey */
     if (fi >= 0) {
-      hsp.coasc2 = Asc1 (th + 90, 90 - fi, sine, cose);
+      hsp.coasc2 = Asc1(th + 90, 90 - fi, sine, cose);
     } else /* southern hemisphere */ {
-      hsp.coasc2 = Asc1 (th + 90, -90 - fi, sine, cose);
+      hsp.coasc2 = Asc1(th + 90, -90 - fi, sine, cose);
     }
     /* "polar ascendant" M. Munkasey */
-    hsp.polasc = Asc1 (th - 90, fi, sine, cose);
+    hsp.polasc = Asc1(th - 90, fi, sine, cose);
     return retc;
   } /* procedure houses */
 
   /**
-  * This is just a wrapping function to deal with the <CODE>goto</CODE>'s in
-  * the original C-Code.
-  */
+   * This is just a wrapping function to deal with the <CODE>goto</CODE>'s in
+   * the original C-Code.
+   */
   private void makePorphyry(Houses hsp) {
     /*
      * within polar circle we swap AC/DC if AC is on wrong side
@@ -1353,26 +1385,26 @@ class SweHouse
       hsp.cusp[1] = hsp.ac;
       acmc = sl.swe_difdeg2n(hsp.ac, hsp.mc);
     }
-    hsp.cusp [2] = sl.swe_degnorm(hsp.ac + (180 - acmc) / 3);
-    hsp.cusp [3] = sl.swe_degnorm(hsp.ac + (180 - acmc) / 3 * 2);
-    hsp.cusp [11] = sl.swe_degnorm(hsp.mc + acmc / 3);
-    hsp.cusp [12] = sl.swe_degnorm(hsp.mc + acmc / 3 * 2);
+    hsp.cusp[2] = sl.swe_degnorm(hsp.ac + (180 - acmc) / 3);
+    hsp.cusp[3] = sl.swe_degnorm(hsp.ac + (180 - acmc) / 3 * 2);
+    hsp.cusp[11] = sl.swe_degnorm(hsp.mc + acmc / 3);
+    hsp.cusp[12] = sl.swe_degnorm(hsp.mc + acmc / 3 * 2);
   }
 
   /******************************/
-  private double Asc1 (double x1, double f, double sine, double cose) {
+  private double Asc1(double x1, double f, double sine, double cose) {
     int n;
     double ass;
     x1 = sl.swe_degnorm(x1);
-    n  = (int) ((x1 / 90) + 1);
+    n = (int) ((x1 / 90) + 1);
     if (n == 1) {
-      ass = ( Asc2 (x1, f, sine, cose));
+      ass = (Asc2(x1, f, sine, cose));
     } else if (n == 2) {
-      ass = (180 - Asc2 (180 - x1, - f, sine, cose));
+      ass = (180 - Asc2(180 - x1, -f, sine, cose));
     } else if (n == 3) {
-      ass = (180 + Asc2 (x1 - 180, - f, sine, cose));
+      ass = (180 + Asc2(x1 - 180, -f, sine, cose));
     } else {
-      ass = (360 - Asc2 (360- x1,  f, sine, cose));
+      ass = (360 - Asc2(360 - x1, f, sine, cose));
     }
     ass = sl.swe_degnorm(ass);
     if (Math.abs(ass - 90) < VERY_SMALL)        /* rounding, e.g.: if */ {
@@ -1390,10 +1422,10 @@ class SweHouse
     return ass;
   }  /* Asc1 */
 
-  private double Asc2 (double x, double f, double sine, double cose) {
+  private double Asc2(double x, double f, double sine, double cose) {
     int n;
     double ass, sinx;
-    ass = - tand(f) * sine + cose * cosd(x);
+    ass = -tand(f) * sine + cose * cosd(x);
     if (Math.abs(ass) < VERY_SMALL) {
       ass = 0;
     }
@@ -1450,28 +1482,30 @@ class SweHouse
    *   equal, Porphyry, Alcabitius, Koch, Krusinski (all others should work).
    * The Swiss Ephemeris currently does not handle these cases.
    */
+
   /**
-  * The function returns a value between 1.0 and 12.999999, indicating in
-  * which house a planet is and how far from its cusp it is. It computes
-  * the house position of a planet or another point in degrees: 0 - 30 =
-  * 1st house, 30 - 60 = 2nd house, etc.
-  * @param armc The ARMC (sidereal time in degrees)
-  * @param geolat The geographic latitude
-  * @param eps The true ecliptic obliquity (e.g. xx[0] of swe_calc(...))
-  * @param hsys The house system. See swe_houses(...) for a description
-  * of the possible houses.
-  * @param xpin A double[6] containing the ecliptic longitude and latitude of
-  * the planet in degrees in xpin[0] and xpin[1]. The other xpin[] values are
-  * not used, but the array has to be this size! The values must describe
-  * tropical positions.
-  * @param serr StringBuffer to contain any error messages or warnings
-  * @return A value between 1.0 and 12.999999, indicating in which house a
-  * planet is and how far from its cusp it is.
-  * #swe_houses
-  */
+   * The function returns a value between 1.0 and 12.999999, indicating in
+   * which house a planet is and how far from its cusp it is. It computes
+   * the house position of a planet or another point in degrees: 0 - 30 =
+   * 1st house, 30 - 60 = 2nd house, etc.
+   *
+   * @param armc   The ARMC (sidereal time in degrees)
+   * @param geolat The geographic latitude
+   * @param eps    The true ecliptic obliquity (e.g. xx[0] of swe_calc(...))
+   * @param hsys   The house system. See swe_houses(...) for a description
+   *               of the possible houses.
+   * @param xpin   A double[6] containing the ecliptic longitude and latitude of
+   *               the planet in degrees in xpin[0] and xpin[1]. The other xpin[] values are
+   *               not used, but the array has to be this size! The values must describe
+   *               tropical positions.
+   * @param serr   StringBuffer to contain any error messages or warnings
+   * @return A value between 1.0 and 12.999999, indicating in which house a
+   * planet is and how far from its cusp it is.
+   * #swe_houses
+   */
   double swe_house_pos(double armc, double geolat, double eps,
                        int hsys, double xpin[], StringBuffer serr) {
-    double xp[]=new double[6], xeq[]=new double[6], ra, de, mdd, mdn, sad, san;
+    double xp[] = new double[6], xeq[] = new double[6], ra, de, mdd, mdn, sad, san;
     double hpos, sinad, ad, a, admc, adp, samc, demc, asc, mc, acmc, tant;
     double fh, ra0, tanfi, fac, dfac;
     double x[] = new double[3], xasc[] = new double[3], raep, raaz, oblaz, xtemp; /* BK 21.02.2006 */
@@ -1480,8 +1514,10 @@ class SweHouse
     boolean is_above_hor = false;
     boolean is_invalid = false;
     boolean is_circumpolar = false;
-    if (serr != null) { serr.setLength(0); }
-    hsys = Character.toUpperCase((char)hsys);
+    if (serr != null) {
+      serr.setLength(0);
+    }
+    hsys = Character.toUpperCase((char) hsys);
     xeq[0] = xpin[0];
     xeq[1] = xpin[1];
     xeq[2] = 1;
@@ -1497,12 +1533,12 @@ class SweHouse
       mdn -= 360;
     }
     /* xp[0] will contain the house position, a value between 0 and 360 */
-    switch(hsys) {
+    switch (hsys) {
       case 'A':
       case 'E':
       case 'V':
       case 'W':
-        asc = Asc1 (sl.swe_degnorm(armc + 90), geolat, sine, cose);
+        asc = Asc1(sl.swe_degnorm(armc + 90), geolat, sine, cose);
         demc = atand(sind(armc) * tand(eps));
         if (geolat >= 0 && 90 - geolat + demc < 0) {
           asc = sl.swe_degnorm(asc + 180);
@@ -1521,14 +1557,14 @@ class SweHouse
          * a value within the house, 0.001" is added */
         xp[0] = sl.swe_degnorm(xp[0] + MILLIARCSEC);
         hpos = xp[0] / 30.0 + 1;
-      break;
+        break;
       case 'O':  /* Porphyry */
       case 'B':  /* Alcabitius */
-        asc = Asc1 (sl.swe_degnorm(armc + 90), geolat, sine, cose);
+        asc = Asc1(sl.swe_degnorm(armc + 90), geolat, sine, cose);
         demc = atand(sind(armc) * tand(eps));
         /* mc */
         if (Math.abs(armc - 90) > VERY_SMALL
-                && Math.abs(armc - 270) > VERY_SMALL) {
+            && Math.abs(armc - 270) > VERY_SMALL) {
           tant = tand(armc);
           mc = sl.swe_degnorm(atand(tant / cose));
           if (armc > 90 && armc <= 270) {
@@ -1549,7 +1585,7 @@ class SweHouse
         if (geolat < 0 && -90 - geolat + demc > 0) {
           asc = sl.swe_degnorm(asc + 180);
         }
-        if (hsys ==  'O') {
+        if (hsys == 'O') {
           xp[0] = sl.swe_degnorm(xpin[0] - asc);
           /* to make sure that a call with a house cusp position returns
            * a value within the house, 0.001" is added */
@@ -1592,14 +1628,14 @@ class SweHouse
           hpos = sl.swe_degnorm(hpos - 90) / 30.0 + 1.0;
           if (hpos >= 13.0) hpos -= 12;
         }
-      break;
+        break;
       case 'X': /* Merdidian or axial rotation system */
         hpos = sl.swe_degnorm(mdd - 90) / 30.0 + 1.0;
-      break;
+        break;
       case 'M': { /* Morinus */
         double am = xpin[0];
         if (Math.abs(am - 90) > VERY_SMALL
-          && Math.abs(am - 270) > VERY_SMALL) {
+            && Math.abs(am - 270) > VERY_SMALL) {
           tant = tand(am);
           hpos = atand(tant / cose);
           if (am > 90 && am <= 270) {
@@ -1618,8 +1654,8 @@ class SweHouse
       break;
       /* version of Koch method: do calculations within circumpolar circle,
        * if possible; make sure house positions 4 - 9 only appear on western
-       * hemisphere */ 
-      case 'K': 
+       * hemisphere */
+      case 'K':
         demc = atand(sind(armc) * tand(eps));
         is_invalid = false;
         is_circumpolar = false;
@@ -1699,9 +1735,9 @@ class SweHouse
          * cuts house plane, giving exact planet's house position.
          * Input data: ramc, geolat, asc.
          */
-        asc = Asc1 (sl.swe_degnorm(armc + 90), geolat, sine, cose);
+        asc = Asc1(sl.swe_degnorm(armc + 90), geolat, sine, cose);
         demc = atand(sind(armc) * tand(eps));
-        /* while MC is always south, 
+        /* while MC is always south,
          * Asc must always be in eastern hemisphere */
         if (geolat >= 0 && 90 - geolat + demc < 0) {
           asc = sl.swe_degnorm(asc + 180);
@@ -1710,51 +1746,56 @@ class SweHouse
           asc = sl.swe_degnorm(asc + 180);
         }
         /*
-         * Descr: find the house plane 'asc-zenith' - where it intersects 
-         * with equator and at what angle, and then simple find arc 
-         * from asc on that plane to planet's meridian intersection 
+         * Descr: find the house plane 'asc-zenith' - where it intersects
+         * with equator and at what angle, and then simple find arc
+         * from asc on that plane to planet's meridian intersection
          * with this plane.
          */
-        /* I. find plane of 'asc-zenith' great circle relative to equator: 
+        /* I. find plane of 'asc-zenith' great circle relative to equator:
          *   solve spherical triangle 'EP-asc-intersection of house circle with equator' */
         /* Ia. Find intersection of house plane with equator: */
-        x[0] = asc; x[1] = 0.0; x[2] = 1.0;          /* 1. Start with ascendant on ecliptic     */
+        x[0] = asc;
+        x[1] = 0.0;
+        x[2] = 1.0;          /* 1. Start with ascendant on ecliptic     */
         sl.swe_cotrans(x, x, -eps);                     /* 2. Transform asc into equatorial coords */
         raep = sl.swe_degnorm(armc + 90);               /* 3. RA of east point                     */
         x[0] = sl.swe_degnorm(raep - x[0]);             /* 4. Rotation - found arc raas-raep      */
-        sl.swe_cotrans(x, x, -(90-geolat));             /* 5. Transform into horizontal coords - arc EP-asc on horizon */
-        xtemp = atand(tand(x[0])/cosd((90-geolat))); /* 6. Rotation from horizon on circle perpendicular to equator */
+        sl.swe_cotrans(x, x, -(90 - geolat));             /* 5. Transform into horizontal coords - arc EP-asc on horizon */
+        xtemp = atand(tand(x[0]) / cosd((90 - geolat))); /* 6. Rotation from horizon on circle perpendicular to equator */
         if (x[0] > 90 && x[0] <= 270)
-        xtemp = sl.swe_degnorm(xtemp + 180);
-        x[0] = sl.swe_degnorm(xtemp);        
+          xtemp = sl.swe_degnorm(xtemp + 180);
+        x[0] = sl.swe_degnorm(xtemp);
         raaz = sl.swe_degnorm(raep - x[0]); /* result: RA of intersection 'asc-zenith' great circle with equator */
         /* Ib. Find obliquity to equator of 'asc-zenith' house plane: */
-        x[0] = raaz; x[1] = 0.0; 
+        x[0] = raaz;
+        x[1] = 0.0;
         x[0] = sl.swe_degnorm(raep - x[0]);  /* 1. Rotate start point relative to EP   */
-        sl.swe_cotrans(x, x, -(90-geolat));  /* 2. Transform into horizontal coords    */
+        sl.swe_cotrans(x, x, -(90 - geolat));  /* 2. Transform into horizontal coords    */
         x[1] = x[1] + 90;                 /* 3. Add 90 deg do decl - so get the point on house plane most distant from equ. */
-        sl.swe_cotrans(x, x, 90-geolat);     /* 4. Rotate back to equator              */
+        sl.swe_cotrans(x, x, 90 - geolat);     /* 4. Rotate back to equator              */
         oblaz = x[1];                     /* 5. Obliquity of house plane to equator */
-        /* II. Next find asc and planet position on house plane, 
-         *     so to find relative distance of planet from 
+        /* II. Next find asc and planet position on house plane,
+         *     so to find relative distance of planet from
          *     coords beginning. */
-        /* IIa. Asc on house plane relative to intersection 
+        /* IIa. Asc on house plane relative to intersection
          *      of equator with 'asc-zenith' plane. */
-        xasc[0] = asc; xasc[1] = 0.0; xasc[2] = 1.0;
+        xasc[0] = asc;
+        xasc[1] = 0.0;
+        xasc[2] = 1.0;
         sl.swe_cotrans(xasc, xasc, -eps);
         xasc[0] = sl.swe_degnorm(xasc[0] - raaz);
-        xtemp = atand(tand(xasc[0])/cosd(oblaz));
+        xtemp = atand(tand(xasc[0]) / cosd(oblaz));
         if (xasc[0] > 90 && xasc[0] <= 270)
-        xtemp = sl.swe_degnorm(xtemp + 180);
+          xtemp = sl.swe_degnorm(xtemp + 180);
         xasc[0] = sl.swe_degnorm(xtemp);
-        /* IIb. Planet on house plane relative to intersection 
+        /* IIb. Planet on house plane relative to intersection
          *      of equator with 'asc-zenith' plane */
         xp[0] = sl.swe_degnorm(xeq[0] - raaz);        /* Rotate on equator  */
-        xtemp = atand(tand(xp[0])/cosd(oblaz));    /* Find arc on house plane from equator */
+        xtemp = atand(tand(xp[0]) / cosd(oblaz));    /* Find arc on house plane from equator */
         if (xp[0] > 90 && xp[0] <= 270)
           xtemp = sl.swe_degnorm(xtemp + 180);
         xp[0] = sl.swe_degnorm(xtemp);
-        xp[0] = sl.swe_degnorm(xp[0]-xasc[0]); /* find arc between asc and planet, and get planet house position  */
+        xp[0] = sl.swe_degnorm(xp[0] - xasc[0]); /* find arc between asc and planet, and get planet house position  */
         /* IIc. Distance from planet to house plane on declination circle: */
         x[0] = xeq[0];
         x[1] = xeq[1];
@@ -1863,7 +1904,7 @@ class SweHouse
       case 'P':
       case 'G':
       default:
-         /* circumpolar region */
+        /* circumpolar region */
         if (90 - Math.abs(de) <= Math.abs(geolat)) {
           if (de * geolat < 0) {
             xp[0] = sl.swe_degnorm(90 + mdn / 2);
@@ -1883,7 +1924,7 @@ class SweHouse
           sad = 90 + ad;
           san = 90 - ad;
           if (is_above_hor) {
-            xp[0] =  (mdd / sad + 3) * 90;
+            xp[0] = (mdd / sad + 3) * 90;
           } else {
             xp[0] = (mdn / san + 1) * 90;
           }
@@ -1891,13 +1932,13 @@ class SweHouse
            * a value within the house, 0.001" is added */
           xp[0] = sl.swe_degnorm(xp[0] + MILLIARCSEC);
         }
-        if ((char)hsys == 'G') {
+        if ((char) hsys == 'G') {
           xp[0] = 360 - xp[0]; /* Gauquelin sectors are in clockwise direction */
           hpos = xp[0] / 10.0 + 1;
         } else {
           hpos = xp[0] / 30.0 + 1;
         }
-      break;
+        break;
     }
     return hpos;
   }

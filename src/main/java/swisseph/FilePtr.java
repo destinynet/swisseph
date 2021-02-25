@@ -200,7 +200,7 @@ public class FilePtr implements Serializable {
    * @throws EOFException if the end of file is reached before the
    *                      2 bytes could be read completely.
    */
-  public short readShort() throws IOException, EOFException {
+  public short readShort() throws IOException {
     if (bigendian) {
       return (short) ((readByte() << 8) + readUnsignedByte());
     }

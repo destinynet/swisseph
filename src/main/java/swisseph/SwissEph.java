@@ -361,9 +361,9 @@ public class SwissEph implements Serializable {
     return _calc(jdET, ipl, iflag, xx, new StringBuffer());
   }
 
-  private int _calc(double tjd, int ipl, int iflag, double[] xx, StringBuffer serr)
-      throws SwissephException {
-    int i, j;
+  private int _calc(double tjd, int ipl, int iflag, double[] xx, StringBuffer serr) throws SwissephException {
+    int i;
+    int j;
     int iflgcoor;
     int iflgsave = iflag;
     int epheflag;
@@ -424,8 +424,7 @@ public class SwissEph implements Serializable {
      * because all asteroids called by MPC number share the same
      * save area.
      */
-    iflgcoor = SweConst.SEFLG_EQUATORIAL | SweConst.SEFLG_XYZ |
-        SweConst.SEFLG_RADIANS;
+    iflgcoor = SweConst.SEFLG_EQUATORIAL | SweConst.SEFLG_XYZ | SweConst.SEFLG_RADIANS;
 
     try { // SwissephExceptions from swecalc
       if (sd.tsave != tjd || tjd == 0 || ipl != sd.ipl ||
@@ -1478,8 +1477,7 @@ public class SwissEph implements Serializable {
                   }
                   StringTokenizer tk = new StringTokenizer(si, " \t([{"); // }
                   String sk = tk.nextToken();
-                  if (sk.startsWith("#") ||
-                      Character.isWhitespace(sk.charAt(0))) {
+                  if (sk.startsWith("#") || Character.isWhitespace(sk.charAt(0))) {
                     continue;
                   }
                   /* catalog number of body of current line */
