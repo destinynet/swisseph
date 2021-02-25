@@ -784,8 +784,7 @@ class FileData implements Serializable {
                    n < 4 && j < nsize[i];
                    n++, j++, idbl++, longs[m] %= o, o /= 4) {
                 if ((longs[m] & o) != 0) {
-                  pdp.segp[idbl] = -(((longs[m] + o) / o / 2) * pdp.rmax /
-                      2 / 1e+9);
+                  pdp.segp[idbl] = -(((longs[m] + o) / o / 2) * pdp.rmax / 2 / 1e+9);
                 } else {
                   pdp.segp[idbl] = (longs[m] / o / 2) * pdp.rmax / 2 / 1e+9;
                 }
