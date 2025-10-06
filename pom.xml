@@ -6,12 +6,12 @@
   <parent>
     <artifactId>destiny-parent</artifactId>
     <groupId>destiny</groupId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>swisseph</artifactId>
-  <version>2.01.00</version>
+  <version>2.01.00-SNAPSHOT</version>
   <name>swisseph</name>
-  <url>http://destiny.to</url>
+  <url>https://destiny.to</url>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
   </build>
