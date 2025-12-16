@@ -795,15 +795,21 @@ class FileData implements Serializable {
       }
       return SweConst.OK;
     } catch (IOException e) {
-      PrintWriter prErr = new PrintWriter(new StringWriter());
+      StringWriter sw = new StringWriter();
+      PrintWriter prErr = new PrintWriter(sw);
       e.printStackTrace(prErr);
-      serr.append("file error in swisseph.FileData: ").append(prErr.toString());
+      if (serr != null) {
+        serr.append("file error in swisseph.FileData: ").append(sw.toString());
+      }
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
     } catch (Exception e) {
-      PrintWriter prErr = new PrintWriter(new StringWriter());
+      StringWriter sw = new StringWriter();
+      PrintWriter prErr = new PrintWriter(sw);
       e.printStackTrace(prErr);
-      serr.append("file error in swisseph.FileData: ").append(prErr.toString());
+      if (serr != null) {
+        serr.append("file error in swisseph.FileData: ").append(sw.toString());
+      }
       throw new SwissephException(tfstart, SwissephException.DAMAGED_FILE_ERROR,
           SweConst.ERR, serr);
     }
