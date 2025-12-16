@@ -3,11 +3,15 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>destiny</groupId>
+  <parent>
+    <groupId>destiny</groupId>
+    <artifactId>destiny-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
   <artifactId>swisseph</artifactId>
   <version>2.01.00-SNAPSHOT</version>
   <name>swisseph</name>
-  <url>https://destiny.to</url>
 
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
