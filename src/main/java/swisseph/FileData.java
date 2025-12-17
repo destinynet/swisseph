@@ -698,12 +698,19 @@ class FileData implements Serializable {
         /* there may not be more coefficients than interpolation
          * order + 1 */
         if (nco > pdp.ncoe) {
+          // Log detailed information for debugging
+          String debugInfo = String.format("[DEBUG] Coefficient mismatch: tjd=%.6f, ipli=%d, expected=%d, actual=%d, file=%s",
+              tjd, ipli, pdp.ncoe, nco, fdp.fnam);
+          System.err.println(debugInfo);
+
           if (serr != null) {
             serr.setLength(0);
             serr.append("error in ephemeris file: " + nco + " coefficients instead of " + pdp.ncoe + ". ");
+            serr.append("(tjd=" + tjd + ", ipli=" + ipli + ") ");
             if (serr.length() + fdp.fnam.length() < SwissData.AS_MAXCH - 1) {
               serr.setLength(0);
               serr.append("error in ephemeris file " + fdp.fnam + ": " + nco + " coefficients instead of " + pdp.ncoe + ". ");
+              serr.append("(tjd=" + tjd + ", ipli=" + ipli + ") ");
             }
           }
           pdp.segp = null;
