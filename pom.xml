@@ -9,33 +9,37 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>swisseph</artifactId>
-  <version>2.01.00-SNAPSHOT</version>
-  <name>swisseph</name>
+  <artifactId>destiny-swisseph</artifactId>
+  <version>3.0.0-SNAPSHOT</version>
+  <name>destiny-swisseph</name>
+  <description>
+    A modernized Java port of the Swiss Ephemeris, derived from Thomas Mack's
+    swisseph Java library (itself a port of Astrodienst AG's C original).
+    See README.md for lineage and LICENSE for the dual licensing terms.
+  </description>
 
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <maven.compiler.release>17</maven.compiler.release>
-
+    <!-- java version 由 destiny-parent 統一為 21 -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
       </resource>
     </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
   </build>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+
+  <!--
+    測試框架 (junit-jupiter) 由 destiny-parent 以 test scope 提供，此處不再宣告。
+  -->
 </project>
