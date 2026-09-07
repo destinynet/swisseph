@@ -1,7 +1,3 @@
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65540
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65796
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=36
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=68
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=2
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=2
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=2
@@ -106,7 +102,6 @@ calc_ut/dense/tjd=2299160.5/ipl=8/iflag=65538
 calc_ut/dense/tjd=2299160.5/ipl=9/iflag=65538
 calc_ut/dense/tjd=2299160.5/ipl=11/iflag=65538
 calc_ut/dense/tjd=2299160.5/ipl=13/iflag=65538
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65538
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=65794
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=65794
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=65794
@@ -119,7 +114,6 @@ calc_ut/dense/tjd=2299160.5/ipl=8/iflag=65794
 calc_ut/dense/tjd=2299160.5/ipl=9/iflag=65794
 calc_ut/dense/tjd=2299160.5/ipl=11/iflag=65794
 calc_ut/dense/tjd=2299160.5/ipl=13/iflag=65794
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65794
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=18
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=18
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=18
@@ -144,7 +138,6 @@ calc_ut/dense/tjd=2299160.5/ipl=8/iflag=34
 calc_ut/dense/tjd=2299160.5/ipl=9/iflag=34
 calc_ut/dense/tjd=2299160.5/ipl=11/iflag=34
 calc_ut/dense/tjd=2299160.5/ipl=13/iflag=34
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=34
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=66
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=66
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=66
@@ -157,7 +150,6 @@ calc_ut/dense/tjd=2299160.5/ipl=8/iflag=66
 calc_ut/dense/tjd=2299160.5/ipl=9/iflag=66
 calc_ut/dense/tjd=2299160.5/ipl=11/iflag=66
 calc_ut/dense/tjd=2299160.5/ipl=13/iflag=66
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=66
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=4098
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=4098
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=4098
@@ -320,7 +312,6 @@ calc_ut/dense/tjd=2451545.0/ipl=8/iflag=65540
 calc_ut/dense/tjd=2451545.0/ipl=9/iflag=65540
 calc_ut/dense/tjd=2451545.0/ipl=11/iflag=65540
 calc_ut/dense/tjd=2451545.0/ipl=13/iflag=65540
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65540
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=65796
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=65796
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=65796
@@ -333,7 +324,6 @@ calc_ut/dense/tjd=2451545.0/ipl=8/iflag=65796
 calc_ut/dense/tjd=2451545.0/ipl=9/iflag=65796
 calc_ut/dense/tjd=2451545.0/ipl=11/iflag=65796
 calc_ut/dense/tjd=2451545.0/ipl=13/iflag=65796
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65796
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=20
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=20
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=20
@@ -358,7 +348,6 @@ calc_ut/dense/tjd=2451545.0/ipl=8/iflag=36
 calc_ut/dense/tjd=2451545.0/ipl=9/iflag=36
 calc_ut/dense/tjd=2451545.0/ipl=11/iflag=36
 calc_ut/dense/tjd=2451545.0/ipl=13/iflag=36
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=36
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=68
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=68
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=68
@@ -371,7 +360,6 @@ calc_ut/dense/tjd=2451545.0/ipl=8/iflag=68
 calc_ut/dense/tjd=2451545.0/ipl=9/iflag=68
 calc_ut/dense/tjd=2451545.0/ipl=11/iflag=68
 calc_ut/dense/tjd=2451545.0/ipl=13/iflag=68
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=68
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=4100
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=4100
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=4100
@@ -459,22 +447,18 @@ calc_ut/dense/tjd=2451545.0/ipl=17/iflag=33026
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=65538
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=65538
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=65538
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65538
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=65794
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=65794
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=65794
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65794
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=18
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=18
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=18
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=34
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=34
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=34
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=34
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=66
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=66
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=66
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=66
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=4098
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=4098
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=4098
@@ -520,22 +504,18 @@ calc_ut/dense/tjd=2460841.5/ipl=17/iflag=33028
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=65540
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=65540
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=65540
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65540
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=65796
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=65796
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=65796
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65796
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=20
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=20
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=20
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=36
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=36
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=36
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=36
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=68
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=68
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=68
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=68
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=4100
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=4100
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=4100
@@ -682,7 +662,6 @@ calc_ut/dense/tjd=2460841.5/ipl=13/iflag=65538
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=65538
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=65538
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=65538
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65538
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=65794
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=65794
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=65794
@@ -698,7 +677,6 @@ calc_ut/dense/tjd=2460841.5/ipl=13/iflag=65794
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=65794
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=65794
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=65794
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65794
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=18
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=18
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=18
@@ -729,7 +707,6 @@ calc_ut/dense/tjd=2460841.5/ipl=13/iflag=34
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=34
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=34
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=34
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=34
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=66
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=66
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=66
@@ -745,7 +722,6 @@ calc_ut/dense/tjd=2460841.5/ipl=13/iflag=66
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=66
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=66
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=66
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=66
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=4098
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=4098
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=4098

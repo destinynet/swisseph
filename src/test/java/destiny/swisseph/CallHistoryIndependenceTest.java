@@ -1,0 +1,83 @@
+package destiny.swisseph;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * The same question, asked twice, must get the same answer.
+ *
+ * <p>This library keeps a great deal of state between calls, and some of it changes what a
+ * later call returns. The golden master measures how much: it records the whole matrix twice,
+ * once with a fresh SwissEph per call and once with one shared instance, and pins the set of
+ * calls whose answers differ between the two. That set is the remaining defect, and it is
+ * large.
+ *
+ * <p>This class is the other half of that: as each cause is understood and fixed, the property
+ * it violated is asserted here in a form that says what the rule is, rather than only that a
+ * number moved. A fixture tells you something changed; a test here tells you what was wrong.
+ */
+class CallHistoryIndependenceTest {
+
+  /** 1582-10-15, the first Gregorian day — a date where nutation is comfortably non-zero. */
+  private static final double TJD = 2299160.5;
+
+  private static double[] eclNut(SwissEph se, int iflag) {
+    double[] xx = new double[6];
+    int rc = se.swe_calc_ut(TJD, SweConst.SE_ECL_NUT, iflag, xx, new StringBuffer());
+    assertTrue(rc >= 0, "swe_calc_ut(SE_ECL_NUT) failed with rc=" + rc);
+    return xx;
+  }
+
+  /**
+   * SEFLG_NONUT means "do not apply nutation". Asking for the ecliptic and nutation with that
+   * flag set must report no nutation — on a fresh instance and equally on one that has already
+   * computed something else.
+   *
+   * <p>It did not: {@code swi_check_nutation} skips updating {@code swed.nut} when NONUT is
+   * set, and the SE_ECL_NUT branch then reported whatever the previous call had left there. A
+   * fresh instance answered correctly only because its cache happened to be zero.
+   */
+  @Test
+  void nonutIsHonouredOnAnInstanceThatHasAlreadyComputedSomething() {
+    int iflag = SweConst.SEFLG_MOSEPH | SweConst.SEFLG_NONUT;
+
+    SwissEph fresh = new SwissEph(SmokeTestSupport.ephePath());
+    SwissEph used = new SwissEph(SmokeTestSupport.ephePath());
+    try {
+      double[] onFresh = eclNut(fresh, iflag);
+
+      // Warm the second instance up with an ordinary call, which populates swed.nut.
+      double[] scratch = new double[6];
+      used.swe_calc_ut(TJD, SweConst.SE_SUN, SweConst.SEFLG_MOSEPH, scratch, new StringBuffer());
+      double[] onUsed = eclNut(used, iflag);
+
+      assertEquals(0.0, onFresh[2], "nutation in longitude, fresh instance");
+      assertEquals(0.0, onFresh[3], "nutation in obliquity, fresh instance");
+      assertEquals(0.0, onUsed[2], "nutation in longitude leaked from an earlier call");
+      assertEquals(0.0, onUsed[3], "nutation in obliquity leaked from an earlier call");
+
+      assertEquals(onUsed[0], onUsed[1],
+                   "with NONUT the true and mean ecliptic must coincide");
+      assertArrayEquals(onFresh, onUsed, 0.0,
+                        "SE_ECL_NUT with NONUT depended on what the instance had done before");
+    } finally {
+      fresh.swe_close();
+      used.swe_close();
+    }
+  }
+
+  /** Without NONUT the nutation is real, so the test above is not passing for a trivial reason. */
+  @Test
+  void withoutNonutTheNutationIsNonZero() {
+    SwissEph se = new SwissEph(SmokeTestSupport.ephePath());
+    try {
+      double[] xx = eclNut(se, SweConst.SEFLG_MOSEPH);
+      assertNotEquals(0.0, xx[2], "nutation in longitude should be non-zero at this date");
+      assertNotEquals(0.0, xx[3], "nutation in obliquity should be non-zero at this date");
+      assertNotEquals(xx[0], xx[1], "true and mean ecliptic differ by the nutation in obliquity");
+    } finally {
+      se.swe_close();
+    }
+  }
+}

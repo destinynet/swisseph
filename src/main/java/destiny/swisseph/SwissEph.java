@@ -3195,10 +3195,17 @@ public class SwissEph implements Serializable {
      * ecliptic and nutation                  *
      ******************************************/
     if (ipl == SweConst.SE_ECL_NUT) {
-      x[0] = swed.oec.eps + swed.nut.nutlo[1];  /* true ecliptic */
+      /* swi_check_nutation() above deliberately leaves swed.nut untouched when the caller
+       * asked for SEFLG_NONUT, so what it holds is whatever some earlier call computed. On a
+       * freshly constructed SwissEph that is zero and the answer is right by accident; on a
+       * reused one it is a stale value from an unrelated date, and the caller silently gets
+       * nutation it explicitly asked not to have. Answer from the flag, not from the cache. */
+      double nutInLongitude = (iflag & SweConst.SEFLG_NONUT) != 0 ? 0.0 : swed.nut.nutlo[0];
+      double nutInObliquity = (iflag & SweConst.SEFLG_NONUT) != 0 ? 0.0 : swed.nut.nutlo[1];
+      x[0] = swed.oec.eps + nutInObliquity;  /* true ecliptic */
       x[1] = swed.oec.eps;      /* mean ecliptic */
-      x[2] = swed.nut.nutlo[0];    /* nutation in longitude */
-      x[3] = swed.nut.nutlo[1];    /* nutation in obliquity */
+      x[2] = nutInLongitude;    /* nutation in longitude */
+      x[3] = nutInObliquity;    /* nutation in obliquity */
       /*if ((iflag & SweConst.SEFLG_RADIANS) == 0)*/
       for (i = 0; i <= 3; i++)
         x[i] *= SwissData.RADTODEG;

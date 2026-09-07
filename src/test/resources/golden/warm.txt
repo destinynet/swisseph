@@ -168,7 +168,7 @@ calc_ut/dense/tjd=2299160.5/ipl=14/iflag=65540 | rc=65604 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2299160.5/ipl=15/iflag=65540 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=16/iflag=65540 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=17/iflag=65540 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65540 | rc=65604 | 0x1.77e6be355fd05p4,0x1.77e572ee2a38p4,0x1.217e3a1231ac3p-8,0x1.4b47359851684p-12,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65540 | rc=65604 | 0x1.77e572ee2a38p4,0x1.77e572ee2a38p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=65796 | rc=65860 | 0x1.6c9f4874dc39bp7,0x1.687a85c68cffep-15,0x1.fd8d545537072p-1,0x1.fd41c5bc707c2p-1,-0x1.0931a867d0a55p-15,-0x1.206efdede9255p-12 | 
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=65796 | rc=65860 | 0x1.7364684a5b8f2p5,0x1.313ef782a961fp1,0x1.3f17fc08baf24p-9,0x1.d374fc8cf72c4p3,-0x1.22bb514c39dafp0,0x1.0d5af86798cd4p-15 | 
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=65796 | rc=65860 | 0x1.6112480c8b07p7,0x1.5f7a1c8a13355p0,0x1.5fe8925c7ec4fp0,0x1.b675c574295d5p0,-0x1.6d7f9bb0ee27ep-4,0x1.4812b8bffbc3fp-7 | 
@@ -187,7 +187,7 @@ calc_ut/dense/tjd=2299160.5/ipl=14/iflag=65796 | rc=65860 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2299160.5/ipl=15/iflag=65796 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=16/iflag=65796 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=17/iflag=65796 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65796 | rc=65860 | 0x1.77e6be355fd05p4,0x1.77e572ee2a38p4,0x1.217e3a1231ac3p-8,0x1.4b47359851684p-12,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65796 | rc=65860 | 0x1.77e572ee2a38p4,0x1.77e572ee2a38p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=20 | rc=1556 | 0x1.927a69c1da92fp7,0x1.66f44c63f894ep-15,0x1.fd8d545537072p-1,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=20 | rc=1556 | 0x1.0562d1fb22ecbp6,0x1.313e7181423a5p1,0x1.3f1d93240240bp-9,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=20 | rc=1556 | 0x1.86f1734b64dc9p7,0x1.5f4b90ea2f481p0,0x1.5feed217a7fdp0,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -225,7 +225,7 @@ calc_ut/dense/tjd=2299160.5/ipl=14/iflag=36 | rc=100 | 0x0.0p0,0x0.0p0,0x0.0p0,0
 calc_ut/dense/tjd=2299160.5/ipl=15/iflag=36 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=16/iflag=36 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=17/iflag=36 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=36 | rc=100 | 0x1.77e6be355fd05p4,0x1.77e572ee2a38p4,0x1.217e3a1231ac3p-8,0x1.4b47359851684p-12,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=36 | rc=100 | 0x1.77e572ee2a38p4,0x1.77e572ee2a38p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=68 | rc=68 | 0x1.927539723a343p7,0x1.687a85c68cffep-15,0x1.fd8d545537072p-1,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=68 | rc=68 | 0x1.055e161fe9bc7p6,0x1.313ef782a961fp1,0x1.3f17fc08baf23p-9,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=68 | rc=68 | 0x1.86e83909e9017p7,0x1.5f7a1c8a13355p0,0x1.5fe8925c7ec4fp0,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -244,7 +244,7 @@ calc_ut/dense/tjd=2299160.5/ipl=14/iflag=68 | rc=68 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2299160.5/ipl=15/iflag=68 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=16/iflag=68 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=17/iflag=68 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=68 | rc=68 | 0x1.77e6be355fd05p4,0x1.77e572ee2a38p4,0x1.217e3a1231ac3p-8,0x1.4b47359851684p-12,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=68 | rc=68 | 0x1.77e572ee2a38p4,0x1.77e572ee2a38p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=4100 | rc=4100 | -0x1.daf5ca34c9719p-1,-0x1.71162013e63f3p-2,0x1.90bbba11becep-21,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=4100 | rc=4100 | 0x1.09fa74a4b17fcp-10,0x1.21c176b966ef6p-9,0x1.a8dfbc6fc2b4ap-14,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=4100 | rc=4100 | -0x1.5314cc2003e9bp0,-0x1.77123644ff1f2p-2,0x1.0dd1a747a6213p-5,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -529,7 +529,7 @@ calc_ut/dense/tjd=2299160.5/ipl=14/iflag=65538 | rc=65602 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2299160.5/ipl=15/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=16/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=17/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65538 | rc=65602 | 0x1.77e6be355fd05p4,0x1.77e572ee2a38p4,0x1.217e3a1231ac3p-8,0x1.4b47359851684p-12,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65538 | rc=65602 | 0x1.77e572ee2a38p4,0x1.77e572ee2a38p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=65794 | rc=65860 | 0x1.6c9f4874dc39bp7,0x1.687a85c68cffep-15,0x1.fd8d545537072p-1,0x1.fd41c5bc707c2p-1,-0x1.0931a867d0a55p-15,-0x1.206efdede9255p-12 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=65794 | rc=65858 | 0x1.7364684a5b8f2p5,0x1.313ef782a961fp1,0x1.3f17fc08baf24p-9,0x1.d374fc8cf72c4p3,-0x1.22bb514c39dafp0,0x1.0d5af86798cd4p-15 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=65794 | rc=65860 | 0x1.6112480c8b07p7,0x1.5f7a1c8a13355p0,0x1.5fe8925c7ec4fp0,0x1.b675c574295d5p0,-0x1.6d7f9bb0ee27ep-4,0x1.4812b8bffbc3fp-7 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
@@ -548,7 +548,7 @@ calc_ut/dense/tjd=2299160.5/ipl=14/iflag=65794 | rc=65858 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2299160.5/ipl=15/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=16/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=17/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65794 | rc=65858 | 0x1.77e6be355fd05p4,0x1.77e572ee2a38p4,0x1.217e3a1231ac3p-8,0x1.4b47359851684p-12,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=65794 | rc=65858 | 0x1.77e572ee2a38p4,0x1.77e572ee2a38p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=18 | rc=1556 | 0x1.927a69c1da92fp7,0x1.66f44c63f894ep-15,0x1.fd8d545537072p-1,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=18 | rc=1554 | 0x1.0562d1fb22ecbp6,0x1.313e7181423a5p1,0x1.3f1d93240240bp-9,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=18 | rc=1556 | 0x1.86f1734b64dc9p7,0x1.5f4b90ea2f481p0,0x1.5feed217a7fdp0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
@@ -586,7 +586,7 @@ calc_ut/dense/tjd=2299160.5/ipl=14/iflag=34 | rc=98 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2299160.5/ipl=15/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=16/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=17/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=34 | rc=98 | 0x1.77e6be355fd05p4,0x1.77e572ee2a38p4,0x1.217e3a1231ac3p-8,0x1.4b47359851684p-12,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=34 | rc=98 | 0x1.77e572ee2a38p4,0x1.77e572ee2a38p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=66 | rc=68 | 0x1.927539723a343p7,0x1.687a85c68cffep-15,0x1.fd8d545537072p-1,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=66 | rc=66 | 0x1.055e161fe9bc7p6,0x1.313ef782a961fp1,0x1.3f17fc08baf23p-9,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=66 | rc=68 | 0x1.86e83909e9017p7,0x1.5f7a1c8a13355p0,0x1.5fe8925c7ec4fp0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
@@ -605,7 +605,7 @@ calc_ut/dense/tjd=2299160.5/ipl=14/iflag=66 | rc=66 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2299160.5/ipl=15/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=16/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
 calc_ut/dense/tjd=2299160.5/ipl=17/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'seas_12.se1' not found in the paths of: '<EPHE>', 
-calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=66 | rc=66 | 0x1.77e6be355fd05p4,0x1.77e572ee2a38p4,0x1.217e3a1231ac3p-8,0x1.4b47359851684p-12,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2299160.5/ipl=-1/iflag=66 | rc=66 | 0x1.77e572ee2a38p4,0x1.77e572ee2a38p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2299160.5/ipl=0/iflag=4098 | rc=4100 | -0x1.daf5ca34c9719p-1,-0x1.71162013e63f3p-2,0x1.90bbba11becep-21,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
 calc_ut/dense/tjd=2299160.5/ipl=1/iflag=4098 | rc=4098 | 0x1.09fa74a4b17fcp-10,0x1.21c176b966ef6p-9,0x1.a8dfbc6fc2b4ap-14,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
 calc_ut/dense/tjd=2299160.5/ipl=2/iflag=4098 | rc=4100 | -0x1.5314cc2003e9bp0,-0x1.77123644ff1f2p-2,0x1.0dd1a747a6213p-5,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'sepl_12.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph.; 
@@ -890,7 +890,7 @@ calc_ut/dense/tjd=2451545.0/ipl=14/iflag=65540 | rc=65604 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=65540 | rc=65604 | 0x1.c5c31cdb165fcp7,0x1.04973b0608925p2,0x1.553b984efee6ap3,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=65540 | rc=65604 | 0x1.7d827cebeddecp7,0x1.81015acd3512dp4,0x1.e296c2aa17ccap3,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=65540 | rc=65604 | 0x1.3f6ed6c64ba0bp7,0x1.7acda3b0e746fp3,0x1.20df6600b74e9p1,0x0.0p0,0x0.0p0,0x0.0p0 | 
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65540 | rc=65604 | 0x1.7700b94cdad08p4,0x1.770749e1d5ee4p4,-0x1.fb3b363fa4388p-9,-0x1.a4253ec76d136p-10,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65540 | rc=65604 | 0x1.770749e1d5ee4p4,0x1.770749e1d5ee4p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=65796 | rc=65860 | 0x1.ff43c7089bf3dp7,0x1.e73958ed09868p-13,0x1.f776b89782997p-1,0x1.04f95f56951fdp0,-0x1.b49fdb98c6b21p-18,-0x1.ec8a0d3953a46p-18 | 
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=65796 | rc=65860 | 0x1.8d2ca9e805af4p7,0x1.4aeea3fed77p2,0x1.6094a8916f589p-9,0x1.80ad8406eba41p3,-0x1.6cae89a0b30c3p-3,0x1.37added4c8476p-16 | 
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=65796 | rc=65860 | 0x1.ee4e330c71c31p7,-0x1.fd59b9f54601ap-1,0x1.6a5c353e01b38p0,0x1.8e6689fe0f859p0,-0x1.8f59940520837p-4,0x1.2ec400dd8c1cp-8 | 
@@ -909,7 +909,7 @@ calc_ut/dense/tjd=2451545.0/ipl=14/iflag=65796 | rc=65860 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=65796 | rc=65860 | 0x1.c5c31cdb165fcp7,0x1.04973b0608921p2,0x1.553b984efee6bp3,0x1.d43185d1ffb24p-4,0x1.93261c90d51d1p-8,-0x1.a5e66afdaccd8p-8 | 
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=65796 | rc=65860 | 0x1.7d827cebeddecp7,0x1.81015acd3512dp4,0x1.e296c2aa17ccap3,0x1.8b0287f87b1a6p-5,0x1.87da4059da24ap-6,-0x1.7a8d4c6b33535p-7 | 
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=65796 | rc=65860 | 0x1.3f6ed6c64ba0bp7,0x1.7acda3b0e746fp3,0x1.20df6600b74e9p1,0x1.c1dd6c5748f18p-3,0x1.37640ca32fe56p-4,-0x1.9ed3bdbe30259p-7 | 
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65796 | rc=65860 | 0x1.7700b94cdad08p4,0x1.770749e1d5ee4p4,-0x1.fb3b363fa4388p-9,-0x1.a4253ec76d136p-10,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65796 | rc=65860 | 0x1.770749e1d5ee4p4,0x1.770749e1d5ee4p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=20 | rc=1556 | 0x1.185fecee9a2fbp8,0x1.e725825dc449ap-13,0x1.f776b89782994p-1,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=20 | rc=1556 | 0x1.bea5de60b3976p7,0x1.4aee98503e828p2,0x1.609c4af9500ccp-9,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=20 | rc=1556 | 0x1.0fe6e9b0a9876p8,-0x1.fdc21be808099p-1,0x1.6a60101b2935bp0,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -947,7 +947,7 @@ calc_ut/dense/tjd=2451545.0/ipl=14/iflag=36 | rc=100 | 0x0.0p0,0x0.0p0,0x0.0p0,0
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=36 | rc=100 | 0x1.f73e341754ddcp7,0x1.04973b0697aebp2,0x1.553b984efee68p3,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=36 | rc=100 | 0x1.aefd94282ad12p7,0x1.81015acd4bf8ap4,0x1.e296c2aa17cc8p3,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=36 | rc=100 | 0x1.70e9ee02893e5p7,0x1.7acda3b0f0494p3,0x1.20df6600b74e9p1,0x0.0p0,0x0.0p0,0x0.0p0 | 
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=36 | rc=100 | 0x1.7700b94cdad08p4,0x1.770749e1d5ee4p4,-0x1.fb3b363fa4388p-9,-0x1.a4253ec76d136p-10,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=36 | rc=100 | 0x1.770749e1d5ee4p4,0x1.770749e1d5ee4p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=68 | rc=68 | 0x1.185f6f22e69e4p8,0x1.e73958ed09868p-13,0x1.f776b89782996p-1,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=68 | rc=68 | 0x1.bea7c12536f8p7,0x1.4aeea3fed76ffp2,0x1.6094a8916f588p-9,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=68 | rc=68 | 0x1.0fe4a524d185ep8,-0x1.fd59b9f54604p-1,0x1.6a5c353e01b39p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -966,7 +966,7 @@ calc_ut/dense/tjd=2451545.0/ipl=14/iflag=68 | rc=68 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=68 | rc=68 | 0x1.f73e341847a87p7,0x1.04973b0608926p2,0x1.553b984efee69p3,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=68 | rc=68 | 0x1.aefd94291f279p7,0x1.81015acd3512dp4,0x1.e296c2aa17cc9p3,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=68 | rc=68 | 0x1.70e9ee037ce97p7,0x1.7acda3b0e747p3,0x1.20df6600b74e9p1,0x0.0p0,0x0.0p0,0x0.0p0 | 
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=68 | rc=68 | 0x1.7700b94cdad08p4,0x1.770749e1d5ee4p4,-0x1.fb3b363fa4388p-9,-0x1.a4253ec76d136p-10,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=68 | rc=68 | 0x1.770749e1d5ee4p4,0x1.770749e1d5ee4p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=4100 | rc=4100 | 0x1.6a7700d565c1ep-3,-0x1.ef3de7772b46dp-1,0x1.0b949451c3f88p-18,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=4100 | rc=4100 | -0x1.fee8aaae90a7ap-10,-0x1.e1db48f819a0fp-10,0x1.fc6c4cfece8f7p-13,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=4100 | rc=4100 | 0x1.7e398aea3fbd5p-5,-0x1.6a1bce899e0c7p0,-0x1.92a53a6854eadp-6,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -1251,7 +1251,7 @@ calc_ut/dense/tjd=2451545.0/ipl=14/iflag=65538 | rc=65602 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65538 | rc=65602 | 0x1.7700b94cdad08p4,0x1.770749e1d5ee4p4,-0x1.fb3b363fa4388p-9,-0x1.a4253ec76d136p-10,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65538 | rc=65602 | 0x1.770749e1d5ee4p4,0x1.770749e1d5ee4p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=65794 | rc=65858 | 0x1.ff43c6ec43c48p7,0x1.dceb3ece71739p-13,0x1.f776b7f088599p-1,0x1.04f981fdc7f64p0,-0x1.a0383a1b0d6b6p-18,-0x1.ed4ec5c1b1abep-18 | SwissEph file 'semo_18.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph. for moon; 
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=65794 | rc=65858 | 0x1.8d2ca9e804b01p7,0x1.4aeea3fed9085p2,0x1.6094a868b97aep-9,0x1.80ad8412148c2p3,-0x1.6cae89b1a4eb5p-3,0x1.37adbe6ec7b2ap-16 | SwissEph file 'semo_18.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph. for moon; 
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=65794 | rc=65858 | 0x1.ee4e335388df4p7,-0x1.fd5a2d0cfdebep-1,0x1.6a5c34ac13837p0,0x1.8e66cd9078abap0,-0x1.8f5959df6afc9p-4,0x1.2ec2f4b662a12p-8 | SwissEph file 'semo_18.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph. for moon; 
@@ -1270,7 +1270,7 @@ calc_ut/dense/tjd=2451545.0/ipl=14/iflag=65794 | rc=65858 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65794 | rc=65858 | 0x1.7700b94cdad08p4,0x1.770749e1d5ee4p4,-0x1.fb3b363fa4388p-9,-0x1.a4253ec76d136p-10,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=65794 | rc=65858 | 0x1.770749e1d5ee4p4,0x1.770749e1d5ee4p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=18 | rc=1554 | 0x1.185fece0a09dp8,0x1.dcd8558582994p-13,0x1.f776b983437e6p-1,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=18 | rc=1554 | 0x1.bea5de60b3976p7,0x1.4aee98503e828p2,0x1.609c4af9500ccp-9,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=18 | rc=1554 | 0x1.0fe6e9c6495aep8,-0x1.fdc29015a60ccp-1,0x1.6a601140c148dp0,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -1308,7 +1308,7 @@ calc_ut/dense/tjd=2451545.0/ipl=14/iflag=34 | rc=98 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=34 | rc=98 | 0x1.7700b94cdad08p4,0x1.770749e1d5ee4p4,-0x1.fb3b363fa4388p-9,-0x1.a4253ec76d136p-10,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=34 | rc=98 | 0x1.770749e1d5ee4p4,0x1.770749e1d5ee4p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=66 | rc=66 | 0x1.185f6f14ba86ap8,0x1.dceb3ece71736p-13,0x1.f776b7f08859ap-1,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=66 | rc=66 | 0x1.bea7c124c2554p7,0x1.4aeea3fc9a6ddp2,0x1.6094a86adb09dp-9,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'semo_18.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph. for moon; 
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=66 | rc=66 | 0x1.0fe4a5485d141p8,-0x1.fd5a2d0cfdec2p-1,0x1.6a5c34ac13836p0,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'semo_18.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph. for moon; 
@@ -1327,7 +1327,7 @@ calc_ut/dense/tjd=2451545.0/ipl=14/iflag=66 | rc=66 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2451545.0/ipl=15/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2451545.0/ipl=16/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2451545.0/ipl=17/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
-calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=66 | rc=66 | 0x1.7700b94cdad08p4,0x1.770749e1d5ee4p4,-0x1.fb3b363fa4388p-9,-0x1.a4253ec76d136p-10,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2451545.0/ipl=-1/iflag=66 | rc=66 | 0x1.770749e1d5ee4p4,0x1.770749e1d5ee4p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=0/iflag=4098 | rc=4098 | 0x1.6a76fe733059ep-3,-0x1.ef3de6e955d9dp-1,0x1.05ebbfb6218e8p-18,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2451545.0/ipl=1/iflag=4098 | rc=4098 | -0x1.fee8aa789b04ep-10,-0x1.e1db48c15ee73p-10,0x1.fc6c4cc3beef7p-13,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'semo_18.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph. for moon; 
 calc_ut/dense/tjd=2451545.0/ipl=2/iflag=4098 | rc=4098 | 0x1.7e39a65e49741p-5,-0x1.6a1bcdea100d2p0,-0x1.92a594bf20fb5p-6,0x0.0p0,0x0.0p0,0x0.0p0 | SwissEph file 'semo_18.se1' not found in the paths of: '<EPHE>',  \nusing Moshier eph. for moon; 
@@ -1612,7 +1612,7 @@ calc_ut/dense/tjd=2460841.5/ipl=14/iflag=65540 | rc=65604 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=65540 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=65540 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=65540 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65540 | rc=65604 | 0x1.77035c246e23ap4,0x1.76f9b99e24378p4,0x1.304b3fb05cab3p-11,0x1.3450c93d86654p-9,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65540 | rc=65604 | 0x1.76f9b99e24378p4,0x1.76f9b99e24378p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=65796 | rc=65860 | 0x1.d88a11f4c924dp5,-0x1.a01f01f308431p-13,0x1.040358c040a5fp0,0x1.e8f97833d072ap-1,0x1.b6930c8379a11p-16,0x1.9e1be1020539bp-14 | 
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=65796 | rc=65860 | 0x1.19e12cb138be6p8,-0x1.c9f27bcfd9bb8p1,0x1.53e75d5847973p-9,0x1.9dc5e3c669cf6p3,0x1.96311178d49c4p-1,-0x1.990c1d3ae7f8p-16 | 
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=65796 | rc=65860 | 0x1.31fc321238c65p6,0x1.03a7e06a13691p1,0x1.2881094d0deeap0,0x1.cd5288b0f70ep0,-0x1.d0849d4b4be85p-10,-0x1.0da364848e27dp-6 | 
@@ -1631,7 +1631,7 @@ calc_ut/dense/tjd=2460841.5/ipl=14/iflag=65796 | rc=65860 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=65796 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=65796 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=65796 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65796 | rc=65860 | 0x1.77035c246e23ap4,0x1.76f9b99e24378p4,0x1.304b3fb05cab3p-11,0x1.3450c93d86654p-9,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65796 | rc=65860 | 0x1.76f9b99e24378p4,0x1.76f9b99e24378p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=20 | rc=1556 | 0x1.50ada48a29c52p6,-0x1.9fccae4e70a5dp-13,0x1.040358c040a5fp0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=20 | rc=1556 | 0x1.32f9f126741dfp8,-0x1.c9f2181016437p1,0x1.53ed28aec4619p-9,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=20 | rc=1556 | 0x1.966b675598afdp6,0x1.03a7775d3cc6cp1,0x1.28778e9eeb484p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -1669,7 +1669,7 @@ calc_ut/dense/tjd=2460841.5/ipl=14/iflag=36 | rc=100 | 0x0.0p0,0x0.0p0,0x0.0p0,0
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=36 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=36 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=36 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=36 | rc=100 | 0x1.77035c246e23ap4,0x1.76f9b99e24378p4,0x1.304b3fb05cab3p-11,0x1.3450c93d86654p-9,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=36 | rc=100 | 0x1.76f9b99e24378p4,0x1.76f9b99e24378p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=68 | rc=68 | 0x1.50a74fdb1e2cap6,-0x1.a01f01f32477ep-13,0x1.040358c040a5ep0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=68 | rc=68 | 0x1.32f9be696724fp8,-0x1.c9f27bcfd9bbfp1,0x1.53e75d5847974p-9,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=68 | rc=68 | 0x1.965e78f2f2608p6,0x1.03a7e06a1369bp1,0x1.2881094d0deebp0,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -1688,7 +1688,7 @@ calc_ut/dense/tjd=2460841.5/ipl=14/iflag=68 | rc=68 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=68 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=68 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=68 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2147260644 byte(s). <frames omitted>
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=68 | rc=68 | 0x1.77035c246e23ap4,0x1.76f9b99e24378p4,0x1.304b3fb05cab3p-11,0x1.3450c93d86654p-9,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=68 | rc=68 | 0x1.76f9b99e24378p4,0x1.76f9b99e24378p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=4100 | rc=4100 | 0x1.a7049554c9f7p-4,0x1.02aa58b7a24e1p0,-0x1.d8192213d82ap-19,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=4100 | rc=4100 | 0x1.98186b00be222p-10,-0x1.0f03e133327f8p-9,-0x1.535f54e10073bp-13,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=4100 | rc=4100 | -0x1.dc5fcab1d5302p-3,0x1.224600d1818b4p0,0x1.4fdb8ec705ea1p-5,0x0.0p0,0x0.0p0,0x0.0p0 | 
@@ -1973,7 +1973,7 @@ calc_ut/dense/tjd=2460841.5/ipl=14/iflag=65538 | rc=65602 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=65538 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65538 | rc=65602 | 0x1.77035c246e23ap4,0x1.76f9b99e24378p4,0x1.304b3fb05cab3p-11,0x1.3450c93d86654p-9,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65538 | rc=65602 | 0x1.76f9b99e24378p4,0x1.76f9b99e24378p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
@@ -1992,7 +1992,7 @@ calc_ut/dense/tjd=2460841.5/ipl=14/iflag=65794 | rc=65858 | 0x0.0p0,0x0.0p0,0x0.
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=65794 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65794 | rc=65858 | 0x1.77035c246e23ap4,0x1.76f9b99e24378p4,0x1.304b3fb05cab3p-11,0x1.3450c93d86654p-9,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=65794 | rc=65858 | 0x1.76f9b99e24378p4,0x1.76f9b99e24378p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=18 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=18 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=18 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
@@ -2030,7 +2030,7 @@ calc_ut/dense/tjd=2460841.5/ipl=14/iflag=34 | rc=98 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=34 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=34 | rc=98 | 0x1.77035c246e23ap4,0x1.76f9b99e24378p4,0x1.304b3fb05cab3p-11,0x1.3450c93d86654p-9,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=34 | rc=98 | 0x1.76f9b99e24378p4,0x1.76f9b99e24378p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
@@ -2049,7 +2049,7 @@ calc_ut/dense/tjd=2460841.5/ipl=14/iflag=66 | rc=66 | 0x0.0p0,0x0.0p0,0x0.0p0,0x
 calc_ut/dense/tjd=2460841.5/ipl=15/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=16/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=17/iflag=66 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
-calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=66 | rc=66 | 0x1.77035c246e23ap4,0x1.76f9b99e24378p4,0x1.304b3fb05cab3p-11,0x1.3450c93d86654p-9,0x0.0p0,0x0.0p0 | 
+calc_ut/dense/tjd=2460841.5/ipl=-1/iflag=66 | rc=66 | 0x1.76f9b99e24378p4,0x1.76f9b99e24378p4,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | 
 calc_ut/dense/tjd=2460841.5/ipl=0/iflag=4098 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=1/iflag=4098 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
 calc_ut/dense/tjd=2460841.5/ipl=2/iflag=4098 | rc=-1 | 0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0,0x0.0p0 | file error in destiny.swisseph.FileData: java.io.EOFException: Filepointer position 2147483645 exceeds file length by 2146999591 byte(s). <frames omitted>
