@@ -261,7 +261,7 @@ class SweHouse implements Serializable {
                  int aOffs) {
     int i, retc = 0;
     double armc, eps_mean, nutlo[] = new double[2];
-    double tjde = tjd_ut + SweDate.getDeltaT(tjd_ut);
+    double tjde = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);
     SidData sip = swed.sidd;
     int ito;
     if (Character.toUpperCase((char) hsys) == 'G') {

@@ -149,8 +149,8 @@ public class SwissEph implements Serializable {
     if (swed == null) {
       swed = new SwissData();
     }
-    SweDate.setSwissEphObject(this);  // to set the swed object in SweDate
     sl = new SwissLib(this.swed);
+    sl.sw = this;
     sm = new Swemmoon(this.swed, this.sl);
     smosh = new SwephMosh(this.sl, this, this.swed);
     sj = new SwephJPL(this, this.swed, this.sl);
@@ -272,8 +272,8 @@ public class SwissEph implements Serializable {
   public int swe_calc_ut(double tjd_ut, int ipl, int iflag, double[] xx, StringBuffer serr) {
     double deltat;
     int retval = SweConst.OK;
-    SweDate.swi_set_tid_acc(tjd_ut, iflag, 0);
-    deltat = SweDate.getDeltaT(tjd_ut);
+    SweDate.swi_set_tid_acc(tjd_ut, iflag, 0, this);
+    deltat = SweDate.getDeltaT(tjd_ut, this);
     retval = swe_calc(tjd_ut + deltat, ipl, iflag, xx, serr);
     return retval;
   }
@@ -685,7 +685,7 @@ public class SwissEph implements Serializable {
     iflag = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_J2000 | SweConst.SEFLG_TRUEPOS | SweConst.SEFLG_ICRS;
     swe_calc(SwephData.J2000, SweConst.SE_MOON, iflag, xx, null);
     if (swed.fidat[SwephData.SEI_FILE_MOON].fptr != null) {
-      SweDate.swi_set_tid_acc(0, 0, swed.fidat[SwephData.SEI_FILE_MOON].sweph_denum);
+      SweDate.swi_set_tid_acc(0, 0, swed.fidat[SwephData.SEI_FILE_MOON].sweph_denum, this);
     }
   }
 
@@ -1033,7 +1033,7 @@ public class SwissEph implements Serializable {
    * @see #swe_get_ayanamsa(double)
    */
   public double swe_get_ayanamsa_ut(double tjd_ut) {
-    return swe_get_ayanamsa(tjd_ut + SweDate.getDeltaT(tjd_ut));
+    return swe_get_ayanamsa(tjd_ut + SweDate.getDeltaT(tjd_ut, this));
   }
 
   /**********************************************************
@@ -1314,8 +1314,8 @@ public class SwissEph implements Serializable {
    * @see SweDate#setGlobalTidalAcc(double)
    */
   public int swe_fixstar_ut(StringBuffer star, double tjd_ut, int iflag, double[] xx, StringBuffer serr) {
-    SweDate.swi_set_tid_acc(tjd_ut, iflag, 0);
-    return swe_fixstar(star, tjd_ut + SweDate.getDeltaT(tjd_ut),
+    SweDate.swi_set_tid_acc(tjd_ut, iflag, 0, this);
+    return swe_fixstar(star, tjd_ut + SweDate.getDeltaT(tjd_ut, this),
         iflag, xx, serr);
   }
 
@@ -3028,8 +3028,8 @@ public class SwissEph implements Serializable {
       ext = new Extensions(this);
     }
     boolean calcUT = (tc instanceof TCHouses);
-    return ext.getTransit(tc, jdET - (calcUT ? SweDate.getDeltaT(jdET) : 0), backwards, jdLimit) +
-        (calcUT ? SweDate.getDeltaT(jdET) : 0);
+    return ext.getTransit(tc, jdET - (calcUT ? SweDate.getDeltaT(jdET, this) : 0), backwards, jdLimit) +
+        (calcUT ? SweDate.getDeltaT(jdET, this) : 0);
   }
 
   /**
@@ -3059,10 +3059,10 @@ public class SwissEph implements Serializable {
     boolean calcUT = (tc instanceof TCHouses);
     double jdET = ext.getTransit(
         tc,
-        jdUT + (calcUT ? 0 : SweDate.getDeltaT(jdUT)),
+        jdUT + (calcUT ? 0 : SweDate.getDeltaT(jdUT, this)),
         backwards,
         (backwards ? -Double.MAX_VALUE : Double.MAX_VALUE));
-    return jdET - (calcUT ? 0 : SweDate.getDeltaT(jdET));
+    return jdET - (calcUT ? 0 : SweDate.getDeltaT(jdET, this));
   }
 
   /**
@@ -3095,10 +3095,10 @@ public class SwissEph implements Serializable {
     }
     double jdET = ext.getTransit(
         tc,
-        jdUT + SweDate.getDeltaT(jdUT),
+        jdUT + SweDate.getDeltaT(jdUT, this),
         backwards,
-        jdLimit + SweDate.getDeltaT(jdLimit));
-    return jdET - SweDate.getDeltaT(jdET);
+        jdLimit + SweDate.getDeltaT(jdLimit, this));
+    return jdET - SweDate.getDeltaT(jdET, this);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -8542,7 +8542,7 @@ public class SwissEph implements Serializable {
      * compute UT from ET. this UT will be slightly different
      * from the user's UT, but this difference is extremely small.
      */
-    delt = SweDate.getDeltaT(tjd);
+    delt = SweDate.getDeltaT(tjd, this);
     tjd_ut = tjd - delt;
     if (swed.oec.teps == tjd && swed.nut.tnut == tjd) {
       eps = swed.oec.eps;
@@ -8729,7 +8729,7 @@ public class SwissEph implements Serializable {
     if (retc == SweConst.OK) {
       swed.jpldenum = sj.swi_get_jpl_denum();
       swed.jpl_file_is_open = true;
-      SweDate.swi_set_tid_acc(0, 0, swed.jpldenum);
+      SweDate.swi_set_tid_acc(0, 0, swed.jpldenum, this);
     }
     return retc;
   }

@@ -643,7 +643,7 @@ class Swecl implements java.io.Serializable {
     int retflag2;
     double[] dcore = new double[10];
     ifl &= SweConst.SEFLG_EPHMASK;
-    SweDate.swi_set_tid_acc(tjd_ut, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_ut, ifl, 0, sw);
     if ((retflag = eclipse_where(tjd_ut, SweConst.SE_SUN, null, ifl, geopos, dcore, serr)) < 0) {
       return retflag;
     }
@@ -666,7 +666,7 @@ class Swecl implements java.io.Serializable {
     double[] dcore = new double[10];
     if (ipl < 0) ipl = 0;
     ifl &= SweConst.SEFLG_EPHMASK;
-    SweDate.swi_set_tid_acc(tjd_ut, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_ut, ifl, 0, sw);
     /* function calls for Pluto with asteroid number 134340
      * are treated as calls for Pluto as main body SE_PLUTO */
     if (ipl == SweConst.SE_AST_OFFSET + 134340) {
@@ -740,7 +740,7 @@ class Swecl implements java.io.Serializable {
     iflag = SweConst.SEFLG_SPEED | SweConst.SEFLG_EQUATORIAL | ifl;
     iflag2 = iflag | SweConst.SEFLG_RADIANS;
     iflag = iflag | SweConst.SEFLG_XYZ;
-    deltat = SweDate.getDeltaT(tjd_ut);
+    deltat = SweDate.getDeltaT(tjd_ut, sw);
     tjd = tjd_ut + deltat;
     /* moon in cartesian coordinates */
     if ((retc = sw.swe_calc(tjd, SweConst.SE_MOON, iflag, rm, serr)) == SweConst.ERR) {
@@ -1031,7 +1031,7 @@ class Swecl implements java.io.Serializable {
       return SweConst.ERR;
     }
     ifl &= SweConst.SEFLG_EPHMASK;
-    SweDate.swi_set_tid_acc(tjd_ut, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_ut, ifl, 0, sw);
     if ((retflag = eclipse_how(tjd_ut, SweConst.SE_SUN, null, ifl, geopos[0],
         geopos[1], geopos[2], attr, serr)) == SweConst.ERR) {
       return retflag;
@@ -1095,7 +1095,7 @@ class Swecl implements java.io.Serializable {
     geopos[0] = geolon;
     geopos[1] = geolat;
     geopos[2] = geohgt;
-    te = tjd_ut + SweDate.getDeltaT(tjd_ut);
+    te = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);
     sw.swe_set_topo(geolon, geolat, geohgt);
     if (calc_planet_star(te, ipl, starname, iflag, ls, serr) == SweConst.ERR) {
       return SweConst.ERR;
@@ -1368,7 +1368,7 @@ class Swecl implements java.io.Serializable {
     int iflag;
     int iflagcart;
     ifl &= SweConst.SEFLG_EPHMASK;
-    SweDate.swi_set_tid_acc(tjd_start, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_start, ifl, 0, sw);
     iflag = SweConst.SEFLG_EQUATORIAL | ifl;
     iflagcart = iflag | SweConst.SEFLG_XYZ;
     if (ifltype == (SweConst.SE_ECL_PARTIAL | SweConst.SE_ECL_CENTRAL)) {
@@ -1467,9 +1467,9 @@ class Swecl implements java.io.Serializable {
         find_maximum(dc[0], dc[1], dc[2], dt, dtint, dctr);
         tjd += dtint.val + dt;
       }
-      tjds = tjd - SweDate.getDeltaT(tjd);
-      tjds = tjd - SweDate.getDeltaT(tjds);
-      tjds = tjd = tjd - SweDate.getDeltaT(tjds);
+      tjds = tjd - SweDate.getDeltaT(tjd, sw);
+      tjds = tjd - SweDate.getDeltaT(tjds, sw);
+      tjds = tjd = tjd - SweDate.getDeltaT(tjds, sw);
       if ((retflag = eclipse_where(tjd, SweConst.SE_SUN, null, ifl, geopos, dcore, serr)) ==
           SweConst.ERR) {
         return retflag;
@@ -1653,7 +1653,7 @@ class Swecl implements java.io.Serializable {
       k = 2;
       for (i = 0; i < 2; i++) {
         j = i + k;
-        tt = tret[j] + SweDate.getDeltaT(tret[j]);
+        tt = tret[j] + SweDate.getDeltaT(tret[j], sw);
         if (sw.swe_calc(tt, SweConst.SE_SUN, iflag, ls, serr) == SweConst.ERR) {
           return SweConst.ERR;
         }
@@ -1678,7 +1678,7 @@ class Swecl implements java.io.Serializable {
              dt > 0.01;
              j++, dt /= 3) {
           for (i = 0, t = tjd; i <= 1; i++, t -= dt) {
-            tt = t + SweDate.getDeltaT(t);
+            tt = t + SweDate.getDeltaT(t, sw);
             if (sw.swe_calc(tt, SweConst.SE_SUN, iflag, ls, serr) ==
                 SweConst.ERR) {
               return SweConst.ERR;
@@ -1835,7 +1835,7 @@ class Swecl implements java.io.Serializable {
       ipl = SweConst.SE_PLUTO;
     }
     ifl &= SweConst.SEFLG_EPHMASK;
-    SweDate.swi_set_tid_acc(tjd_start, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_start, ifl, 0, sw);
     iflag = SweConst.SEFLG_EQUATORIAL | ifl;
     iflagcart = iflag | SweConst.SEFLG_XYZ;
     backward &= 1L;
@@ -1942,7 +1942,7 @@ class Swecl implements java.io.Serializable {
         find_maximum(dc[0], dc[1], dc[2], dt, dtint, dctr);
         tjd += dtint.val + dt;
       }
-      tjd -= SweDate.getDeltaT(tjd);
+      tjd -= SweDate.getDeltaT(tjd, sw);
       tjds = tjd;
       if ((retflag = eclipse_where(tjd, ipl, starname, ifl, geopos, dcore, serr)) == SweConst.ERR)
         return retflag;
@@ -2167,7 +2167,7 @@ class Swecl implements java.io.Serializable {
       k = 2;
       for (i = 0; i < 2; i++) {
         j = i + k;
-        tt = tret[j] + SweDate.getDeltaT(tret[j]);
+        tt = tret[j] + SweDate.getDeltaT(tret[j], sw);
         if (calc_planet_star(tt, ipl, starname, iflag, ls, serr) == SweConst.ERR)
           return SweConst.ERR;
         if (sw.swe_calc(tt, SweConst.SE_MOON, iflag, lm, serr) == SweConst.ERR)
@@ -2188,7 +2188,7 @@ class Swecl implements java.io.Serializable {
              dt > 0.01;
              j++, dt /= 3) {
           for (i = 0, t = tjd; i <= 1; i++, t -= dt) {
-            tt = t + SweDate.getDeltaT(t);
+            tt = t + SweDate.getDeltaT(t, sw);
             if (calc_planet_star(tt, ipl, starname, iflag, ls, serr) == SweConst.ERR)
               return SweConst.ERR;
             if (sw.swe_calc(tt, SweConst.SE_MOON, iflag, lm, serr) == SweConst.ERR)
@@ -2334,7 +2334,7 @@ class Swecl implements java.io.Serializable {
       return SweConst.ERR;
     }
     ifl &= SweConst.SEFLG_EPHMASK;
-    SweDate.swi_set_tid_acc(tjd_start, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_start, ifl, 0, sw);
     if ((retflag = eclipse_when_loc(tjd_start, ifl, geopos, tret, attr,
         backward, serr)) <= 0) {
       return retflag;
@@ -2399,7 +2399,7 @@ class Swecl implements java.io.Serializable {
       ipl = SweConst.SE_PLUTO;
     }
     ifl &= SweConst.SEFLG_EPHMASK;
-    SweDate.swi_set_tid_acc(tjd_start, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_start, ifl, 0, sw);
     if ((retflag = occult_when_loc(tjd_start, ipl, starname, ifl, geopos, tret, attr, backward, serr)) <= 0)
       return retflag;
     /*
@@ -2582,8 +2582,8 @@ class Swecl implements java.io.Serializable {
         }
         continue;
       }
-      tret[0] = tjd - SweDate.getDeltaT(tjd);
-      tret[0] = tjd - SweDate.getDeltaT(tret[0]);
+      tret[0] = tjd - SweDate.getDeltaT(tjd, sw);
+      tret[0] = tjd - SweDate.getDeltaT(tret[0], sw);
       if ((backward != 0 && tret[0] >= tjd_start - 0.0001)
           || (backward == 0 && tret[0] <= tjd_start + 0.0001)) {
         if (backward != 0) {
@@ -2661,8 +2661,8 @@ class Swecl implements java.io.Serializable {
             tret[j] += dt1.val;
           }
         }
-        tret[2] -= SweDate.getDeltaT(tret[2]);
-        tret[3] -= SweDate.getDeltaT(tret[3]);
+        tret[2] -= SweDate.getDeltaT(tret[2], sw);
+        tret[3] -= SweDate.getDeltaT(tret[3], sw);
       }
       /* contacts 1 and 4 */
       dc[1] = rsplusrm - dctrmin;
@@ -2723,8 +2723,8 @@ class Swecl implements java.io.Serializable {
           tret[j] += dt1.val;
         }
       }
-      tret[1] -= SweDate.getDeltaT(tret[1]);
-      tret[4] -= SweDate.getDeltaT(tret[4]);
+      tret[1] -= SweDate.getDeltaT(tret[1], sw);
+      tret[4] -= SweDate.getDeltaT(tret[4], sw);
       /*
        * visibility of eclipse phases
        */
@@ -2991,8 +2991,8 @@ class Swecl implements java.io.Serializable {
 //    goto next_try;
         continue;
       }
-      tret[0] = tjd - SweDate.getDeltaT(tjd);
-      tret[0] = tjd - SweDate.getDeltaT(tret[0]);
+      tret[0] = tjd - SweDate.getDeltaT(tjd, sw);
+      tret[0] = tjd - SweDate.getDeltaT(tret[0], sw);
       if ((backward != 0 && tret[0] >= tjd_start - 0.0001)
           || (backward == 0 && tret[0] <= tjd_start + 0.0001)) {
         /* t = tjd + direction;*/
@@ -3068,8 +3068,8 @@ class Swecl implements java.io.Serializable {
             tret[j] += dt1.val;
           }
         }
-        tret[2] -= SweDate.getDeltaT(tret[2]);
-        tret[3] -= SweDate.getDeltaT(tret[3]);
+        tret[2] -= SweDate.getDeltaT(tret[2], sw);
+        tret[3] -= SweDate.getDeltaT(tret[3], sw);
       }
       /* contacts 1 and 4 */
       dc[1] = rsplusrm - dctrmin;
@@ -3122,8 +3122,8 @@ class Swecl implements java.io.Serializable {
           tret[j] += dt1.val;
         }
       }
-      tret[1] -= SweDate.getDeltaT(tret[1]);
-      tret[4] -= SweDate.getDeltaT(tret[4]);
+      tret[1] -= SweDate.getDeltaT(tret[1], sw);
+      tret[4] -= SweDate.getDeltaT(tret[4], sw);
       /*
        * visibility of eclipse phases
        */
@@ -3260,7 +3260,7 @@ class Swecl implements java.io.Serializable {
       xra[i] = xin[i];
     xra[2] = 1;
     if (calc_flag == SweConst.SE_ECL2HOR) {
-      tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
+      tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);
       sw.swe_calc(tjd_et, SweConst.SE_ECL_NUT, 0, x, null);
       eps_true = x[0];
       sl.swe_cotrans(xra, 0, xra, 0, -eps_true);
@@ -3341,7 +3341,7 @@ class Swecl implements java.io.Serializable {
     xout[1] = xaz[1];
     /* ecliptic positions */
     if (calc_flag == SweConst.SE_HOR2ECL) {
-      tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
+      tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);
       sw.swe_calc(tjd_et, SweConst.SE_ECL_NUT, 0, x, null);
       eps_true = x[0];
       sl.swe_cotrans(xaz, 0, x, 0, eps_true);
@@ -3669,7 +3669,7 @@ class Swecl implements java.io.Serializable {
     }
     ifl = ifl & ~SweConst.SEFLG_TOPOCTR;
     ifl &= ~(SweConst.SEFLG_JPLHOR | SweConst.SEFLG_JPLHOR_APPROX);
-    SweDate.swi_set_tid_acc(tjd_ut, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_ut, ifl, 0, sw);
     retc = lun_eclipse_how(tjd_ut, ifl, attr, dcore, serr);
     if (geopos == null) {
       return retc;
@@ -3736,7 +3736,7 @@ class Swecl implements java.io.Serializable {
      * if mean sidereal time will be used */
     iflag = SweConst.SEFLG_SPEED | SweConst.SEFLG_EQUATORIAL | ifl;
     iflag = iflag | SweConst.SEFLG_XYZ;
-    deltat = SweDate.getDeltaT(tjd_ut);
+    deltat = SweDate.getDeltaT(tjd_ut, sw);
     tjd = tjd_ut + deltat;
     /* moon in cartesian coordinates */
     if (sw.swe_calc(tjd, SweConst.SE_MOON, iflag, rm, serr) == SweConst.ERR) {
@@ -3942,7 +3942,7 @@ class Swecl implements java.io.Serializable {
     int iflag;
     int iflagcart;
     ifl &= SweConst.SEFLG_EPHMASK;
-    SweDate.swi_set_tid_acc(tjd_start, ifl, 0);
+    SweDate.swi_set_tid_acc(tjd_start, ifl, 0, sw);
     iflag = SweConst.SEFLG_EQUATORIAL | ifl;
     iflagcart = iflag | SweConst.SEFLG_XYZ;
     if (ifltype == 0) {
@@ -4058,9 +4058,9 @@ class Swecl implements java.io.Serializable {
         find_maximum(dc[0], dc[1], dc[2], dt, dtint, dctr);
         tjd += dtint.val + dt;
       }
-      tjd2 = tjd - SweDate.getDeltaT(tjd);
-      tjd2 = tjd - SweDate.getDeltaT(tjd2);
-      tjd = tjd - SweDate.getDeltaT(tjd2);
+      tjd2 = tjd - SweDate.getDeltaT(tjd, sw);
+      tjd2 = tjd - SweDate.getDeltaT(tjd2, sw);
+      tjd = tjd - SweDate.getDeltaT(tjd2, sw);
       if ((retflag = swe_lun_eclipse_how(tjd, ifl, null, attr, serr)) ==
           SweConst.ERR) {
         return retflag;
@@ -4613,8 +4613,8 @@ class Swecl implements java.io.Serializable {
    */
   int swe_pheno_ut(double tjd_ut, int ipl, int iflag, double[] attr,
                    StringBuffer serr) {
-    SweDate.swi_set_tid_acc(tjd_ut, iflag, 0);
-    return swe_pheno(tjd_ut + SweDate.getDeltaT(tjd_ut), ipl, iflag, attr, serr);
+    SweDate.swi_set_tid_acc(tjd_ut, iflag, 0, sw);
+    return swe_pheno(tjd_ut + SweDate.getDeltaT(tjd_ut, sw), ipl, iflag, attr, serr);
   }
 
   private int find_maximum(double y00, double y11, double y2, double dx,
@@ -4746,7 +4746,7 @@ class Swecl implements java.io.Serializable {
     int ii;
     int calc_culm;
     int nculm = -1;
-    double tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
+    double tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);
     double[] xc = new double[6];
     double[][] xh = new double[20][6];
     double[] ah = new double[6];
@@ -4778,7 +4778,7 @@ class Swecl implements java.io.Serializable {
       }
       return SweConst.ERR;
     }
-    SweDate.swi_set_tid_acc(tjd_ut, epheflag, 0);
+    SweDate.swi_set_tid_acc(tjd_ut, epheflag, 0, sw);
     /* function calls for Pluto with asteroid number 134340
      * are treated as calls for Pluto as main body SE_PLUTO */
     if (ipl == SweConst.SE_AST_OFFSET + 134340) {
@@ -4821,7 +4821,7 @@ class Swecl implements java.io.Serializable {
     for (ii = 0, t = tjd_ut - twohrs; ii <= jmax; ii++, t += twohrs) {
       tc[ii] = t;
       if (!do_fixstar) {
-        te = t + SweDate.getDeltaT(t);
+        te = t + SweDate.getDeltaT(t, sw);
         if (sw.swe_calc(te, ipl, iflag, xc, serr) == SweConst.ERR) {
           return SweConst.ERR;
         }
@@ -4890,7 +4890,7 @@ class Swecl implements java.io.Serializable {
         dt /= 3;
         for (; dt > 0.0001; dt /= 3) {
           for (i = 0, tt = tcu - dt; i < 3; tt += dt, i++) {
-            te = tt + SweDate.getDeltaT(tt);
+            te = tt + SweDate.getDeltaT(tt, sw);
             if (!do_fixstar) {
               if (sw.swe_calc(te, ipl, iflag, xc, serr) == SweConst.ERR) {
                 return SweConst.ERR;
@@ -4920,7 +4920,7 @@ class Swecl implements java.io.Serializable {
           }
           tc[j] = tculm[i];
           if (!do_fixstar) {
-            te = tc[j] + SweDate.getDeltaT(tc[j]);
+            te = tc[j] + SweDate.getDeltaT(tc[j], sw);
             if (sw.swe_calc(te, ipl, iflag, xc, serr) == SweConst.ERR) {
               return SweConst.ERR;
             }
@@ -4980,7 +4980,7 @@ class Swecl implements java.io.Serializable {
       for (i = 0; i < 20; i++) {
         t = (t2[0] + t2[1]) / 2;
         if (!do_fixstar) {
-          te = t + SweDate.getDeltaT(t);
+          te = t + SweDate.getDeltaT(t, sw);
           if (sw.swe_calc(te, ipl, iflag, xc, serr) == SweConst.ERR) {
             return SweConst.ERR;
           }
@@ -5039,7 +5039,7 @@ class Swecl implements java.io.Serializable {
                              double[] geopos, StringBuffer starname,
                              DblObj tret, StringBuffer serr) {
     int i;
-    double tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
+    double tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);
     double armc;
     double armc0;
     double arxc;
@@ -5100,7 +5100,7 @@ class Swecl implements java.io.Serializable {
       }
       if (!do_fixstar) {
         //        te = t + swe_deltat(t);
-        te = t + SweDate.getDeltaT(t);
+        te = t + SweDate.getDeltaT(t, sw);
         if (sw.swe_calc(te, ipl, iflag, x, serr) == SweConst.ERR) {
           return SweConst.ERR;
         }
@@ -6182,8 +6182,8 @@ class Swecl implements java.io.Serializable {
                      double[] xnasc, double[] xndsc,
                      double[] xperi, double[] xaphe,
                      StringBuffer serr) {
-    SweDate.swi_set_tid_acc(tjd_ut, iflag, 0);
-    return swe_nod_aps(tjd_ut + SweDate.getDeltaT(tjd_ut),
+    SweDate.swi_set_tid_acc(tjd_ut, iflag, 0, sw);
+    return swe_nod_aps(tjd_ut + SweDate.getDeltaT(tjd_ut, sw),
         ipl, iflag, method, xnasc, xndsc, xperi, xaphe,
         serr);
   }
@@ -6240,7 +6240,7 @@ class Swecl implements java.io.Serializable {
      * geometrically from ecl. longitude and latitude
      */
     if (imeth == 0 || imeth == 1) {
-      t_et = t_ut + SweDate.getDeltaT(t_ut);
+      t_et = t_ut + SweDate.getDeltaT(t_ut, sw);
       eps = sl.swi_epsiln(t_et, iflag) * SwissData.RADTODEG;
       sl.swi_nutation(t_et, iflag, nutlo);
       nutlo[0] *= SwissData.RADTODEG;

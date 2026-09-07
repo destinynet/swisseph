@@ -503,7 +503,7 @@ public class TCPlanetHouse extends TransitCalculator implements Serializable {
 
 
     // House calculation:
-    ret = sw.swe_houses(jdET - SweDate.getDeltaT(jdET), houseFlags, houseGeolat, houseGeolon, houseSystem, cusps, ascmc);
+    ret = sw.swe_houses(jdET - SweDate.getDeltaT(jdET, sw), houseFlags, houseGeolat, houseGeolon, houseSystem, cusps, ascmc);
 
     if (ret < 0) {
       throw new SwissephException(jdET, SwissephException.UNDEFINED_ERROR,

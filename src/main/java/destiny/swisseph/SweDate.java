@@ -93,7 +93,6 @@ import java.util.TimeZone;
 */
 public class SweDate implements Serializable {
 
-  private static SwissEph sw = new SwissEph();	// Just a default
   /**
    * Constant for weekdays. SUNDAY is equal to 0.
    */
@@ -421,7 +420,7 @@ public class SweDate implements Serializable {
   */
   public double getDeltaT() {
     if (deltatIsValid) { return this.deltaT; }
-    this.deltaT=calc_deltaT(this.getJulDay());
+    this.deltaT=calc_deltaT(this.getJulDay(), null);
     deltatIsValid=true;
     return this.deltaT;
   }
@@ -435,9 +434,23 @@ public class SweDate implements Serializable {
   * @see destiny.swisseph.SweConst#SE_TIDAL_DEFAULT
   */
   public static double getDeltaT(double tjd) {
-    //double sdt = calc_deltaT(tjd, SE_TIDAL_DEFAULT);
-    double sdt = calc_deltaT(tjd);
-    return sdt;
+    return calc_deltaT(tjd, null);
+  }
+
+  /**
+  * Delta T for a Julian Day, in days, using the delta-T model and ephemeris path of the
+  * given SwissEph.
+  *
+  * <p>Prefer this over {@link #getDeltaT(double)} wherever an ephemeris context is at hand.
+  * The single-argument form answers with the default model and cannot consult a
+  * {@code swe_deltat.txt} override, because it has no path to look in.
+  *
+  * @param tjd the Julian Day in UT
+  * @param se  the ephemeris context, or null for the default model
+  * @return DeltaT (ET - UT) in days
+  */
+  public static double getDeltaT(double tjd, SwissEph se) {
+    return calc_deltaT(tjd, se);
   }
 
   /**
@@ -889,8 +902,8 @@ public class SweDate implements Serializable {
   /**
   * @see #setGlobalTidalAcc(double, int, int)
   */
-  static void swi_set_tid_acc(double tjd_ut, int iflag, int denum) {
-    setGlobalTidalAcc(tjd_ut, iflag, denum);
+  static void swi_set_tid_acc(double tjd_ut, int iflag, int denum, SwissEph se) {
+    setGlobalTidalAcc(tjd_ut, iflag, denum, se);
   }
   /**
   * Sets the tidal acceleration used in calculations of delta T.
@@ -912,7 +925,7 @@ public class SweDate implements Serializable {
   * @see destiny.swisseph.SweConst#SE_TIDAL_AUTOMATIC
   * @see destiny.swisseph.SweConst#SE_TIDAL_DEFAULT
   */
-  static void setGlobalTidalAcc(double tjd_ut, int iflag, int denum) {
+  static void setGlobalTidalAcc(double tjd_ut, int iflag, int denum, SwissEph se) {
     double xx[] = new double[6];
     double tjd_et;
     int retval = 0;
@@ -926,28 +939,28 @@ public class SweDate implements Serializable {
         return;
       }
       if ((iflag & SweConst.SEFLG_JPLEPH) != 0) {
-        if (sw.swed.jpl_file_is_open) {
-	  denum = sw.swed.jpldenum;
+        if (se.swed.jpl_file_is_open) {
+	  denum = se.swed.jpldenum;
         } else {
-	  tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
+	  tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut, se);
 	  iflag = SweConst.SEFLG_JPLEPH|SweConst.SEFLG_J2000|SweConst.SEFLG_TRUEPOS|SweConst.SEFLG_ICRS|SweConst.SEFLG_BARYCTR;
-	  retval = sw.swe_calc(tjd_et, SweConst.SE_JUPITER, iflag, xx, null);
-	  if (sw.swed.jpl_file_is_open && (retval & SweConst.SEFLG_JPLEPH) != 0) {
-	    denum = sw.swed.jpldenum;
+	  retval = se.swe_calc(tjd_et, SweConst.SE_JUPITER, iflag, xx, null);
+	  if (se.swed.jpl_file_is_open && (retval & SweConst.SEFLG_JPLEPH) != 0) {
+	    denum = se.swed.jpldenum;
 	  }
         }
       }
       /* SEFLG_SWIEPH wanted or SEFLG_JPLEPH failed: */
       if (denum == 0) {
-        tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
-        if (sw.swed.fidat[SwephData.SEI_FILE_MOON].fptr == null ||
-          tjd_et < sw.swed.fidat[SwephData.SEI_FILE_MOON].tfstart + 1 ||
-	  tjd_et > sw.swed.fidat[SwephData.SEI_FILE_MOON].tfend - 1) {
+        tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut, se);
+        if (se.swed.fidat[SwephData.SEI_FILE_MOON].fptr == null ||
+          tjd_et < se.swed.fidat[SwephData.SEI_FILE_MOON].tfstart + 1 ||
+	  tjd_et > se.swed.fidat[SwephData.SEI_FILE_MOON].tfend - 1) {
 	  iflag = SweConst.SEFLG_SWIEPH|SweConst.SEFLG_J2000|SweConst.SEFLG_TRUEPOS|SweConst.SEFLG_ICRS;
-	  sw.swe_calc(tjd_et, SweConst.SE_MOON, iflag, xx, null);
+	  se.swe_calc(tjd_et, SweConst.SE_MOON, iflag, xx, null);
         }
-        if (sw.swed.fidat[SwephData.SEI_FILE_MOON].fptr != null) {
-	  denum = sw.swed.fidat[SwephData.SEI_FILE_MOON].sweph_denum;
+        if (se.swed.fidat[SwephData.SEI_FILE_MOON].fptr != null) {
+	  denum = se.swed.fidat[SwephData.SEI_FILE_MOON].sweph_denum;
         /* Moon ephemeris file is not available, default to Moshier ephemeris */
         } else {
 	  denum = 404; /* DE number of Moshier ephemeris */
@@ -976,15 +989,6 @@ public class SweDate implements Serializable {
     }
   }
 
-  /**
-  * This method is needed to have a consistent global SwissData object "swed",
-  * whose contents may determine the tidal acceleration. Called from the
-  * SwissEph constructor only.
-  * @param swiss The SwissEph object to be used
-  */
-  protected static void setSwissEphObject(SwissEph swiss) {
-    sw = swiss;
-  }
 
   /**
   * Returns the date, calendar type (gregorian / julian), julian day
@@ -1315,11 +1319,19 @@ public class SweDate implements Serializable {
   /* returns DeltaT (ET - UT) in days
    * double tjd 	= 	julian day in UT
    */
-  private static synchronized double calc_deltaT(double tjd) {
+  /**
+   * @param se the ephemeris context this calculation belongs to, or null when there is
+   *           none. It supplies two things: the delta-T model from its {@code astro_models},
+   *           and the search path for the optional {@code swe_deltat.txt} override file.
+   *           Passed in rather than read from a shared static reference, so that the answer
+   *           depends on the caller's own state rather than on whichever SwissEph happened
+   *           to be constructed last.
+   */
+  private static synchronized double calc_deltaT(double tjd, SwissEph se) {
     double ans = 0;
     double B, Y, Ygreg, dd;
     int iy;
-    int deltat_model = sw.swed.astro_models[SweConst.SE_MODEL_DELTAT];
+    int deltat_model = (se == null) ? 0 : se.swed.astro_models[SweConst.SE_MODEL_DELTAT];
     if (deltat_model == 0) deltat_model = SweConst.SEMOD_DELTAT_DEFAULT;
     /* read additional values from swedelta.txt */
     /*AS_BOOL use_espenak_meeus = DELTAT_ESPENAK_MEEUS_2006;*/
@@ -1363,18 +1375,18 @@ public class SweDate implements Serializable {
      * See AA page K11.
      */
     if (Y >= TABSTART) {
-      return deltat_aa(tjd);
+      return deltat_aa(tjd, se);
     }
     return ans / 86400.0;
   }
 
-  private static double deltat_aa(double tjd) {
+  private static double deltat_aa(double tjd, SwissEph se) {
     double ans = 0, ans2, ans3;
     double p, B, B2, Y, dd;
     double d[] = new double[6];
     int i, iy, k;
     /* read additional values from swedelta.txt */
-    int tabsiz = init_dt();
+    int tabsiz = init_dt(se);
     int tabend = TABSTART + tabsiz - 1;
     /*Y = 2000.0 + (tjd - J2000)/365.25;*/
     Y = 2000.0 + (tjd - SwephData.J2000)/365.2425;
@@ -1552,24 +1564,30 @@ public class SweDate implements Serializable {
   /* Read delta t values from external file.
    * record structure: year(whitespace)delta_t in 0.01 sec.
    */
-  private static int init_dt() {
+  private static int init_dt(SwissEph se) {
     FilePtr fp = null;
     int year;
     int tab_index;
     int tabsiz;
     int i;
     String s;
+    if (se == null) {
+      // No ephemeris context, so no path in which to look for an override file. Deliberately
+      // does not set init_dt_done: a later call that does have a context must still get its
+      // chance to load the file.
+      return TABSIZ;
+    }
     if (!init_dt_done) {
       init_dt_done = true;
       /* no error message if file is missing */
       try {
-        if ((fp = sw.swi_fopen(-1, "swe_deltat.txt", sw.swed.ephepath, null)) == null &&
-            (fp = sw.swi_fopen(-1, "sedeltat.txt", sw.swed.ephepath, null)) == null) {
+        if ((fp = se.swi_fopen(-1, "swe_deltat.txt", se.swed.ephepath, null)) == null &&
+            (fp = se.swi_fopen(-1, "sedeltat.txt", se.swed.ephepath, null)) == null) {
           return TABSIZ;  // I think, I could skip this one...
         }
-      } catch (SwissephException se) {
+      } catch (SwissephException ex) {
         try {
-          if ((fp = sw.swi_fopen(-1, "sedeltat.txt", sw.swed.ephepath, null)) == null) {
+          if ((fp = se.swi_fopen(-1, "sedeltat.txt", se.swed.ephepath, null)) == null) {
             return TABSIZ;  // I think, I could skip this one...
           }
         } catch (SwissephException se2) {
@@ -1815,19 +1833,23 @@ public class SweDate implements Serializable {
 
   /* Read additional leap second dates from external file, if given.
    */
-  private int init_leapsec() {
+  private int init_leapsec(SwissEph se) {
     FilePtr fp = null;
     int ndat, ndat_last;
     int tabsiz = 0;
     int i;
     String s;
+    if (se == null) {
+      // See init_dt: without a context there is no path to search, and the flag stays unset.
+      return NLEAP_SECONDS;
+    }
     if (!init_leapseconds_done) {
       init_leapseconds_done = true;
       tabsiz = NLEAP_SECONDS;
       ndat_last = leap_seconds[NLEAP_SECONDS - 1];
       /* no error message if file is missing */
       try {
-        if ((fp = sw.swi_fopen(-1, "seleapsec.txt", sw.swed.ephepath, null)) == null)
+        if ((fp = se.swi_fopen(-1, "seleapsec.txt", se.swed.ephepath, null)) == null)
           return NLEAP_SECONDS;
         while ((s=fp.readLine()) != null) {
           s.trim();
@@ -1913,7 +1935,7 @@ public class SweDate implements Serializable {
     /*
      * number of leap seconds since 1972:
      */
-    tabsiz_nleap = init_leapsec();
+    tabsiz_nleap = init_leapsec(null);
     ndat = iyear * 10000 + imonth * 100 + iday;
     /*
      * if input second is 60: is it a valid leap second ?
@@ -2024,7 +2046,7 @@ public class SweDate implements Serializable {
     /*
      * number of leap seconds since 1972:
      */
-    tabsiz_nleap = init_leapsec();
+    tabsiz_nleap = init_leapsec(null);
     nleap = NLEAP_INIT; /* initial difference between UTC and TAI in 1972 */
     ndat = iyear * 10000 + imonth * 100 + iday;
     for (i = 0; i < tabsiz_nleap; i++) {
@@ -2117,7 +2139,7 @@ public class SweDate implements Serializable {
      * minimum number of leap seconds since 1972; we may be missing one leap
      * second
      */
-    tabsiz_nleap = init_leapsec();
+    tabsiz_nleap = init_leapsec(null);
 //   swe_revjul(tjd_ut-1, SE_GREG_CAL, &iyear2, &imonth2, &iday2, &d);
     IDate dt=swe_revjul(tjd_ut-1, SE_GREG_CAL);
     iyear2 = dt.year;

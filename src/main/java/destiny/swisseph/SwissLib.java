@@ -172,6 +172,13 @@ public class SwissLib implements Serializable {
 
   SwissData swed;
 
+  /**
+   * The ephemeris context this instance belongs to, or null for a standalone SwissLib.
+   * Only used to give delta-T calculations the caller's own model and ephemeris path
+   * instead of a process-wide one.
+   */
+  SwissEph sw;
+
   // Konstruktor(en):
   public SwissLib() {
     this(null);
@@ -2211,7 +2218,7 @@ public class SwissLib implements Serializable {
     double t6;
     eps *= SwissData.RADTODEG;
     nut *= SwissData.RADTODEG;
-    tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut);
+    tjd_et = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);
     t = (tjd_et - SwephData.J2000) / 365250.0;
     t2 = t * t;
     t3 = t * t2;
@@ -2228,7 +2235,7 @@ public class SwissLib implements Serializable {
     /* to mean equator J2000, cartesian */
     xobl[0] = 23.45;
     xobl[1] = 23.45;
-    xobl[1] = swi_epsiln(SwephData.J2000 + SweDate.getDeltaT(SwephData.J2000), 0) * SwissData.RADTODEG;
+    xobl[1] = swi_epsiln(SwephData.J2000 + SweDate.getDeltaT(SwephData.J2000, sw), 0) * SwissData.RADTODEG;
     swi_polcart(xs, xs);
     swi_coortrf(xs, xs, -xobl[1] * SwissData.DEGTORAD);
     /* precess to mean equinox of date */
@@ -2523,7 +2530,7 @@ public class SwissLib implements Serializable {
       /*  ERA-based expression for for Greenwich Sidereal Time (GST) based
        *  on the IAU 2006 precession */
       jdrel = tjd - SwephData.J2000;
-      tt = (tjd + SweDate.getDeltaT(tjd) - SwephData.J2000) / 36525.0;
+      tt = (tjd + SweDate.getDeltaT(tjd, sw) - SwephData.J2000) / 36525.0;
       gmst = swe_degnorm((0.7790572732640 + 1.00273781191135448 * jdrel) * 360);
       gmst += (0.014506 + tt * (4612.156534 + tt * (1.3915817 + tt * (-0.00000044 + tt * (-0.000029956 + tt * -0.0000000368))))) / 3600.0;
       dadd = sidtime_non_polynomial_part(tt);
@@ -2532,7 +2539,7 @@ public class SwissLib implements Serializable {
       gmst = gmst / 15.0 * 3600.0;
       /* sidt_model == SEMOD_SIDT_PREC_MODEL, older standards according to precession model */
     } else if (prec_model_short >= SweConst.SEMOD_PREC_IAU_2006) {
-      tt = (jd0 + SweDate.getDeltaT(jd0) - SwephData.J2000) / 36525.0; /* TT in centuries after J2000 */
+      tt = (jd0 + SweDate.getDeltaT(jd0, sw) - SwephData.J2000) / 36525.0; /* TT in centuries after J2000 */
       gmst = (((-0.000000002454 * tt - 0.00000199708) * tt - 0.0000002926) * tt + 0.092772110) * tt * tt + 307.4771013 * (tt - tu) + 8640184.79447825 * tu + 24110.5493771;
       /* mean solar days per sidereal day at date tu;
        * for the derivative of gmst, we can assume UT1 =~ TT */
@@ -2573,7 +2580,7 @@ public class SwissLib implements Serializable {
     double eps;
     double[] nutlo = new double[2];
     double tsid;
-    double tjde = tjd_ut + SweDate.getDeltaT(tjd_ut);
+    double tjde = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);
     eps = swi_epsiln(tjde, 0) * SwissData.RADTODEG;
     swi_nutation(tjde, 0, nutlo);
     for (i = 0; i < 2; i++)
