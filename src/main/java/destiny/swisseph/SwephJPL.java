@@ -645,7 +645,7 @@ class SwephJPL implements Serializable {
     String ch_ttl = "";
     boolean ferr = false;
     try {
-      if (js.jplfptr == null || js.jplfptr.fp == null) {
+      if (js.jplfptr == null || !js.jplfptr.isOpen()) {
         // fsizer() throws SwissephException
         ksize = fsizer(serr); /* the number of single precision words in a record */
         nrecl = 4;

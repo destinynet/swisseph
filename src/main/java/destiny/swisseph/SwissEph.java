@@ -4781,7 +4781,15 @@ public class SwissEph implements Serializable {
         if (ifno >= 0) {
           swed.fidat[ifno].fnam = fnamp;
         }
-        FilePtr sfp = new FilePtr(fp, fnamp, -1, EPHE_BUFSIZE);
+        byte[] whole = EphemerisFile.contentsOf(fp, fnamp);
+        FilePtr sfp;
+        if (whole != null) {
+          // Held in memory and shared; the handle is not needed any more.
+          fp.close();
+          sfp = new FilePtr(whole, fnamp);
+        } else {
+          sfp = new FilePtr(fp, fnamp, -1, EPHE_BUFSIZE);
+        }
 ////#ifdef TRACE0
 //        Trace.level--;
 ////#endif /* TRACE0 */

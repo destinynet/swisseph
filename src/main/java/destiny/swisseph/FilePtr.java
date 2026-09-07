@@ -90,6 +90,12 @@ public class FilePtr implements AutoCloseable {
   RandomAccessFile fp;
   String fnamp;
 
+  /**
+   * The whole file, when it was small enough to hold. Non-null means reads are array indexing
+   * and no file handle is kept; null means the buffered {@link RandomAccessFile} path below.
+   */
+  private byte[] contents;
+
   private long fpos = 0;
   private final int BUFSIZE;
 
@@ -116,6 +122,25 @@ public class FilePtr implements AutoCloseable {
     this.data = new byte[bufsize];
   }
 
+  /**
+   * Reads from a copy of the file already in memory. No file handle is held.
+   *
+   * @param contents the file, shared and never modified
+   * @param fnamp    the resolved file name, kept for error messages
+   */
+  FilePtr(byte[] contents, String fnamp) {
+    this.contents = contents;
+    this.fnamp = fnamp;
+    this.savedLength = contents.length;
+    this.BUFSIZE = 0;
+    this.data = null;
+  }
+
+  /** True while this reader can still serve bytes. */
+  boolean isOpen() {
+    return contents != null || fp != null;
+  }
+
   public void setBigendian(boolean bigendian) {
     this.bigendian = bigendian;
   }
@@ -129,6 +154,13 @@ public class FilePtr implements AutoCloseable {
    *                      byte could be read.
    */
   public byte readByte() throws IOException, EOFException {
+    if (contents != null) {
+      if (fpos < 0 || fpos >= contents.length) {
+        throw new EOFException("Filepointer position " + fpos + " exceeds file" +
+            " length by " + (fpos - contents.length + 1) + " byte(s).");
+      }
+      return contents[(int) fpos++];
+    }
     if (startIdx < 0 || fpos < startIdx || fpos > endIdx) {
       readToBuffer();
     }
@@ -247,6 +279,8 @@ public class FilePtr implements AutoCloseable {
     startIdx = -1;
     endIdx = -1;
     savedLength = -1;
+    // The array is shared and outlives this reader; only the reference is dropped.
+    contents = null;
     if (fp != null) {
       RandomAccessFile toClose = fp;
       fp = null;
@@ -259,6 +293,9 @@ public class FilePtr implements AutoCloseable {
   }
 
   public long length() throws IOException {
+    if (contents != null) {
+      return contents.length;
+    }
     if (fp != null && savedLength < 0) {
       savedLength = fp.length();
     }
