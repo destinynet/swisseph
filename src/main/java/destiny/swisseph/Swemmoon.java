@@ -686,21 +686,28 @@ class Swemmoon
   double T;
   double T2;
 
-  static double T3;
-  static double T4;
-  static double f;
-  static double g;
-  static double Ve;
-  static double Ea;
-  static double Ma;
-  static double Ju;
-  static double Sa;
-  static double cg;
-  static double sg;
-  static double l1;
-  static double l2;
-  static double l3;
-  static double l4;
+  /*
+   * Scratch variables for the lunar series evaluation. These were file-scope globals in the
+   * C original; the port turned the ones above into fields and left these as statics, which
+   * made them shared by every SwissEph in the process — two threads computing the Moon at
+   * once would overwrite each other's intermediate values. They are written before they are
+   * read within a single computation, so they are per-instance state, not shared state.
+   */
+  double T3;
+  double T4;
+  double f;
+  double g;
+  double Ve;
+  double Ea;
+  double Ma;
+  double Ju;
+  double Sa;
+  double cg;
+  double sg;
+  double l1;
+  double l2;
+  double l3;
+  double l4;
 
   /* Calculate geometric coordinates of Moon
    * without light time or nutation correction.
