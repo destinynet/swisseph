@@ -138,12 +138,18 @@ public class SweDate implements Serializable {
   */
   public static final double JD0=2440587.5;          /* 1970 January 1.0 */
 
-  private static double tid_acc = SweConst.SE_TIDAL_DEFAULT;
+  /**
+   * The tidal acceleration used by calculations that have no ephemeris context — the
+   * deprecated context-free entry points, and SweDate's own UTC conversions. It is no longer
+   * written by any SwissEph: each instance now keeps its own in {@link SwissData#tid_acc},
+   * so one instance's choice of ephemeris can no longer move another's delta-T.
+   */
+  private static double defaultTidAcc = SweConst.SE_TIDAL_DEFAULT;
 // private static ThreadLocal<Integer> double = new ThreadLocal<Integer>() {
 // @Override protected Integer initialValue() { return SweConst.SE_TIDAL_DEFAULT; }
 // };
 
-  private static boolean is_tid_acc_manual = false;
+  private static boolean defaultTidAccManual = false;
   private static boolean init_dt_done = false;
   private double jd;
   // JD for the start of the Gregorian calendar system (October 15, 1582):
@@ -846,7 +852,7 @@ public class SweDate implements Serializable {
   * @return Tidal acceleration
   */
   public static double getGlobalTidalAcc() {
-    return tid_acc;
+    return defaultTidAcc;
 // return tid_acc.get();
   }
 
@@ -860,8 +866,8 @@ public class SweDate implements Serializable {
   /**
   * @see #setGlobalTidalAcc(double)
   */
-  static void swe_set_tid_acc(double t_acc) {
-    setGlobalTidalAcc(t_acc);
+  static void swe_set_tid_acc(double t_acc, SwissEph se) {
+    setGlobalTidalAcc(t_acc, se);
   }
   /**
   * Sets the tidal acceleration used in calculations of delta T.
@@ -889,14 +895,43 @@ public class SweDate implements Serializable {
   */
   public static void setGlobalTidalAcc(double t_acc) {
     if (t_acc == SweConst.SE_TIDAL_AUTOMATIC) {
-      tid_acc = SweConst.SE_TIDAL_DEFAULT;
-// tid_acc.set(SweConst.SE_TIDAL_DEFAULT);
-      is_tid_acc_manual = false;
+      defaultTidAcc = SweConst.SE_TIDAL_DEFAULT;
+      defaultTidAccManual = false;
       return;
     }
-    tid_acc = t_acc;
-// tid_acc.set(t_acc);
-    is_tid_acc_manual = true;
+    defaultTidAcc = t_acc;
+    defaultTidAccManual = true;
+  }
+
+  /**
+  * The tidal acceleration this ephemeris context is using.
+  *
+  * @param se the ephemeris context, or null for the context-free default
+  */
+  public static double getGlobalTidalAcc(SwissEph se) {
+    return se == null ? defaultTidAcc : se.swed.tid_acc;
+  }
+
+  /**
+  * Sets the tidal acceleration for one ephemeris context, leaving every other instance
+  * alone. Pass {@link SweConst#SE_TIDAL_AUTOMATIC} to hand control back to the automatic
+  * derivation from whichever ephemeris file this context loads.
+  *
+  * @param t_acc tidal acceleration
+  * @param se    the ephemeris context, or null to set the context-free default
+  */
+  public static void setGlobalTidalAcc(double t_acc, SwissEph se) {
+    if (se == null) {
+      setGlobalTidalAcc(t_acc);
+      return;
+    }
+    if (t_acc == SweConst.SE_TIDAL_AUTOMATIC) {
+      se.swed.tid_acc = SweConst.SE_TIDAL_DEFAULT;
+      se.swed.is_tid_acc_manual = false;
+      return;
+    }
+    se.swed.tid_acc = t_acc;
+    se.swed.is_tid_acc_manual = true;
   }
 
   /**
@@ -930,12 +965,11 @@ public class SweDate implements Serializable {
     double tjd_et;
     int retval = 0;
     /* manual tid_acc overrides automatic tid_acc */
-    if (is_tid_acc_manual)
+    if (se.swed.is_tid_acc_manual)
       return;
     if (denum == 0) {
       if ((iflag & SweConst.SEFLG_MOSEPH) != 0) {
-        tid_acc = SweConst.SE_TIDAL_DE404;
-// tid_acc.set(SweConst.SE_TIDAL_DE404);
+        se.swed.tid_acc = SweConst.SE_TIDAL_DE404;
         return;
       }
       if ((iflag & SweConst.SEFLG_JPLEPH) != 0) {
@@ -968,15 +1002,15 @@ public class SweDate implements Serializable {
       }
     }
     switch(denum) {
-      case 200: tid_acc = SweConst.SE_TIDAL_DE200; break;
-      case 403: tid_acc = SweConst.SE_TIDAL_DE403; break;
-      case 404: tid_acc = SweConst.SE_TIDAL_DE404; break;
-      case 405: tid_acc = SweConst.SE_TIDAL_DE405; break;
-      case 406: tid_acc = SweConst.SE_TIDAL_DE406; break;
-      case 421: tid_acc = SweConst.SE_TIDAL_DE421; break; 
-      case 430: tid_acc = SweConst.SE_TIDAL_DE430; break;
-      case 431: tid_acc = SweConst.SE_TIDAL_DE431; break;
-      default: tid_acc = SweConst.SE_TIDAL_DEFAULT; break;
+      case 200: se.swed.tid_acc = SweConst.SE_TIDAL_DE200; break;
+      case 403: se.swed.tid_acc = SweConst.SE_TIDAL_DE403; break;
+      case 404: se.swed.tid_acc = SweConst.SE_TIDAL_DE404; break;
+      case 405: se.swed.tid_acc = SweConst.SE_TIDAL_DE405; break;
+      case 406: se.swed.tid_acc = SweConst.SE_TIDAL_DE406; break;
+      case 421: se.swed.tid_acc = SweConst.SE_TIDAL_DE421; break; 
+      case 430: se.swed.tid_acc = SweConst.SE_TIDAL_DE430; break;
+      case 431: se.swed.tid_acc = SweConst.SE_TIDAL_DE431; break;
+      default: se.swed.tid_acc = SweConst.SE_TIDAL_DEFAULT; break;
 //      case 200: tid_acc.set(SweConst.SE_TIDAL_DE200); break;
 //      case 403: tid_acc.set(SweConst.SE_TIDAL_DE403); break;
 //      case 404: tid_acc.set(SweConst.SE_TIDAL_DE404); break;
@@ -1332,6 +1366,7 @@ public class SweDate implements Serializable {
     double B, Y, Ygreg, dd;
     int iy;
     int deltat_model = (se == null) ? 0 : se.swed.astro_models[SweConst.SE_MODEL_DELTAT];
+    double tidAcc = (se == null) ? defaultTidAcc : se.swed.tid_acc;
     if (deltat_model == 0) deltat_model = SweConst.SEMOD_DELTAT_DEFAULT;
     /* read additional values from swedelta.txt */
     /*AS_BOOL use_espenak_meeus = DELTAT_ESPENAK_MEEUS_2006;*/
@@ -1346,7 +1381,7 @@ public class SweDate implements Serializable {
      */
     /*if (use_espenak_meeus && tjd < 2317746.13090277789) {*/
     if (deltat_model == SweConst.SEMOD_DELTAT_ESPENAK_MEEUS_2006 && tjd < 2317746.13090277789) {
-      return deltat_espenak_meeus_1620(tjd);
+      return deltat_espenak_meeus_1620(tjd, tidAcc);
     }
     /* If the macro DELTAT_ESPENAK_MEEUS_2006 is FALSE:
      * Before 1620, we follow Stephenson & Morrsion 2004. For the tabulated 
@@ -1354,7 +1389,7 @@ public class SweDate implements Serializable {
      */
     if (Y < TABSTART) {
       if (Y < TAB2_END) {
-        return deltat_stephenson_morrison_1600(tjd);
+        return deltat_stephenson_morrison_1600(tjd, tidAcc);
       } else {
         /* between 1600 and 1620:
          * linear interpolation between 
@@ -1365,7 +1400,7 @@ public class SweDate implements Serializable {
 	  dd = (Y - TAB2_END) / B;
 	  /*ans = dt2[iy] + dd * (dt[0] / 100.0 - dt2[iy]);*/
 	  ans = dt2[iy] + dd * (dt[0] - dt2[iy]);
-	  ans = adjust_for_tidacc(ans, Ygreg);
+	  ans = adjust_for_tidacc(ans, Ygreg, tidAcc);
 	  return ans / 86400.0;
         }
       }
@@ -1375,12 +1410,12 @@ public class SweDate implements Serializable {
      * See AA page K11.
      */
     if (Y >= TABSTART) {
-      return deltat_aa(tjd, se);
+      return deltat_aa(tjd, se, tidAcc);
     }
     return ans / 86400.0;
   }
 
-  private static double deltat_aa(double tjd, SwissEph se) {
+  private static double deltat_aa(double tjd, SwissEph se, double tidAcc) {
     double ans = 0, ans2, ans3;
     double p, B, B2, Y, dd;
     double d[] = new double[6];
@@ -1399,13 +1434,13 @@ public class SweDate implements Serializable {
       ans = dt[iy];
       k = iy + 1;
       if( k >= tabsiz )
-        return deltat_aa_label_done(ans, Y); /* No data, can't go on. */
+        return deltat_aa_label_done(ans, Y, tidAcc); /* No data, can't go on. */
       /* The fraction of tabulation interval */
       p = Y - p;
       /* First order interpolated value */
       ans += p*(dt[k] - dt[iy]);
       if( (iy-1 < 0) || (iy+2 >= tabsiz) )
-        return deltat_aa_label_done(ans, Y); /* can't do second differences */
+        return deltat_aa_label_done(ans, Y, tidAcc); /* can't do second differences */
       /* Make table of first differences */
       k = iy - 2;
       for( i=0; i<5; i++ ) {
@@ -1421,20 +1456,20 @@ public class SweDate implements Serializable {
       B = 0.25*p*(p-1.0);
       ans += B*(d[1] + d[2]);
       if( iy+2 >= tabsiz )
-        return deltat_aa_label_done(ans, Y);
+        return deltat_aa_label_done(ans, Y, tidAcc);
       /* Compute third differences */
       for( i=0; i<3; i++ )
         d[i] = d[i+1] - d[i];
       B = 2.0*B/3.0;
       ans += (p-0.5)*B*d[1];
       if( (iy-2 < 0) || (iy+3 > tabsiz) )
-        return deltat_aa_label_done(ans, Y);
+        return deltat_aa_label_done(ans, Y, tidAcc);
       /* Compute fourth differences */
       for( i=0; i<2; i++ )
         d[i] = d[i+1] - d[i];
       B = 0.125*B*(p+1.0)*(p-2.0);
       ans += B*(d[0] + d[1]);
-      return deltat_aa_label_done(ans, Y); /* No data, can't go on. */
+      return deltat_aa_label_done(ans, Y, tidAcc); /* No data, can't go on. */
     }
     /* today - :
      * Formula Stephenson (1997; p. 507),
@@ -1461,7 +1496,7 @@ public class SweDate implements Serializable {
     return (-20 + 32 * u * u);
   }
 
-  private static double deltat_stephenson_morrison_1600(double tjd) {
+  private static double deltat_stephenson_morrison_1600(double tjd, double tidAcc) {
     double ans = 0, ans2, ans3;
     double p, B, dd;
     double tjd0;
@@ -1476,17 +1511,17 @@ public class SweDate implements Serializable {
       /*B = (Y - LTERM_EQUATION_YSTART) * 0.01;
       ans = -20 + LTERM_EQUATION_COEFF * B * B;*/
       ans = deltat_longterm_morrison_stephenson(tjd);
-      ans = adjust_for_tidacc(ans, Y);
+      ans = adjust_for_tidacc(ans, Y, tidAcc);
       /* transition from formula to table over 100 years */
       if (Y >= TAB2_START - 100) {
         /* starting value of table dt2: */
-        ans2 = adjust_for_tidacc(dt2[0], TAB2_START);
+        ans2 = adjust_for_tidacc(dt2[0], TAB2_START, tidAcc);
         /* value of formula at epoch TAB2_START */
         /* B = (TAB2_START - LTERM_EQUATION_YSTART) * 0.01;
         ans3 = -20 + LTERM_EQUATION_COEFF * B * B;*/
         tjd0 = (TAB2_START - 2000) * 365.2425 + SwephData.J2000;
         ans3 = deltat_longterm_morrison_stephenson(tjd0);
-        ans3 = adjust_for_tidacc(ans3, Y);
+        ans3 = adjust_for_tidacc(ans3, Y, tidAcc);
         dd = ans3 - ans2;
         B = (Y - (TAB2_START - 100)) * 0.01;
         /* fit to starting point of table dt2. */
@@ -1502,13 +1537,13 @@ public class SweDate implements Serializable {
       dd = (Yjul - (TAB2_START + TAB2_STEP * iy)) / TAB2_STEP;
       ans = dt2[iy] + (dt2[iy+1] - dt2[iy]) * dd;
       /* correction for tidal acceleration used by our ephemeris */
-      ans = adjust_for_tidacc(ans, Y);
+      ans = adjust_for_tidacc(ans, Y, tidAcc);
     }
     ans /= 86400.0;
     return ans;
   }
 
-  private static double deltat_espenak_meeus_1620(double tjd) {
+  private static double deltat_espenak_meeus_1620(double tjd, double tidAcc) {
     double ans = 0;
     double Ygreg;
     double u;
@@ -1550,13 +1585,13 @@ public class SweDate implements Serializable {
       u = Ygreg - 2000;
       ans = ((((0.00002373599 * u + 0.000651814) * u + 0.0017275) * u - 0.060374) * u + 0.3345) * u + 63.86;
     }
-    ans = adjust_for_tidacc(ans, Ygreg);
+    ans = adjust_for_tidacc(ans, Ygreg, tidAcc);
     ans /= 86400.0;
     return ans;
   }
 
-  private static synchronized double deltat_aa_label_done(double ans, double Y) {
-    ans = adjust_for_tidacc(ans, Y);
+  private static synchronized double deltat_aa_label_done(double ans, double Y, double tidAcc) {
+    ans = adjust_for_tidacc(ans, Y, tidAcc);
     return ans / 86400.0;
   }
 
@@ -1635,12 +1670,11 @@ public class SweDate implements Serializable {
    * Entries after 1955 are referred to atomic time standards and
    * are not affected by errors in Lunar or planetary theory.
    */
-  private static double adjust_for_tidacc(double ans, double Y) {
+  private static double adjust_for_tidacc(double ans, double Y, double tidAcc) {
     double B;
     if( Y < 1955.0 ) {
       B = (Y - 1955.0);
-      ans += -0.000091 * (tid_acc + 26.0) * B * B;
-//      ans += -0.000091 * (tid_acc.get() + 26.0) * B * B;
+      ans += -0.000091 * (tidAcc + 26.0) * B * B;
     }
     return ans;
   }

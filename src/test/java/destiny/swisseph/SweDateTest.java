@@ -232,35 +232,59 @@ class SweDateTest {
   // ------------------------------------------------------------- the shared state
 
   /**
-   * A tripwire, not an endorsement.
+   * The property that replaced a tripwire.
    *
-   * <p>{@code SweDate} holds a {@code static} reference to a {@code SwissEph}, and every
-   * {@code new SwissEph(...)} overwrites it — so constructing an instance on one thread
-   * changes what delta-T calculations on every other thread go through. Constructing one also
-   * leaves the global tidal acceleration at a different value than {@code swe_close()} does.
+   * <p>This test used to assert the opposite: that constructing a SwissEph moved a
+   * process-wide tidal acceleration, and that {@code swe_close()} moved it back. That was the
+   * defect. Phase 2 gave each instance its own {@code SwissData.tid_acc}, so what is worth
+   * asserting now is that two instances cannot reach each other.
    *
-   * <p>This is the single defect that makes the library unsafe to share and, per the design,
-   * the first thing Phase 2 removes. When it is gone this test should fail — and the right
-   * response is to delete it, not to restore the behaviour.
+   * <p>Tidal acceleration is derived from whichever ephemeris an instance actually loads, so
+   * before this change an instance that fell back to Moshier could leave a value behind that
+   * a different instance — on a different thread, with a different ephemeris path — would
+   * then use for its own delta-T.
    */
   @Test
-  void constructingASwissEphMutatesGlobalState() {
-    double afterConstruction;
-    double afterClose;
+  void twoSwissEphInstancesDoNotShareTidalAcceleration() {
+    SwissEph a = new SwissEph(SmokeTestSupport.ephePath());
+    SwissEph b = new SwissEph(SmokeTestSupport.ephePath());
+    try {
+      SweDate.setGlobalTidalAcc(-25.0, a);
+      SweDate.setGlobalTidalAcc(-26.0, b);
+
+      assertEquals(-25.0, SweDate.getGlobalTidalAcc(a));
+      assertEquals(-26.0, SweDate.getGlobalTidalAcc(b), "setting one instance moved the other");
+
+      // Driving a calculation on one must not disturb the other's setting either.
+      double[] xx = new double[6];
+      a.swe_calc_ut(2451545.0, SweConst.SE_SUN, SweConst.SEFLG_MOSEPH, xx, new StringBuffer());
+      assertEquals(-26.0, SweDate.getGlobalTidalAcc(b),
+                   "calculating on one instance moved another instance's tidal acceleration");
+    } finally {
+      a.swe_close();
+      b.swe_close();
+    }
+  }
+
+  /**
+   * A SwissEph's lifecycle no longer touches the context-free default that
+   * {@link SweDate#getDeltaT(double)} and the UTC conversions fall back on.
+   */
+  @Test
+  void aSwissEphLifecycleLeavesTheContextFreeDefaultAlone() {
+    double before = SweDate.getGlobalTidalAcc();
 
     SwissEph se = new SwissEph(SmokeTestSupport.ephePath());
     try {
       double[] xx = new double[6];
-      se.swe_calc_ut(2451545.0, SweConst.SE_SUN, SweConst.SEFLG_MOSEPH, xx, new StringBuffer());
-      afterConstruction = SweDate.getGlobalTidalAcc();
+      se.swe_calc_ut(2451545.0, SweConst.SE_SUN, SweConst.SEFLG_SWIEPH, xx, new StringBuffer());
+      assertEquals(before, SweDate.getGlobalTidalAcc(),
+                   "constructing and using a SwissEph moved the process-wide default");
     } finally {
       se.swe_close();
     }
-    afterClose = SweDate.getGlobalTidalAcc();
-
-    assertNotEquals(afterConstruction, afterClose,
-                    "global tidal acceleration is process-wide state that a single "
-                    + "SwissEph's lifecycle moves; see the Phase 2 design notes");
+    assertEquals(before, SweDate.getGlobalTidalAcc(),
+                 "closing a SwissEph moved the process-wide default");
   }
 
   // ------------------------------------------------------- mutation of an instance

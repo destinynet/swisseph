@@ -215,6 +215,18 @@ public class SwissData implements Serializable {
   double[] dpsi;
   double[] deps;
   int[] astro_models = new int[SwephData.SEI_NMODELS];
+
+  /**
+   * Tidal acceleration of the Moon, which delta-T depends on. Per-instance rather than
+   * process-wide: its value is derived from whichever ephemeris this instance actually
+   * loaded, so sharing it between instances made one calculation's answer depend on another
+   * calculation's choice of ephemeris.
+   */
+  double tid_acc = SweConst.SE_TIDAL_DEFAULT;
+
+  /** True once a caller has set the tidal acceleration explicitly, which suppresses the
+   *  automatic derivation from the loaded ephemeris. */
+  boolean is_tid_acc_manual = false;
   int timeout;
 
   /**

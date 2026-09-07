@@ -610,7 +610,7 @@ public class SwissEph implements Serializable {
       }
       swed.fixfp = null;
     }
-    SweDate.swe_set_tid_acc(SweConst.SE_TIDAL_AUTOMATIC);
+    SweDate.swe_set_tid_acc(SweConst.SE_TIDAL_AUTOMATIC, this);
     swed.geopos_is_set = false;
     swed.ayana_is_set = false;
     swed.is_old_starfile = false;
