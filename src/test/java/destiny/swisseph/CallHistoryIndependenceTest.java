@@ -80,4 +80,79 @@ class CallHistoryIndependenceTest {
       se.swe_close();
     }
   }
+
+  // ---------------------------------------------------- the ephemeris file index
+
+  /** 2025-06-15, inside the range of the sepl_18.se1 shipped with these tests. */
+  private static final double IN_FILE_RANGE = 2460841.5;
+
+  private static String sunLongitude(SwissEph se, int iflag, StringBuffer serr) {
+    double[] xx = new double[6];
+    int rc = se.swe_calc_ut(IN_FILE_RANGE, SweConst.SE_SUN, iflag, xx, serr);
+    return rc + ":" + Double.toHexString(xx[0]);
+  }
+
+  /**
+   * A Moshier calculation must not break the file-based calculations that follow it.
+   *
+   * <p>It did, and permanently. {@code free_planets()} runs whenever the caller switches
+   * ephemeris, and it zeroes the index that was read from the {@code .se1} header — while
+   * leaving the file open. The header is only read when a file is opened, so the index was
+   * never restored, and the next segment lookup computed its file offset from zeroes:
+   * {@code Filepointer position 2147483645}, which is {@code Integer.MAX_VALUE - 2}. Every
+   * later file-based call on that instance failed the same way.
+   *
+   * <p>Two calls were enough to trigger it, and the calling application mixes ephemerides
+   * without meaning to: a date outside the available file falls back to Moshier on its own.
+   */
+  @Test
+  void aMoshierCalculationDoesNotBreakLaterFileBasedOnes() {
+    SwissEph alone = new SwissEph(SmokeTestSupport.ephePath());
+    String expected;
+    try {
+      expected = sunLongitude(alone, SweConst.SEFLG_SWIEPH, new StringBuffer());
+      assertTrue(expected.startsWith("2:"), "the file-based calculation itself failed: " + expected);
+    } finally {
+      alone.swe_close();
+    }
+
+    SwissEph mixed = new SwissEph(SmokeTestSupport.ephePath());
+    try {
+      sunLongitude(mixed, SweConst.SEFLG_MOSEPH, new StringBuffer());
+
+      StringBuffer serr = new StringBuffer();
+      String first = sunLongitude(mixed, SweConst.SEFLG_SWIEPH, serr);
+      assertEquals(expected, first,
+                   "a preceding Moshier call changed the file-based result (serr=" + serr + ")");
+
+      // The corruption used to be permanent, so check that it has not merely been deferred.
+      assertEquals(expected, sunLongitude(mixed, SweConst.SEFLG_SWIEPH, new StringBuffer()));
+      assertEquals(expected, sunLongitude(mixed, SweConst.SEFLG_SWIEPH, new StringBuffer()));
+    } finally {
+      mixed.swe_close();
+    }
+  }
+
+  /**
+   * The same thing the other way round, and repeatedly: switching ephemeris back and forth
+   * must leave both answers stable.
+   */
+  @Test
+  void switchingEphemerisRepeatedlyIsStable() {
+    SwissEph se = new SwissEph(SmokeTestSupport.ephePath());
+    try {
+      String swieph = sunLongitude(se, SweConst.SEFLG_SWIEPH, new StringBuffer());
+      String moseph = sunLongitude(se, SweConst.SEFLG_MOSEPH, new StringBuffer());
+      assertNotEquals(swieph, moseph, "the two ephemerides should not agree bit for bit");
+
+      for (int i = 0; i < 4; i++) {
+        assertEquals(swieph, sunLongitude(se, SweConst.SEFLG_SWIEPH, new StringBuffer()),
+                     "SWIEPH drifted on round " + i);
+        assertEquals(moseph, sunLongitude(se, SweConst.SEFLG_MOSEPH, new StringBuffer()),
+                     "MOSEPH drifted on round " + i);
+      }
+    } finally {
+      se.swe_close();
+    }
+  }
 }

@@ -510,12 +510,46 @@ public class SwissEph implements Serializable {
     return iflag;
   }
 
+  /**
+   * Discards everything derived from the current ephemeris, which is what has to happen when
+   * the caller switches between ephemerides.
+   *
+   * <p>It used to discard slightly less than that, and the gap was a real defect.
+   * {@code PlanData.clearData()} zeroes {@code lndx0}, {@code nndx}, {@code tfstart},
+   * {@code tfend} and {@code dseg} — the index into the {@code .se1} file, read from its
+   * header. Those were cleared while the file itself was left open, and the code that reads
+   * a header only runs when the file is <em>not</em> open. So the index was never restored,
+   * and the next segment lookup computed its file offset from zeroes:
+   *
+   * <pre>
+   *   se.swe_calc_ut(tjd, SE_SUN, SEFLG_MOSEPH);   // ok
+   *   se.swe_calc_ut(tjd, SE_SUN, SEFLG_SWIEPH);   // ERR: Filepointer position 2147483645
+   * </pre>
+   *
+   * <p>Two calls were enough, and the damage was permanent: every later file-based
+   * calculation on that instance failed the same way. The invariant is now explicit — a
+   * planet's file index is valid exactly while its file is open, so both are dropped
+   * together. Reopening is cheap because the file itself is already in memory.
+   */
   private void free_planets() {
     int i;
     try {
       /* free planets data space */
       for (i = 0; i < SwephData.SEI_NPLANETS; i++) {
         swed.pldat[i].clearData();
+      }
+      /* the file index just cleared above came from these files' headers, and the header is
+       * only read when a file is opened; keeping them open would leave the index at zero */
+      for (i = 0; i < SwephData.SEI_NEPHFILES; i++) {
+        if (swed.fidat[i].fptr != null) {
+          try {
+            swed.fidat[i].fptr.close();
+          } catch (IOException ignored) {
+// NBT
+          }
+          swed.fidat[i].fptr = null;
+          swed.fidat[i].clearData();
+        }
       }
       for (i = 0; i <= SweConst.SE_NPLANETS; i++) {/* "<=" is correct! see decl.*/
         swed.savedat[i].clearData();
