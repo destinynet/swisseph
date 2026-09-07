@@ -107,9 +107,6 @@ public class SwissEph implements Serializable {
   SweHouse sh = null;
   Extensions ext = null;
 
-  double lastLat = 0.;
-  double lastLong = 0.;
-  int lastHSys = -1;
 
 //////////////////////////////////////////////////////////////////////////////
 // Constructors: /////////////////////////////////////////////////////////////
@@ -621,6 +618,15 @@ public class SwissEph implements Serializable {
     swed.timeout = 0;
     swed.dpsi = null;
     swed.deps = null;
+
+    /* Caches that live on this object rather than in swed, which swe_close() used to walk
+     * straight past. Each one changes what a later call returns, so leaving them behind meant
+     * a "closed" instance was not equivalent to a fresh one — which is the whole point of the
+     * method. */
+    swe_calc_epheflag_sv = 0;
+    slast_stardata = null;
+    slast_starname = null;
+    chck_nut_nutflag = 0;
   }
 
   /* sets ephemeris file path.
