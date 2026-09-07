@@ -172,40 +172,13 @@ public class SwissEph implements Serializable {
 // Public Methods: ///////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-  private int httpBufSize = 300;
-
   /**
-   * This sets the buffer size for access to Swiss Ephemeris
-   * or JPL
-   * data files, if you specify an http-URL in swe_set_ephe_path() or via
-   * the SwissEph constructor. The buffer size determines, how many bytes
-   * will get read on one single HTTP request. Increased buffer size will
-   * result in a reduced number of HTTP-requests, but it will increase
-   * the amount of data to be transferred. As the access to the data is
-   * <I>somehow</I> random, it does not make so much sense to increase the
-   * size arbitrarily.<P>
-   * Some test numbers for the calculation of sun, and for calculation of
-   * 9&nbsp;planets in a row:<BR>
-   * <table border="1" summary=""><tr><th>buffer<br>size</th><th>HTTP Requests<br>for the sun</th><th>HTTP Requests<br>for 9 planets</th></tr>
-   * <tr><td align="right">100</td><td align="right">57</td><td align="right">69</td></tr>
-   * <tr><td align="right">200</td><td align="right">30</td><td align="right">40</td></tr>
-   * <tr><td align="right">300</td><td align="right">23</td><td align="right">33</td></tr>
-   * <tr><td align="right">400</td><td align="right">19</td><td align="right">29</td></tr>
-   * <tr><td align="right">800</td><td align="right">14</td><td align="right">24</td></tr></table>
-   *
-   * @param size The size of the buffer. It defaults to 300 bytes. Values less
-   *             than 100 bytes will be increased to 100 bytes, as you will only increase
-   *             the number of requests dramatically, but the amount of bytes transferred
-   *             will just be minimal less.
-   * @see SwissEph#swe_set_ephe_path(java.lang.String)
+   * How many bytes an ephemeris read fetches at a time. This was configurable only because
+   * the removed HTTP transport wanted to size its byte-range requests; a local read has no
+   * such need.
    */
-  public void setHttpBufSize(int size) {
-    httpBufSize = size;
-    if (size < 100) {
-      httpBufSize = 100;
-    }
-    swe_close();
-  }
+  private static final int EPHE_BUFSIZE = 300;
+
 
   /**
    * Returns the version information of this swisseph package.
@@ -4808,29 +4781,15 @@ public class SwissEph implements Serializable {
         if (ifno >= 0) {
           swed.fidat[ifno].fnam = fnamp;
         }
-        FilePtr sfp = new FilePtr(fp, null, null, null, fnamp, -1, httpBufSize);
+        FilePtr sfp = new FilePtr(fp, fnamp, -1, EPHE_BUFSIZE);
 ////#ifdef TRACE0
 //        Trace.level--;
 ////#endif /* TRACE0 */
         return sfp;
-      } catch (IOException ex) {
-        // Maybe it is an URL...
-        FilePtr f = tryFileAsURL(s + "/" + fname, ifno);
-        if (f != null) {
-////#ifdef TRACE0
-//        Trace.level--;
-////#endif /* TRACE0 */
-          return f;
-        }
-      } catch (SecurityException ex) {
-        // Probably an applet, we try fnamp as an URL:
-        FilePtr f = tryFileAsURL(s + "/" + fname, ifno);
-        if (f != null) {
-////#ifdef TRACE0
-//        Trace.level--;
-////#endif /* TRACE0 */
-          return f;
-        }
+      } catch (IOException | SecurityException ex) {
+        // Not readable at this path element; fall through and try the next one. The original
+        // treated both of these as "maybe it is a URL" and went off to open a socket; that
+        // transport is gone.
       }
     }
     s = "SwissEph file '" + fname + "' not found in the paths of: ";
@@ -4848,77 +4807,6 @@ public class SwissEph implements Serializable {
 ////#endif /* TRACE0 */
     throw new SwissephException(1. / 0., SwissephException.FILE_NOT_FOUND,
         SwephData.NOT_AVAILABLE, serr);
-  }
-
-  private FilePtr tryFileAsURL(String fnamp, int ifno) {
-////#ifdef TRACE0
-//    Trace.level++;
-//    Trace.log("SwissEph.tryFileAsURL(String, int)");
-////#ifdef TRACE1
-//    Trace.log("   fnamp: " + fnamp + "\n    ifno: " + ifno);
-////#endif /* TRACE1 */
-////#endif /* TRACE0 */
-    if (!fnamp.startsWith("http://")) {
-      return null;
-    }
-    Socket sk = null;
-    try {
-      URL u = new URL(fnamp);
-      sk = new Socket(u.getHost(), (u.getPort() < 0 ? 80 : u.getPort()));
-      String sht = "HEAD " + fnamp + " HTTP/1.1\r\n" +
-          "User-Agent: " + FilePtr.useragent + "\r\n" +
-          "Host: " + u.getHost() + ":" + (u.getPort() < 0 ? 80 : u.getPort()) +
-          "\r\n\r\n";
-      sk.setSoTimeout(5000);
-      InputStream is = sk.getInputStream();
-      BufferedOutputStream os = new BufferedOutputStream(sk.getOutputStream());
-      for (int n = 0; n < sht.length(); n++) {
-        os.write((byte) sht.charAt(n));
-      }
-      os.flush();
-      String sret = "" + (char) is.read();
-      while (is.available() > 0) {
-        sret += (char) is.read();
-      }
-      int idx = sret.indexOf("Content-Length:");
-      if (idx < 0) {
-        sk.close();
-////#ifdef TRACE0
-//        Trace.level--;
-////#endif /* TRACE0 */
-        return null;
-      }
-      // We need to query ranges, otherwise it will not make much sense...
-      if (sret.indexOf("Accept-Ranges: none") >= 0) {
-        System.err.println("Server does not accept HTTP range requests. " +
-            "Aborting!");
-        sk.close();
-////#ifdef TRACE0
-//        Trace.level--;
-////#endif /* TRACE0 */
-        return null;
-      }
-      sret = sret.substring(idx + "Content-Length:".length());
-      sret = sret.substring(0, sret.indexOf("\n")).trim();
-// We might want to check for a minimum length?
-      long len = Long.parseLong(sret);
-      if (ifno >= 0) {
-        swed.fidat[ifno].fnam = fnamp;
-      }
-////#ifdef TRACE0
-//      Trace.level--;
-////#endif /* TRACE0 */
-      return new FilePtr(null, sk, is, os, fnamp, len, httpBufSize);
-    } catch (IOException | NumberFormatException | SecurityException ignored) {
-    }
-    try {
-      sk.close();
-    } catch (IOException | NullPointerException ignored) {
-    }
-////#ifdef TRACE0
-//    Trace.level--;
-////#endif /* TRACE0 */
-    return null;
   }
 
   /* converts planets from barycentric to geocentric,

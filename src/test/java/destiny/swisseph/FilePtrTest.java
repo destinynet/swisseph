@@ -28,25 +28,7 @@ class FilePtrTest {
 
   private FilePtr open(Path file) throws IOException {
     RandomAccessFile raf = new RandomAccessFile(file.toFile(), "r");
-    return new FilePtr(raf, null, null, null, file.toString(), raf.length(), BUFSIZE);
-  }
-
-  /**
-   * {@link FilePtr} has a {@code close()} but does not implement {@link AutoCloseable}, so
-   * try-with-resources is unavailable to its callers — one reason its handles have been hard
-   * to account for. Phase 3 should fix that; until then, this helper stands in for it.
-   */
-  private interface Body {
-    void run(FilePtr fp) throws IOException;
-  }
-
-  private void with(Path file, Body body) throws IOException {
-    FilePtr fp = open(file);
-    try {
-      body.run(fp);
-    } finally {
-      fp.close();
-    }
+    return new FilePtr(raf, file.toString(), raf.length(), BUFSIZE);
   }
 
   private Path write(Path dir, String name, byte[] bytes) throws IOException {
@@ -60,7 +42,7 @@ class FilePtrTest {
   @Test
   void readsSignedAndUnsignedBytes(@TempDir Path dir) throws IOException {
     Path f = write(dir, "bytes.bin", new byte[]{0x00, 0x7F, (byte) 0x80, (byte) 0xFF});
-    with(f, fp -> {
+    try (FilePtr fp = open(f)) {
       assertEquals(0, fp.readByte());
       assertEquals(127, fp.readByte());
       assertEquals(-128, fp.readByte());
@@ -71,36 +53,36 @@ class FilePtrTest {
       assertEquals(127, fp.readUnsignedByte());
       assertEquals(128, fp.readUnsignedByte());
       assertEquals(255, fp.readUnsignedByte());
-    });
+    }
   }
 
   @Test
   void readsShortsInBothEndiannesses(@TempDir Path dir) throws IOException {
     Path f = write(dir, "short.bin", new byte[]{0x12, 0x34, (byte) 0xFF, (byte) 0xFE});
-    with(f, fp -> {
+    try (FilePtr fp = open(f)) {
       assertEquals((short) 0x1234, fp.readShort());
       assertEquals((short) 0xFFFE, fp.readShort());
-    });
-    with(f, fp -> {
+    }
+    try (FilePtr fp = open(f)) {
       fp.setBigendian(false);
       assertEquals((short) 0x3412, fp.readShort());
       assertEquals((short) 0xFEFF, fp.readShort());
-    });
+    }
   }
 
   @Test
   void readsIntsInBothEndiannesses(@TempDir Path dir) throws IOException {
     Path f = write(dir, "int.bin",
                    new byte[]{0x01, 0x02, 0x03, 0x04, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF});
-    with(f, fp -> {
+    try (FilePtr fp = open(f)) {
       assertEquals(0x01020304, fp.readInt());
       assertEquals(-1, fp.readInt());
-    });
-    with(f, fp -> {
+    }
+    try (FilePtr fp = open(f)) {
       fp.setBigendian(false);
       assertEquals(0x04030201, fp.readInt());
       assertEquals(-1, fp.readInt());
-    });
+    }
   }
 
   /** Eight bytes at a buffer size of eight: this read always straddles a refill. */
@@ -123,17 +105,17 @@ class FilePtrTest {
     padded[0] = 0x5A;
     System.arraycopy(be, 0, padded, 1, 8);
 
-    with(write(dir, "be.bin", be), fp -> {
+    try (FilePtr fp = open(write(dir, "be.bin", be))) {
       assertEquals(value, fp.readDouble());
-    });
-    with(write(dir, "le.bin", le), fp -> {
+    }
+    try (FilePtr fp = open(write(dir, "le.bin", le))) {
       fp.setBigendian(false);
       assertEquals(value, fp.readDouble());
-    });
-    with(write(dir, "padded.bin", padded), fp -> {
+    }
+    try (FilePtr fp = open(write(dir, "padded.bin", padded))) {
       assertEquals(0x5A, fp.readByte());
       assertEquals(value, fp.readDouble(), "a double straddling a buffer refill");
-    });
+    }
   }
 
   // ---------------------------------------------------------------- positioning
@@ -144,7 +126,7 @@ class FilePtrTest {
     for (int i = 0; i < data.length; i++) {
       data[i] = (byte) i;
     }
-    with(write(dir, "seq.bin", data), fp -> {
+    try (FilePtr fp = open(write(dir, "seq.bin", data))) {
       assertEquals(64, fp.length());
       assertEquals(0, fp.getFilePointer());
 
@@ -160,16 +142,16 @@ class FilePtrTest {
       // Forwards again, far enough to force a fresh refill.
       fp.seek(63);
       assertEquals(63, fp.readUnsignedByte());
-    });
+    }
   }
 
   @Test
   void readingPastTheEndThrowsEof(@TempDir Path dir) throws IOException {
-    with(write(dir, "tiny.bin", new byte[]{1, 2}), fp -> {
+    try (FilePtr fp = open(write(dir, "tiny.bin", new byte[]{1, 2}))) {
       fp.readByte();
       fp.readByte();
       assertThrows(EOFException.class, fp::readByte);
-    });
+    }
   }
 
   // --------------------------------------------------------------------- lines
@@ -178,19 +160,19 @@ class FilePtrTest {
   void readLineKeepsTheTerminatorAndSplitsOnNewlineOnly(@TempDir Path dir) throws IOException {
     // Deliberately CRLF: the reader splits on \n only, so \r stays in the line.
     byte[] text = "alpha\nbeta\r\ngamma\n".getBytes(StandardCharsets.UTF_8);
-    with(write(dir, "lines.txt", text), fp -> {
+    try (FilePtr fp = open(write(dir, "lines.txt", text))) {
       assertEquals("alpha\n", fp.readLine());
       assertEquals("beta\r\n", fp.readLine());
       assertEquals("gamma\n", fp.readLine());
-    });
+    }
   }
 
   @Test
   void readLineReturnsAnUnterminatedFinalLine(@TempDir Path dir) throws IOException {
-    with(write(dir, "noeol.txt", "one\ntwo".getBytes(StandardCharsets.UTF_8)), fp -> {
+    try (FilePtr fp = open(write(dir, "noeol.txt", "one\ntwo".getBytes(StandardCharsets.UTF_8)))) {
       assertEquals("one\n", fp.readLine());
       assertEquals("two", fp.readLine());
-    });
+    }
   }
 
   /**
@@ -201,19 +183,19 @@ class FilePtrTest {
    */
   @Test
   void readLineThrowsAtEndOfInputRatherThanReturningNull(@TempDir Path dir) throws IOException {
-    with(write(dir, "one.txt", "only\n".getBytes(StandardCharsets.UTF_8)), fp -> {
+    try (FilePtr fp = open(write(dir, "one.txt", "only\n".getBytes(StandardCharsets.UTF_8)))) {
       assertEquals("only\n", fp.readLine());
       assertThrows(EOFException.class, fp::readLine);
-    });
+    }
   }
 
   /** A line longer than the buffer must still come back whole. */
   @Test
   void readLineSpansManyBufferRefills(@TempDir Path dir) throws IOException {
     String line = "x".repeat(BUFSIZE * 7 + 3);
-    with(write(dir, "long.txt", (line + "\n").getBytes(StandardCharsets.UTF_8)), fp -> {
+    try (FilePtr fp = open(write(dir, "long.txt", (line + "\n").getBytes(StandardCharsets.UTF_8)))) {
       assertEquals(line + "\n", fp.readLine());
-    });
+    }
   }
 
   // -------------------------------------------------------------- the real files
@@ -226,11 +208,11 @@ class FilePtrTest {
   void readsTheHeaderOfARealEphemerisFile() throws IOException {
     Path se1 = Path.of(SmokeTestSupport.ephePath(), "sepl_18.se1");
     assertTrue(Files.isRegularFile(se1), "test resource missing: " + se1);
-    with(se1, fp -> {
+    try (FilePtr fp = open(se1)) {
       assertTrue(fp.length() > 400_000, "unexpected file length: " + fp.length());
       String first = fp.readLine();
       assertTrue(first.startsWith("SWISSEPH"),
                  "expected a SWISSEPH header, got: " + first.strip());
-    });
+    }
   }
 }

@@ -68,99 +68,57 @@
 
 package destiny.swisseph;
 
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.Socket;
-import java.net.URL;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 /**
- * This class is meant to be a wrapper to some read functionality of the
- * RandomAccessFile class. It adds the ability to read (and search and
- * seek) in files using http://... access. This is needed to allow applets
- * read access to files, in this case the Swiss Ephemeris and JPL data
- * files.
+ * Buffered random-access reading of the Swiss Ephemeris data files.
+ *
+ * <p>This class used to double as an HTTP client: it could fetch byte ranges of an ephemeris
+ * file over a hand-rolled HTTP/1.1 conversation on a raw socket, so that a Java applet could
+ * read data files it had no filesystem access to. That was written in 2001, the applet
+ * deployment model it served is long gone, and nothing in this project ever used it. It has
+ * been removed, along with the second buffer that existed only to stage bytes on their way in
+ * from the network — reads now land in the buffer they are served from.
  */
-public class FilePtr implements Serializable {
-  public static final String useragent = "swisseph-java-" + SwephData.SE_JAVA_VERSION;
+public class FilePtr implements AutoCloseable {
 
-  //Allocate a 1K buffer for line reading
+  /** Initial capacity for {@link #readLine()}'s accumulator. */
   private static final int STRING_BUFFER_SIZE = 200;
 
-  private static final int MAX_FAILURES = 100;
-
-  transient RandomAccessFile fp;
-  transient Socket sk;
-  transient InputStream is;
-  transient BufferedOutputStream os;
+  RandomAccessFile fp;
   String fnamp;
+
   private long fpos = 0;
-  private String host;
-  private int port;
-  private int BUFSIZE;
-  // Holds max. 1 BUFSIZE byte chunks of read data: startidx, endidx, data:
-  private long startIdx = -1;  // long, as it holds the file pointer pos.
+  private final int BUFSIZE;
+
+  /** Holds at most BUFSIZE bytes of the file: [startIdx, endIdx] in file coordinates. */
+  private final byte[] data;
+  private long startIdx = -1;
   private long endIdx = -1;
-  private byte[] data;
-  private final byte[] inbuf;
-  private long savedLength = -1;
+
+  private long savedLength;
 
   private boolean bigendian = true;
 
-  private boolean useHTTP;
-
   /**
-   * Creates a new FilePtr instance. Well, the parameters are rather
-   * &quot;funny&quot; for now, but there were reasons for it. I will
-   * change it later (hopefully)...<br>
-   * If you do not need to read randomly and you have access to the file
-   * directly, you should use the BufferedInputStream etc. -classes, as
-   * they are MUCH faster than the RandomAccessFile class that is used
-   * here.
-   *
-   * @param fp         (optional) RandomAccessFile, if already open and available
-   * @param sk         (optional) Socket, if already open and available
-   * @param is         (optional) InputStream, if already opened
-   * @param os         (optional) The OutputStream to write to for HTTP-access
-   * @param fnamp      (optional) The url for HTTP-access
-   * @param fileLength (optional) The file length of an opened data file
-   * @param bufsize    Size of input-buffer to be used
+   * @param fp         an open file, already positioned anywhere
+   * @param fnamp      the resolved file name, kept for error messages and cache keys
+   * @param fileLength the file length if already known, or a negative value to ask the file
+   * @param bufsize    how many bytes to fetch per refill
    */
-  public FilePtr(RandomAccessFile fp,
-                 Socket sk,
-                 InputStream is,
-                 BufferedOutputStream os,
-                 String fnamp,
-                 long fileLength,
-                 int bufsize) throws IOException {
+  public FilePtr(RandomAccessFile fp, String fnamp, long fileLength, int bufsize) {
     this.fp = fp;
-    this.sk = sk;
-    this.is = is;
-    this.os = os;
     this.fnamp = fnamp;
     this.savedLength = fileLength;
     this.BUFSIZE = bufsize;
-    useHTTP = (fnamp.startsWith("http://"));
-    data = new byte[BUFSIZE];
-    inbuf = new byte[BUFSIZE];
-    if (useHTTP && fp == null) { // RandomAccessFile, try file access via http:
-      try {
-        URL u = new URL(fnamp);
-        host = u.getHost();
-        port = u.getPort();
-        if (port < 0) {
-          port = 80;
-        } // Default port for http...
-      } catch (MalformedURLException me) {
-        throw new IOException("Malformed URL '" + fnamp + "'");
-      }
-    }
+    this.data = new byte[bufsize];
   }
-
 
   public void setBigendian(boolean bigendian) {
     this.bigendian = bigendian;
   }
-
 
   /**
    * Reads one (signed) byte.
@@ -174,14 +132,13 @@ public class FilePtr implements Serializable {
     if (startIdx < 0 || fpos < startIdx || fpos > endIdx) {
       readToBuffer();
     }
-    fpos++;
-    return data[(int) (fpos - 1 - startIdx)];
+    return data[(int) (fpos++ - startIdx)];
   }
 
   /**
-   * Reads one <i>unsigned</i> byte.
+   * Reads one unsigned byte.
    *
-   * @return One unsigned 8 bit byte as an integer.
+   * @return One unsigned 8 bit byte as an int.
    * @throws IOException  if an I/O error occurs.
    * @throws EOFException if the end of file is reached <i>before</i> the
    *                      byte could be read.
@@ -190,15 +147,11 @@ public class FilePtr implements Serializable {
     return ((int) readByte()) & 0xff;
   }
 
-
   /**
-   * Reads a (signed) short value. This is a two byte read (16 bits) with
-   * highest byte first.
+   * Reads a (signed) short value.
    *
-   * @return A signed 2 byte (16 bit) value as a short.
-   * @throws IOException  if an I/O error occurs.
-   * @throws EOFException if the end of file is reached before the
-   *                      2 bytes could be read completely.
+   * @return One signed 16 bit short value.
+   * @throws IOException if an I/O error occurs.
    */
   public short readShort() throws IOException {
     if (bigendian) {
@@ -208,13 +161,10 @@ public class FilePtr implements Serializable {
   }
 
   /**
-   * Reads a (signed) integer value. This is a four byte read (32 bits) with
-   * highest bytes first.
+   * Reads a (signed) int value.
    *
-   * @return A signed 4 byte (32 bit) value as an integer.
-   * @throws IOException  if an I/O error occurs.
-   * @throws EOFException if the end of file is reached before the
-   *                      4 bytes could be read completely.
+   * @return One signed 32 bit int value.
+   * @throws IOException if an I/O error occurs.
    */
   public int readInt() throws IOException {
     if (bigendian) {
@@ -230,13 +180,10 @@ public class FilePtr implements Serializable {
   }
 
   /**
-   * Reads a double value. This is an 8 byte read (64 bits) with highest
-   * bytes first.
+   * Reads a double value.
    *
-   * @return A double value.
-   * @throws IOException  if an I/O error occurs.
-   * @throws EOFException if the end of file is reached before the
-   *                      8 bytes could be read completely.
+   * @return One 64 bit double value.
+   * @throws IOException if an I/O error occurs.
    */
   public double readDouble() throws IOException {
     long ldb = (bigendian ?
@@ -264,20 +211,17 @@ public class FilePtr implements Serializable {
     return Double.longBitsToDouble(ldb);
   }
 
-
   /**
-   * Reads a complete line from the file. The line is seen to end on a
-   * newline character ('\n') or on an end of file. The returned String
-   * will include the newline character if any.
+   * Reads a line, terminator included. Splits on '\n' only, so a '\r' stays in the line.
    *
-   * @return A String containing a complete line. The line may be 0 characters
-   * long.
-   * @throws IOException  if an I/O error occurs.
-   * @throws EOFException if the end of file is reached before even one
-   *                      character (byte) could be read.
+   * <p>At end of input this throws rather than returning null, even though every caller in
+   * this library is written as {@code while ((s = readLine()) != null)}; those loops actually
+   * end on the exception.
+   *
+   * @throws EOFException at end of input, when nothing could be read at all.
    */
   public String readLine() throws IOException {
-    StringBuffer sout = new StringBuffer(200);
+    StringBuilder sout = new StringBuilder(STRING_BUFFER_SIZE);
     try {
       char ch;
       while ((ch = (char) readUnsignedByte()) != '\n') {
@@ -289,256 +233,51 @@ public class FilePtr implements Serializable {
         throw e;
       }
     }
-
     return sout.toString();
   }
 
   /**
-   * Closes the connection to the file. This includes any Streams as well
-   * as the Socket and the RandomAccessFile from the constructor.
+   * Closes the file.
    *
    * @throws IOException if an I/O error occurs.
    */
+  @Override
   public void close() throws IOException {
-    try {
-      fnamp = "";
-      if (fp != null) {
-        fp.close();
-      }
+    fnamp = "";
+    startIdx = -1;
+    endIdx = -1;
+    savedLength = -1;
+    if (fp != null) {
+      RandomAccessFile toClose = fp;
       fp = null;
-      if (sk != null) {
-        sk.close();
-      }
-      sk = null;
-      is = null;
-      os = null;
-    } catch (IOException ie) {
-      try {
-        if (sk != null) {
-          sk.close();
-        }
-        sk = null;
-        is = null;
-        os = null;
-      } catch (IOException ies) {
-        throw ies;
-      }
-      throw ie;
+      toClose.close();
     }
   }
 
-  /**
-   * Returns the current position of the file pointer.
-   *
-   * @return the current position of the file pointer.
-   */
   public long getFilePointer() {
     return fpos;
   }
 
-  /**
-   * Returns the length of the file.
-   *
-   * @return the length of the file in bytes.
-   * @throws IOException if an I/O error occurs.
-   */
   public long length() throws IOException {
     if (fp != null && savedLength < 0) {
       savedLength = fp.length();
     }
-    if (fp != null || savedLength >= 0 || !useHTTP) {
-      return savedLength;
-    }
-
-    long len = 0;
-    String s = "HEAD " + fnamp + " HTTP/1.1\r\n" + "User-Agent: " + useragent + "\r\n" + "Host: " + host + ":" + port + "\r\n\r\n";
-    String sout;
-    int failures = 0;
-    int rc = 0;
-    while (true) {
-      try {
-        URLwrite(os, s);
-        sout = URLread(is);
-      } catch (IOException ioe) {
-        if (++failures >= MAX_FAILURES) {
-          throw new IOException("(java.net.SocketException) " + ioe.getMessage());
-        }
-        reconnect();
-        continue;
-      }
-      rc = checkHeader(sout);
-      if (rc < 0) { // What has happened? Invalid header?
-        if (++failures >= MAX_FAILURES) {
-          throw new IOException("Failed to read a valid / complete header.");
-        }
-        reconnect();
-        continue;
-      }
-      break;
-    }
-    int idx = sout.indexOf("Content-Length:");
-    if (rc == 200 && sout.contains("Content-Length:")) {
-      sout = sout.substring(idx + "Content-Length:".length());
-      sout = sout.substring(0, sout.indexOf("\n")).trim();
-      len = Long.parseLong(sout);
-    } else {
-      throw new IOException("Can't determine length of (HTTP-)file '" + fnamp + "'. HTTP error code: " + rc);
-    }
-    return len;
+    return savedLength;
   }
 
-  /**
-   * Positions the file pointer.
-   *
-   * @param pos the new position in the file. The position is seen zero based.
-   */
   public void seek(long pos) {
     fpos = pos;
   }
 
-// RFC 2068: Response = Status-Line
-//                      * ( general-header
-//                        | response-header
-//                        | entity-header )
-//                     CRLF
-//                     [ message-body ]
-//
-// Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
-//
-// Status-Code should (has to?) be 206
-//
-
-
-  private String URLread(InputStream is) throws IOException {
-    StringBuffer sret = new StringBuffer(BUFSIZE);
-    int av = is.read();
-    if (av == -1) {
-      throw new IOException("No bytes available.");
-    }
-    sret.append((char) av);
-    while (is.available() > 0) {
-      sret.append((char) is.read());
-    }
-    return sret.toString();
-  }
-
-  private void URLwrite(BufferedOutputStream os, String s) throws IOException {
-    for (int n = 0; n < s.length(); n++) {
-      os.write((byte) s.charAt(n));
-    }
-    os.flush();
-  }
-
-  // Returns the data part of the html response in String s
-  private String htmlStrip(String s) {
-    int idx = s.indexOf("\r\n\r\n");
-    if (idx >= 0) {
-      return s.substring(idx + 4);
-    }
-    return "";
-  }
-
-  // Returns the http return code or -1, if not available
-  private int checkHeader(String s) {
-    try {
-      int ix1 = s.indexOf(" ");
-      int ix2 = s.indexOf(" ", ix1 + 1);
-      if (ix1 < 0 || ix2 < 0 || ix1 < 8 || ix1 + 4 != ix2) {
-        return -1;
-      }
-      return Integer.parseInt(s.substring(ix1 + 1, ix2));
-    } catch (NumberFormatException nf) {
-      return -1;
-    }
-  }
-
-
-  // Reads a chunk of data to the buffer data[]
+  /** Refills the buffer so that it covers {@link #fpos}. */
   private void readToBuffer() throws IOException {
-    // Directly reading a file:
-    if (fp != null) {
-      fp.seek(fpos);
-      int cnt = fp.read(inbuf);
-// Probably, RandomAccessFile.read(byte[n]) performes n read operations???
-      if (cnt == -1) {
-        throw new EOFException("Filepointer position " + fpos + " exceeds file" +
-            " length by " + (fpos - length() + 1) + " byte(s).");
-      }
-      if (cnt >= 0) System.arraycopy(inbuf, 0, data, 0, cnt);
-      startIdx = fpos;
-      endIdx = fpos + cnt - 1;
-      return;
-    }
-
-    if (fpos >= length()) {
-      throw new EOFException("Filepointer position " + fpos + " exceeds file " +
-          "length by " + (fpos - length() + 1) + " byte(s).");
-    }
-    if (!useHTTP) {
-      return;
-    }
-
-    // Reading via http:
-    String s = "GET " + fnamp + " HTTP/1.1\r\n" + "User-Agent: " + useragent + "\r\n" + "Host: " + host + ":" + port + "\r\n" + "Range: bytes=" + fpos + "-" +
-        Math.min(length() - 1, fpos + BUFSIZE - 1) + "\r\n\r\n";
-    String sout;
-    int slen;
-    int failures = 0;
-    while (true) {
-      try {
-        URLwrite(os, s);
-        sout = URLread(is);
-      } catch (IOException ioe) {
-        if (++failures >= MAX_FAILURES) {
-          throw new IOException("(java.net.SocketException) " + ioe.getMessage());
-        }
-        reconnect();
-        continue;
-      }
-      int rc = checkHeader(sout);
-      if (rc < 0) { // What has happened?
-        if (++failures >= MAX_FAILURES) { // Too many failures in a row, abort:
-          throw new IOException("Failed to read successfully from address\n'" +
-              fnamp + "'. The http reply from the server was " +
-              sout.length() +
-              " bytes long and it's content is:\n\n" + sout);
-        }
-        continue;
-      }
-      sout = htmlStrip(sout); // keep data part of http response only
-      slen = sout.length();
-      if ((rc != 200 /* OK */ && rc != 206 /* Partial content */) ||
-          slen > BUFSIZE ||
-          (slen < BUFSIZE && savedLength >= 0 && fpos + slen != savedLength)) {
-        if (++failures >= MAX_FAILURES) {
-          throw new IOException("HTTP read failed with HTTP response " + rc +
-              ". Read " + slen + " bytes, requested " + BUFSIZE +
-              " bytes.");
-        }
-        continue;
-      }
-      if (slen == 0) { // How is this to happen???
-        if (++failures >= MAX_FAILURES) {
-          throw new EOFException("Filepointer position " + fpos + " exceeds file " +
-              "length by " + (fpos - length() + 1) + " byte(s).");
-        }
-        continue;
-      }
-      break;
+    fp.seek(fpos);
+    int cnt = fp.read(data);
+    if (cnt == -1) {
+      throw new EOFException("Filepointer position " + fpos + " exceeds file" +
+          " length by " + (fpos - length() + 1) + " byte(s).");
     }
     startIdx = fpos;
-    endIdx = fpos + slen - 1;
-    for (int n = 0; n < slen; n++) {
-      data[n] = (byte) sout.charAt(n);
-    }
-  }
-
-  private void reconnect() throws IOException {
-    System.err.println("reconnecting...");
-    sk.close();
-    sk = new Socket(host, port);
-    sk.setSoTimeout(5000);
-    is = sk.getInputStream();
-    os = new BufferedOutputStream(sk.getOutputStream());
+    endIdx = fpos + cnt - 1;
   }
 }
