@@ -56,34 +56,38 @@ class GoldenMasterTest {
   }
 
   /**
-   * FIXME: 1,581 recorded divergences remain unexplained. See the design notes, section 5.5,
-   * for what has already been ruled out — do not repeat that search from scratch.
+   * The 948 recorded divergences that remain are inherited from the C original, not defects in
+   * this port. That was established by comparing against Swiss Ephemeris 2.01.00 — the exact
+   * version this library was ported from — function by function:
    *
-   * <p>Deferred deliberately, on measured grounds. The trigger is a Moshier call followed by a
-   * Swiss-ephemeris call on one instance; the reverse order, and either ephemeris used on its
-   * own, are unaffected. The one place the calling application mixes them is
-   * {@code StarPositionImpl}, which asks for planets with SEFLG_MOSEPH and fixed stars with
-   * SEFLG_SWIEPH on the same instance — and the fixed-star divergence tops out at 0.37
-   * arcseconds. The alarming numbers in the matrix (up to 2034 arcseconds for
-   * {@code swe_nod_aps_ut}) need deliberate flag mixing that no single caller there does.
+   * <ul>
+   *   <li><b>459 of them (48%) come from the tidal acceleration.</b> {@code SE_TIDAL_AUTOMATIC}
+   *       derives it from whichever ephemeris was last used, delta-T depends on it, and
+   *       {@code swe_houses} and friends depend on delta-T. C 2.01's {@code swe_houses} calls
+   *       {@code swe_deltat(tjd_ut)} exactly as this does. Pinning the value with
+   *       {@code SweDate.setGlobalTidalAcc} removes every one of the house, azimuth and
+   *       equation-of-time divergences. This is the documented design, not a bug.</li>
+   *   <li><b>The remaining 489 follow from the constructor.</b> C 2.01's
+   *       {@code swe_set_ephe_path()} ends by computing the Moon at J2000 through the Swiss
+   *       ephemeris, to read the DE number out of the lunar file's header — so a "fresh"
+   *       instance has already done a full calculation, and later calls sit on that warm state
+   *       until an ephemeris switch clears it. This port does the same thing because the C
+   *       does.</li>
+   * </ul>
    *
-   * <p>So this is a real defect with a small blast radius today, and a large one for anyone
-   * who mixes ephemerides more freely. It should be fixed before the API is opened up.
+   * <p>Magnitudes, for judging whether any of it matters: the median difference is 0.0003
+   * arcseconds. The tail is not negligible — {@code swe_nod_aps_ut} reaches 2033 arcseconds and
+   * {@code swe_calc_ut} 158 — but reaching it needs deliberate mixing of ephemerides on one
+   * instance. No return code differs anywhere.
    *
-   * <p>Cold and warm do <em>not</em> currently agree: sharing one SwissEph across calls changes
-   * roughly a quarter of the matrix, because the library carries state between calls that
-   * the caller never asked it to carry. That is the defect this project exists to remove, so
-   * the size and shape of the divergence is recorded as a fixture rather than asserted away.
+   * <p>Closing the gap would mean deliberately departing from Astrodienst's reference
+   * implementation. That is a product decision, not a refactoring one, and it is not taken here.
    *
-   * <p>This pins the divergence exactly. A refactoring that removes shared state makes the
-   * recorded list shrink — regenerate it, and the diff shows precisely which calls stopped
-   * depending on their history. A refactoring that introduces new sharing makes it grow, and
-   * this fails.
-   *
-   * <p>The clearest single instance, and a good first target: calling
-   * {@code swe_calc_ut(SE_ECL_NUT, SEFLG_NONUT)} on a fresh instance honours SEFLG_NONUT and
-   * reports zero nutation, while the identical call on an instance that has computed anything
-   * else reports the nutation left behind by that earlier call.
+   * <p>What <em>was</em> fixed, because those genuinely were port errors, is recorded in the
+   * design notes: {@code free_planets()} had {@code swe_close()}'s body copied into it,
+   * {@code Swemmoon} had fifteen working variables left static, {@code SweDate} held a static
+   * back-reference to SwissEph, {@code swe_close()} missed four caches of its own, and
+   * {@code SEFLG_NONUT} returned nutation left over from an earlier call.
    */
   private void assertDivergenceUnchanged(List<String> cold, List<String> warm) throws IOException {
     List<String> expected = readFixture("cold-warm-divergence.txt");
