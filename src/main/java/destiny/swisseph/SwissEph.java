@@ -362,9 +362,33 @@ public class SwissEph implements Serializable {
     if ((epheflag & SweConst.SEFLG_DEFAULTEPH) != 0) {
       epheflag = 0;
     }
-    if (swe_calc_epheflag_sv != epheflag && ipl != SweConst.SE_ECL_NUT) {
+    if (swe_calc_epheflag_sv != epheflag) {
       free_planets();
-      swe_calc_epheflag_sv = epheflag;
+      /* close and free ephemeris files.
+       *
+       * The guard, and the fact that the remembered flag is only updated inside it, are the
+       * C original's (sweph.c, swe_calc): SE_ECL_NUT does not reopen a file, so its files are
+       * left alone and the flag is left unchanged for the next real calculation to act on.
+       * The Java port had the guard on the outer condition instead, which skipped
+       * free_planets() entirely for SE_ECL_NUT and updated the flag unconditionally. */
+      if (ipl != SweConst.SE_ECL_NUT) {
+        if (swed.jpl_file_is_open) {
+          sj.swi_close_jpl_file();
+          swed.jpl_file_is_open = false;
+        }
+        for (int fi = 0; fi < SwephData.SEI_NEPHFILES; fi++) {
+          if (swed.fidat[fi].fptr != null) {
+            try {
+              swed.fidat[fi].fptr.close();
+            } catch (IOException ignored) {
+// NBT
+            }
+            swed.fidat[fi].fptr = null;
+          }
+          swed.fidat[fi].clearData();
+        }
+        swe_calc_epheflag_sv = epheflag;
+      }
     }
     /* high precision speed prevails fast speed */
     if ((iflag & SweConst.SEFLG_SPEED3) != 0 && (iflag & SweConst.SEFLG_SPEED) != 0) {
@@ -511,25 +535,19 @@ public class SwissEph implements Serializable {
   }
 
   /**
-   * Discards everything derived from the current ephemeris, which is what has to happen when
-   * the caller switches between ephemerides.
+   * Discards the computed planetary positions, and nothing else.
    *
-   * <p>It used to discard slightly less than that, and the gap was a real defect.
-   * {@code PlanData.clearData()} zeroes {@code lndx0}, {@code nndx}, {@code tfstart},
-   * {@code tfend} and {@code dseg} — the index into the {@code .se1} file, read from its
-   * header. Those were cleared while the file itself was left open, and the code that reads
-   * a header only runs when the file is <em>not</em> open. So the index was never restored,
-   * and the next segment lookup computed its file offset from zeroes:
+   * <p>This mirrors {@code free_planets()} in the C original, which clears exactly three
+   * things: {@code pldat}, {@code savedat} and {@code nddat}. The Java port had folded most of
+   * {@code swe_close()} into it as well — the obliquity and nutation caches, the JPL file, the
+   * fixed-star file, and {@code jpldenum} — none of which the C version touches here.
    *
-   * <pre>
-   *   se.swe_calc_ut(tjd, SE_SUN, SEFLG_MOSEPH);   // ok
-   *   se.swe_calc_ut(tjd, SE_SUN, SEFLG_SWIEPH);   // ERR: Filepointer position 2147483645
-   * </pre>
-   *
-   * <p>Two calls were enough, and the damage was permanent: every later file-based
-   * calculation on that instance failed the same way. The invariant is now explicit — a
-   * planet's file index is valid exactly while its file is open, so both are dropped
-   * together. Reopening is cheap because the file itself is already in memory.
+   * <p>Clearing {@code jpldenum} was the damaging one. It holds the DE number of the ephemeris
+   * in use, is set when a {@code .se1} header is read, and is consulted in six places as
+   * {@code jpldenum >= 403} to decide whether to apply the ICRS-to-J2000 frame bias. Zeroing it
+   * on an ephemeris switch meant the next calculation asked that question before the header
+   * that answers it had been read — so the answer depended on what the instance had done
+   * before. Closing the files belongs to the caller in {@code swe_calc}, guarded, as in C.
    */
   private void free_planets() {
     int i;
@@ -538,19 +556,6 @@ public class SwissEph implements Serializable {
       for (i = 0; i < SwephData.SEI_NPLANETS; i++) {
         swed.pldat[i].clearData();
       }
-      /* the file index just cleared above came from these files' headers, and the header is
-       * only read when a file is opened; keeping them open would leave the index at zero */
-      for (i = 0; i < SwephData.SEI_NEPHFILES; i++) {
-        if (swed.fidat[i].fptr != null) {
-          try {
-            swed.fidat[i].fptr.close();
-          } catch (IOException ignored) {
-// NBT
-          }
-          swed.fidat[i].fptr = null;
-          swed.fidat[i].clearData();
-        }
-      }
       for (i = 0; i <= SweConst.SE_NPLANETS; i++) {/* "<=" is correct! see decl.*/
         swed.savedat[i].clearData();
       }
@@ -558,17 +563,6 @@ public class SwissEph implements Serializable {
       for (i = 0; i < SwephData.SEI_NNODE_ETC; i++) {
         swed.nddat[i].clearData();
       }
-      swed.oec.clearData();
-      swed.oec2000.clearData();
-      swed.nut.clearData();
-      swed.nut2000.clearData();
-      swed.nutv.clearData();
-      /* close JPL file */
-      sj.swi_close_jpl_file();
-      swed.jpl_file_is_open = false;
-      swed.jpldenum = 0;
-      /* release the fixed star catalogue; it is reloaded on demand for the new path */
-      fixedStars = null;
     } catch (RuntimeException e) {
 // NBT
     }
