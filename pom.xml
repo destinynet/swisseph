@@ -37,6 +37,21 @@
         <directory>src/test/resources</directory>
       </testResource>
     </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!--
+            每個測試類別開一個新的 JVM。這個函式庫把狀態放在 static 欄位裡，
+            所以 golden master 的「cold」只有在乾淨的 JVM 裡才真的是 cold ——
+            若與其他測試類別共用 JVM，前面跑過的測試會先污染它。
+            Phase 2 拔掉全域狀態之後，這個設定就可以移除。
+          -->
+          <reuseForks>false</reuseForks>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 
   <!--
