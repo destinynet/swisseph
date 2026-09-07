@@ -56,8 +56,22 @@ class GoldenMasterTest {
   }
 
   /**
-   * Cold and warm do <em>not</em> currently agree: sharing one SwissEph across calls changes
-   * roughly two fifths of the matrix, because the library carries state between calls that
+   * FIXME: 1,581 recorded divergences remain unexplained. See the design notes, section 5.5,
+   * for what has already been ruled out — do not repeat that search from scratch.
+   *
+   * <p>Deferred deliberately, on measured grounds. The trigger is a Moshier call followed by a
+   * Swiss-ephemeris call on one instance; the reverse order, and either ephemeris used on its
+   * own, are unaffected. The one place the calling application mixes them is
+   * {@code StarPositionImpl}, which asks for planets with SEFLG_MOSEPH and fixed stars with
+   * SEFLG_SWIEPH on the same instance — and the fixed-star divergence tops out at 0.37
+   * arcseconds. The alarming numbers in the matrix (up to 2034 arcseconds for
+   * {@code swe_nod_aps_ut}) need deliberate flag mixing that no single caller there does.
+   *
+   * <p>So this is a real defect with a small blast radius today, and a large one for anyone
+   * who mixes ephemerides more freely. It should be fixed before the API is opened up.
+   *
+   * <p>Cold and warm do <em>not</em> currently agree: sharing one SwissEph across calls changes
+   * roughly a quarter of the matrix, because the library carries state between calls that
    * the caller never asked it to carry. That is the defect this project exists to remove, so
    * the size and shape of the divergence is recorded as a fixture rather than asserted away.
    *
