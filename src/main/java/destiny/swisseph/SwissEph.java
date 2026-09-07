@@ -154,7 +154,6 @@ public class SwissEph implements Serializable {
 
     swed.ephe_path_is_set = false;
     swed.jpl_file_is_open = false;
-    swed.fixfp = null;
     swed.ephepath = SweConst.SE_EPHE_PATH;
     swed.jplfnam = SweConst.SE_FNAME_DFT;
     swed.geopos_is_set = false;
@@ -561,12 +560,9 @@ public class SwissEph implements Serializable {
       sj.swi_close_jpl_file();
       swed.jpl_file_is_open = false;
       swed.jpldenum = 0;
-      /* close fixed stars */
-      if (swed.fixfp != null) {
-        swed.fixfp.close();
-        swed.fixfp = null;
-      }
-    } catch (IOException e) {
+      /* release the fixed star catalogue; it is reloaded on demand for the new path */
+      fixedStars = null;
+    } catch (RuntimeException e) {
 // NBT
     }
   }
@@ -598,15 +594,10 @@ public class SwissEph implements Serializable {
     sj.swi_close_jpl_file();
     swed.jpl_file_is_open = false;
     swed.jpldenum = 0;
-    /* close fixed stars */
-    if (swed.fixfp != null) {
-      try {
-        swed.fixfp.close();
-      } catch (IOException e) {
-// NBT
-      }
-      swed.fixfp = null;
-    }
+    /* release the fixed star catalogue. The file itself is no longer held open — it is read
+     * once into an immutable, shared FixedStarFile — but the reference must go, so that a
+     * later swe_set_ephe_path() resolves the catalogue afresh against the new path. */
+    fixedStars = null;
     SweDate.swe_set_tid_acc(SweConst.SE_TIDAL_AUTOMATIC, this);
     swed.geopos_is_set = false;
     swed.ayana_is_set = false;
@@ -624,8 +615,6 @@ public class SwissEph implements Serializable {
      * a "closed" instance was not equivalent to a fresh one — which is the whole point of the
      * method. */
     swe_calc_epheflag_sv = 0;
-    slast_stardata = null;
-    slast_starname = null;
     chck_nut_nutflag = 0;
   }
 
@@ -1138,8 +1127,37 @@ public class SwissEph implements Serializable {
     return swe_fixstar_error(xx, SweConst.ERR);
   }
 
-  String slast_stardata;
-  String slast_starname;
+  /**
+   * The fixed-star catalogue, read once and shared between every instance pointing at the
+   * same file. It replaces both the open file handle that used to be kept in
+   * {@code swed.fixfp} and the one-entry {@code slast_stardata} cache: with the whole
+   * catalogue in memory a lookup is a scan over strings, so caching the previous answer buys
+   * nothing and only added another way for one call to change the next one's result.
+   */
+  FixedStarFile fixedStars;
+
+  /**
+   * Opens a fixed-star catalogue through the usual ephemeris path search, reads it whole, and
+   * closes it. The returned object is shared with every other instance that resolved the same
+   * file, so this costs a map lookup after the first call.
+   *
+   * @throws SwissephException if the file cannot be found or opened, exactly as before
+   */
+  private FixedStarFile loadFixedStars(String fname, StringBuffer serr) {
+    FilePtr fp = swi_fopen(SwephData.SEI_FILE_FIXSTAR, fname, swed.ephepath, serr);
+    if (fp == null) {
+      return null;
+    }
+    try {
+      return FixedStarFile.of(fp, fp.fnamp);
+    } catch (IOException ioe) {
+      if (serr != null) {
+        serr.setLength(0);
+        serr.append("error reading star file ").append(fname).append(": ").append(ioe.getMessage());
+      }
+      return null;
+    }
+  }
 
   // Reads the line with the fixstar parameters and returns the
   // corresponding line number as a String in String[0] and the
@@ -1177,12 +1195,6 @@ public class SwissEph implements Serializable {
       }
       return null;
     }
-    /* star elements from last call: */
-    if (slast_stardata != null && slast_starname.equals(sstar)) {
-      s = slast_stardata;
-//     goto found;
-      return new String[]{"" + fline, s};
-    }
     /******************************************************
      * Star file
      * close to the beginning, a few stars selected by Astrodienst.
@@ -1190,11 +1202,11 @@ public class SwissEph implements Serializable {
      * All other stars can be accessed by name.
      * Comment lines start with # and are ignored.
      ******************************************************/
-    if (swed.fixfp == null) {
+    if (fixedStars == null) {
       int swErrorType = SwissephException.UNSPECIFIED_FILE_ERROR;
       try {
         // May throw SwissephException:
-        swed.fixfp = swi_fopen(SwephData.SEI_FILE_FIXSTAR, SweConst.SE_STARFILE, swed.ephepath, serr);
+        fixedStars = loadFixedStars(SweConst.SE_STARFILE, serr);
       } catch (SwissephException se) {
         if (serr != null) {
           serr.setLength(0);
@@ -1204,8 +1216,7 @@ public class SwissEph implements Serializable {
         swed.is_old_starfile = true;
         try {
           // May throw SwissephException:
-          swed.fixfp = swi_fopen(SwephData.SEI_FILE_FIXSTAR, SweConst.SE_STARFILE_OLD,
-              swed.ephepath, null);
+          fixedStars = loadFixedStars(SweConst.SE_STARFILE_OLD, null);
         } catch (SwissephException se2) {
           if (serr != null) {
             serr.append(se2.getMessage() == null ? "" : se2.getMessage());
@@ -1227,9 +1238,9 @@ public class SwissEph implements Serializable {
         }
       }
     }
-    swed.fixfp.seek(0);
-    try {
-      while ((s = swed.fixfp.readLine()) != null) {
+    for (int idx = 0; idx < fixedStars.lines.size(); idx++) {
+      s = fixedStars.lines.get(idx);
+      {
         fline++;
         if (s.startsWith("#")) {
           continue;
@@ -1237,8 +1248,6 @@ public class SwissEph implements Serializable {
         line++;
         // The name can be a line number, counted without(!!!) comment lines:
         if (star_nr == line) {  // goto found:
-          slast_stardata = s;
-          slast_starname = sstar;
           return new String[]{"" + fline, s};
         } else if (star_nr > 0) {
           continue;
@@ -1254,20 +1263,15 @@ public class SwissEph implements Serializable {
 
         // The name can be before the first comma (case insensitive),
         // or case sensitive after the comma (and including the comma):
-        if (!isnomclat && s.toLowerCase().startsWith(sstar)) {
-          slast_stardata = s;
-          slast_starname = sstar;
+        if (!isnomclat && fixedStars.lowerCased.get(idx).startsWith(sstar)) {
           return new String[]{"" + fline, s};
         } else if (isnomclat) {
           String fstar = s.substring(s.indexOf(',')).trim();
           if (fstar.startsWith(sstar)) {
-            slast_stardata = s;
-            slast_starname = sstar;
             return new String[]{"" + fline, s};
           }
         }
       }
-    } catch (IOException ignored) {
     }
     if (serr != null && star.length() < SwissData.AS_MAXCH - 20) {
       serr.setLength(0);
@@ -8382,12 +8386,11 @@ public class SwissEph implements Serializable {
      * All other stars can be accessed by name.
      * Comment lines start with # and are ignored.
      ******************************************************/
-    if (swed.fixfp == null) {
+    if (fixedStars == null) {
       // May throw SwissephException:
       int swErrorType = SwissephException.FILE_NOT_FOUND;
       try {
-        swed.fixfp = swi_fopen(SwephData.SEI_FILE_FIXSTAR, SweConst.SE_STARFILE,
-            swed.ephepath, serr);
+        fixedStars = loadFixedStars(SweConst.SE_STARFILE, serr);
       } catch (SwissephException se) {
         if (serr != null) {
           serr.setLength(0);
@@ -8397,13 +8400,12 @@ public class SwissEph implements Serializable {
         swed.is_old_starfile = true;
         try {
           // May throw SwissephException:
-          swed.fixfp = swi_fopen(SwephData.SEI_FILE_FIXSTAR, SweConst.SE_STARFILE_OLD,
-              swed.ephepath, null);
+          fixedStars = loadFixedStars(SweConst.SE_STARFILE_OLD, null);
         } catch (SwissephException se2) {
           // Don't change error message from above
-          swed.fixfp = null;
+          fixedStars = null;
         }
-        if (swed.fixfp == null) {
+        if (fixedStars == null) {
           throw new SwissephException(0. / 0.,
               swErrorType,
               SweConst.ERR,
@@ -8414,7 +8416,6 @@ public class SwissEph implements Serializable {
         }
       }
     }
-    swed.fixfp.seek(0);
     sstar = star.toString().substring(0,
         Math.min(star.length(), SweConst.SE_MAX_STNAME));
     if (sstar.length() > 0) {
@@ -8440,17 +8441,24 @@ public class SwissEph implements Serializable {
           "swe_fixstar_mag(): star name empty");
     }
 
-    try {
-      while ((s = swed.fixfp.readLine()) != null) {
+    {
+      // The original loop ended by letting readLine() throw at end of input, which set s to
+      // null and so signalled "not found" below. Scanning a list ends without an exception,
+      // so the match is tracked explicitly and s is left null when there is none.
+      String matched = null;
+      for (int idx = 0; idx < fixedStars.lines.size(); idx++) {
+        s = fixedStars.lines.get(idx);
         fline++;
         if (s.startsWith("#")) {
           continue;
         }
         line++;
-        if (star_nr == line)
+        if (star_nr == line) {
+          matched = s;
           break;
-        else if (star_nr > 0)
+        } else if (star_nr > 0) {
           continue;
+        }
         if (s.indexOf(',') < 0) {
           throw new SwissephException(0. / 0.,
               SwissephException.DAMAGED_FILE_ERROR,
@@ -8459,21 +8467,25 @@ public class SwissEph implements Serializable {
         }
         sp = s.substring(s.indexOf(','));
         if (isnomclat) {
-          if (sp.substring(0, Math.min(sp.length(), cmplen)).equals(sstar.substring(0, Math.min(sstar.length(), cmplen))))
+          if (sp.substring(0, Math.min(sp.length(), cmplen)).equals(sstar.substring(0, Math.min(sstar.length(), cmplen)))) {
+            matched = s;
             break;
-          else
+          } else {
             continue;
+          }
         }
         fstar = s.substring(0, Math.min(s.length(), SweConst.SE_MAX_STNAME)).trim();  // Left trimming only in original sources
         i = fstar.length();
-        if (i < cmplen)
+        if (i < cmplen) {
           continue;
+        }
         fstar = fstar.toLowerCase();
-        if (fstar.substring(0, Math.min(fstar.length(), cmplen)).equals(sstar.substring(0, Math.min(sstar.length(), cmplen))))
+        if (fstar.substring(0, Math.min(fstar.length(), cmplen)).equals(sstar.substring(0, Math.min(sstar.length(), cmplen)))) {
+          matched = s;
           break;
+        }
       }
-    } catch (IOException ioe) {
-      s = null;
+      s = matched;
     }
     if (s == null) {
       String errmsg = "star " + star + " not found";

@@ -179,7 +179,6 @@ public class SwissData implements Serializable {
   //////////////////////////////////////////////////////////////////////////////
   boolean ephe_path_is_set = false;  /* ephe_path_is_set = FALSE */
   boolean jpl_file_is_open = false;  /* jpl_file_is_open = FALSE */
-  FilePtr fixfp = null;      /* fixfp, fixed stars file pointer */
   String ephepath = SweConst.SE_EPHE_PATH;  /* ephepath, ephemeris path */
   String jplfnam = SweConst.SE_FNAME_DFT;  /* jplfnam, JPL file name, default */
   int jpldenum = 0;      /* jpldenum */
