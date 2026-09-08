@@ -27,6 +27,12 @@ import java.io.Serializable;
  * This would calculate the (UT-) date, when the ascendant is at 30 degree
  * longitude next time.
  */
+/**
+ * @deprecated describe the search with {@link destiny.swisseph.api.TransitSearch} and run it with
+ *             {@link destiny.swisseph.api.SwissEphemeris#nextTransit}. This type is built around
+ *             a {@link SwissEph} instance, which is what tied a search to one mutable object.
+ */
+@Deprecated
 public class TCHouses extends TransitCalculator implements Serializable {
 
   private int houseObject;

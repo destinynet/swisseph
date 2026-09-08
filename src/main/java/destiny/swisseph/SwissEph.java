@@ -87,7 +87,22 @@ import java.util.StringTokenizer;
 import static java.util.regex.Pattern.matches;
 
 /**
- * This class is the basic class for planetary calculations.<p>
+ * The original Java port's calculation object —— stateful, not safe to share, and reached through
+ * out-parameters and flag masks.
+ *
+ * <p><b>New code should use {@link destiny.swisseph.api.SwissEphemeris} instead.</b> It answers
+ * the same questions with values rather than out-parameters, distinguishes a failure from a
+ * degradation, and is safe to share between threads. This class remains because it is what that
+ * one is built on, and because a few places still use it deliberately —— a test that wants an
+ * independent second opinion, for one.
+ *
+ * <p>What makes it unsafe to share: its state is one large mutable structure that every
+ * calculation reads and writes, and asking for a topocentric or sidereal position means mutating
+ * the object and then calling it. Measured on eight threads sharing one instance, of 150 distinct
+ * requests 94 came back with more than one answer —— some of them zero or NaN, with a success
+ * return code.
+ *
+ * <p>This class is the basic class for planetary calculations.<p>
  * One important note: in all this package, negative longitudes are considered
  * to be <b>west</b> of Greenwich, positive longitudes are seen as <b>east</b>
  * of Greenwich. America seems to often use a different notation!<p>
@@ -118,6 +133,10 @@ public class SwissEph implements Serializable {
    *
    * @see SweConst#SE_EPHE_PATH
    */
+  /**
+   * @deprecated use {@link destiny.swisseph.api.SwissEphemeris#moshierOnly()}
+   */
+  @Deprecated
   public SwissEph() {
     this(null);
   }
@@ -141,7 +160,10 @@ public class SwissEph implements Serializable {
    *             ';' character. See swe_set_ephe_path() for more information.
    * @see SweConst#SE_EPHE_PATH
    * @see SwissEph#swe_set_ephe_path(java.lang.String)
+   * @deprecated use {@link destiny.swisseph.api.SwissEphemeris#at(String)}, which can be shared
+   *             between threads and reports failures as failures
    */
+  @Deprecated
   public SwissEph(String path) {
     if (swed == null) {
       swed = new SwissData();
@@ -3112,6 +3134,7 @@ public class SwissEph implements Serializable {
    * @see destiny.swisseph.TCPlanet
    * @see destiny.swisseph.TCPlanetPlanet
    */
+  @Deprecated
   public double getTransitUT(
       TransitCalculator tc,
       double jdUT,
@@ -3148,6 +3171,7 @@ public class SwissEph implements Serializable {
    * @see destiny.swisseph.TCPlanet
    * @see destiny.swisseph.TCPlanetPlanet
    */
+  @Deprecated
   public double getTransitUT(
       TransitCalculator tc,
       double jdUT,

@@ -27,6 +27,12 @@ import java.io.Serializable;
 * This would calculate the (ET-) date, when the Saturn will
 * change from retrograde to direct movement or vice versa.
 */
+/**
+ * @deprecated describe the search with {@link destiny.swisseph.api.TransitSearch} and run it with
+ *             {@link destiny.swisseph.api.SwissEphemeris#nextTransit}. This type is built around
+ *             a {@link SwissEph} instance, which is what tied a search to one mutable object.
+ */
+@Deprecated
 public class TCPlanet extends TransitCalculator implements Serializable {
 
 

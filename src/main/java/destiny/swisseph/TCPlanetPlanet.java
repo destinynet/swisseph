@@ -26,6 +26,12 @@ package destiny.swisseph;
 * This would calculate the last (UT-) date, when Mercury and Venus
 * had the same longitudinal position.
 */
+/**
+ * @deprecated describe the search with {@link destiny.swisseph.api.TransitSearch} and run it with
+ *             {@link destiny.swisseph.api.SwissEphemeris#nextTransit}. This type is built around
+ *             a {@link SwissEph} instance, which is what tied a search to one mutable object.
+ */
+@Deprecated
 public class TCPlanetPlanet extends TransitCalculator
         	implements java.io.Serializable
         	{

@@ -624,6 +624,7 @@ public final class SwissEphemeris implements AutoCloseable {
       case TransitSearch.BetweenBodies p -> context.apply(p.centre(), p.zodiac());
     }
 
+    @SuppressWarnings("deprecation")   // this method is what replaces them
     TransitCalculator calculator = switch (search) {
       case TransitSearch.OfBody b ->
           new TCPlanet(context.se, numberOf(b.body()), search.flags(), b.target());
@@ -634,6 +635,7 @@ public final class SwissEphemeris implements AutoCloseable {
 
     boolean backwards = direction == SearchDirection.BACKWARD;
     try {
+      @SuppressWarnings("deprecation")
       double found = until
           .map(limit -> context.se.getTransitUT(calculator, from.value(), backwards, limit.value()))
           .orElseGet(() -> context.se.getTransitUT(calculator, from.value(), backwards));
@@ -971,6 +973,7 @@ public final class SwissEphemeris implements AutoCloseable {
     return "SwissEphemeris[" + (ephemerisPath.isEmpty() ? "no data files" : ephemerisPath) + "]";
   }
 
+  @SuppressWarnings("deprecation")   // this class is what replaces it; something has to build it
   private Context newContext() {
     Context context = new Context(new SwissEph(ephemerisPath));
     live.add(context);
