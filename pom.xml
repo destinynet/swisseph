@@ -65,11 +65,21 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <junit.version>6.1.1</junit.version>
+    <jspecify.version>1.0.0</jspecify.version>  <!-- 與 guava 帶進消費者的版本一致，避免分歧 -->
   </properties>
 
   <!--
-    ⚠️ compile scope 必須維持空的。這裡只有測試框架。
+    ⚠️ compile scope 必須維持空的。
     要加任何 compile 依賴之前，先問：這個純數值函式庫真的需要它嗎？
+
+    唯一的例外是 jspecify，而它其實不算例外：那是一個只有註解、沒有任何程式碼的
+    artifact，而且宣告成 provided —— 不會傳遞給消費者，執行期也不需要它在 classpath 上
+    （註解類別載不到時 JVM 直接忽略該註解，不會失敗）。`mvn dependency:tree` 的
+    compile scope 仍然是空的。
+
+    它換到的是：Kotlin 呼叫端看到的是 String 而不是 String!，少掉一整類 platform type
+    造成的 NPE。這是 2024 年由 Google／JetBrains／Oracle／Spring 共同收斂出來的標準，
+    取代了先前各家分歧的 @NotNull／@NonNull。
   -->
   <dependencyManagement>
     <dependencies>
@@ -84,6 +94,13 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+      <version>${jspecify.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>

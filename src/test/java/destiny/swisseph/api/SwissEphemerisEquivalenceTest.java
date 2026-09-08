@@ -127,21 +127,22 @@ class SwissEphemerisEquivalenceTest {
 
   private static String renderModern(CalcResult r) {
     StringBuilder sb = new StringBuilder(r.usedEphemeris().name());
-    double a, b, c;
-    if (r.position() instanceof Position.Ecliptic e) {
-      a = e.longitudeDeg(); b = e.latitudeDeg(); c = e.distanceAu();
-    } else if (r.position() instanceof Position.Equatorial q) {
-      a = q.rightAscensionDeg(); b = q.declinationDeg(); c = q.distanceAu();
-    } else {
-      Position.Cartesian xyz = (Position.Cartesian) r.position();
-      a = xyz.x(); b = xyz.y(); c = xyz.z();
+    double[] parts = switch (r.position()) {
+      case Position.Ecliptic e -> e.speed()
+          .map(v -> new double[]{e.longitudeDeg(), e.latitudeDeg(), e.distanceAu(),
+                                 v.longitudeDegPerDay(), v.latitudeDegPerDay(), v.distanceAuPerDay()})
+          .orElseGet(() -> new double[]{e.longitudeDeg(), e.latitudeDeg(), e.distanceAu()});
+      case Position.Equatorial q -> q.speed()
+          .map(v -> new double[]{q.rightAscensionDeg(), q.declinationDeg(), q.distanceAu(),
+                                 v.rightAscensionDegPerDay(), v.declinationDegPerDay(), v.distanceAuPerDay()})
+          .orElseGet(() -> new double[]{q.rightAscensionDeg(), q.declinationDeg(), q.distanceAu()});
+      case Position.Cartesian c -> c.speed()
+          .map(v -> new double[]{c.x(), c.y(), c.z(), v.xAuPerDay(), v.yAuPerDay(), v.zAuPerDay()})
+          .orElseGet(() -> new double[]{c.x(), c.y(), c.z()});
+    };
+    for (double d : parts) {
+      sb.append(',').append(Double.toHexString(d));
     }
-    sb.append(',').append(Double.toHexString(a))
-      .append(',').append(Double.toHexString(b))
-      .append(',').append(Double.toHexString(c));
-    r.motion().ifPresent(m -> sb.append(',').append(Double.toHexString(m.first()))
-                                .append(',').append(Double.toHexString(m.second()))
-                                .append(',').append(Double.toHexString(m.third())));
     return sb.toString();
   }
 

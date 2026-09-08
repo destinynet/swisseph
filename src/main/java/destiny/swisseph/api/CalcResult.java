@@ -25,8 +25,8 @@ import java.util.Set;
  * files comes back as {@link Ephemeris#MOSHIER} here, with a matching entry in
  * {@link #warnings()}. In the legacy API that fact is buried in the returned flag mask.
  *
- * @param position       where the body is; which variant depends on the options requested
- * @param motion         how fast it is moving, present only if {@link CalcOption#SPEED} was asked for
+ * @param position       where the body is —— and how fast, if that was asked for. Which variant
+ *                       depends on the options requested
  * @param usedEphemeris  what the calculation actually ran on
  * @param resolvedName   for a {@link Body.FixedStar}, the catalogue's own full name for it;
  *                       empty for every other kind of body
@@ -34,14 +34,12 @@ import java.util.Set;
  */
 public record CalcResult(
     Position position,
-    Optional<Motion> motion,
     Ephemeris usedEphemeris,
     Optional<String> resolvedName,
     List<Warning> warnings) {
 
   public CalcResult {
     Objects.requireNonNull(position, "position");
-    Objects.requireNonNull(motion, "motion");
     Objects.requireNonNull(usedEphemeris, "usedEphemeris");
     Objects.requireNonNull(resolvedName, "resolvedName");
     warnings = List.copyOf(warnings);

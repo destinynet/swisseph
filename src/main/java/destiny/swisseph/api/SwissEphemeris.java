@@ -190,27 +190,31 @@ public final class SwissEphemeris implements AutoCloseable {
                                      StringBuffer serr,
                                      Set<CalcOption> requested,
                                      String resolvedName) {
-    Position position;
-    if (requested.contains(CalcOption.CARTESIAN)) {
-      position = new Position.Cartesian(xx[0], xx[1], xx[2]);
-    } else if (requested.contains(CalcOption.EQUATORIAL)) {
-      position = new Position.Equatorial(xx[0], xx[1], xx[2]);
-    } else {
-      position = new Position.Ecliptic(xx[0], xx[1], xx[2]);
-    }
-
     // Speeds are only meaningful if they were asked for; otherwise the slots hold zeroes, which
     // would read as "not moving" rather than "not computed".
-    Optional<Motion> motion = requested.contains(CalcOption.SPEED)
-        ? Optional.of(new Motion(xx[3], xx[4], xx[5]))
-        : Optional.empty();
+    boolean withSpeed = requested.contains(CalcOption.SPEED);
+
+    Position position;
+    if (requested.contains(CalcOption.CARTESIAN)) {
+      position = new Position.Cartesian(xx[0], xx[1], xx[2], withSpeed
+          ? Optional.of(new Position.CartesianSpeed(xx[3], xx[4], xx[5]))
+          : Optional.empty());
+    } else if (requested.contains(CalcOption.EQUATORIAL)) {
+      position = new Position.Equatorial(xx[0], xx[1], xx[2], withSpeed
+          ? Optional.of(new Position.EquatorialSpeed(xx[3], xx[4], xx[5]))
+          : Optional.empty());
+    } else {
+      position = new Position.Ecliptic(xx[0], xx[1], xx[2], withSpeed
+          ? Optional.of(new Position.EclipticSpeed(xx[3], xx[4], xx[5]))
+          : Optional.empty());
+    }
 
     List<Warning> warnings = new ArrayList<>(1);
     if (!serr.isEmpty()) {
       warnings.add(Warning.classify(serr.toString()));
     }
 
-    return new CalcResult(position, motion, ephemerisOf(returnedFlags),
+    return new CalcResult(position, ephemerisOf(returnedFlags),
                           Optional.ofNullable(resolvedName), warnings);
   }
 

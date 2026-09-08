@@ -77,22 +77,32 @@ class SwissEphemerisConcurrencyTest {
   /** Renders one result exactly —— hex doubles, so nothing is lost to formatting. */
   private static String render(CalcResult r) {
     StringBuilder sb = new StringBuilder(r.usedEphemeris().name());
-    if (r.position() instanceof Position.Ecliptic e) {
-      sb.append(",ecl,").append(Double.toHexString(e.longitudeDeg()))
-        .append(',').append(Double.toHexString(e.latitudeDeg()))
-        .append(',').append(Double.toHexString(e.distanceAu()));
-    } else if (r.position() instanceof Position.Equatorial q) {
-      sb.append(",equ,").append(Double.toHexString(q.rightAscensionDeg()))
-        .append(',').append(Double.toHexString(q.declinationDeg()))
-        .append(',').append(Double.toHexString(q.distanceAu()));
-    } else if (r.position() instanceof Position.Cartesian c) {
-      sb.append(",xyz,").append(Double.toHexString(c.x()))
-        .append(',').append(Double.toHexString(c.y()))
-        .append(',').append(Double.toHexString(c.z()));
+    switch (r.position()) {
+      case Position.Ecliptic e -> {
+        sb.append(",ecl,").append(Double.toHexString(e.longitudeDeg()))
+          .append(',').append(Double.toHexString(e.latitudeDeg()))
+          .append(',').append(Double.toHexString(e.distanceAu()));
+        e.speed().ifPresent(v -> sb.append(",spd,").append(Double.toHexString(v.longitudeDegPerDay()))
+                                   .append(',').append(Double.toHexString(v.latitudeDegPerDay()))
+                                   .append(',').append(Double.toHexString(v.distanceAuPerDay())));
+      }
+      case Position.Equatorial q -> {
+        sb.append(",equ,").append(Double.toHexString(q.rightAscensionDeg()))
+          .append(',').append(Double.toHexString(q.declinationDeg()))
+          .append(',').append(Double.toHexString(q.distanceAu()));
+        q.speed().ifPresent(v -> sb.append(",spd,").append(Double.toHexString(v.rightAscensionDegPerDay()))
+                                   .append(',').append(Double.toHexString(v.declinationDegPerDay()))
+                                   .append(',').append(Double.toHexString(v.distanceAuPerDay())));
+      }
+      case Position.Cartesian c -> {
+        sb.append(",xyz,").append(Double.toHexString(c.x()))
+          .append(',').append(Double.toHexString(c.y()))
+          .append(',').append(Double.toHexString(c.z()));
+        c.speed().ifPresent(v -> sb.append(",spd,").append(Double.toHexString(v.xAuPerDay()))
+                                   .append(',').append(Double.toHexString(v.yAuPerDay()))
+                                   .append(',').append(Double.toHexString(v.zAuPerDay())));
+      }
     }
-    r.motion().ifPresent(m -> sb.append(",spd,").append(Double.toHexString(m.first()))
-                                .append(',').append(Double.toHexString(m.second()))
-                                .append(',').append(Double.toHexString(m.third())));
     for (Warning w : r.warnings()) {
       sb.append(",warn,").append(w.kind());
     }
