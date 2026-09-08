@@ -7,9 +7,11 @@
 
 package destiny.swisseph.api;
 
+import destiny.swisseph.DblObj;
 import destiny.swisseph.SweConst;
 import destiny.swisseph.SwissEph;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -227,6 +229,237 @@ public final class SwissEphemeris implements AutoCloseable {
     }
     return Ephemeris.MOSHIER;
   }
+
+  // -----------------------------------------------------------------------------------------
+  // Houses
+  // -----------------------------------------------------------------------------------------
+
+  /** Houses in the tropical zodiac. */
+  public Houses houses(JulianDayUT time, GeoLocation place, HouseSystem system) {
+    return houses(time, place, system, Zodiac.tropical());
+  }
+
+  /**
+   * Divides the sky into houses for a place and a moment.
+   *
+   * <p>Note what this does <em>not</em> take: an {@link Ephemeris}. House division is geometry —— it
+   * needs the obliquity and sidereal time, not a planetary ephemeris —— so the choice would have
+   * had no effect. The legacy signature accepts the ephemeris bits anyway and ignores them, which
+   * has misled callers into thinking they were selecting something.
+   *
+   * @param time   the instant, in Universal Time
+   * @param place  where on Earth
+   * @param system how to divide
+   * @param zodiac what the returned longitudes are measured from
+   * @throws SwissEphemerisException if the division could not be computed —— which happens for
+   *                                 real: several systems are undefined inside the polar circles
+   */
+  public Houses houses(JulianDayUT time, GeoLocation place, HouseSystem system, Zodiac zodiac) {
+    Objects.requireNonNull(time, "time");
+    Objects.requireNonNull(place, "place");
+    Objects.requireNonNull(system, "system");
+    Objects.requireNonNull(zodiac, "zodiac");
+
+    Context context = perThread.get();
+    context.apply(Centre.geocentric(), zodiac);
+
+    // 13 and 10 are the legacy sizes: cusp[0] is unused, and ascmc has two reserved slots.
+    double[] cusp = new double[37];
+    double[] ascmc = new double[10];
+    int returned = context.se.swe_houses(
+        time.value(), zodiac.bit(), place.latitudeDeg(), place.longitudeDeg(), system.code(),
+        cusp, ascmc);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot divide houses (" + system.displayName() + ") at " + time
+          + " for " + place + "; several systems are undefined near the poles");
+    }
+
+    int count = system == HouseSystem.GAUQUELIN_SECTORS ? 36 : 12;
+    List<Double> cusps = new ArrayList<>(count);
+    for (int house = 1; house <= count; house++) {
+      cusps.add(cusp[house]);
+    }
+
+    HouseAngles angles = new HouseAngles(
+        ascmc[SweConst.SE_ASC], ascmc[SweConst.SE_MC], ascmc[SweConst.SE_ARMC],
+        ascmc[SweConst.SE_VERTEX], ascmc[SweConst.SE_EQUASC], ascmc[SweConst.SE_COASC1],
+        ascmc[SweConst.SE_COASC2], ascmc[SweConst.SE_POLASC]);
+
+    return new Houses(cusps, angles, zodiac);
+  }
+
+  // -----------------------------------------------------------------------------------------
+  // Solar time
+  // -----------------------------------------------------------------------------------------
+
+  /**
+   * The equation of time: apparent solar time minus mean solar time at this instant.
+   *
+   * <p>Returned as a {@link Duration} rather than the legacy's bare {@code double}, which is in
+   * days —— a unit nothing in the signature mentions, and which every caller immediately multiplies
+   * away. It swings roughly between -14 and +16 minutes over a year.
+   *
+   * @throws SwissEphemerisException if it could not be computed
+   */
+  public Duration equationOfTime(JulianDayUT time) {
+    Objects.requireNonNull(time, "time");
+    Context context = perThread.get();
+
+    double[] e = new double[1];
+    StringBuffer serr = new StringBuffer();
+    int returned = context.se.swe_time_equ(time.value(), e, serr);
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot compute the equation of time at " + time + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+    // e[0] is a fraction of a day.
+    return Duration.ofNanos(Math.round(e[0] * 24 * 60 * 60 * 1_000_000_000L));
+  }
+
+  // -----------------------------------------------------------------------------------------
+  // The observer's sky
+  // -----------------------------------------------------------------------------------------
+
+  /** Under the standard atmosphere. */
+  public Horizontal toHorizontal(JulianDayUT time, GeoLocation place, Position position) {
+    return toHorizontal(time, place, position, Atmosphere.STANDARD);
+  }
+
+  /**
+   * Where a position appears in an observer's sky: its azimuth and altitude.
+   *
+   * <p>Which conversion to run is decided by the type of {@code position} —— ecliptic and
+   * equatorial coordinates need different maths, and the legacy API selects between them with a
+   * magic {@code int} ({@code SE_ECL2HOR} or {@code SE_EQU2HOR}) that the caller has to keep in
+   * step with what is actually in the array by hand.
+   *
+   * @param position a position from {@link #calculate}, in ecliptic or equatorial coordinates
+   * @throws IllegalArgumentException for a cartesian position, which this conversion does not take
+   */
+  public Horizontal toHorizontal(JulianDayUT time,
+                                 GeoLocation place,
+                                 Position position,
+                                 Atmosphere atmosphere) {
+    Objects.requireNonNull(time, "time");
+    Objects.requireNonNull(place, "place");
+    Objects.requireNonNull(position, "position");
+    Objects.requireNonNull(atmosphere, "atmosphere");
+
+    int direction;
+    double[] xin = new double[3];
+    switch (position) {
+      case Position.Ecliptic e -> {
+        direction = SweConst.SE_ECL2HOR;
+        xin[0] = e.longitudeDeg();
+        xin[1] = e.latitudeDeg();
+        xin[2] = e.distanceAu();
+      }
+      case Position.Equatorial q -> {
+        direction = SweConst.SE_EQU2HOR;
+        xin[0] = q.rightAscensionDeg();
+        xin[1] = q.declinationDeg();
+        xin[2] = q.distanceAu();
+      }
+      case Position.Cartesian ignored -> throw new IllegalArgumentException(
+          "a cartesian position cannot be converted to the horizon; ask for the position in "
+          + "ecliptic or equatorial coordinates instead");
+    }
+
+    double[] geopos = {place.longitudeDeg(), place.latitudeDeg(), place.altitudeMetres()};
+    double[] xaz = new double[3];
+    perThread.get().se.swe_azalt(time.value(), direction, geopos,
+                                 atmosphere.pressureMillibars(), atmosphere.temperatureCelsius(),
+                                 xin, xaz);
+    return new Horizontal(xaz[0], xaz[1], xaz[2]);
+  }
+
+  // -----------------------------------------------------------------------------------------
+  // Rising, setting, culminating
+  // -----------------------------------------------------------------------------------------
+
+  /** The next rise or set, under the standard atmosphere and default disc handling. */
+  public Optional<JulianDayUT> nextRiseSet(JulianDayUT after,
+                                           Body body,
+                                           RiseSetEvent event,
+                                           GeoLocation place,
+                                           Ephemeris ephemeris) {
+    return nextRiseSet(after, body, event, place, ephemeris,
+                       EnumSet.noneOf(RiseSetOption.class), Atmosphere.STANDARD);
+  }
+
+  /**
+   * When a body next rises, sets, or crosses the meridian.
+   *
+   * <p>The result is an {@link Optional} because "it does not happen" is a real, ordinary answer,
+   * not a failure: inside the polar circles a body can stay up or stay down for months. The
+   * legacy API distinguishes that ({@code -2}) from a genuine error ({@code -1}), but callers
+   * routinely collapse both into null and lose the difference —— a polar summer then looks like a
+   * malfunction. Here a real failure still throws.
+   *
+   * @param after      search forward from this instant
+   * @param body       what to watch for
+   * @param event      which moment in its daily circuit
+   * @param place      where the observer is
+   * @param ephemeris  which ephemeris to compute the body's motion from
+   * @param options    how to treat the disc and the atmosphere; ignored for the transits
+   * @param atmosphere the air the body is seen through
+   * @return when it happens, or empty if it does not happen at all
+   * @throws SwissEphemerisException if the search failed
+   */
+  public Optional<JulianDayUT> nextRiseSet(JulianDayUT after,
+                                           Body body,
+                                           RiseSetEvent event,
+                                           GeoLocation place,
+                                           Ephemeris ephemeris,
+                                           Set<RiseSetOption> options,
+                                           Atmosphere atmosphere) {
+    Objects.requireNonNull(after, "after");
+    Objects.requireNonNull(body, "body");
+    Objects.requireNonNull(event, "event");
+    Objects.requireNonNull(place, "place");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+    Objects.requireNonNull(options, "options");
+    Objects.requireNonNull(atmosphere, "atmosphere");
+
+    Context context = perThread.get();
+    double[] geopos = {place.longitudeDeg(), place.latitudeDeg(), place.altitudeMetres()};
+    DblObj found = new DblObj(0.0);
+    StringBuffer serr = new StringBuffer();
+
+    int ipl;
+    StringBuffer starName;
+    if (body instanceof Body.FixedStar star) {
+      ipl = 0;
+      starName = new StringBuffer(star.name());
+    } else {
+      ipl = numberOf(body);
+      starName = null;
+    }
+
+    int returned = context.se.swe_rise_trans(
+        after.value(), ipl, starName, ephemeris.bit(),
+        event.bit() | RiseSetOption.bitmask(options), geopos,
+        atmosphere.pressureMillibars(), atmosphere.temperatureCelsius(), found, serr);
+
+    if (returned == DOES_NOT_HAPPEN) {
+      return Optional.empty();
+    }
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot find the " + event + " of " + body.displayName() + " after " + after
+          + " at " + place + ": " + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+    return Optional.of(JulianDayUT.of(found.val));
+  }
+
+  /**
+   * The legacy return code for "this body never rises or sets here", as opposed to
+   * {@link SweConst#ERR} for a failure. It has no name in {@code SweConst}.
+   */
+  private static final int DOES_NOT_HAPPEN = -2;
 
   // -----------------------------------------------------------------------------------------
   // Lifecycle
