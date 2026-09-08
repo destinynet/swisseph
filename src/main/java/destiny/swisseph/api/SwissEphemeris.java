@@ -746,9 +746,10 @@ public final class SwissEphemeris implements AutoCloseable {
   /**
    * Where on Earth a solar eclipse is central at a given instant.
    *
-   * @throws SwissEphemerisException if no solar eclipse is in progress then
+   * <p>Empty when no solar eclipse is in progress then —— the ordinary case for any instant picked
+   * at random, and not a failure.
    */
-  public EclipseCentre solarEclipseCentre(JulianDayUT time, Ephemeris ephemeris) {
+  public Optional<EclipseCentre> solarEclipseCentre(JulianDayUT time, Ephemeris ephemeris) {
     Objects.requireNonNull(time, "time");
     Objects.requireNonNull(ephemeris, "ephemeris");
 
@@ -763,11 +764,14 @@ public final class SwissEphemeris implements AutoCloseable {
           "cannot locate a solar eclipse at " + time + ": "
           + (serr.isEmpty() ? "no reason given" : serr.toString()));
     }
-    return new EclipseCentre(
+    if (returned == 0) {
+      return Optional.empty();   // no eclipse in progress
+    }
+    return Optional.of(new EclipseCentre(
         new GeoLocation(geopos[0], geopos[1], 0),
         SolarEclipseKind.from(returned),
         (returned & SweConst.SE_ECL_CENTRAL) != 0,
-        SolarEclipseAppearance.from(attr));
+        SolarEclipseAppearance.from(attr)));
   }
 
   /**

@@ -189,7 +189,9 @@ class EclipseEquivalenceTest {
                  || ephemeris.solarEclipseAt(JulianDayUT.of(maximum), TAIPEI, Ephemeris.SWISS).isPresent(),
                  "食甚時刻至少某處看得到");
 
-      EclipseCentre centre = ephemeris.solarEclipseCentre(JulianDayUT.of(maximum), Ephemeris.SWISS);
+      assertTrue(ephemeris.solarEclipseCentre(JulianDayUT.of(2451545.0), Ephemeris.SWISS).isEmpty(),
+                 "沒有日食的時刻不該回傳中心線");
+      EclipseCentre centre = ephemeris.solarEclipseCentre(JulianDayUT.of(maximum), Ephemeris.SWISS).orElseThrow();
       String actual = hex(centre.centralLine().longitudeDeg()) + ',' + hex(centre.centralLine().latitudeDeg())
                       + ',' + hex(centre.appearance().magnitude())
                       + ',' + hex(centre.appearance().obscuration());

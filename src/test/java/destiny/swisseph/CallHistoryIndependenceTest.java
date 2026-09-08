@@ -155,4 +155,111 @@ class CallHistoryIndependenceTest {
       se.swe_close();
     }
   }
+
+  // ---------------------------------------------------------------------------------------
+  // Mixing ephemerides
+  // ---------------------------------------------------------------------------------------
+
+  /**
+   * The sharpest case there was: nodes and apsides asked for after the instance had already
+   * computed something with a different ephemeris used to come back up to half a degree away
+   * from the same request asked first. Half a degree is a chart-changing amount —— it moves a
+   * point across a sign boundary.
+   *
+   * <p>Two things caused it, and both are now dealt with. The tidal acceleration was latched
+   * from whichever ephemeris ran last, and delta-T is derived from it; and the file state the
+   * constructor leaves behind was torn down by the switch and not put back, so the second
+   * request started from somewhere the first one never was.
+   */
+  @Test
+  void nodesAndApsidesDoNotDependOnWhatRanBeforeThem() {
+    String ephe = SmokeTestSupport.ephePath();
+    int swiss = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_SPEED;
+
+    for (int ipl : new int[]{SweConst.SE_MOON, SweConst.SE_MERCURY, SweConst.SE_MARS,
+                             SweConst.SE_JUPITER, SweConst.SE_SATURN}) {
+      double[] a1 = new double[6], d1 = new double[6], p1 = new double[6], f1 = new double[6];
+      SwissEph fresh = new SwissEph(ephe);
+      try {
+        fresh.swe_nod_aps_ut(TJD, ipl, swiss, SweConst.SE_NODBIT_OSCU, a1, d1, p1, f1, new StringBuffer());
+      } finally {
+        fresh.swe_close();
+      }
+
+      double[] a2 = new double[6], d2 = new double[6], p2 = new double[6], f2 = new double[6];
+      SwissEph used = new SwissEph(ephe);
+      try {
+        // The history that used to poison it: a Moshier calculation, then a Swiss one.
+        double[] scratch = new double[6];
+        used.swe_calc_ut(TJD, SweConst.SE_SUN, SweConst.SEFLG_MOSEPH | SweConst.SEFLG_SPEED,
+                         scratch, new StringBuffer());
+        used.swe_nod_aps_ut(TJD, ipl, swiss, SweConst.SE_NODBIT_OSCU, a2, d2, p2, f2, new StringBuffer());
+      } finally {
+        used.swe_close();
+      }
+
+      assertArrayEquals(a1, a2, 0.0, "ascending node of ipl=" + ipl + " changed with call history");
+      assertArrayEquals(d1, d2, 0.0, "descending node of ipl=" + ipl + " changed with call history");
+      assertArrayEquals(p1, p2, 0.0, "perihelion of ipl=" + ipl + " changed with call history");
+      assertArrayEquals(f1, f2, 0.0, "aphelion of ipl=" + ipl + " changed with call history");
+    }
+  }
+
+  /**
+   * House division needs delta-T, and delta-T needs a tidal acceleration —— but house division
+   * chooses no ephemeris, so it used to read whichever one the last calculation had latched.
+   * Same request, different answer, depending on what came before.
+   */
+  @Test
+  void houseCuspsDoNotDependOnWhatRanBeforeThem() {
+    String ephe = SmokeTestSupport.ephePath();
+
+    double[] cusp1 = new double[13], ascmc1 = new double[10];
+    SwissEph fresh = new SwissEph(ephe);
+    try {
+      fresh.swe_houses(TJD, 0, 25.0, 121.5, (int) 'P', cusp1, ascmc1);
+    } finally {
+      fresh.swe_close();
+    }
+
+    // Every ephemeris in turn, since the point is that none of them should matter here.
+    for (int epheflag : new int[]{SweConst.SEFLG_MOSEPH, SweConst.SEFLG_SWIEPH}) {
+      double[] cusp2 = new double[13], ascmc2 = new double[10];
+      SwissEph used = new SwissEph(ephe);
+      try {
+        double[] scratch = new double[6];
+        used.swe_calc_ut(TJD, SweConst.SE_SUN, epheflag | SweConst.SEFLG_SPEED, scratch, new StringBuffer());
+        used.swe_houses(TJD, 0, 25.0, 121.5, (int) 'P', cusp2, ascmc2);
+      } finally {
+        used.swe_close();
+      }
+      assertArrayEquals(cusp1, cusp2, 0.0, "cusps changed after a calculation with epheflag=" + epheflag);
+      assertArrayEquals(ascmc1, ascmc2, 0.0, "angles changed after a calculation with epheflag=" + epheflag);
+    }
+  }
+
+  /** The same, for the equation of time and for horizon coordinates. */
+  @Test
+  void solarTimeAndHorizonDoNotDependOnWhatRanBeforeThem() {
+    String ephe = SmokeTestSupport.ephePath();
+
+    double[] e1 = new double[1];
+    SwissEph fresh = new SwissEph(ephe);
+    try {
+      fresh.swe_time_equ(TJD, e1, new StringBuffer());
+    } finally {
+      fresh.swe_close();
+    }
+
+    double[] e2 = new double[1];
+    SwissEph used = new SwissEph(ephe);
+    try {
+      double[] scratch = new double[6];
+      used.swe_calc_ut(TJD, SweConst.SE_SUN, SweConst.SEFLG_MOSEPH, scratch, new StringBuffer());
+      used.swe_time_equ(TJD, e2, new StringBuffer());
+    } finally {
+      used.swe_close();
+    }
+    assertEquals(e1[0], e2[0], 0.0, "the equation of time changed with call history");
+  }
 }

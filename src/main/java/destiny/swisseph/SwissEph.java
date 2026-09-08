@@ -388,6 +388,7 @@ public class SwissEph implements Serializable {
           swed.fidat[fi].clearData();
         }
         swe_calc_epheflag_sv = epheflag;
+        restoreEphemerisBootstrap(epheflag);
       }
     }
     /* high precision speed prevails fast speed */
@@ -682,6 +683,54 @@ public class SwissEph implements Serializable {
     swe_calc(SwephData.J2000, SweConst.SE_MOON, iflag, xx, null);
     if (swed.fidat[SwephData.SEI_FILE_MOON].fptr != null) {
       SweDate.swi_set_tid_acc(0, 0, swed.fidat[SwephData.SEI_FILE_MOON].sweph_denum, this);
+    }
+    /* Remember what the files available here imply, so that later calculations which need
+     * delta-T but choose no ephemeris of their own have something fixed to read. See
+     * SwissData.tid_acc_default. */
+    swed.tid_acc_default = swed.tid_acc;
+  }
+
+  /**
+   * True while the constructor's lunar bootstrap is running, so that the ephemeris switch it
+   * itself performs does not ask for another one.
+   */
+  private boolean inEphemerisBootstrap = false;
+
+  /**
+   * Puts back the state a newly-constructed instance would have, after an ephemeris switch has
+   * torn it down.
+   *
+   * <p>Setting the ephemeris path ends with a J2000 lunar calculation —— nominally to learn the
+   * DE number, but it leaves more than that behind: the data files are open and read, and the
+   * obliquity cache holds J2000. Every later calculation on a fresh instance quietly builds on
+   * that. Switching ephemeris closes the files and clears the caches, so the same request asked
+   * after a switch is answered from a different starting state than the same request asked
+   * first —— by up to half a degree for nodes and apsides.
+   *
+   * <p>This is a deliberate departure from the reference implementation, which has the same
+   * behaviour. It can afford to: in the C original there is one global state per process, so
+   * "the same request from a different starting state" is not a situation that arises. Here one
+   * instance is shared, and an answer that depends on what was computed before it is not an
+   * answer.
+   */
+  private void restoreEphemerisBootstrap(int epheflag) {
+    if (inEphemerisBootstrap || swed.ephepath == null || swed.ephepath.isEmpty()) {
+      return;
+    }
+    /* What the bootstrap establishes is Swiss-file state. Re-establishing it on the way into a
+     * calculation that will not read those files would leave behind exactly the sort of
+     * leftover this is meant to remove. */
+    if ((epheflag & SweConst.SEFLG_MOSEPH) != 0 || (epheflag & SweConst.SEFLG_JPLEPH) != 0) {
+      return;
+    }
+    inEphemerisBootstrap = true;
+    try {
+      double[] xx = new double[6];
+      int iflag = SweConst.SEFLG_SWIEPH | SweConst.SEFLG_J2000
+                  | SweConst.SEFLG_TRUEPOS | SweConst.SEFLG_ICRS;
+      swe_calc(SwephData.J2000, SweConst.SE_MOON, iflag, xx, null);
+    } finally {
+      inEphemerisBootstrap = false;
     }
   }
 
@@ -1029,6 +1078,8 @@ public class SwissEph implements Serializable {
    * @see #swe_get_ayanamsa(double)
    */
   public double swe_get_ayanamsa_ut(double tjd_ut) {
+    // Needs delta-T but chooses no ephemeris; see SweDate.useDefaultTidalAcc.
+    SweDate.useDefaultTidalAcc(this);
     return swe_get_ayanamsa(tjd_ut + SweDate.getDeltaT(tjd_ut, this));
   }
 
@@ -1684,6 +1735,8 @@ public class SwissEph implements Serializable {
   public void swe_azalt(double tjd_ut, int calc_flag, double[] geopos,
                         double atpress, double attemp, double[] xin,
                         double[] xaz) {
+    // Needs delta-T but chooses no ephemeris; see SweDate.useDefaultTidalAcc.
+    SweDate.useDefaultTidalAcc(this);
     if (sc == null) {
       sc = new Swecl(this, sl, sm, swed);
     }
@@ -8596,6 +8649,8 @@ public class SwissEph implements Serializable {
    * @see SweDate#setGlobalTidalAcc(double)
    */
   public int swe_time_equ(double tjd_ut, double[] E, StringBuffer serr) {
+    // Needs delta-T but chooses no ephemeris; see SweDate.useDefaultTidalAcc.
+    SweDate.useDefaultTidalAcc(this);
     int retval;
     double t;
     double dt;

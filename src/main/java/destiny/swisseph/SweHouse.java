@@ -259,6 +259,8 @@ class SweHouse implements Serializable {
                  double[] cusp,
                  double[] ascmc,
                  int aOffs) {
+    // House division needs delta-T but chooses no ephemeris; see SweDate.useDefaultTidalAcc.
+    SweDate.useDefaultTidalAcc(sw);
     int i, retc = 0;
     double armc, eps_mean, nutlo[] = new double[2];
     double tjde = tjd_ut + SweDate.getDeltaT(tjd_ut, sw);

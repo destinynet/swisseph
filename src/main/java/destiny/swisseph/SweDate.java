@@ -937,6 +937,21 @@ public class SweDate implements Serializable {
   /**
   * @see #setGlobalTidalAcc(double, int, int)
   */
+  /**
+   * Puts the tidal acceleration back to what this instance's ephemeris files imply, discarding
+   * whatever the last calculation left behind.
+   *
+   * <p>For entry points that need delta-T but select no ephemeris —— house division, the equation
+   * of time, horizon coordinates. Without this they inherit the previous call's choice, so the
+   * same request answers differently depending on what ran before it. A caller who has set the
+   * tidal acceleration by hand is left alone, as everywhere else.
+   */
+  static void useDefaultTidalAcc(SwissEph se) {
+    if (!se.swed.is_tid_acc_manual) {
+      se.swed.tid_acc = se.swed.tid_acc_default;
+    }
+  }
+
   static void swi_set_tid_acc(double tjd_ut, int iflag, int denum, SwissEph se) {
     setGlobalTidalAcc(tjd_ut, iflag, denum, se);
   }

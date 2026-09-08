@@ -226,6 +226,19 @@ public class SwissData implements Serializable {
   /** True once a caller has set the tidal acceleration explicitly, which suppresses the
    *  automatic derivation from the loaded ephemeris. */
   boolean is_tid_acc_manual = false;
+
+  /**
+   * The tidal acceleration this instance derives from the ephemeris files it can actually see,
+   * fixed when the ephemeris path is set and not touched again.
+   *
+   * <p>{@link #tid_acc} above is overwritten by every calculation, from that calculation's own
+   * choice of ephemeris —— which is right for the calculation doing it and wrong for anybody who
+   * reads it afterwards. House division, the equation of time and horizon coordinates all need
+   * delta-T, all depend on the tidal acceleration to get it, and none of them chooses an
+   * ephemeris; left to read {@link #tid_acc} they answer differently depending on what was
+   * computed before them. They read this field instead.
+   */
+  double tid_acc_default = SweConst.SE_TIDAL_DEFAULT;
   int timeout;
 
   /**
