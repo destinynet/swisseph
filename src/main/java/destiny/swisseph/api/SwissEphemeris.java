@@ -8,6 +8,10 @@
 package destiny.swisseph.api;
 
 import destiny.swisseph.DblObj;
+import destiny.swisseph.SwissephException;
+import destiny.swisseph.TCPlanet;
+import destiny.swisseph.TCPlanetPlanet;
+import destiny.swisseph.TransitCalculator;
 import destiny.swisseph.SweConst;
 import destiny.swisseph.SwissEph;
 
@@ -547,6 +551,91 @@ public final class SwissEphemeris implements AutoCloseable {
    * {@link SweConst#ERR} for a failure. It has no name in {@code SweConst}.
    */
   private static final int DOES_NOT_HAPPEN = -2;
+
+  // -----------------------------------------------------------------------------------------
+  // Transits: when a quantity reaches a value
+  // -----------------------------------------------------------------------------------------
+
+  /** Searches without a deadline; see the four-argument form for why that can matter. */
+  public Optional<JulianDayUT> nextTransit(TransitSearch search,
+                                           JulianDayUT from,
+                                           SearchDirection direction) {
+    return nextTransit(search, from, direction, Optional.empty());
+  }
+
+  /**
+   * When a body —— or a pair of them —— next reaches a given longitude, latitude, distance or speed.
+   *
+   * <p>This is how aspects and stations are found: a conjunction is two bodies separated by zero
+   * degrees, a station is one body whose speed in longitude passes through zero.
+   *
+   * <p>The result is an {@link Optional} because a search can legitimately come up empty: an
+   * outer planet may not reach a given degree within any interval one cares to search, and a
+   * pair of slow bodies may never form a given angle at all. The legacy call signals this by
+   * throwing, which makes an ordinary "not in this window" answer look like a malfunction.
+   *
+   * @param search    what to look for
+   * @param from      search from this instant
+   * @param direction forwards or backwards in time
+   * @param until     stop looking at this instant. Worth passing. For a position the library
+   *                  does not know what a body can actually reach —— it only checks the target is
+   *                  between 0 and 360 —— so a request that can never be satisfied (an ecliptic
+   *                  latitude of 80 degrees, say) is searched for until the ephemeris data runs
+   *                  out, and then fails. With a window it is simply an empty answer. Speeds are
+   *                  bounded properly and need no window to be told they are impossible
+   * @throws SwissEphemerisException if the search itself failed
+   */
+  public Optional<JulianDayUT> nextTransit(TransitSearch search,
+                                           JulianDayUT from,
+                                           SearchDirection direction,
+                                           Optional<JulianDayUT> until) {
+    Objects.requireNonNull(search, "search");
+    Objects.requireNonNull(from, "from");
+    Objects.requireNonNull(direction, "direction");
+    Objects.requireNonNull(until, "until");
+
+    Context context = perThread.get();
+    switch (search) {
+      case TransitSearch.OfBody b -> context.apply(b.centre(), b.zodiac());
+      case TransitSearch.BetweenBodies p -> context.apply(p.centre(), p.zodiac());
+    }
+
+    TransitCalculator calculator = switch (search) {
+      case TransitSearch.OfBody b ->
+          new TCPlanet(context.se, numberOf(b.body()), search.flags(), b.target());
+      case TransitSearch.BetweenBodies p ->
+          new TCPlanetPlanet(context.se, numberOf(p.first()), numberOf(p.second()),
+                             search.flags(), p.target());
+    };
+
+    boolean backwards = direction == SearchDirection.BACKWARD;
+    try {
+      double found = until
+          .map(limit -> context.se.getTransitUT(calculator, from.value(), backwards, limit.value()))
+          .orElseGet(() -> context.se.getTransitUT(calculator, from.value(), backwards));
+      return Optional.of(JulianDayUT.of(found));
+    } catch (SwissephException e) {
+      // The legacy code throws for "it does not happen" as well as for real trouble. Its
+      // exception type tells the two apart —— which is worth using rather than matching on the
+      // message text, because the two "does not happen" cases word themselves differently.
+      int type = e.getType();
+      if (type == SwissephException.BEYOND_USER_TIME_LIMIT) {
+        // Ran out of window before finding anything.
+        return Optional.empty();
+      }
+      if (type == SwissephException.OUT_OF_TIME_RANGE) {
+        // The target is one the body can never reach —— asking Mars for an ecliptic latitude of
+        // 80 degrees, say, or for a change in something that does not vary. Not an error either:
+        // the honest answer is that it never happens.
+        return Optional.empty();
+      }
+      throw new SwissEphemerisException(
+          "transit search failed for " + search + " from " + from + ": " + e.getMessage());
+    } catch (IllegalArgumentException e) {
+      throw new SwissEphemerisException(
+          "transit search was asked for something impossible: " + e.getMessage());
+    }
+  }
 
   // -----------------------------------------------------------------------------------------
   // Eclipses
