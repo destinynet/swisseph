@@ -549,6 +549,267 @@ public final class SwissEphemeris implements AutoCloseable {
   private static final int DOES_NOT_HAPPEN = -2;
 
   // -----------------------------------------------------------------------------------------
+  // Eclipses
+  // -----------------------------------------------------------------------------------------
+
+  /**
+   * The next solar eclipse anywhere on Earth.
+   *
+   * @param after     search from this instant
+   * @param direction forwards or backwards in time
+   * @param ephemeris which ephemeris to compute from
+   * @param kinds     restrict the search to these kinds; an empty set means any
+   * @throws SwissEphemerisException if the search failed
+   */
+  public GlobalSolarEclipse nextGlobalSolarEclipse(JulianDayUT after,
+                                                   SearchDirection direction,
+                                                   Ephemeris ephemeris,
+                                                   Set<SolarEclipseKind> kinds) {
+    Objects.requireNonNull(after, "after");
+    Objects.requireNonNull(direction, "direction");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+    Objects.requireNonNull(kinds, "kinds");
+
+    double[] tret = new double[10];
+    StringBuffer serr = new StringBuffer();
+    int returned = perThread.get().se.swe_sol_eclipse_when_glob(
+        after.value(), ephemeris.bit(), kindFilter(kinds), tret, direction.flag(), serr);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot find a solar eclipse " + direction + " from " + after + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+
+    return new GlobalSolarEclipse(
+        SolarEclipseKind.from(returned),
+        (returned & SweConst.SE_ECL_CENTRAL) != 0,
+        JulianDayUT.of(tret[0]), JulianDayUT.of(tret[1]),
+        JulianDayUT.of(tret[2]), JulianDayUT.of(tret[3]),
+        moment(tret[4]), moment(tret[5]),
+        moment(tret[6]), moment(tret[7]),
+        moment(tret[8]), moment(tret[9]));
+  }
+
+  /**
+   * The next solar eclipse visible from one place.
+   *
+   * <p>"Visible" is the point of this call as against {@link #nextGlobalSolarEclipse}: most
+   * eclipses happen where the observer is not, and this one skips them.
+   */
+  public LocalSolarEclipse nextLocalSolarEclipse(JulianDayUT after,
+                                                 GeoLocation place,
+                                                 SearchDirection direction,
+                                                 Ephemeris ephemeris) {
+    Objects.requireNonNull(after, "after");
+    Objects.requireNonNull(place, "place");
+    Objects.requireNonNull(direction, "direction");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+
+    double[] geopos = {place.longitudeDeg(), place.latitudeDeg(), place.altitudeMetres()};
+    double[] tret = new double[10];
+    double[] attr = new double[20];
+    StringBuffer serr = new StringBuffer();
+    int returned = perThread.get().se.swe_sol_eclipse_when_loc(
+        after.value(), ephemeris.bit(), geopos, tret, attr, direction.flag(), serr);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot find a solar eclipse at " + place + " " + direction + " from " + after + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+
+    // Note the layout: for the local call the contacts are tret[1] to tret[4], and sunrise and
+    // sunset are tret[5] and tret[6] —— not the same slots as the global call at all.
+    return new LocalSolarEclipse(
+        SolarEclipseKind.from(returned),
+        (returned & SweConst.SE_ECL_VISIBLE) != 0,
+        JulianDayUT.of(tret[0]), JulianDayUT.of(tret[1]),
+        moment(tret[2]), moment(tret[3]), JulianDayUT.of(tret[4]),
+        moment(tret[5]), moment(tret[6]),
+        SolarEclipseAppearance.from(attr));
+  }
+
+  /**
+   * Where on Earth a solar eclipse is central at a given instant.
+   *
+   * @throws SwissEphemerisException if no solar eclipse is in progress then
+   */
+  public EclipseCentre solarEclipseCentre(JulianDayUT time, Ephemeris ephemeris) {
+    Objects.requireNonNull(time, "time");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+
+    double[] geopos = new double[20];
+    double[] attr = new double[20];
+    StringBuffer serr = new StringBuffer();
+    int returned = perThread.get().se.swe_sol_eclipse_where(
+        time.value(), ephemeris.bit(), geopos, attr, serr);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot locate a solar eclipse at " + time + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+    return new EclipseCentre(
+        new GeoLocation(geopos[0], geopos[1], 0),
+        SolarEclipseKind.from(returned),
+        (returned & SweConst.SE_ECL_CENTRAL) != 0,
+        SolarEclipseAppearance.from(attr));
+  }
+
+  /**
+   * How a solar eclipse looks from one place at one instant —— for an eclipse already known to be
+   * in progress.
+   *
+   * @throws SwissEphemerisException if no solar eclipse is in progress then
+   */
+  public SolarEclipseAppearance solarEclipseAt(JulianDayUT time,
+                                               GeoLocation place,
+                                               Ephemeris ephemeris) {
+    Objects.requireNonNull(time, "time");
+    Objects.requireNonNull(place, "place");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+
+    double[] geopos = {place.longitudeDeg(), place.latitudeDeg(), place.altitudeMetres()};
+    double[] attr = new double[20];
+    StringBuffer serr = new StringBuffer();
+    int returned = perThread.get().se.swe_sol_eclipse_how(
+        time.value(), ephemeris.bit(), geopos, attr, serr);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot describe a solar eclipse at " + place + " at " + time + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+    return SolarEclipseAppearance.from(attr);
+  }
+
+  /**
+   * The next lunar eclipse.
+   *
+   * <p>No place is needed: a lunar eclipse happens at the same moments for everyone who can see
+   * the Moon. Use {@link #nextLocalLunarEclipse} to also learn whether it is above the horizon
+   * somewhere in particular.
+   */
+  public LunarEclipse nextLunarEclipse(JulianDayUT after,
+                                       SearchDirection direction,
+                                       Ephemeris ephemeris,
+                                       Set<LunarEclipseKind> kinds) {
+    Objects.requireNonNull(after, "after");
+    Objects.requireNonNull(direction, "direction");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+    Objects.requireNonNull(kinds, "kinds");
+
+    int filter = 0;
+    for (LunarEclipseKind kind : kinds) {
+      filter |= kind.bit();
+    }
+
+    double[] tret = new double[10];
+    StringBuffer serr = new StringBuffer();
+    int returned = perThread.get().se.swe_lun_eclipse_when(
+        after.value(), ephemeris.bit(), filter, tret, direction.flag(), serr);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot find a lunar eclipse " + direction + " from " + after + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+
+    return new LunarEclipse(
+        LunarEclipseKind.from(returned), JulianDayUT.of(tret[0]),
+        moment(tret[2]), moment(tret[3]), moment(tret[4]), moment(tret[5]),
+        moment(tret[6]), moment(tret[7]),
+        Optional.empty(), Optional.empty(), Optional.empty());
+  }
+
+  /** The next lunar eclipse visible from one place, with the Moon's position in that sky. */
+  public LunarEclipse nextLocalLunarEclipse(JulianDayUT after,
+                                            GeoLocation place,
+                                            SearchDirection direction,
+                                            Ephemeris ephemeris) {
+    Objects.requireNonNull(after, "after");
+    Objects.requireNonNull(place, "place");
+    Objects.requireNonNull(direction, "direction");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+
+    double[] geopos = {place.longitudeDeg(), place.latitudeDeg(), place.altitudeMetres()};
+    double[] tret = new double[10];
+    double[] attr = new double[20];
+    StringBuffer serr = new StringBuffer();
+    int returned = perThread.get().se.swe_lun_eclipse_when_loc(
+        after.value(), ephemeris.bit(), geopos, tret, attr, direction.flag(), serr);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot find a lunar eclipse at " + place + " " + direction + " from " + after + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+
+    return new LunarEclipse(
+        LunarEclipseKind.from(returned), JulianDayUT.of(tret[0]),
+        moment(tret[2]), moment(tret[3]), moment(tret[4]), moment(tret[5]),
+        moment(tret[6]), moment(tret[7]),
+        moment(tret[8]), moment(tret[9]),
+        Optional.of(LunarEclipseAppearance.from(attr)));
+  }
+
+  /** How a lunar eclipse looks from one place at one instant. */
+  public LunarEclipseAppearance lunarEclipseAt(JulianDayUT time,
+                                               GeoLocation place,
+                                               Ephemeris ephemeris) {
+    Objects.requireNonNull(time, "time");
+    Objects.requireNonNull(place, "place");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+
+    double[] geopos = {place.longitudeDeg(), place.latitudeDeg(), place.altitudeMetres()};
+    double[] attr = new double[20];
+    StringBuffer serr = new StringBuffer();
+    int returned = perThread.get().se.swe_lun_eclipse_how(
+        time.value(), ephemeris.bit(), geopos, attr, serr);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot describe a lunar eclipse at " + place + " at " + time + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+    return LunarEclipseAppearance.from(attr);
+  }
+
+  /**
+   * Builds the legacy {@code ifltype} filter from a set of kinds.
+   *
+   * <p>The centrality bits have to be added, and this is not a detail. The legacy filter is
+   * checked bit by bit as "is this wanted?", and centrality is checked the same way as kind —— so
+   * asking for {@code SE_ECL_TOTAL} alone says, in effect, "total, but neither central nor
+   * non-central". Every eclipse is one or the other, so every candidate is rejected and the
+   * search walks forward for ever, failing eventually with a missing-file error from some
+   * century far away rather than saying anything about the filter. Asking for total eclipses is
+   * a reasonable thing to want; this makes it work.
+   */
+  private static int kindFilter(Set<SolarEclipseKind> kinds) {
+    if (kinds.isEmpty()) {
+      return 0;    // zero means "any", which the library expands for itself
+    }
+    int filter = SweConst.SE_ECL_CENTRAL | SweConst.SE_ECL_NONCENTRAL;
+    for (SolarEclipseKind kind : kinds) {
+      filter |= kind.bit();
+    }
+    return filter;
+  }
+
+  /**
+   * Reads one phase time out of a legacy {@code tret} slot.
+   *
+   * <p>Slots for phases that do not occur are left at zero —— a partial eclipse has no totality ——
+   * and zero is not a plausible answer here (it would be a date in 4713 BC), so it is read as
+   * "this phase does not happen" rather than passed on as a number.
+   */
+  private static Optional<JulianDayUT> moment(double tret) {
+    return tret == 0 ? Optional.empty() : Optional.of(JulianDayUT.of(tret));
+  }
+
+  // -----------------------------------------------------------------------------------------
   // Lifecycle
   // -----------------------------------------------------------------------------------------
 
