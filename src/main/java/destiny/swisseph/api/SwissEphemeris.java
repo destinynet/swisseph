@@ -252,6 +252,30 @@ public final class SwissEphemeris implements AutoCloseable {
     return Ephemeris.MOSHIER;
   }
 
+  /**
+   * The obliquity of the ecliptic and the nutation at a moment.
+   *
+   * <p>A separate method rather than a {@link Body}, because it is a separate kind of thing: the
+   * legacy API reaches it through the position call with a body number of -1, and what comes back
+   * in the position slots is two angles and two corrections. Giving it its own signature means
+   * the result cannot be read as coordinates.
+   *
+   * @throws SwissEphemerisException if it could not be computed
+   */
+  public ObliquityAndNutation obliquityAndNutation(JulianDayUT time) {
+    Objects.requireNonNull(time, "time");
+
+    double[] xx = new double[6];
+    StringBuffer serr = new StringBuffer();
+    int returned = perThread.get().se.swe_calc_ut(time.value(), SweConst.SE_ECL_NUT, 0, xx, serr);
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot compute the obliquity at " + time + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+    return new ObliquityAndNutation(xx[0], xx[1], xx[2], xx[3]);
+  }
+
   // -----------------------------------------------------------------------------------------
   // Houses
   // -----------------------------------------------------------------------------------------
