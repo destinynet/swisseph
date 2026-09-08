@@ -31,6 +31,10 @@ import java.util.Optional;
  * @param moonset          if it sets while the eclipse is in progress
  * @param appearance       how deep in the shadow it is, and where it is in the sky; present only
  *                         for an eclipse searched for at a place
+ * @param visibility       which phases are above the horizon there; present only for an eclipse
+ *                         searched for at a place. A lunar eclipse happens at the same moments
+ *                         for everyone, but the Moon sets —— so a place can see the beginning and
+ *                         miss the end, and the phase times alone do not say what was seen
  */
 public record LunarEclipse(LunarEclipseKind kind,
                            JulianDayUT maximum,
@@ -42,7 +46,8 @@ public record LunarEclipse(LunarEclipseKind kind,
                            Optional<JulianDayUT> penumbraEnd,
                            Optional<JulianDayUT> moonrise,
                            Optional<JulianDayUT> moonset,
-                           Optional<LunarEclipseAppearance> appearance) {
+                           Optional<LunarEclipseAppearance> appearance,
+                           Optional<EclipseVisibility> visibility) {
 
   public LunarEclipse {
     Objects.requireNonNull(kind, "kind");

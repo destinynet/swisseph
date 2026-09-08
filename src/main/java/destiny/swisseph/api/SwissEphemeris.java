@@ -774,11 +774,12 @@ public final class SwissEphemeris implements AutoCloseable {
    * How a solar eclipse looks from one place at one instant —— for an eclipse already known to be
    * in progress.
    *
-   * @throws SwissEphemerisException if no solar eclipse is in progress then
+   * <p>Returns empty when no eclipse is in progress at that moment —— which is the ordinary case
+   * for any instant picked at random, and not a failure.
    */
-  public SolarEclipseAppearance solarEclipseAt(JulianDayUT time,
-                                               GeoLocation place,
-                                               Ephemeris ephemeris) {
+  public Optional<SolarEclipseAt> solarEclipseAt(JulianDayUT time,
+                                                 GeoLocation place,
+                                                 Ephemeris ephemeris) {
     Objects.requireNonNull(time, "time");
     Objects.requireNonNull(place, "place");
     Objects.requireNonNull(ephemeris, "ephemeris");
@@ -794,7 +795,11 @@ public final class SwissEphemeris implements AutoCloseable {
           "cannot describe a solar eclipse at " + place + " at " + time + ": "
           + (serr.isEmpty() ? "no reason given" : serr.toString()));
     }
-    return SolarEclipseAppearance.from(attr);
+    if (returned == 0) {
+      return Optional.empty();   // no eclipse in progress
+    }
+    return Optional.of(new SolarEclipseAt(
+        SolarEclipseKind.from(returned), SolarEclipseAppearance.from(attr)));
   }
 
   /**
@@ -833,7 +838,7 @@ public final class SwissEphemeris implements AutoCloseable {
         LunarEclipseKind.from(returned), JulianDayUT.of(tret[0]),
         moment(tret[2]), moment(tret[3]), moment(tret[4]), moment(tret[5]),
         moment(tret[6]), moment(tret[7]),
-        Optional.empty(), Optional.empty(), Optional.empty());
+        Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
   }
 
   /** The next lunar eclipse visible from one place, with the Moon's position in that sky. */
@@ -864,13 +869,18 @@ public final class SwissEphemeris implements AutoCloseable {
         moment(tret[2]), moment(tret[3]), moment(tret[4]), moment(tret[5]),
         moment(tret[6]), moment(tret[7]),
         moment(tret[8]), moment(tret[9]),
-        Optional.of(LunarEclipseAppearance.from(attr)));
+        Optional.of(LunarEclipseAppearance.from(attr)),
+        Optional.of(EclipseVisibility.from(returned)));
   }
 
-  /** How a lunar eclipse looks from one place at one instant. */
-  public LunarEclipseAppearance lunarEclipseAt(JulianDayUT time,
-                                               GeoLocation place,
-                                               Ephemeris ephemeris) {
+  /**
+   * How a lunar eclipse looks from one place at one instant.
+   *
+   * <p>Empty when no eclipse is in progress then.
+   */
+  public Optional<LunarEclipseAt> lunarEclipseAt(JulianDayUT time,
+                                                 GeoLocation place,
+                                                 Ephemeris ephemeris) {
     Objects.requireNonNull(time, "time");
     Objects.requireNonNull(place, "place");
     Objects.requireNonNull(ephemeris, "ephemeris");
@@ -886,7 +896,12 @@ public final class SwissEphemeris implements AutoCloseable {
           "cannot describe a lunar eclipse at " + place + " at " + time + ": "
           + (serr.isEmpty() ? "no reason given" : serr.toString()));
     }
-    return LunarEclipseAppearance.from(attr);
+    if (returned == 0) {
+      return Optional.empty();   // no eclipse in progress
+    }
+    return Optional.of(new LunarEclipseAt(
+        LunarEclipseKind.from(returned), LunarEclipseAppearance.from(attr),
+        EclipseVisibility.from(returned)));
   }
 
   /**

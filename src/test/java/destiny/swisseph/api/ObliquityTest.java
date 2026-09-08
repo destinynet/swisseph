@@ -12,6 +12,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ObliquityTest {
 
   @Test
+  void everyLegacyBodyNumberRoundTrips() {
+    // Body.ofLegacyNumber exists so migrating code can keep an existing domain-to-number mapping.
+    // It is only useful if it is exactly the inverse of Point.number().
+    for (Body.Point point : Body.Point.values()) {
+      assertEquals(point, Body.ofLegacyNumber(point.number()),
+                   "編號 " + point.number() + " 應該對應回 " + point);
+    }
+    assertEquals(new Body.MinorPlanet(433), Body.ofLegacyNumber(SweConst.SE_AST_OFFSET + 433));
+    org.junit.jupiter.api.Assertions.assertThrows(
+        IllegalArgumentException.class, () -> Body.ofLegacyNumber(9999));
+  }
+
+  @Test
   void matchesTheLegacyCall() {
     String ephePath = SmokeTestSupport.ephePath();
     for (double tjd : new double[]{2299160.5, 2415020.5, 2451545.0, 2460841.5}) {

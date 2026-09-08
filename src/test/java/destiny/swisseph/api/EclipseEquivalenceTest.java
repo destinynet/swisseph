@@ -175,6 +175,20 @@ class EclipseEquivalenceTest {
     }
 
     try (SwissEphemeris ephemeris = SwissEphemeris.at(ephePath)) {
+      // While we are here: at a moment with no eclipse, "how does it look" has no answer, and
+      // that must be an absence rather than a fabricated one. The legacy call returns 0 for this
+      // and the arrays keep whatever was in them.
+      assertTrue(ephemeris.solarEclipseAt(JulianDayUT.of(2451545.0), TAIPEI, Ephemeris.SWISS).isEmpty(),
+                 "沒有日食的時刻不該回傳觀測資料");
+      assertTrue(ephemeris.lunarEclipseAt(JulianDayUT.of(2451545.0), TAIPEI, Ephemeris.SWISS).isEmpty(),
+                 "沒有月食的時刻不該回傳觀測資料");
+
+      // And at a moment when there is one, it does answer.
+      assertTrue(ephemeris.solarEclipseAt(JulianDayUT.of(maximum),
+                                          GeoLocation.of(0.0, 0.0), Ephemeris.SWISS).isPresent()
+                 || ephemeris.solarEclipseAt(JulianDayUT.of(maximum), TAIPEI, Ephemeris.SWISS).isPresent(),
+                 "食甚時刻至少某處看得到");
+
       EclipseCentre centre = ephemeris.solarEclipseCentre(JulianDayUT.of(maximum), Ephemeris.SWISS);
       String actual = hex(centre.centralLine().longitudeDeg()) + ',' + hex(centre.centralLine().latitudeDeg())
                       + ',' + hex(centre.appearance().magnitude())

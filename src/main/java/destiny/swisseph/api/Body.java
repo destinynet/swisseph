@@ -25,6 +25,28 @@ public sealed interface Body {
   /** A short, stable name for this body, for messages. */
   String displayName();
 
+  /**
+   * The body a legacy {@code ipl} number refers to.
+   *
+   * <p>A bridge for code being migrated, where the number is already being produced by some
+   * existing mapping that is worth keeping —— one that encodes choices the number alone does not
+   * show, such as whether "the lunar node" means the mean node or the true one. New code should
+   * name the body directly instead; that is the whole point of this type.
+   *
+   * @throws IllegalArgumentException if no body has that number
+   */
+  static Body ofLegacyNumber(int ipl) {
+    if (ipl >= SweConst.SE_AST_OFFSET) {
+      return new MinorPlanet(ipl - SweConst.SE_AST_OFFSET);
+    }
+    for (Point point : Point.values()) {
+      if (point.number() == ipl) {
+        return point;
+      }
+    }
+    throw new IllegalArgumentException("no body has the number " + ipl);
+  }
+
   /** The bodies Swiss Ephemeris addresses by a small fixed number. */
   enum Point implements Body {
     SUN(SweConst.SE_SUN),
