@@ -1023,8 +1023,13 @@ public class SweDate implements Serializable {
       case 405: se.swed.tid_acc = SweConst.SE_TIDAL_DE405; break;
       case 406: se.swed.tid_acc = SweConst.SE_TIDAL_DE406; break;
       case 421: se.swed.tid_acc = SweConst.SE_TIDAL_DE421; break; 
+      case 422: se.swed.tid_acc = SweConst.SE_TIDAL_DE422; break;
       case 430: se.swed.tid_acc = SweConst.SE_TIDAL_DE430; break;
       case 431: se.swed.tid_acc = SweConst.SE_TIDAL_DE431; break;
+      /* Ephemeris files Astrodienst ships today are built on DE441. Without this case such a
+       * file falls through to the DE431 value below, which is wrong by 0.136 arcsec/cy^2 —— a
+       * tenth of an arcsecond on the Moon around 1800, nothing in the present era. */
+      case 441: se.swed.tid_acc = SweConst.SE_TIDAL_DE441; break;
       default: se.swed.tid_acc = SweConst.SE_TIDAL_DEFAULT; break;
 //      case 200: tid_acc.set(SweConst.SE_TIDAL_DE200); break;
 //      case 403: tid_acc.set(SweConst.SE_TIDAL_DE403); break;

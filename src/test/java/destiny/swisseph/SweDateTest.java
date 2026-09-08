@@ -445,4 +445,45 @@ class SweDateTest {
                  "delta T around 1600 should be a couple of minutes, was " + dt / SECOND);
     }
   }
+
+  /**
+   * Every DE number Astrodienst has shipped an ephemeris for must map to its own tidal
+   * acceleration, because delta-T is derived from it.
+   *
+   * <p>The table used to stop at DE431, so the files Astrodienst ships today —— built on DE441 ——
+   * fell through to the default and were given DE431's value. The error is 0.136 arcsec/cy², which
+   * is a tenth of an arcsecond on the Moon around 1800 and nothing in the present era; small, but
+   * silent, and there is no reason to carry it.
+   *
+   * <p>Values are Astrodienst's own, from {@code swephexp.h}.
+   */
+  @Test
+  void everyShippedDeNumberHasItsOwnTidalAcceleration() {
+    SwissEph se = new SwissEph(SmokeTestSupport.ephePath());
+    try {
+      assertTidalAcc(se, 200, -23.8946);
+      assertTidalAcc(se, 403, -25.580);
+      assertTidalAcc(se, 404, -25.580);
+      assertTidalAcc(se, 405, -25.826);
+      assertTidalAcc(se, 406, -25.826);
+      assertTidalAcc(se, 421, -25.85);
+      assertTidalAcc(se, 422, -25.85);
+      assertTidalAcc(se, 430, -25.82);
+      assertTidalAcc(se, 431, -25.80);
+      assertTidalAcc(se, 441, -25.936);
+
+      // An unknown one still has to land somewhere sensible rather than throw.
+      SweDate.swi_set_tid_acc(0, 0, 999, se);
+      assertEquals(SweConst.SE_TIDAL_DEFAULT, SweDate.getGlobalTidalAcc(se), 0.0,
+                   "未知的 DE 編號應該落到預設值");
+    } finally {
+      se.swe_close();
+    }
+  }
+
+  private static void assertTidalAcc(SwissEph se, int denum, double expected) {
+    SweDate.swi_set_tid_acc(0, 0, denum, se);
+    assertEquals(expected, SweDate.getGlobalTidalAcc(se), 0.0,
+                 "DE" + denum + " 的潮汐加速度");
+  }
 }
