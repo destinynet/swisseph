@@ -652,6 +652,25 @@ class FileData implements Serializable {
     /* compute segment number */
 
 
+    /*
+     * A zero segment size means this planet's index was cleared —— by free_planets() —— while the
+     * file it indexes stayed open, so nothing re-read the header. Without this guard the division
+     * yields infinity, the cast pins it at Integer.MAX_VALUE, and MAX_VALUE * 3 overflows to
+     * exactly 2147483645, which is then used as a file position. The failure that reaches the
+     * caller is "Filepointer position 2147483645 exceeds file length", which says nothing about
+     * what actually went wrong and is very hard to trace back.
+     *
+     * This does not fix whatever left the index cleared; it makes that condition say so.
+     */
+    if (pdp.dseg == 0) {
+      if (serr != null) {
+        serr.setLength(0);
+        serr.append("ephemeris file ").append(fdp.fnam)
+            .append(" is open but its index for this body was cleared (segment size is zero); ")
+            .append("tjd=").append(tjd).append(" ipli=").append(ipli);
+      }
+      return SwephData.NOT_AVAILABLE;
+    }
     iseg = (int) ((tjd - pdp.tfstart) / pdp.dseg);
     /*if (tjd - pdp->tfstart < 0)
         return(NOT_AVAILABLE);*/
