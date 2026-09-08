@@ -180,10 +180,17 @@
         <configuration>
           <skipTests>${skipTests}</skipTests>
           <!--
-            每個測試類別開一個新的 JVM。這個函式庫把狀態放在 static 欄位裡，
-            所以 golden master 的「cold」只有在乾淨的 JVM 裡才真的是 cold ——
-            若與其他測試類別共用 JVM，前面跑過的測試會先污染它。
-            Phase 2 拔掉全域狀態之後，這個設定就可以移除。
+            每個測試類別開一個新的 JVM，讓 golden master 的「cold」真的是 cold。
+
+            原本的理由（函式庫把計算狀態放在 static 欄位裡）已經消失：那些欄位都已經
+            移進實例或改成依路徑快取的不可變表。剩下的兩個 static 是 SweDate 的全域
+            預設潮汐加速度，而它們只被「顯式呼叫該 API」時寫入，沒有任何計算會動它。
+
+            但這個設定**仍然保留**，理由換了一個：process 層級的共享快取
+            （EphemerisFile、FixedStarFile、delta-T 表）會跨測試類別存活，而目前有一個
+            尚未查明的缺陷（Filepointer position 2147483645）就發生在「同一個 JVM 裡
+            多個實例並存」這個維度上。這套測試只跑十幾秒，不值得為了那點時間把
+            自己放進那個情境。查清楚之後再回來拿掉。
           -->
           <reuseForks>false</reuseForks>
         </configuration>

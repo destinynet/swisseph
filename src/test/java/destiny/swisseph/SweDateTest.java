@@ -1,6 +1,10 @@
 package destiny.swisseph;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -486,4 +490,47 @@ class SweDateTest {
     assertEquals(expected, SweDate.getGlobalTidalAcc(se), 0.0,
                  "DE" + denum + " 的潮汐加速度");
   }
+
+  /**
+   * An ephemeris directory may carry a delta-T override file. Two instances pointing at
+   * different directories must each get their own —— which sounds obvious, and was not true:
+   * the table was a mutable static array behind a JVM-global "already loaded" flag, so whichever
+   * instance ran first decided, for the whole process, whose overrides everybody would use.
+   *
+   * <p>Harmless in practice while nobody ships such a file, which is why it survived so long.
+   * But it is the same defect as the ones already removed —— an answer that depends on who went
+   * first —— and it is only invisible until someone does ship one.
+   */
+  @Test
+  void twoDirectoriesDoNotShareDeltaTOverrides(@TempDir Path withOverride, @TempDir Path plain)
+      throws Exception {
+    // A wildly wrong value, so that using it is unmistakable.
+    Files.writeString(withOverride.resolve("sedeltat.txt"), "1900 999.0\n");
+
+    // Ask the plain directory first: under the old flag, it would have claimed the one chance to
+    // load and left the other instance reading the built-in table.
+    SwissEph plainEph = new SwissEph(plain.toString());
+    SwissEph overriddenEph = new SwissEph(withOverride.toString());
+    try {
+      double plainDeltaT = SweDate.getDeltaT(J1900, plainEph);
+      double overriddenDeltaT = SweDate.getDeltaT(J1900, overriddenEph);
+
+      assertNotEquals(plainDeltaT, overriddenDeltaT,
+                      "帶覆寫檔的目錄應該給出不同的 delta-T");
+      // Not exactly 999: the table value is still corrected for tidal acceleration afterwards.
+      // Close enough to be unmistakably that value and nothing else.
+      assertEquals(999.0, overriddenDeltaT * 86400.0, 1.0,
+                   "覆寫檔裡的 999 秒應該被採用（容許潮汐加速度的修正）");
+
+      // And asking again the other way round must not change either of them.
+      assertEquals(plainDeltaT, SweDate.getDeltaT(J1900, plainEph), 0.0,
+                   "沒有覆寫檔的目錄不該被另一個目錄的覆寫檔污染");
+    } finally {
+      plainEph.swe_close();
+      overriddenEph.swe_close();
+    }
+  }
+
+  /** 1900-01-01, inside the table the override file patches. */
+  private static final double J1900 = 2415020.5;
 }

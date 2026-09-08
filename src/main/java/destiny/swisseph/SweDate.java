@@ -150,7 +150,6 @@ public class SweDate implements Serializable {
 // };
 
   private static boolean defaultTidAccManual = false;
-  private static boolean init_dt_done = false;
   private double jd;
   // JD for the start of the Gregorian calendar system (October 15, 1582):
   private double jdCO = 2299160.5;
@@ -1291,7 +1290,12 @@ public class SweDate implements Serializable {
   /* we make the table greater for additional values read from external file */
   private static final int TABSIZ_SPACE=TABSIZ+100;
 
-  private static double dt[]=new double[] {
+  /**
+   * The built-in delta-T table, 1620 onwards. Never modified: an ephemeris directory may carry
+   * an override file, and applying it used to write into this array, which made the table a
+   * property of whichever instance happened to load it first. See {@link #deltaTTableFor}.
+   */
+  private static final double DT_BASE[]=new double[] {
   /* 1620.0 thru 1659.0 */
   124.00, 119.00, 115.00, 110.00, 106.00, 102.00, 98.00, 95.00, 91.00, 88.00,
   85.00, 82.00, 79.00, 77.00, 74.00, 72.00, 70.00, 67.00, 65.00, 63.00,
@@ -1362,7 +1366,8 @@ public class SweDate implements Serializable {
   private static final int LTERM_EQUATION_YSTART = 1820;
   private static final int LTERM_EQUATION_COEFF = 32;
   /* Table for -1000 through 1600, from Morrison & Stephenson (2004).  */
-  private static short dt2[]=new short[] {
+  /** The 1600-1620 table. Never modified. */
+  private static final short dt2[]=new short[] {
   /*-1000  -900  -800  -700  -600  -500  -400  -300  -200  -100*/
     25400,23700,22000,21000,19040,17190,15530,14080,12790,11640,
   /*    0   100   200   300   400   500   600   700   800   900*/
@@ -1381,7 +1386,16 @@ public class SweDate implements Serializable {
    *           depends on the caller's own state rather than on whichever SwissEph happened
    *           to be constructed last.
    */
-  private static synchronized double calc_deltaT(double tjd, SwissEph se) {
+  /*
+   * No longer synchronized. The lock was guarding the delta-T override table, which used to be a
+   * mutable static array filled in on first use; that is now computed once per ephemeris
+   * directory and never written again. Nothing else on this call path touches shared state.
+   *
+   * Worth removing rather than leaving as harmless belt-and-braces: delta-T is computed on
+   * essentially every calculation, so a lock on this method is a process-wide queue —— exactly the
+   * kind of serialisation that making the ephemeris object shareable was meant to avoid.
+   */
+  private static double calc_deltaT(double tjd, SwissEph se) {
     double ans = 0;
     double B, Y, Ygreg, dd;
     int iy;
@@ -1419,7 +1433,7 @@ public class SweDate implements Serializable {
 	  iy = (TAB2_END - TAB2_START) / TAB2_STEP;
 	  dd = (Y - TAB2_END) / B;
 	  /*ans = dt2[iy] + dd * (dt[0] / 100.0 - dt2[iy]);*/
-	  ans = dt2[iy] + dd * (dt[0] - dt2[iy]);
+	  ans = dt2[iy] + dd * (deltaTTableFor(se).values()[0] - dt2[iy]);
 	  ans = adjust_for_tidacc(ans, Ygreg, tidAcc);
 	  return ans / 86400.0;
         }
@@ -1441,7 +1455,9 @@ public class SweDate implements Serializable {
     double d[] = new double[6];
     int i, iy, k;
     /* read additional values from swedelta.txt */
-    int tabsiz = init_dt(se);
+    DeltaTTable table = deltaTTableFor(se);
+    double[] dt = table.values();
+    int tabsiz = table.size();
     int tabend = TABSTART + tabsiz - 1;
     /*Y = 2000.0 + (tjd - J2000)/365.25;*/
     Y = 2000.0 + (tjd - SwephData.J2000)/365.2425;
@@ -1619,67 +1635,98 @@ public class SweDate implements Serializable {
   /* Read delta t values from external file.
    * record structure: year(whitespace)delta_t in 0.01 sec.
    */
-  private static int init_dt(SwissEph se) {
-    FilePtr fp = null;
-    int year;
-    int tab_index;
-    int tabsiz;
-    int i;
-    String s;
-    if (se == null) {
-      // No ephemeris context, so no path in which to look for an override file. Deliberately
-      // does not set init_dt_done: a later call that does have a context must still get its
-      // chance to load the file.
-      return TABSIZ;
+  /**
+   * The delta-T table an ephemeris directory implies: the built-in values, with any override
+   * file in that directory applied on top.
+   *
+   * <p>Keyed by directory, and computed once per directory. It used to be a JVM-global flag and
+   * a mutable static array —— so whichever instance ran first decided, for the whole process,
+   * which directory's override file everybody would use. Harmless while no such file exists,
+   * which is why it survived this long, but it is the same defect as the ones already removed:
+   * an answer that depends on who went first.
+   */
+  record DeltaTTable(double[] values, int size) { }
+
+  private static final java.util.Map<String, DeltaTTable> DT_BY_PATH =
+      new java.util.concurrent.ConcurrentHashMap<>();
+
+  /** The unmodified built-in table, for callers with no ephemeris directory to look in. */
+  private static final DeltaTTable DT_BUILTIN = buildTable(null);
+
+  static DeltaTTable deltaTTableFor(SwissEph se) {
+    if (se == null || se.swed.ephepath == null || se.swed.ephepath.isEmpty()) {
+      return DT_BUILTIN;
     }
-    if (!init_dt_done) {
-      init_dt_done = true;
+    // Delta-T is computed on essentially every calculation, so the hot path must be a field read
+    // rather than a hash of the directory name. The map behind it is what makes two instances
+    // sharing a directory share the work.
+    DeltaTTable cached = se.swed.deltaTTable;
+    if (cached != null) {
+      return cached;
+    }
+    DeltaTTable table = DT_BY_PATH.computeIfAbsent(se.swed.ephepath, path -> buildTable(se));
+    se.swed.deltaTTable = table;
+    return table;
+  }
+
+  /** Reads any override file in this instance's directory over a fresh copy of the built-in table. */
+  private static DeltaTTable buildTable(SwissEph se) {
+    double[] values = new double[TABSIZ_SPACE];
+    System.arraycopy(DT_BASE, 0, values, 0, Math.min(DT_BASE.length, values.length));
+
+    if (se != null) {
+      FilePtr fp = null;
       /* no error message if file is missing */
       try {
-        if ((fp = se.swi_fopen(-1, "swe_deltat.txt", se.swed.ephepath, null)) == null &&
-            (fp = se.swi_fopen(-1, "sedeltat.txt", se.swed.ephepath, null)) == null) {
-          return TABSIZ;  // I think, I could skip this one...
-        }
-      } catch (SwissephException ex) {
         try {
-          if ((fp = se.swi_fopen(-1, "sedeltat.txt", se.swed.ephepath, null)) == null) {
-            return TABSIZ;  // I think, I could skip this one...
+          if ((fp = se.swi_fopen(-1, "swe_deltat.txt", se.swed.ephepath, null)) == null) {
+            fp = se.swi_fopen(-1, "sedeltat.txt", se.swed.ephepath, null);
           }
-        } catch (SwissephException se2) {
-          return TABSIZ;
+        } catch (SwissephException ex) {
+          try {
+            fp = se.swi_fopen(-1, "sedeltat.txt", se.swed.ephepath, null);
+          } catch (SwissephException ignored) {
+            fp = null;
+          }
+        }
+        if (fp != null) {
+          String s;
+          while ((s = fp.readLine()) != null) {
+            s = s.trim();
+            if (s.isEmpty() || s.charAt(0) == '#') {
+              continue;
+            }
+            int year = SwissLib.atoi(s);
+            int tab_index = year - TABSTART;
+            /* table space is limited. no error msg, if exceeded */
+            if (tab_index >= TABSIZ_SPACE || tab_index < 0) {
+              continue;
+            }
+            if (s.length() > 4) {
+              s = s.substring(4).trim();
+            }
+            values[tab_index] = (short) SwissLib.atof(s);
+          }
+        }
+      } catch (IOException ignored) {
+        // partial reads are as tolerated here as they were before
+      } finally {
+        if (fp != null) {
+          try { fp.close(); } catch (IOException ignored) { }
         }
       }
-      try {
-        while ((s=fp.readLine()) != null) {
-          s.trim();
-          if (s.length() == 0 || s.charAt(0) == '#') {
-            continue;
-          }
-          year = SwissLib.atoi(s);
-          tab_index = year - TABSTART;
-          /* table space is limited. no error msg, if exceeded */
-          if (tab_index >= TABSIZ_SPACE)
-            continue;
-          if (s.length() > 4) {
-            s = s.substring(4).trim();
-          }
-          /*dt[tab_index] = (short) (atof(sp) * 100 + 0.5);*/
-          dt[tab_index] = (short)SwissLib.atof(s);
-        }
-      } catch (IOException e) {
-      }
-      try { fp.close(); } catch (IOException e) {}
     }
+
     /* find table size */
-    tabsiz = 2001 - TABSTART + 1;
-    for (i = tabsiz - 1; i < TABSIZ_SPACE; i++) {
-      if (dt[i] == 0)
+    int tabsiz = 2001 - TABSTART + 1;
+    for (int i = tabsiz - 1; i < TABSIZ_SPACE; i++) {
+      if (values[i] == 0) {
         break;
-      else
-        tabsiz++;
+      }
+      tabsiz++;
     }
     tabsiz--;
-    return tabsiz;
+    return new DeltaTTable(values, tabsiz);
   }
 
   /* Astronomical Almanac table is corrected by adding the expression

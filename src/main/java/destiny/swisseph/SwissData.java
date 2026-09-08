@@ -239,6 +239,15 @@ public class SwissData implements Serializable {
    * computed before them. They read this field instead.
    */
   double tid_acc_default = SweConst.SE_TIDAL_DEFAULT;
+
+  /**
+   * The delta-T table for this instance's ephemeris directory, resolved on first use.
+   *
+   * <p>Only a shortcut: the table itself is shared between every instance pointing at the same
+   * directory. Delta-T is computed on essentially every calculation, and this keeps that path a
+   * field read.
+   */
+  SweDate.DeltaTTable deltaTTable;
   int timeout;
 
   /**
