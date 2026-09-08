@@ -1,0 +1,12 @@
+<extensions>
+  <!--
+    Google Artifact Registry 的 Maven wagon —— 讓 artifactregistry:// 這個 protocol
+    在 resolve 與 deploy 時可用。實際的 repository 位址不寫在版控裡，
+    由 ~/.m2/settings.xml 與 `mvn deploy -DaltDeploymentRepository=...` 提供（見 pom.xml 結尾）。
+  -->
+  <extension>
+    <groupId>com.google.cloud.artifactregistry</groupId>
+    <artifactId>artifactregistry-maven-wagon</artifactId>
+    <version>2.2.5</version>
+  </extension>
+</extensions>

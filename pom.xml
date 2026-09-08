@@ -3,26 +3,99 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>destiny</groupId>
-    <artifactId>destiny-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
 
+  <!--
+    ⚠️ 這個 POM 刻意「沒有 <parent>」，也刻意沒有任何 compile scope 依賴。
+
+    destiny-swisseph 是一個純數值函式庫：src/main/java 的 54 個檔案裡，
+    非 java.* 的 import 數量是 0。執行期只需要 java.base。
+    那是它能被獨立發布、被別人放心使用的前提 —— 一個算天體位置的函式庫，
+    不該把 JSON、序列化、collection 工具或 Kotlin runtime 拖進呼叫端的 classpath。
+
+    先前它繼承一份共用的聚合 POM，而那份 POM 的 <dependencies>（不是
+    dependencyManagement）帶著十來個 compile scope 依賴，會一路傳遞給所有消費者：
+    實測 `mvn dependency:tree` 有 30 個以上的 compile artifact，一個都沒被用到。
+    獨立 POM 的代價，就是原本繼承而來的設定必須自己寫一遍 —— 就是下面這些。
+  -->
+
+  <groupId>destiny</groupId>
   <artifactId>destiny-swisseph</artifactId>
   <version>3.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <name>destiny-swisseph</name>
   <description>
     A modernized Java port of the Swiss Ephemeris, derived from Thomas Mack's
     swisseph Java library (itself a port of Astrodienst AG's C original).
     See README.md for lineage and LICENSE for the dual licensing terms.
   </description>
+  <url>https://destiny.to</url>
+
+  <organization>
+    <name>DestinyNet</name>
+    <url>https://destiny.to</url>
+  </organization>
+
+  <!-- 詳細條款見 repo 根目錄的 LICENSE（雙授權，沿襲自 Astrodienst 與 Thomas Mack） -->
+  <licenses>
+    <license>
+      <name>GNU General Public License, version 2</name>
+      <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+    <license>
+      <name>Swiss Ephemeris Professional License</name>
+      <url>https://www.astro.com/swisseph/</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <properties>
-    <!-- java version 由 destiny-parent 統一為 21 -->
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.release>21</maven.compiler.release>
+
+    <!--
+      預設不跑測試 —— golden master 的 83 個測試每個類別各開一個 JVM（見下方
+      surefire 的 reuseForks），跑完要花上一段時間，不適合掛在每次 build 上。
+      要跑：mvn test -DskipTests=false
+    -->
+    <skipTests>true</skipTests>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <junit.version>6.1.1</junit.version>
   </properties>
+
+  <!--
+    ⚠️ compile scope 必須維持空的。這裡只有測試框架。
+    要加任何 compile 依賴之前，先問：這個純數值函式庫真的需要它嗎？
+  -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- surefire 需要它來啟動 JUnit Platform；先前由 kotlin-test-junit5 間接帶入 -->
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
@@ -38,6 +111,24 @@
       </testResource>
     </testResources>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.14.1</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.5.0</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.1.4</version>
+      </plugin>
+
       <!--
         JaCoCo：量測 golden master 保護網對 production code 的覆蓋率。
         這不是為了追求一個好看的數字，而是要找出保護網的盲點 ——
@@ -68,7 +159,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.4</version>
         <configuration>
+          <skipTests>${skipTests}</skipTests>
           <!--
             每個測試類別開一個新的 JVM。這個函式庫把狀態放在 static 欄位裡，
             所以 golden master 的「cold」只有在乾淨的 JVM 裡才真的是 cold ——
@@ -82,6 +175,12 @@
   </build>
 
   <!--
-    測試框架 (junit-jupiter) 由 destiny-parent 以 test scope 提供，此處不再宣告。
+    ⚠️ 這裡刻意「沒有 <distributionManagement>」。
+
+    這個 repo 是公開的，artifact repository 的位址不該寫進版控。
+    要發布時在命令列指定：
+
+        mvn deploy -DaltDeploymentRepository=<id>::<url>
   -->
+
 </project>
