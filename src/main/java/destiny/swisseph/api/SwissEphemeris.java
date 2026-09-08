@@ -187,29 +187,47 @@ public final class SwissEphemeris implements AutoCloseable {
     throw new IllegalArgumentException("not a numbered body: " + body);
   }
 
+  /**
+   * Reads one legacy {@code double[6]} into the position type the requested options imply.
+   *
+   * <p>Shared by every call that returns a position, so that the mapping from slot to meaning is
+   * written down exactly once.
+   */
+  private static Position positionFrom(double[] xx, Set<CalcOption> requested) {
+    // Speeds are only meaningful if they were asked for; otherwise the slots hold zeroes, which
+    // would read as "not moving" rather than "not computed".
+    boolean withSpeed = requested.contains(CalcOption.SPEED);
+
+    if (requested.contains(CalcOption.CARTESIAN)) {
+      return new Position.Cartesian(xx[0], xx[1], xx[2], withSpeed
+          ? Optional.of(new Position.CartesianSpeed(xx[3], xx[4], xx[5]))
+          : Optional.empty());
+    }
+    if (requested.contains(CalcOption.EQUATORIAL)) {
+      return new Position.Equatorial(xx[0], xx[1], xx[2], withSpeed
+          ? Optional.of(new Position.EquatorialSpeed(xx[3], xx[4], xx[5]))
+          : Optional.empty());
+    }
+    return new Position.Ecliptic(xx[0], xx[1], xx[2], withSpeed
+        ? Optional.of(new Position.EclipticSpeed(xx[3], xx[4], xx[5]))
+        : Optional.empty());
+  }
+
+  /** Classifies whatever the legacy {@code serr} out-parameter came back with. */
+  private static List<Warning> warningsFrom(StringBuffer serr) {
+    List<Warning> warnings = new ArrayList<>(1);
+    if (!serr.isEmpty()) {
+      warnings.add(Warning.classify(serr.toString()));
+    }
+    return warnings;
+  }
+
   private static CalcResult assemble(int returnedFlags,
                                      double[] xx,
                                      StringBuffer serr,
                                      Set<CalcOption> requested,
                                      String resolvedName) {
-    // Speeds are only meaningful if they were asked for; otherwise the slots hold zeroes, which
-    // would read as "not moving" rather than "not computed".
-    boolean withSpeed = requested.contains(CalcOption.SPEED);
-
-    Position position;
-    if (requested.contains(CalcOption.CARTESIAN)) {
-      position = new Position.Cartesian(xx[0], xx[1], xx[2], withSpeed
-          ? Optional.of(new Position.CartesianSpeed(xx[3], xx[4], xx[5]))
-          : Optional.empty());
-    } else if (requested.contains(CalcOption.EQUATORIAL)) {
-      position = new Position.Equatorial(xx[0], xx[1], xx[2], withSpeed
-          ? Optional.of(new Position.EquatorialSpeed(xx[3], xx[4], xx[5]))
-          : Optional.empty());
-    } else {
-      position = new Position.Ecliptic(xx[0], xx[1], xx[2], withSpeed
-          ? Optional.of(new Position.EclipticSpeed(xx[3], xx[4], xx[5]))
-          : Optional.empty());
-    }
+    Position position = positionFrom(xx, requested);
 
     List<Warning> warnings = new ArrayList<>(1);
     if (!serr.isEmpty()) {
@@ -317,6 +335,75 @@ public final class SwissEphemeris implements AutoCloseable {
     }
     // e[0] is a fraction of a day.
     return Duration.ofNanos(Math.round(e[0] * 24 * 60 * 60 * 1_000_000_000L));
+  }
+
+  // -----------------------------------------------------------------------------------------
+  // Nodes and apsides
+  // -----------------------------------------------------------------------------------------
+
+  /** Geocentric, tropical, no modifiers. */
+  public NodesAndApsides nodesAndApsides(JulianDayUT time,
+                                         Body body,
+                                         Ephemeris ephemeris,
+                                         ApsisMethod method) {
+    return nodesAndApsides(time, body, ephemeris, method, EnumSet.noneOf(CalcOption.class),
+                           EnumSet.noneOf(ApsisOption.class), Centre.geocentric(), Zodiac.tropical());
+  }
+
+  /**
+   * Where a body's orbit crosses the reference plane, and where it is nearest and furthest.
+   *
+   * @param time      the instant, in Universal Time
+   * @param body      whose orbit —— a numbered body; fixed stars have no orbit to speak of here
+   * @param ephemeris which ephemeris to compute from
+   * @param method    mean or osculating elements; they answer different questions
+   * @param options   modifiers on the returned positions, as for {@link #calculate}
+   * @param apsis     modifiers on what is returned in place of the aphelion
+   * @param centre    where the observer is
+   * @param zodiac    what longitudes are measured from
+   * @throws SwissEphemerisException if nothing could be computed
+   */
+  public NodesAndApsides nodesAndApsides(JulianDayUT time,
+                                         Body body,
+                                         Ephemeris ephemeris,
+                                         ApsisMethod method,
+                                         Set<CalcOption> options,
+                                         Set<ApsisOption> apsis,
+                                         Centre centre,
+                                         Zodiac zodiac) {
+    Objects.requireNonNull(time, "time");
+    Objects.requireNonNull(body, "body");
+    Objects.requireNonNull(ephemeris, "ephemeris");
+    Objects.requireNonNull(method, "method");
+    Objects.requireNonNull(options, "options");
+    Objects.requireNonNull(apsis, "apsis");
+    Objects.requireNonNull(centre, "centre");
+    Objects.requireNonNull(zodiac, "zodiac");
+
+    Context context = perThread.get();
+    context.apply(centre, zodiac);
+
+    int iflag = ephemeris.bit() | CalcOption.bitmask(options) | centre.bit() | zodiac.bit();
+    double[] ascending = new double[6];
+    double[] descending = new double[6];
+    double[] perihelion = new double[6];
+    double[] aphelion = new double[6];
+    StringBuffer serr = new StringBuffer();
+
+    int returned = context.se.swe_nod_aps_ut(
+        time.value(), numberOf(body), iflag, method.bit() | ApsisOption.bitmask(apsis),
+        ascending, descending, perihelion, aphelion, serr);
+
+    if (returned == SweConst.ERR) {
+      throw new SwissEphemerisException(
+          "cannot compute the nodes and apsides of " + body.displayName() + " at " + time + ": "
+          + (serr.isEmpty() ? "no reason given" : serr.toString()));
+    }
+
+    return new NodesAndApsides(
+        positionFrom(ascending, options), positionFrom(descending, options),
+        positionFrom(perihelion, options), positionFrom(aphelion, options),
+        warningsFrom(serr));
   }
 
   // -----------------------------------------------------------------------------------------
