@@ -4,11 +4,11 @@ import java.io.File;
 import java.net.URL;
 
 /** Locates the ephemeris directory shared by the tests in this package. */
-final class SmokeTestSupport {
+public final class SmokeTestSupport {
 
   private SmokeTestSupport() {}
 
-  static String ephePath() {
+  public static String ephePath() {
     String prop = System.getProperty("ephe.path");
     File dir = (prop != null && !prop.isEmpty())
                ? new File(prop)
